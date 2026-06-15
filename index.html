@@ -4,73 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>86chaos | Coming Soon</title>
-    <style>
-        /* This prevents the 100% width + padding bug from shoving things off screen */
-        * {
-            box-sizing: border-box;
-        }
-
-        body, html {
-            margin: 0;
-            padding: 0;
-            background-color: #000000;
-            color: #e2e8f0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            text-align: center;
-            /* Physically stops the browser from allowing left/right scrolling */
-            overflow-x: hidden; 
-        }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 40px; 
-            padding: 40px 20px;
-            max-width: 1200px;
-            width: 100%;
-        }
-
-        .logo, .map-img {
-            max-width: 90%;
-            height: auto;
-        }
-
-        .logo {
-            width: 700px;
-        }
-
-        .map-img {
-            width: 900px;
-        }
-
-        .tagline {
-            font-size: 1.2rem;
-            line-height: 1.6;
-            color: #94a3b8;
-            max-width: 650px;
-            margin: 0;
-            padding: 0 10px;
-        }
-    </style>
 </head>
-<body>
+<body style="background-color: black; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; text-align: center;">
 
-    <div class="container">
-        <img src="chaosblue.png" alt="86 Chaos Logo" class="logo">
-        
-        <p class="tagline">
-            The ultimate Kitchen Management OS is currently in development.<br>
-            Prepare to bring order to the line.
-        </p>
+    <img src="chaosblue.png?v=1" alt="86 Chaos Logo" style="max-width: 100%; width: 700px; height: auto;">
+    
+    <p style="color: #94a3b8; font-family: sans-serif; font-size: 1.2rem; margin: 40px 0;">
+        The ultimate Kitchen Management OS is currently in development.<br>
+        Prepare to bring order to the line.
+    </p>
 
-        <img src="comingsoon.png" alt="Coming Soon Map" class="map-img">
-    </div>
+    <img src="comingsoon.png?v=1" alt="Coming Soon Map" style="max-width: 100%; width: 900px; height: auto;">
 
 </body>
 </html>
