@@ -8,7 +8,8 @@
         body, html {
             margin: 0;
             padding: 0;
-            background-color: #000000; /* Pure black canvas */
+            /* This hex code matches the dark slate-gray inside your JPG files */
+            background-color: #13151a; 
             color: #e2e8f0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             display: flex;
@@ -27,11 +28,6 @@
             padding: 40px 20px;
             max-width: 1200px;
             width: 100%;
-        }
-
-        /* THE FIX: This physically erases the dark gray boxes from your JPGs */
-        img {
-            mix-blend-mode: screen; 
         }
 
         .logo {
