@@ -3,80 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>86 Chaos | Kitchen Management OS</title>
+    <title>86chaos | Coming Soon</title>
     <style>
+        /* 1. Global Background & Text */
         body, html {
             margin: 0;
             padding: 0;
-            height: 100%;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #0B0E11;
-            color: #ffffff;
-        }
-
-        .hero-section {
-            height: 100vh;
-            /* Places the map in the background with a dark blur overlay so the logo pops */
-            background-image: linear-gradient(rgba(11, 14, 17, 0.75), rgba(11, 14, 17, 0.85)), url('86chaos-bg.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            background-color: #050608; /* Very dark slate to match the vibe */
+            color: #e2e8f0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* 2. Top Content Container (Logo & Text) */
+        .top-section {
+            flex-grow: 1; /* Pushes the map down to the bottom */
+            display: flex;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
             text-align: center;
-            padding: 0 20px;
         }
 
-        .main-logo {
+        /* 3. The Logo - CSS Magic removes the box */
+        .logo {
             max-width: 90%;
-            width: 700px;
-            margin-bottom: 2rem;
-            animation: fadeIn 1.5s ease-out;
+            width: 650px; /* Looks huge on desktop, automatically shrinks on mobile */
+            height: auto;
+            margin-bottom: 25px;
+            
+            /* THE MAGIC LINE: This deletes the solid background box from your JPG */
+            mix-blend-mode: screen; 
         }
 
-        .status-badge {
-            background-color: rgba(212, 163, 129, 0.1);
-            border: 1px solid #D4A381;
-            color: #D4A381;
-            padding: 8px 24px;
-            border-radius: 50px;
-            font-size: 1rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-            animation: slideUp 1s ease-out 0.4s both;
-        }
-
-        .subtext {
-            font-size: 1.1rem;
-            color: #a0aec0;
-            max-width: 500px;
+        /* 4. The Tagline Text */
+        .tagline {
+            font-size: 1.25rem;
             line-height: 1.6;
-            animation: slideUp 1s ease-out 0.6s both;
+            color: #94a3b8;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        /* Simple animations for a premium feel */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
+        /* 5. Bottom Map Container */
+        .map-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            background-color: #050608;
         }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .map-image {
+            width: 100%;
+            max-width: 1600px; /* Prevents it from getting absurdly huge on ultrawide monitors */
+            height: auto;
+            object-fit: cover;
+            
+            /* Softens the top edge of the map to fade it into the background */
+            mask-image: linear-gradient(to bottom, transparent 0%, black 15%);
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%);
         }
     </style>
 </head>
 <body>
 
-    <div class="hero-section">
-        <img src="chaosblue.jpg" alt="86 Chaos Logo" class="main-logo">
-     
-        <div class="subtext">The ultimate Kitchen Management OS is currently in development. Prepare to bring order to the line.</div>
+    <div class="top-section">
+        <img src="chaosblue.jpg" alt="86 Chaos Logo" class="logo">
+        <p class="tagline">
+            The ultimate Kitchen Management OS is currently in development.<br>
+            Prepare to bring order to the line.
+        </p>
     </div>
-<center><img src="comingsoon.jpg" alt="Coming Soon" style="max-width: 400px; margin-top: 20px;"></center>
+
+    <div class="map-container">
+        <img src="86chaos-bg.jpg" alt="Wisconsin Background" class="map-image">
+    </div>
+
 </body>
 </html>
