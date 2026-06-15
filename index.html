@@ -8,39 +8,26 @@
         body, html {
             margin: 0;
             padding: 0;
-            height: 100%;
-            /* Sets a deep black base color */
-            background-color: #000000; 
-            
-            /* Makes your Wisconsin map cover the entire background */
-            background-image: url('86chaos-bg.jpg'); 
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            
-            /* Keeps the background map locked in place when scrolling on mobile */
-            background-attachment: fixed; 
-            
-            /* Centers your images perfectly */
+            /* This hex code matches the dark gray inside your JPG files */
+            background-color: #0e1013; 
+            color: #e2e8f0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
         }
 
         .container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            gap: 25px; /* Controls the space between the logo and coming soon image */
+            gap: 40px; /* Controls the spacing between the 3 elements */
+            padding: 40px 20px;
+            max-width: 1200px;
             width: 100%;
-            padding: 20px;
-        }
-
-        /* This applies to both images and makes their dark backgrounds invisible */
-        img {
-            mix-blend-mode: screen; 
         }
 
         .logo {
@@ -49,9 +36,17 @@
             height: auto;
         }
 
-        .coming-soon {
-            max-width: 80%;
-            width: 400px;
+        .tagline {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            color: #94a3b8;
+            max-width: 650px;
+            margin: 0;
+        }
+
+        .map-img {
+            max-width: 95%;
+            width: 900px;
             height: auto;
         }
     </style>
@@ -59,11 +54,17 @@
 <body>
 
     <div class="container">
-        <!-- Main Logo -->
+        <!-- Top Logo -->
         <img src="chaosblue.jpg" alt="86 Chaos Logo" class="logo">
         
-        <!-- Coming Soon Image -->
-        <img src="comingsoon.jpg" alt="Coming Soon" class="coming-soon">
+        <!-- The text I stupidly deleted -->
+        <p class="tagline">
+            The ultimate Kitchen Management OS is currently in development.<br>
+            Prepare to bring order to the line.
+        </p>
+
+        <!-- Bottom Map Graphic -->
+        <img src="comingsoon.jpg" alt="Coming Soon Map" class="map-img">
     </div>
 
 </body>
