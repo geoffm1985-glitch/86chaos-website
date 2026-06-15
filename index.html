@@ -3,57 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>86chaos | Coming Soon</title>
+    <title>86 Chaos | Kitchen Management OS</title>
     <style>
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
-            /* This is the dark fallback color behind the map */
-            background-color: #0a0a0a; 
-            /* Your Wisconsin map background */
-            background-image: url('86chaos-bg.jpg'); 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0B0E11;
+            color: #ffffff;
+        }
+
+        .hero-section {
+            height: 100vh;
+            /* Places the map in the background with a dark blur overlay so the logo pops */
+            background-image: linear-gradient(rgba(11, 14, 17, 0.75), rgba(11, 14, 17, 0.85)), url('86chaos-bg.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            
-            /* Centers everything perfectly on the screen */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-        }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 30px; /* Space between the logo and the coming soon image */
-            padding: 20px;
-            width: 100%;
+            text-align: center;
+            padding: 0 20px;
         }
 
         .main-logo {
             max-width: 90%;
-            width: 700px; /* Limits how big the logo gets on desktop */
-            height: auto;
+            width: 700px;
+            margin-bottom: 2rem;
+            animation: fadeIn 1.5s ease-out;
         }
 
-        .coming-soon-img {
-            max-width: 80%;
-            width: 350px; /* Keeps the coming soon text smaller than the logo */
-            height: auto;
+        .status-badge {
+            background-color: rgba(212, 163, 129, 0.1);
+            border: 1px solid #D4A381;
+            color: #D4A381;
+            padding: 8px 24px;
+            border-radius: 50px;
+            font-size: 1rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            animation: slideUp 1s ease-out 0.4s both;
+        }
+
+        .subtext {
+            font-size: 1.1rem;
+            color: #a0aec0;
+            max-width: 500px;
+            line-height: 1.6;
+            animation: slideUp 1s ease-out 0.6s both;
+        }
+
+        /* Simple animations for a premium feel */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <img src="chaosblue.jpg" alt="86 Chaos Kitchen Management OS" class="main-logo">
-        
-        <img src="comingsoon.jpg" alt="Coming Soon" class="coming-soon-img">
+    <div class="hero-section">
+        <img src="chaosblue.jpg" alt="86 Chaos Logo" class="main-logo">
+     
+        <div class="subtext">The ultimate Kitchen Management OS is currently in development. Prepare to bring order to the line.</div>
     </div>
-
+<img src="comingsoon.jpg" alt="Coming Soon" style="max-width: 400px; margin-top: 20px;">
 </body>
 </html>
