@@ -8,8 +8,7 @@
         body, html {
             margin: 0;
             padding: 0;
-            /* This hex code matches the dark gray inside your JPG files */
-            background-color: #0e1013; 
+            background-color: #000000; /* Pure black canvas */
             color: #e2e8f0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             display: flex;
@@ -24,10 +23,15 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 40px; /* Controls the spacing between the 3 elements */
+            gap: 40px; 
             padding: 40px 20px;
             max-width: 1200px;
             width: 100%;
+        }
+
+        /* THE FIX: This physically erases the dark gray boxes from your JPGs */
+        img {
+            mix-blend-mode: screen; 
         }
 
         .logo {
@@ -54,16 +58,13 @@
 <body>
 
     <div class="container">
-        <!-- Top Logo -->
         <img src="chaosblue.jpg" alt="86 Chaos Logo" class="logo">
         
-        <!-- The text I stupidly deleted -->
         <p class="tagline">
             The ultimate Kitchen Management OS is currently in development.<br>
             Prepare to bring order to the line.
         </p>
 
-        <!-- Bottom Map Graphic -->
         <img src="comingsoon.jpg" alt="Coming Soon Map" class="map-img">
     </div>
 
