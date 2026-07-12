@@ -1,4 +1,4 @@
-const OWNER_EMAIL = "founder@86chaos.com"; // TODO: replace with your real beta signup email or replace the form with Tally/Formspree.
+const OWNER_EMAIL = "geoffrey@86chaos.com"; // TODO: replace with your real beta signup email or replace the form with Tally/Formspree.
 
 const screens = {
   manager: {
