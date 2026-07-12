@@ -88,3 +88,15 @@ If the Founder Beta form does not send:
 - Added left/right feature arrows.
 - Active feature scrolls into view automatically.
 - Preserved compact desktop/mobile layout and all previous form fixes.
+
+
+## v10 tiers added
+
+- Added a compact Plans & Founder Pricing section.
+- Added tiers:
+  - Shift: $49/month, Founder $24.50/month
+  - Operations: $99/month, Founder $49.50/month
+  - Smart Kitchen: $179/month, Founder $89.50/month
+  - Owner Pro: $299/month, Founder $149.50/month
+- Added a Plans nav link.
+- Added integrations-coming-soon note.
