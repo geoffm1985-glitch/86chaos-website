@@ -28,6 +28,7 @@
       <nav class="nav-links" id="navLinks" aria-label="Main navigation">
         <a href="#proof">Proof</a>
         <a href="#product">Product</a>
+        <a href="#voice">86Voice</a>
         <a href="#plans">Plans</a>
         <a href="#comparison">Compare</a>
         <a href="#beta" class="nav-cta">Founder Beta</a>
@@ -54,6 +55,7 @@
           <div class="mini-proof">
             <span><b>60-day</b> Founder Beta</span>
             <span><b>50% off</b> for 12 months after beta</span>
+            <span><b>86Voice</b> intelligent commands</span>
             <span><b>Built by</b> a working kitchen manager</span>
           </div>
         </div>
@@ -129,6 +131,7 @@
             <button class="feature-arrow" type="button" data-tab-scroll="-1" aria-label="Previous features">‹</button>
             <div class="preview-tabs" id="featureTabs" role="tablist" aria-label="Product previews">
               <button class="active" data-screen="manager" type="button">Manager</button>
+              <button data-screen="voice" type="button">86Voice</button>
               <button data-screen="financials" type="button">Financials</button>
               <button data-screen="dailyclose" type="button">Daily Close</button>
               <button data-screen="labor" type="button">Labor</button>
@@ -150,6 +153,10 @@
           </div>
 
           <div class="screenshot-grid" aria-label="More 86 Chaos screen examples">
+            <button type="button" data-screen="voice">
+              <span>86Voice</span>
+              <b>Add, update, and complete tasks by voice</b>
+            </button>
             <button type="button" data-screen="dailyclose">
               <span>Daily Close</span>
               <b>Cash, cards, tips, deposits</b>
@@ -180,6 +187,61 @@
     </section>
 
 
+
+    <section class="section voice-section" id="voice">
+      <div class="container">
+        <div class="voice-card">
+          <div>
+            <p class="eyebrow">86Voice Intelligent Commands</p>
+            <h2>Talk like you work. 86 Chaos turns it into action.</h2>
+            <p>
+              86Voice is built for real kitchen language, not perfect robot commands. It can help add prep,
+              create tasks, match existing items, update quantities, and mark work as done after deciphering
+              what the team actually said.
+            </p>
+          </div>
+
+          <div class="voice-examples">
+            <div>
+              <span>“Prep 2 pans of onions.”</span>
+              <b>Adds or updates onion prep</b>
+            </div>
+            <div>
+              <span>“Mark the tomatoes done.”</span>
+              <b>Finds the matching prep item and completes it</b>
+            </div>
+            <div>
+              <span>“We’re out of chicken breast.”</span>
+              <b>Creates an 86 alert and checks menu impact</b>
+            </div>
+            <div>
+              <span>“Add clean fryer wall to tasks.”</span>
+              <b>Creates a task without digging through tabs</b>
+            </div>
+          </div>
+        </div>
+
+        <div class="voice-points">
+          <article>
+            <strong>Deciphers messy kitchen language</strong>
+            <span>Understands natural phrases like pans, cases, prep, done, out of, and task requests.</span>
+          </article>
+          <article>
+            <strong>Updates instead of duplicating</strong>
+            <span>When it finds a matching prep or task item, it can update the existing row instead of making clutter.</span>
+          </article>
+          <article>
+            <strong>Marks work complete</strong>
+            <span>Voice commands can find the right prep or task item and mark it done when the work is finished.</span>
+          </article>
+          <article>
+            <strong>Respects permissions</strong>
+            <span>Voice obeys the same role, plan, and workspace rules as tapping through the app.</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section class="section plans-section" id="plans">
       <div class="container">
         <div class="section-header center">
@@ -200,6 +262,7 @@
             <p>Basic daily organization for tiny kitchens, bars, and early teams.</p>
             <ul>
               <li>Prep lists and kitchen tasks</li>
+              <li>86Voice for basic prep/task commands</li>
               <li>Messages and basic 86 alerts</li>
               <li>Recipes and reminders</li>
               <li>Basic schedule viewing</li>
@@ -217,6 +280,7 @@
               <li>Everything in Shift</li>
               <li>Schedule Builder and Time Clock</li>
               <li>Labor Command and Tip Center</li>
+              <li>Smarter 86Voice shift commands</li>
               <li>Daily Close and Sales Breakdown</li>
             </ul>
           </article>
@@ -232,7 +296,7 @@
               <li>Everything in Operations</li>
               <li>Financial Center and Prime Cost snapshots</li>
               <li>Cost Center and vendor spend visibility</li>
-              <li>AI-assisted invoice and menu review</li>
+              <li>AI-assisted invoice, menu, and voice review</li>
             </ul>
           </article>
 
@@ -343,6 +407,13 @@
                 <td class="partial">Document storage</td>
                 <td class="partial">Recipes / costing focus</td>
                 <td class="yes">Yes</td>
+              </tr>
+              <tr>
+                <th>Intelligent voice commands</th>
+                <td class="highlight-col yes">86Voice for prep, tasks, 86 alerts, and completion flows</td>
+                <td class="partial">Limited task/team workflows</td>
+                <td class="no">Not core</td>
+                <td class="partial">Platform dependent</td>
               </tr>
               <tr>
                 <th>Best fit</th>

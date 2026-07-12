@@ -100,3 +100,14 @@ If the Founder Beta form does not send:
   - Owner Pro: $299/month, Founder $149.50/month
 - Added a Plans nav link.
 - Added integrations-coming-soon note.
+
+
+## v11 86Voice push
+
+- Added 86Voice to the nav.
+- Added 86Voice to hero proof badges.
+- Added 86Voice product preview button and mockup.
+- Added 86Voice screenshot gallery tile.
+- Added dedicated 86Voice Intelligent Commands section.
+- Added intelligent voice commands row to comparison chart.
+- Added voice command mentions in plan cards.

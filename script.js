@@ -43,6 +43,44 @@ const screens = {
       </div>`
   },
 
+
+  voice: {
+    title: "86Voice",
+    sub: "Intelligent voice commands for real kitchen language: add prep, update quantities, create tasks, trigger 86 alerts, and mark work done.",
+    bullets: [
+      "Turns phrases like “prep 2 pans onions” into clean prep entries or updates.",
+      "Can decipher completion commands like “mark tomatoes done.”",
+      "Routes 86 phrases into alerts instead of accidentally editing inventory."
+    ],
+    html: `
+      <div class="phone-screen">
+        <div class="phone-header"><div class="phone-brand"><img src="/assets/86chaos-logo.png" alt="86 Chaos" /></div><div>86Voice</div></div>
+        <h3 class="app-title">86Voice</h3>
+        <p class="app-subtitle">Speak naturally • review important actions</p>
+        <div class="metric-grid">
+          <div class="metric"><strong>4</strong><span>Commands</span></div>
+          <div class="metric"><strong class="money">3</strong><span>Matched</span></div>
+          <div class="metric"><strong class="warning">1</strong><span>Review</span></div>
+        </div>
+        <div class="app-card">
+          <h4>Heard</h4>
+          <div class="list">
+            <div class="list-row"><b>“Prep 2 pans onions”</b><span class="tag">Updated</span></div>
+            <div class="list-row"><b>“Mark tomatoes done”</b><span class="tag">Done</span></div>
+            <div class="list-row"><b>“We’re out of chicken breast”</b><span class="tag red">86 Alert</span></div>
+          </div>
+        </div>
+        <div class="app-card">
+          <h4>Smart Match</h4>
+          <div class="list">
+            <div class="list-row"><b>Diced onions</b><span>Existing prep row found</span></div>
+            <div class="list-row"><b>Slice tomatoes</b><span>Marked complete</span></div>
+            <div class="list-row"><b>Chicken breast</b><span>6 menu items affected</span></div>
+          </div>
+        </div>
+      </div>`
+  },
+
   financials: {
     title: "Financial Center",
     sub: "Daily close, labor, tips, COGS, prime cost, and owner-ready reporting in one place.",
