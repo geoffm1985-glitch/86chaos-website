@@ -1371,3 +1371,69 @@ svg{
     grid-template-columns:1fr;
   }
 }
+
+
+/* v12 hero Wisconsin image tagline replacement */
+.hero-tagline-card{
+  padding:17px 18px 18px;
+  border-top:1px solid rgba(255,255,255,.075);
+  background:
+    radial-gradient(circle at 10% 0%,rgba(213,160,125,.10),transparent 34%),
+    rgba(7,16,23,.72);
+}
+
+.hero-tagline-card p{
+  margin:0 0 8px;
+  color:var(--text);
+  font-size:clamp(20px,2.2vw,27px);
+  line-height:1.08;
+  letter-spacing:-.04em;
+  font-weight:950;
+}
+
+.hero-tagline-card span{
+  display:block;
+  max-width:520px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.45;
+  font-weight:650;
+}
+
+@media (max-width:640px){
+  .hero-tagline-card{
+    padding:14px;
+  }
+
+  .hero-tagline-card p{
+    font-size:21px;
+  }
+
+  .hero-tagline-card span{
+    font-size:12px;
+  }
+}
+
+
+/* v16 clean hero tagline */
+.hero-tagline-card.single-line{
+  display:grid;
+  place-items:center;
+  min-height:82px;
+  text-align:center;
+}
+
+.hero-tagline-card.single-line p{
+  margin:0;
+  font-size:clamp(24px,3vw,34px);
+}
+
+@media (max-width:640px){
+  .hero-tagline-card.single-line{
+    min-height:68px;
+  }
+
+  .hero-tagline-card.single-line p{
+    font-size:25px;
+  }
+}

@@ -111,3 +111,52 @@ If the Founder Beta form does not send:
 - Added dedicated 86Voice Intelligent Commands section.
 - Added intelligent voice commands row to comparison chart.
 - Added voice command mentions in plan cards.
+
+
+## v12 hero tagline update
+
+- Removed the Tonight’s Pulse metrics box under the Wisconsin image.
+- Replaced it with the hero tagline:
+  “Built for the rush, the close, and everything that gets missed between.”
+
+
+## v13 better hero tagline
+
+Updated hero image tagline to:
+“The shift doesn’t fall apart because one person forgot.”
+
+Updated supporting line to:
+“86 Chaos keeps prep, 86 alerts, inventory, labor, daily close, voice commands, and owner visibility connected before small misses become expensive.”
+
+
+## v14 short bold hero tagline
+
+Updated hero image tagline to:
+“Less chaos. More control.”
+
+Updated supporting line to:
+“Prep, alerts, inventory, labor, voice commands, and closeout connected.”
+
+
+## v15 86Voice tagline refinement
+
+Kept the main tagline:
+“Less chaos. More control.”
+
+Updated supporting line to:
+“86Voice turns prep, tasks, 86 alerts, and “done” into action.”
+
+
+## v16 clean hero + 86Voice promotion
+
+- Hero Wisconsin image tagline now only says:
+  “Less chaos. More control.”
+- Removed the second line under the hero image.
+- Strengthened 86Voice promotion elsewhere:
+  - Nav
+  - Hero proof badge
+  - Product preview
+  - Screenshot gallery
+  - Dedicated 86Voice section
+  - Plan card language
+  - Comparison chart
