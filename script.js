@@ -460,6 +460,21 @@ navToggle?.addEventListener("click", () => {
 });
 navLinks?.querySelectorAll("a").forEach(link => link.addEventListener("click", () => navLinks.classList.remove("open")));
 
+
+const featureTabs = document.getElementById("featureTabs");
+document.querySelectorAll("[data-tab-scroll]").forEach(arrow => {
+  arrow.addEventListener("click", () => {
+    const direction = Number(arrow.dataset.tabScroll || 1);
+    const distance = Math.max(180, Math.round((featureTabs?.clientWidth || 300) * 0.72));
+    featureTabs?.scrollBy({ left: direction * distance, behavior: "smooth" });
+  });
+});
+
+function keepActiveFeatureVisible(key){
+  const active = document.querySelector(`.preview-tabs button[data-screen="${key}"]`);
+  active?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+}
+
 const betaForm = document.getElementById("betaForm");
 const formStatus = document.getElementById("formStatus");
 betaForm?.addEventListener("submit", async (event) => {

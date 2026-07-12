@@ -8,7 +8,7 @@
   <meta property="og:title" content="86 Chaos | Restaurant Operations Hub" />
   <meta property="og:description" content="Built by a working kitchen manager for real restaurant shifts. Founder Beta now open." />
   <meta property="og:type" content="website" />
-  <meta name="theme-color" content="#050d14" />
+  <meta name="theme-color" content="#07121b" />
   <link rel="icon" href="/assets/app-icon.png" />
   <link rel="apple-touch-icon" href="/assets/app-icon.png" />
   <link rel="stylesheet" href="styles.css" />
@@ -124,34 +124,23 @@
         </div>
 
         <div class="preview-layout">
-          
-          <!-- REORGANIZED TABS -->
-          <div class="preview-tabs" role="tablist" aria-label="Product previews">
-            
-            <div class="tab-group">
-              <span class="tab-group-label">Shift</span>
+          <div class="feature-carousel" aria-label="Product feature selector">
+            <button class="feature-arrow" type="button" data-tab-scroll="-1" aria-label="Previous features">‹</button>
+            <div class="preview-tabs" id="featureTabs" role="tablist" aria-label="Product previews">
               <button class="active" data-screen="manager" type="button">Manager</button>
+              <button data-screen="financials" type="button">Financials</button>
+              <button data-screen="dailyclose" type="button">Daily Close</button>
+              <button data-screen="labor" type="button">Labor</button>
               <button data-screen="schedule" type="button">Schedule</button>
               <button data-screen="timeclock" type="button">Time Clock</button>
-              <button data-screen="labor" type="button">Labor</button>
-            </div>
-
-            <div class="tab-group">
-              <span class="tab-group-label">Kitchen</span>
               <button data-screen="prep" type="button">Prep</button>
-              <button data-screen="recipes" type="button">Recipes</button>
-              <button data-screen="alerts" type="button">86 Alerts</button>
-              <button data-screen="menu" type="button">Menu Intel</button>
-            </div>
-
-            <div class="tab-group">
-              <span class="tab-group-label">Back Office</span>
-              <button data-screen="dailyclose" type="button">Daily Close</button>
-              <button data-screen="financials" type="button">Financials</button>
               <button data-screen="inventory" type="button">Inventory</button>
+              <button data-screen="menu" type="button">Menu Intel</button>
+              <button data-screen="recipes" type="button">Recipes</button>
               <button data-screen="reminders" type="button">Reminders</button>
+              <button data-screen="alerts" type="button">86 Alerts</button>
             </div>
-
+            <button class="feature-arrow" type="button" data-tab-scroll="1" aria-label="Next features">›</button>
           </div>
 
           <div class="preview-body">
@@ -159,7 +148,6 @@
             <div class="screen-copy" id="screenCopy"></div>
           </div>
 
-          <!-- REORGANIZED SCREENSHOT GRID -->
           <div class="screenshot-grid" aria-label="More 86 Chaos screen examples">
             <button type="button" data-screen="dailyclose">
               <span>Daily Close</span>
@@ -186,7 +174,6 @@
               <b>Menu impact before guests order</b>
             </button>
           </div>
-
         </div>
       </div>
     </section>

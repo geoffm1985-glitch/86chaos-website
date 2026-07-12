@@ -79,3 +79,12 @@ If the Founder Beta form does not send:
   - 86 Alerts
 - Added a compact screenshot gallery under the main product preview.
 - Kept the compact desktop/mobile layout from v7.
+
+
+## v9 mobile zoom-out fix
+
+- Fixed horizontal overflow that caused mobile Chrome to zoom the whole page out.
+- Replaced the long product-preview button row with a professional feature carousel.
+- Added left/right feature arrows.
+- Active feature scrolls into view automatically.
+- Preserved compact desktop/mobile layout and all previous form fixes.
