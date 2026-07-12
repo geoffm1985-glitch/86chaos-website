@@ -33,7 +33,7 @@ const screens = {
 
 const phone = document.getElementById("phoneMockup");
 const copy = document.getElementById("screenCopy");
-const tabButtons = document.querySelectorAll(".mockup-tabs button");
+const tabButtons = document.querySelectorAll(".preview-tabs button");
 
 function renderScreen(key){
   const s = screens[key] || screens.manager;

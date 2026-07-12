@@ -1,27 +1,36 @@
-# 86 Chaos Marketing Site v3
+# 86 Chaos Marketing Site v4
 
-Changes:
-- Smaller hero/header text.
-- Shorter page.
-- Added cited fact cards.
-- Added price-context comparison section.
-- Keeps your actual logo, app icon, and Wisconsin/map brand image.
-- Keeps the Vercel/Resend beta form that sends to geoffrey@86chaos.com.
+This version is the professional desktop/mobile polish pass.
 
-## Files to upload
+## Changes
+- Smaller, cleaner desktop hero.
+- Professional max-width layout so the page no longer feels huge on PC.
+- More compact scrolling.
+- Feature and price comparison chart instead of oversized comparison cards.
+- Updated proof cards with the most dramatic owner-facing facts.
+- Added copyright footer: © 2026 Chilton App Works.
+- Keeps actual 86 Chaos logo, app icon, and Wisconsin/map brand image.
+- Keeps Vercel/Resend beta form to send applications to geoffrey@86chaos.com.
 
-Upload everything in this ZIP to your website repo root:
+## Upload
+Copy everything in this ZIP to your website repo root:
 
-- `index.html`
-- `styles.css`
-- `script.js`
-- `package.json`
-- `api/apply.js`
-- `assets/`
+- index.html
+- styles.css
+- script.js
+- package.json
+- api/
+- assets/
 
-## Form email setup
+Then commit and push:
 
-Add these environment variables in Vercel:
+```bash
+git add .
+git commit -m "Polish 86 Chaos marketing site desktop layout and comparison chart"
+git push
+```
+
+## Vercel environment variables
 
 ```text
 RESEND_API_KEY=your_resend_api_key_here
@@ -29,14 +38,5 @@ BETA_TO_EMAIL=geoffrey@86chaos.com
 BETA_FROM_EMAIL=86 Chaos <beta@86chaos.com>
 ```
 
-`BETA_FROM_EMAIL` requires that your sending domain/address is verified in Resend.
-
-## Source notes included on page
-
-- National Restaurant Association: restaurant margin / food and labor cost shares.
-- National Restaurant Association: recruitment and retention challenge.
-- 7shifts: average BOH replacement cost and pricing.
-- MarginEdge: public monthly/location pricing.
-- Restaurant365: published cost comparison.
-
-Review these links before public launch and update the claims if any vendor changes pricing.
+## Notes
+The comparison table uses public pricing/source links. Review the links before final launch and update if vendors change pricing.
