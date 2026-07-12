@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>86 Chaos | Restaurant Operations Hub</title>
   <meta name="description" content="86 Chaos helps independent restaurants run prep, inventory, schedules, 86 alerts, recipes, reminders, daily close, labor, and team communication in one place." />
-  <meta property="og:title" content="86 Chaos | Your restaurant already has enough chaos." />
+  <meta property="og:title" content="86 Chaos | Restaurant Operations Hub" />
   <meta property="og:description" content="Built by a working kitchen manager for real restaurant shifts. Founder Beta now open." />
   <meta property="og:type" content="website" />
   <meta name="theme-color" content="#07121b" />
@@ -25,17 +25,18 @@
     </button>
 
     <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+      <a href="#proof">Proof</a>
       <a href="#product">Product</a>
-      <a href="#pricing">Pricing</a>
+      <a href="#comparison">Compare</a>
       <a href="#beta" class="nav-cta">Founder Beta</a>
     </nav>
   </header>
 
   <main id="top">
-    <section class="hero compact-section">
+    <section class="hero">
       <div class="hero-copy">
         <p class="eyebrow">Restaurant operations hub • Founder Beta now open</p>
-        <h1>Your restaurant already has enough <span>chaos.</span></h1>
+        <h1>Run the shift. See the numbers. Keep the restaurant’s memory.</h1>
         <p class="hero-lede">
           86 Chaos keeps prep, inventory, schedules, 86 alerts, recipes, reminders,
           labor, daily close, and team communication in one place.
@@ -43,47 +44,75 @@
 
         <div class="hero-actions">
           <a class="btn primary" href="#beta">Apply for Founder Beta</a>
-          <a class="btn secondary" href="#product">See the app</a>
-        </div>
-
-        <div class="hero-badges" aria-label="Product highlights">
-          <span>Built by a working kitchen manager</span>
-          <span>Free during beta</span>
-          <span>50% founder discount for 12 months</span>
+          <a class="btn secondary" href="#product">See product preview</a>
         </div>
       </div>
 
-      <div class="hero-visual">
+      <div class="hero-card">
         <img src="/assets/86chaos-map-brand.jpg" alt="86 Chaos brand graphic over a Wisconsin map" />
-        <div class="hero-overlay-card">
+        <div class="pulse-card">
           <strong>Tonight’s pulse</strong>
-          <div class="overlay-grid">
+          <div class="pulse-grid">
             <span><b>$6,842</b>Net sales</span>
             <span><b>28.7%</b>Labor</span>
-            <span><b>4</b>86 impacts</span>
+            <span><b>4</b>Menu impacts</span>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="facts-row" aria-label="Restaurant industry facts">
-      <article><strong>5%</strong><span>Typical restaurant pre-tax profit margin</span></article>
-      <article><strong>77%</strong><span>Operators say recruiting and retention remain challenging</span></article>
-      <article><strong>$1,491</strong><span>Reported average BOH replacement cost</span></article>
-    </section>
-
-    <section class="product-section compact-section" id="product">
-      <div class="section-head">
-        <p class="eyebrow">Product preview</p>
-        <h2>Real restaurant workflows, cleaned up for owners.</h2>
+    <section class="proof-band" id="proof">
+      <div class="proof-intro">
+        <p class="eyebrow">Why this matters</p>
+        <h2>Thin margins make scattered information expensive.</h2>
         <p>
-          The previews below use realistic sample restaurant data instead of test clutter,
-          so owners can immediately understand what the app does.
+          Use a few sharp facts, not a lecture. Owners already feel the pressure. The page should connect that pressure to the daily chaos your app organizes.
         </p>
       </div>
 
+      <div class="fact-grid">
+        <article>
+          <strong>~5%</strong>
+          <span>Typical restaurant pre-tax profit margin.</span>
+          <a href="https://restaurant.org/research-and-media/research/inflation/" target="_blank" rel="noreferrer">Source</a>
+        </article>
+        <article>
+          <strong>33¢ + 33¢</strong>
+          <span>Food and labor each represent about one-third of restaurant sales.</span>
+          <a href="https://restaurant.org/research-and-media/research/inflation/" target="_blank" rel="noreferrer">Source</a>
+        </article>
+        <article>
+          <strong>$1,491</strong>
+          <span>Reported average BOH employee replacement cost.</span>
+          <a href="https://www.7shifts.com/blog/true-cost-of-employee-turnover/" target="_blank" rel="noreferrer">Source</a>
+        </article>
+        <article>
+          <strong>77%</strong>
+          <span>Operators say recruitment and retention remain a significant challenge.</span>
+          <a href="https://restaurant.org/education-and-resources/resource-library/report-workforce-technology-amps-up-hiring-performance/" target="_blank" rel="noreferrer">Source</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="compact-copy">
+      <div class="callout-card">
+        <p class="eyebrow">The owner math</p>
+        <h2>At a 5% margin, a $1,491 replacement cost can require about $29,820 in sales to recover.</h2>
+        <p>
+          86 Chaos cannot stop turnover. It can help keep recipes, prep expectations, closeout steps,
+          reminders, schedules, and shift information from living only in someone’s head.
+        </p>
+      </div>
+    </section>
+
+    <section class="product-section" id="product">
+      <div class="section-head">
+        <p class="eyebrow">Product preview</p>
+        <h2>Real workflows, realistic restaurant data.</h2>
+      </div>
+
       <div class="mockup-tabs" role="tablist" aria-label="Product previews">
-        <button class="active" data-screen="manager" type="button">Manager Brief</button>
+        <button class="active" data-screen="manager" type="button">Manager</button>
         <button data-screen="financials" type="button">Financials</button>
         <button data-screen="prep" type="button">Prep</button>
         <button data-screen="inventory" type="button">Inventory</button>
@@ -96,42 +125,69 @@
       </div>
     </section>
 
-    <section class="work-pricing compact-section" id="pricing">
-      <div class="workflow-panel">
-        <p class="eyebrow">What it replaces</p>
-        <h2>One system for the parts that usually scatter.</h2>
-        <div class="workflow-grid">
-          <article>
-            <span>🧭</span>
-            <h3>Run the shift</h3>
-            <p>Prep, tasks, messages, reminders, events, and 86 alerts stay visible.</p>
-          </article>
-          <article>
-            <span>📦</span>
-            <h3>Protect inventory</h3>
-            <p>Counts, vendors, invoices, burn logs, and menu impacts connect.</p>
-          </article>
-          <article>
-            <span>💸</span>
-            <h3>See the money</h3>
-            <p>Daily close, labor, tips, prime cost, COGS, and reports stay readable.</p>
-          </article>
-        </div>
+    <section class="compare-section" id="comparison">
+      <div class="section-head">
+        <p class="eyebrow">Price context</p>
+        <h2>One app should replace the pile, not become another bill in the pile.</h2>
+        <p>
+          These are public price examples for context only. Feature sets differ, and 86 Chaos is still heading into beta.
+        </p>
       </div>
 
-      <div class="pricing-panel">
-        <p class="eyebrow">Aggressive launch pricing</p>
-        <h2>Founder pricing that actually rewards early restaurants.</h2>
-        <div class="pricing-list">
-          <div><b>Shift</b><span>$49/mo</span><em>Founder: $24.50</em></div>
-          <div><b>Operations</b><span>$99/mo</span><em>Founder: $49.50</em></div>
-          <div class="hot"><b>Smart Kitchen</b><span>$179/mo</span><em>Founder: $89.50</em></div>
-          <div><b>Owner Pro</b><span>$299/mo</span><em>Founder: $149.50</em></div>
-        </div>
+      <div class="comparison-grid">
+        <article class="compare-card">
+          <h3>7shifts</h3>
+          <p class="price">$149.99/mo/location + $6 per paid employee</p>
+          <p>Scheduling, time clock, tasks, payroll/tips, team tools.</p>
+          <a href="https://www.7shifts.com/pricing/" target="_blank" rel="noreferrer">Public pricing</a>
+        </article>
+
+        <article class="compare-card">
+          <h3>MarginEdge</h3>
+          <p class="price">$350/mo/location</p>
+          <p>Invoices, inventory, food/bev cost visibility, vendor and back-office tools.</p>
+          <a href="https://www.marginedge.com/pricing/" target="_blank" rel="noreferrer">Public pricing</a>
+        </article>
+
+        <article class="compare-card">
+          <h3>Restaurant365</h3>
+          <p class="price">$469-$499/mo/location starting range</p>
+          <p>Restaurant accounting and operations platform, based on R365’s cost comparison post.</p>
+          <a href="https://www.restaurant365.com/blog/restaurant-operations-platform-cost-comparison-r365-vs-alternatives/" target="_blank" rel="noreferrer">Published comparison</a>
+        </article>
+
+        <article class="compare-card featured">
+          <h3>86 Chaos Smart Kitchen</h3>
+          <p class="price">$179/mo/location launch target</p>
+          <p>Prep, 86 alerts, inventory, invoices, menu intelligence, daily close, labor, tips, financial overview, and reports.</p>
+          <a href="#beta">Founder Beta: $89.50/mo for 12 months after beta</a>
+        </article>
       </div>
+
+      <p class="comparison-note">
+        This is not a claim that the products are identical. It shows the pricing neighborhood restaurant owners are already asked to consider.
+      </p>
     </section>
 
-    <section class="beta-section compact-section" id="beta">
+    <section class="workflow-strip">
+      <article>
+        <span>🧭</span>
+        <h3>Run the shift</h3>
+        <p>Prep, tasks, messages, events, reminders, and 86 alerts stay visible.</p>
+      </article>
+      <article>
+        <span>📦</span>
+        <h3>Protect inventory</h3>
+        <p>Counts, vendors, invoices, burn logs, and menu impacts connect.</p>
+      </article>
+      <article>
+        <span>💸</span>
+        <h3>See the money</h3>
+        <p>Daily close, labor, tips, prime cost, COGS, and reports stay readable.</p>
+      </article>
+    </section>
+
+    <section class="beta-section" id="beta">
       <div class="beta-card">
         <div>
           <img src="/assets/86chaos-logo.png" alt="86 Chaos Kitchen Management OS" class="beta-logo" />
@@ -139,7 +195,7 @@
           <h2>Help shape the tool your kitchen would actually use.</h2>
           <p>
             Founder Beta is planned for 60 days, with an optional 30-day extension if needed.
-            Early restaurants use the app free during beta and receive 50% off their selected tier
+            Early restaurants use the app free during active beta and receive 50% off their selected tier
             for 12 months after beta.
           </p>
           <div class="beta-perks">
@@ -164,30 +220,12 @@
           </label>
           <label>
             Biggest headache
-            <textarea name="headache" rows="4" placeholder="Prep gets missed, inventory is messy, daily close takes forever..."></textarea>
+            <textarea name="headache" rows="3" placeholder="Prep gets missed, inventory is messy, daily close takes forever..."></textarea>
           </label>
           <button class="btn primary full" type="submit">Apply for Founder Beta</button>
           <p class="form-status" id="formStatus" role="status"></p>
-          <p class="form-note">
-            Form sends directly from the website after you add the Vercel email environment variables.
-          </p>
         </form>
       </div>
-    </section>
-
-    <section class="mini-faq">
-      <details>
-        <summary>Is this a POS system?</summary>
-        <p>No. 86 Chaos is an operations hub. POS integrations are planned, but manual closeout and report-import workflows can work first.</p>
-      </details>
-      <details>
-        <summary>Are the screenshots real data?</summary>
-        <p>No. The public page uses realistic sample data so private employee, wage, sales, and customer information stays off the internet.</p>
-      </details>
-      <details>
-        <summary>Who is this for?</summary>
-        <p>Independent restaurants, bars, grills, cafés, and kitchens that need control without a giant corporate system.</p>
-      </details>
     </section>
   </main>
 
@@ -195,7 +233,7 @@
     <img src="/assets/86chaos-logo.png" alt="86 Chaos Kitchen Management OS" />
     <p>Built by a working kitchen manager for independent restaurants.</p>
     <small>
-      Industry fact notes: National Restaurant Association and 7shifts research. Replace or expand citations on final public launch if desired.
+      Public pricing and industry sources are linked in-page. Update source links and claims before final launch if vendors change pricing.
     </small>
   </footer>
 

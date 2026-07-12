@@ -13,24 +13,17 @@ function escapeHtml(value = "") {
 }
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed." });
-  }
+  if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed." });
 
   const { name, restaurant, email, headache } = req.body || {};
-
   if (!name || !restaurant || !email) {
     return res.status(400).json({ error: "Name, restaurant, and email are required." });
   }
-
   if (!process.env.RESEND_API_KEY) {
-    return res.status(501).json({
-      error: "Email sending is not configured yet. Add RESEND_API_KEY in Vercel."
-    });
+    return res.status(501).json({ error: "Email sending is not configured yet. Add RESEND_API_KEY in Vercel." });
   }
 
   const resend = new Resend(process.env.RESEND_API_KEY);
-
   const safeName = escapeHtml(name);
   const safeRestaurant = escapeHtml(restaurant);
   const safeEmail = escapeHtml(email);
@@ -52,16 +45,8 @@ export default async function handler(req, res) {
           <div style="white-space:pre-wrap;border-left:4px solid #d5a07d;padding-left:12px">${safeHeadache}</div>
         </div>
       `,
-      text: `New 86 Chaos Founder Beta Request
-
-Name: ${name}
-Restaurant: ${restaurant}
-Email: ${email}
-
-Biggest headache:
-${headache || "Not provided"}`
+      text: `New 86 Chaos Founder Beta Request\n\nName: ${name}\nRestaurant: ${restaurant}\nEmail: ${email}\n\nBiggest headache:\n${headache || "Not provided"}`
     });
-
     return res.status(200).json({ ok: true });
   } catch (error) {
     console.error("Founder Beta email failed:", error);
