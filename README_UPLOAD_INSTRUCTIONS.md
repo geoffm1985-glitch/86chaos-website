@@ -40,3 +40,28 @@ BETA_FROM_EMAIL=86 Chaos <beta@86chaos.com>
 
 ## Notes
 The comparison table uses public pricing/source links. Review the links before final launch and update if vendors change pricing.
+
+
+## Beta form troubleshooting
+
+If the Founder Beta form does not send:
+
+1. Make sure the site is deployed on Vercel. The form posts to `/api/apply`, which is a Vercel serverless function. A purely static host will return 404.
+2. In Vercel → Project → Settings → Environment Variables, confirm:
+   - `RESEND_API_KEY`
+   - `BETA_TO_EMAIL=geoffrey@86chaos.com`
+   - `BETA_FROM_EMAIL=86 Chaos <beta@86chaos.com>`
+3. Redeploy after adding environment variables.
+4. In Resend, verify the sending domain/email used in `BETA_FROM_EMAIL`.
+5. In Vercel, open the latest deployment → Functions → `/api/apply` logs to see the exact error.
+6. This v6 package fixes the Resend Node SDK reply-to field by using `replyTo`.
+
+
+## v7 compact professional pass
+
+- Desktop max-width reduced to 980px.
+- Top nav and logo reduced.
+- Hero text, section headers, cards, app mockup, and footer reduced.
+- Comparison chart made smaller, denser, and more professional.
+- Mobile typography and spacing reduced.
+- Mobile comparison chart uses a smaller horizontal-scroll table.
