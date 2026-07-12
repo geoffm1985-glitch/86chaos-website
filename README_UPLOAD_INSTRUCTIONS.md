@@ -1,82 +1,120 @@
-# 86 Chaos Marketing Site
+# 86 Chaos Marketing Site v2
 
-This is a static landing page for 86 Chaos built from the current app screenshots/style direction, but with cleaned-up, realistic sample restaurant data instead of test/demo clutter.
+This version uses your actual uploaded 86 Chaos logo, Wisconsin/map brand image, and app icon.
 
-## Files
+## Included files
 
-- `index.html` - the website structure and content
-- `styles.css` - all styling
-- `script.js` - mobile nav, product mockup tabs, and beta form mailto behavior
+- `index.html`
+- `styles.css`
+- `script.js`
+- `package.json`
+- `api/apply.js`
+- `assets/86chaos-logo.png`
+- `assets/86chaos-map-brand.jpg`
+- `assets/app-icon.png`
 
-## Important before publishing
+## Uploaded asset dimensions
 
-1. Open `script.js`.
-2. Replace:
-
-```js
-const OWNER_EMAIL = "founder@86chaos.com";
+```json
+{
+  "86chaos-logo.png": [
+    1376,
+    768
+  ],
+  "86chaos-map-brand.jpg": [
+    1896,
+    2048
+  ],
+  "app-icon.png": [
+    500,
+    500
+  ]
+}
 ```
 
-with the real email address where beta requests should go.
+## What changed from v1
 
-Or replace the form with a real provider such as:
-- Tally
-- Google Forms
-- Formspree
-- HubSpot
-- Mailchimp
-- ConvertKit
+- Uses your real logo and app icon.
+- Uses the Wisconsin/map brand image in the hero.
+- Shorter overall page with fewer large sections.
+- Cleaner compact product preview area.
+- Beta form no longer opens the visitor's personal email app.
+- Beta form posts to `/api/apply`.
+- `/api/apply` sends the form to `geoffrey@86chaos.com` using Resend.
 
-## How to upload to Vercel
+## Important: form email setup
 
-### Option A: Existing Vercel/GitHub website repo
+Static websites cannot send email by themselves. This package includes a Vercel serverless API route that sends email through Resend.
 
-1. Unzip `86chaos_marketing_site.zip`.
-2. Open your website repo on your computer.
-3. Copy these files into the root of the repo:
+### Step 1: Create Resend account
+
+1. Go to Resend.
+2. Create an account.
+3. Add/verify your domain if you want to send from `beta@86chaos.com`.
+4. Create an API key.
+
+### Step 2: Add Vercel environment variables
+
+In Vercel → Project → Settings → Environment Variables, add:
+
+```text
+RESEND_API_KEY=your_resend_api_key_here
+BETA_TO_EMAIL=geoffrey@86chaos.com
+BETA_FROM_EMAIL=86 Chaos <beta@86chaos.com>
+```
+
+If `beta@86chaos.com` is not verified yet in Resend, use whatever sender address Resend allows until the domain is verified.
+
+### Step 3: Deploy
+
+If using GitHub/Vercel:
+
+```bash
+git add .
+git commit -m "Update 86 Chaos marketing site"
+git push
+```
+
+Vercel should install the `resend` package and deploy the `/api/apply` serverless function automatically.
+
+## Upload instructions
+
+### Existing website repo
+
+1. Unzip this package.
+2. Copy everything into your website repo root:
    - `index.html`
    - `styles.css`
    - `script.js`
-4. Commit the changes:
-   ```bash
-   git add .
-   git commit -m "Add 86 Chaos marketing landing page"
-   git push
-   ```
-5. Vercel should auto-deploy if the repo is connected.
+   - `package.json`
+   - `api/`
+   - `assets/`
+3. Commit and push.
+4. Add the Vercel environment variables above.
+5. Redeploy.
 
-### Option B: Upload directly to Vercel as a static site
+### New Vercel project
 
-1. Go to Vercel.
-2. Create a new project.
-3. Import or upload this folder.
-4. Framework preset: `Other`
-5. Build command: leave blank
-6. Output directory: leave blank or `.`
-7. Deploy.
+1. Create a new project in Vercel.
+2. Upload/import this folder.
+3. Framework preset: Other.
+4. Build command: leave blank unless Vercel asks.
+5. Add environment variables.
+6. Deploy.
 
-### Option C: GitHub new repo
+## Test checklist
 
-1. Create a new GitHub repo, for example `86chaos-website`.
-2. Upload `index.html`, `styles.css`, and `script.js`.
-3. Import that repo into Vercel.
-4. Point `86chaos.com` to the new Vercel project if desired.
+After deploy:
 
-## Custom domain checklist
+1. Open `https://86chaos.com`.
+2. Check desktop layout.
+3. Check mobile layout.
+4. Click product preview tabs.
+5. Submit a test Founder Beta form.
+6. Confirm email arrives at `geoffrey@86chaos.com`.
+7. Reply to the received email and confirm it replies to the applicant's email.
+8. If the form says email is not configured, verify `RESEND_API_KEY` is set and redeploy.
 
-In Vercel:
-1. Go to Project Settings.
-2. Go to Domains.
-3. Add `86chaos.com`.
-4. Follow Vercel’s DNS instructions.
-5. After DNS updates, test:
-   - `https://86chaos.com`
-   - mobile view
-   - Founder Beta button/form
-   - Product preview tabs
+## Note
 
-## Notes about the mockups
-
-The app previews are not raw screenshots. They are HTML/CSS mockups based on the current app UI, with fictional but realistic restaurant data.
-
-Do not publish real customer, employee, wage, payroll, tip, or sales data on a public marketing page.
+The app previews use realistic fictional restaurant data. Do not put real employee names, wage data, payroll data, private sales data, or customer information on the public website.

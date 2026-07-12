@@ -1,0 +1,12 @@
+{
+  "name": "86chaos-marketing-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "vercel dev"
+  },
+  "dependencies": {
+    "resend": "^4.0.0"
+  }
+}

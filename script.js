@@ -1,5 +1,3 @@
-const OWNER_EMAIL = "geoffrey@86chaos.com"; // TODO: replace with your real beta signup email or replace the form with Tally/Formspree.
-
 const screens = {
   manager: {
     title: "Manager Brief",
@@ -11,7 +9,7 @@ const screens = {
     ],
     html: `
       <div class="phone-screen">
-        <div class="phone-header"><div class="phone-brand">86<span>chaos</span></div><div class="phone-date">Sat, Jul 11</div></div>
+        <div class="phone-header"><div class="phone-brand"><img src="/assets/86chaos-logo.png" alt="86 Chaos" /></div><div>Sat, Jul 11</div></div>
         <h3 class="app-title">Manager Brief</h3>
         <p class="app-subtitle">Ridge & Rail Tavern • Dinner shift</p>
         <div class="metric-grid">
@@ -55,7 +53,7 @@ const screens = {
     ],
     html: `
       <div class="phone-screen">
-        <div class="phone-header"><div class="phone-brand">86<span>chaos</span></div><div class="phone-date">July 2026</div></div>
+        <div class="phone-header"><div class="phone-brand"><img src="/assets/86chaos-logo.png" alt="86 Chaos" /></div><div>July 2026</div></div>
         <h3 class="app-title">Financial Center</h3>
         <p class="app-subtitle">Week-to-date performance • Ridge & Rail Tavern</p>
         <div class="app-card">
@@ -96,7 +94,7 @@ const screens = {
     ],
     html: `
       <div class="phone-screen">
-        <div class="phone-header"><div class="phone-brand">86<span>chaos</span></div><div class="phone-date">Sat, Jul 11</div></div>
+        <div class="phone-header"><div class="phone-brand"><img src="/assets/86chaos-logo.png" alt="86 Chaos" /></div><div>Sat, Jul 11</div></div>
         <h3 class="app-title">Food Prep</h3>
         <p class="app-subtitle">Target date 07/11/2026 • Dinner service</p>
         <div class="metric-grid">
@@ -105,7 +103,7 @@ const screens = {
           <div class="metric"><strong class="warning">4</strong><span>Open</span></div>
         </div>
         <div class="app-card">
-          <h4>Prep Table Station</h4>
+          <h4>Prep Table</h4>
           <div class="list">
             <div class="task-row"><span class="check done"></span><b>Slice tomatoes</b><span class="qty">3 pans</span></div>
             <div class="task-row"><span class="check"></span><b>Dice onions</b><span class="qty">2 pans</span></div>
@@ -115,13 +113,9 @@ const screens = {
         <div class="app-card">
           <h4>Grill Station</h4>
           <div class="list">
-            <div class="task-row"><span class="check"></span><b>Portion burger patties</b><span class="qty">48</span></div>
+            <div class="task-row"><span class="check"></span><b>Portion burgers</b><span class="qty">48</span></div>
             <div class="task-row"><span class="check done"></span><b>Pull ribeye backups</b><span class="qty">0 left</span></div>
           </div>
-        </div>
-        <div class="app-card">
-          <h4>Daily Tasks</h4>
-          <div class="list-row"><b>Clean behind fryers</b><span class="tag gold">Wed/Sat</span></div>
         </div>
       </div>
     `
@@ -136,9 +130,9 @@ const screens = {
     ],
     html: `
       <div class="phone-screen">
-        <div class="phone-header"><div class="phone-brand">86<span>chaos</span></div><div class="phone-date">Inventory</div></div>
-        <h3 class="app-title">Count</h3>
-        <p class="app-subtitle">Below-par focus • Performance Foodservice invoice reviewed</p>
+        <div class="phone-header"><div class="phone-brand"><img src="/assets/86chaos-logo.png" alt="86 Chaos" /></div><div>Inventory</div></div>
+        <h3 class="app-title">Inventory</h3>
+        <p class="app-subtitle">Below-par focus • invoices reviewed</p>
         <div class="app-card">
           <h4>Below Par</h4>
           <div class="list">
@@ -156,10 +150,6 @@ const screens = {
             <div class="list-row"><b>Local Produce Co.</b><span class="money">$219.38</span></div>
           </div>
         </div>
-        <div class="app-card">
-          <h4>Burn Log</h4>
-          <div class="kpi-line"><span>Waste today</span><strong>$38.12</strong></div>
-        </div>
       </div>
     `
   },
@@ -173,9 +163,9 @@ const screens = {
     ],
     html: `
       <div class="phone-screen">
-        <div class="phone-header"><div class="phone-brand">86<span>chaos</span></div><div class="phone-date">AI Tools</div></div>
+        <div class="phone-header"><div class="phone-brand"><img src="/assets/86chaos-logo.png" alt="86 Chaos" /></div><div>AI Tools</div></div>
         <h3 class="app-title">Menu Intelligence</h3>
-        <p class="app-subtitle">Upload a menu, review AI ingredient links, and power 86 Menu Impact Alerts.</p>
+        <p class="app-subtitle">Review ingredient links and power 86 Menu Impact Alerts.</p>
         <div class="app-card">
           <h4>Menu AI Pages</h4>
           <div class="kpi-line"><span>This month</span><strong>4 / 10 pages</strong></div>
@@ -198,40 +188,6 @@ const screens = {
         </div>
       </div>
     `
-  },
-  command: {
-    title: "Kitchen Command Center",
-    sub: "A service-time command board that tells managers what to fix first.",
-    bullets: [
-      "Combines prep, inventory, menu impact, maintenance, labor, and specials.",
-      "Turns scattered alerts into a ranked priority list.",
-      "Built for the rush, when nobody has time to hunt through tabs."
-    ],
-    html: `
-      <div class="phone-screen">
-        <div class="phone-header"><div class="phone-brand">86<span>chaos</span></div><div class="phone-date">4:15 PM</div></div>
-        <h3 class="app-title">Kitchen Command</h3>
-        <p class="app-subtitle">Short list of what needs attention right now.</p>
-        <div class="metric-grid">
-          <div class="metric"><strong>72</strong><span>Health</span></div>
-          <div class="metric"><strong>11</strong><span>Open tasks</span></div>
-          <div class="metric"><strong class="danger">6</strong><span>Menu impact</span></div>
-        </div>
-        <div class="app-card">
-          <h4>Today's Priorities</h4>
-          <div class="list">
-            <div class="list-row"><b>1. Chicken breast affects 6 menu items</b><span class="tag red">86</span></div>
-            <div class="list-row"><b>2. Fryer #2 filter due before dinner</b><span class="tag gold">Fix</span></div>
-            <div class="list-row"><b>3. Prep ranch and tomatoes for patio party</b><span class="tag">Prep</span></div>
-            <div class="list-row"><b>4. Geoff has 6 scheduled days this week</b><span class="tag gold">Labor</span></div>
-          </div>
-        </div>
-        <div class="app-card">
-          <h4>Stock to Check</h4>
-          <div class="list-row"><b>Brioche buns</b><span>2 bags / par 5</span></div>
-        </div>
-      </div>
-    `
   }
 };
 
@@ -251,10 +207,7 @@ function renderScreen(key){
   tabButtons.forEach(btn => btn.classList.toggle("active", btn.dataset.screen === key));
 }
 
-tabButtons.forEach(btn => {
-  btn.addEventListener("click", () => renderScreen(btn.dataset.screen));
-});
-
+tabButtons.forEach(btn => btn.addEventListener("click", () => renderScreen(btn.dataset.screen)));
 renderScreen("manager");
 
 const navToggle = document.getElementById("navToggle");
@@ -268,19 +221,33 @@ navLinks?.querySelectorAll("a").forEach(link => {
 });
 
 const betaForm = document.getElementById("betaForm");
-betaForm?.addEventListener("submit", (event) => {
+const formStatus = document.getElementById("formStatus");
+
+betaForm?.addEventListener("submit", async (event) => {
   event.preventDefault();
-  const form = new FormData(betaForm);
-  const subject = encodeURIComponent("86 Chaos Founder Beta Application");
-  const body = encodeURIComponent(
-`Name: ${form.get("name") || ""}
-Restaurant: ${form.get("restaurant") || ""}
-Email: ${form.get("email") || ""}
+  formStatus.className = "form-status";
+  formStatus.textContent = "Sending your Founder Beta request...";
 
-Biggest headache:
-${form.get("headache") || ""}
+  const payload = Object.fromEntries(new FormData(betaForm).entries());
 
-Sent from the 86 Chaos landing page.`
-  );
-  window.location.href = `mailto:${OWNER_EMAIL}?subject=${subject}&body=${body}`;
+  try {
+    const response = await fetch("/api/apply", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(payload)
+    });
+
+    const result = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      throw new Error(result.error || "The form could not be sent.");
+    }
+
+    formStatus.className = "form-status ok";
+    formStatus.textContent = "Request sent. I’ll reach out soon.";
+    betaForm.reset();
+  } catch (error) {
+    formStatus.className = "form-status bad";
+    formStatus.textContent = error.message || "Something went wrong. Email geoffrey@86chaos.com directly.";
+  }
 });
