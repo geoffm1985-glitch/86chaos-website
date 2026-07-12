@@ -65,3 +65,17 @@ If the Founder Beta form does not send:
 - Comparison chart made smaller, denser, and more professional.
 - Mobile typography and spacing reduced.
 - Mobile comparison chart uses a smaller horizontal-scroll table.
+
+
+## v8 product preview expansion
+
+- Added more product preview buttons:
+  - Daily Close
+  - Labor
+  - Schedule
+  - Time Clock
+  - Recipes
+  - Reminders
+  - 86 Alerts
+- Added a compact screenshot gallery under the main product preview.
+- Kept the compact desktop/mobile layout from v7.
