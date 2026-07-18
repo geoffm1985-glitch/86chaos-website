@@ -111,3 +111,18 @@ Review public claims before launch if vendor or industry data changes.
 - Replaced the previous Source Sans / Source Serif font setup with Inter across the entire website.
 - Removed serif headline styling so the site feels more like professional software.
 - Added “Beta sign-up ends 8/31” across the site, including Home, Pricing, FAQ, Product Tour, Features, How It Works, and Apply pages.
+
+## Latest 86Voice / How It Works / deadline update
+
+- Added a dedicated `86voice.html` page.
+- Added 86Voice to the main navigation and footer.
+- Promoted 86Voice on Home, Features, Product Tour, and How It Works.
+- Expanded How It Works with a more descriptive rollout, example day, and daily/kitchen/owner value sections.
+- Added prominent beta deadline displays, including a sticky deadline strip and deadline cards on Pricing and Apply.
+
+## Latest ROI / time savings update
+
+- Added a Home section explaining how saving 15 minutes a day can make the app nearly pay for itself.
+- Added a Pricing page ROI calculator for minutes saved, hourly manager value, and days per month.
+- Added inventory savings messaging around invoices, waste, burn logs, stockouts, prep duplication, and recipe consistency.
+- Added FAQ and How It Works language explaining the time + inventory value.
