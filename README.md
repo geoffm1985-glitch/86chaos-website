@@ -105,3 +105,9 @@ Review public claims before launch if vendor or industry data changes.
 - Restored the comparison chart to match the table structure from the uploaded website.
 - Moved that restored comparison table above the 86 Chaos tier cards.
 - Removed the experimental comparison card/matrix layouts.
+
+## Latest font and beta deadline update
+
+- Replaced the previous Source Sans / Source Serif font setup with Inter across the entire website.
+- Removed serif headline styling so the site feels more like professional software.
+- Added “Beta sign-up ends 8/31” across the site, including Home, Pricing, FAQ, Product Tour, Features, How It Works, and Apply pages.
