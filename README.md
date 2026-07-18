@@ -134,3 +134,27 @@ Review public claims before launch if vendor or industry data changes.
 - Expanded 86Voice from a small mention into a full sales feature across Home, Features, Product Tour, How It Works, Pricing, FAQ, and the dedicated 86Voice page.
 - Added detailed 86Voice capabilities: prep upserts, task completion, recurring task creation, 86 alerts, menu-impact questions, reminders, navigation/search, status summaries, maintenance, burn logs, message posts, safety confirmations, audit behavior, and safe undo.
 - Added app-wide feature coverage: Today, scheduling, availability, prep, tasks, inventory, invoices, recipes, Menu Intelligence, financials, maintenance, HR/training, reminders, AI Tools, settings, audit logs, and admin controls.
+
+## Latest beta banner cleanup
+
+- Removed the sticky beta deadline banner from all pages.
+- Removed the beta deadline pill from the top navigation.
+- Removed large beta deadline callout cards.
+- Removed beta-deadline-only chip rows.
+- Left the rest of the site intact, including 86Voice, All Features, pricing, ROI, and the beta form.
+
+## Latest AI assisted ordering update
+
+- Added a dedicated `ai-ordering.html` page.
+- Added AI Ordering to the top navigation and footer.
+- Added AI-assisted ordering sections to Home, Features, 86Voice, How It Works, Product Tour, Pricing, FAQ, and All Features.
+- Added copy covering smart order suggestions from stock, par, pending orders, events, prep, Menu Intelligence links, burn/waste logs, and invoice history.
+- Added vendor-grouped drafts, copy/save/apply workflow, event supply planning, prep prediction, invoice price warnings, waste/par warning cards, Manager Brief ordering attention, AI Tools launcher, and 86Voice ordering commands.
+
+## Latest AI capabilities update from pasted capability list
+
+- Added a dedicated `ai-tools.html` page.
+- Added AI Tools to the main navigation and footer.
+- Expanded AI coverage across Home, Features, 86Voice, AI Ordering, How It Works, Product Tour, Pricing, Beta, FAQ, and All Features.
+- Main points now covered: 86Voice, AI Order Assistant, event supply planning, prep prediction, invoice intelligence, waste/burn analysis, par recommendations, recipe/menu costing, Menu Intelligence/86 impact, Manager Brief intelligence, Python order/ops intelligence, scheduled automation, recommendation approval queues, critical alerts, diagnostics, Help Center search, and bug report admin alerts.
+- Added clearer AI safety language: AI can suggest, explain, draft, alert, analyze, report, and summarize. Humans approve business-changing actions.

@@ -268,7 +268,6 @@ input:focus, textarea:focus, select:focus { border-color: var(--copper-2); box-s
   .fact-card span { min-height: auto; }
 }
 
-
 /* Extra compact pass requested for a thinner, tighter site */
 .site-header { border-bottom-color: rgba(255,255,255,.065); }
 .nav-shell { min-height: 46px; }
@@ -309,7 +308,6 @@ input, textarea, select { font-size: .84rem; padding: 8px 9px; }
   .section-tight { padding-top: 34px; }
   .section { padding: 32px 0; }
 }
-
 
 /* Pricing comparison and sales polish */
 .comparison-wrap {
@@ -386,7 +384,6 @@ input, textarea, select { font-size: .84rem; padding: 8px 9px; }
 @media (max-width: 920px) {
   .sales-strip { grid-template-columns: 1fr; }
 }
-
 
 /* Uploaded-site style comparison table restored */
 .compare-section {
@@ -492,7 +489,6 @@ input, textarea, select { font-size: .84rem; padding: 8px 9px; }
   margin-top: 10px;
 }
 
-
 /* Site-wide font reset requested: no serif/comic-looking headings */
 body,
 button,
@@ -520,63 +516,8 @@ h2 {
   letter-spacing: -.04em;
 }
 
-
 /* More prominent beta deadline + 86Voice promotional sections */
-.deadline-strip {
-  position: sticky;
-  top: 46px;
-  z-index: 35;
-  padding: 7px 16px;
-  text-align: center;
-  font-size: .82rem;
-  color: #081016;
-  background: linear-gradient(90deg, var(--copper-2), #f2d0ae, var(--copper));
-  box-shadow: 0 10px 26px rgba(0,0,0,.22);
-}
-.deadline-strip a {
-  color: #081016;
-  font-weight: 950;
-}
-.nav-deadline {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4px 8px;
-  border-radius: 999px;
-  color: #081016;
-  background: var(--copper-2);
-  font-weight: 950;
-  font-size: .74rem;
-  white-space: nowrap;
-}
-.deadline-card-section {
-  padding: 18px 0 0;
-}
-.deadline-card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 14px 16px;
-  border-radius: 16px;
-  border: 1px solid rgba(231,186,145,.38);
-  background:
-    radial-gradient(circle at 0% 0%, rgba(201,143,109,.22), transparent 26rem),
-    linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.03));
-  box-shadow: 0 18px 46px rgba(0,0,0,.22);
-}
-.deadline-card strong {
-  color: var(--copper-2);
-  font-size: 1rem;
-}
-.deadline-card span {
-  color: var(--muted);
-  font-size: .86rem;
-  flex: 1;
-}
-.deadline-card.urgent {
-  border-color: rgba(244,122,63,.55);
-}
+
 .voice-home-section {
   border-block: 1px solid rgba(255,255,255,.08);
   background:
@@ -658,18 +599,13 @@ h2 {
   min-height: 210px;
 }
 @media (max-width: 920px) {
-  .deadline-strip { top: 46px; }
-  .nav-deadline { align-self: flex-start; }
-  .deadline-card { flex-direction: column; align-items: flex-start; }
+  
+  
+  
 }
 @media (max-width: 560px) {
-  .deadline-strip {
-    top: 44px;
-    font-size: .76rem;
-    padding: 6px 12px;
-  }
+  
 }
-
 
 /* ROI / pay-for-itself sections */
 .roi-section {
@@ -727,7 +663,6 @@ h2 {
     grid-template-columns: 1fr;
   }
 }
-
 
 /* Full feature map and expanded 86Voice */
 .feature-map-grid {
@@ -802,4 +737,91 @@ h2 {
 }
 @media (max-width: 560px) {
   .feature-map-grid, .voice-capability-grid, .voice-example-grid { grid-template-columns: 1fr; }
+}
+
+
+/* AI assisted ordering sections */
+.ai-order-section {
+  background:
+    radial-gradient(circle at 8% 0%, rgba(68,212,151,.08), transparent 24rem),
+    radial-gradient(circle at 92% 10%, rgba(201,143,109,.13), transparent 25rem);
+}
+.ai-order-hero {
+  background:
+    radial-gradient(circle at 88% 0%, rgba(68,212,151,.10), transparent 26rem);
+}
+.ai-order-card,
+.ai-order-flow {
+  padding: 18px;
+}
+.ai-order-result {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+.ai-order-result span {
+  display: block;
+  padding: 9px 10px;
+  border-radius: 12px;
+  color: var(--muted);
+  background: rgba(0,0,0,.22);
+  border: 1px solid rgba(255,255,255,.075);
+  font-size: .84rem;
+}
+.ai-order-result b {
+  color: var(--copper-2);
+}
+.command-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.command-grid span {
+  display: block;
+  padding: 12px 13px;
+  border-radius: 14px;
+  color: var(--text);
+  background: linear-gradient(180deg, rgba(201,143,109,.13), rgba(255,255,255,.035));
+  border: 1px solid rgba(231,186,145,.22);
+  font-weight: 850;
+}
+@media (max-width: 820px) {
+  .command-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* AI capability suite sections */
+.ai-tools-section,
+.ai-tools-hero {
+  background:
+    radial-gradient(circle at 12% 0%, rgba(201,143,109,.11), transparent 25rem),
+    radial-gradient(circle at 90% 8%, rgba(68,212,151,.08), transparent 25rem);
+}
+.ai-suite-card {
+  padding: 18px;
+}
+.ai-suite-card h3 {
+  font-size: 1.28rem;
+}
+.ai-suite-card p {
+  color: var(--muted);
+}
+.ai-capability-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.ai-capability-grid .card a {
+  display: inline-flex;
+  margin-top: 8px;
+  color: var(--copper-2);
+  font-weight: 900;
+  text-decoration: none;
+}
+@media (max-width: 920px) {
+  .ai-capability-grid {
+    grid-template-columns: 1fr;
+  }
 }
