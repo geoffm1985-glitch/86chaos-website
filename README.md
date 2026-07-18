@@ -126,3 +126,11 @@ Review public claims before launch if vendor or industry data changes.
 - Added a Pricing page ROI calculator for minutes saved, hourly manager value, and days per month.
 - Added inventory savings messaging around invoices, waste, burn logs, stockouts, prep duplication, and recipe consistency.
 - Added FAQ and How It Works language explaining the time + inventory value.
+
+
+## Latest full app / 86Voice coverage update
+
+- Reviewed the uploaded 86 Chaos 15.0.72 app package and added a full `all-features.html` feature map.
+- Expanded 86Voice from a small mention into a full sales feature across Home, Features, Product Tour, How It Works, Pricing, FAQ, and the dedicated 86Voice page.
+- Added detailed 86Voice capabilities: prep upserts, task completion, recurring task creation, 86 alerts, menu-impact questions, reminders, navigation/search, status summaries, maintenance, burn logs, message posts, safety confirmations, audit behavior, and safe undo.
+- Added app-wide feature coverage: Today, scheduling, availability, prep, tasks, inventory, invoices, recipes, Menu Intelligence, financials, maintenance, HR/training, reminders, AI Tools, settings, audit logs, and admin controls.
