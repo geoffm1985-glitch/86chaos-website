@@ -81,3 +81,9 @@ Review public claims before launch if vendor or industry data changes.
 - Home page now includes a week-one beta testing plan.
 - Features page now clarifies what 86 Chaos is and is not.
 - Beta page now explains what happens after a restaurant applies.
+
+## Latest comparison rebuild
+
+- Rebuilt the pricing comparison so it is no longer a giant ugly table.
+- Moved the comparison section above the 86 Chaos pricing tier cards.
+- Added compact product price cards plus a cleaner feature matrix.
