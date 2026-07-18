@@ -158,3 +158,26 @@ Review public claims before launch if vendor or industry data changes.
 - Expanded AI coverage across Home, Features, 86Voice, AI Ordering, How It Works, Product Tour, Pricing, Beta, FAQ, and All Features.
 - Main points now covered: 86Voice, AI Order Assistant, event supply planning, prep prediction, invoice intelligence, waste/burn analysis, par recommendations, recipe/menu costing, Menu Intelligence/86 impact, Manager Brief intelligence, Python order/ops intelligence, scheduled automation, recommendation approval queues, critical alerts, diagnostics, Help Center search, and bug report admin alerts.
 - Added clearer AI safety language: AI can suggest, explain, draft, alert, analyze, report, and summarize. Humans approve business-changing actions.
+
+## Latest legal packet update
+
+- Added a concise `legal.html` page using only the needed public-facing legal packet items.
+- Added footer links to Legal / Terms.
+- Added short beta and backup responsibility notes on the Apply and Pricing pages.
+- Included key customer-facing legal concepts: business/operator name, beta limitations, independent customer backups, AI/human review, no legal/payroll/tax/HR/food-safety advice, notification/automation delay risk, privacy basics, security basics, and support contact.
+- Did not paste the full legal packet into the site.
+
+## Latest app/website feature alignment update
+
+- Added missing current-app feature details from the legal/current-feature packet.
+- Added Schedule Copilot, coverage targets, schedule templates, drag board, request-off history, availability management, and conflict warnings.
+- Added clearer Staff/HR, Manager Brief, Event Calendar, Message Board, Prep & Tasks, Smart Prep Matching, Brother QL-810W labels, Inventory & Orders, Menu Intelligence, Maintenance Log, bug reporting, System Audit, and restricted admin/support descriptions.
+- Clarified Smart Kitchen+ access for AI Order Assistant, Python Forecast, Python Ops Scan, Menu Intelligence, invoice/menu scan intelligence, and AI-assisted ordering/intelligence features.
+- Clarified Python Ops Scan lives in Manager Brief and findings route managers to the right app area.
+- Clarified 86Voice does not create/edit/publish schedules or perform high-risk admin/payroll/billing/security/financial approvals by voice.
+
+## Latest sales-focused cleanup
+
+- Removed small release-note-style website copy such as navigation move details and bug-report/admin plumbing.
+- Reframed app alignment into customer-facing sales language: time savings, smarter ordering, prep accountability, 86Voice, Menu Intelligence, Manager Brief, inventory visibility, and human-approved AI.
+- Kept important legal/safety boundaries, but moved away from internal implementation details on the public pages.
