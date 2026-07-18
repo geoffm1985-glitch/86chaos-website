@@ -41,6 +41,7 @@ The form now requires:
 - City and state
 - Email
 - Phone
+- Best time to contact
 - Biggest headache
 
 The API route sends through Resend. Do **not** hardcode private API keys into public GitHub code. Add these environment variables in Vercel instead:

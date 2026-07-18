@@ -64,6 +64,7 @@ module.exports = async function handler(req, res) {
     location: clean(body.location),
     email: clean(body.email).toLowerCase(),
     phone: clean(body.phone),
+    contact_time: clean(body.contact_time || body.contactTime),
     plan: clean(body.plan),
     headache: clean(body.headache || body.pain_point),
     message: clean(body.message),
@@ -77,6 +78,7 @@ module.exports = async function handler(req, res) {
   if (!submission.location) missing.push('city and state');
   if (!submission.email || !emailLooksValid(submission.email)) missing.push('valid email');
   if (!submission.phone) missing.push('phone');
+  if (!submission.contact_time) missing.push('best time to contact');
   if (!submission.headache) missing.push('biggest headache');
 
   if (missing.length) {
@@ -108,6 +110,7 @@ module.exports = async function handler(req, res) {
     `City/State: ${submission.location}`,
     `Email: ${submission.email}`,
     `Phone: ${submission.phone}`,
+    `Best time to contact: ${submission.contact_time}`,
     `Plan: ${submission.plan || 'Not sure yet'}`,
     `Biggest headache: ${submission.headache}`,
     '',
@@ -127,6 +130,7 @@ module.exports = async function handler(req, res) {
         <tr><td style="padding:8px;border-bottom:1px solid #eee"><strong>City/State</strong></td><td style="padding:8px;border-bottom:1px solid #eee">${escapeHtml(submission.location)}</td></tr>
         <tr><td style="padding:8px;border-bottom:1px solid #eee"><strong>Email</strong></td><td style="padding:8px;border-bottom:1px solid #eee"><a href="mailto:${escapeHtml(submission.email)}">${escapeHtml(submission.email)}</a></td></tr>
         <tr><td style="padding:8px;border-bottom:1px solid #eee"><strong>Phone</strong></td><td style="padding:8px;border-bottom:1px solid #eee">${escapeHtml(submission.phone)}</td></tr>
+        <tr><td style="padding:8px;border-bottom:1px solid #eee"><strong>Best time to contact</strong></td><td style="padding:8px;border-bottom:1px solid #eee">${escapeHtml(submission.contact_time)}</td></tr>
         <tr><td style="padding:8px;border-bottom:1px solid #eee"><strong>Plan</strong></td><td style="padding:8px;border-bottom:1px solid #eee">${escapeHtml(submission.plan || 'Not sure yet')}</td></tr>
         <tr><td style="padding:8px;border-bottom:1px solid #eee"><strong>Biggest headache</strong></td><td style="padding:8px;border-bottom:1px solid #eee">${escapeHtml(submission.headache)}</td></tr>
         <tr><td style="padding:8px;border-bottom:1px solid #eee"><strong>Message</strong></td><td style="padding:8px;border-bottom:1px solid #eee;white-space:pre-wrap">${escapeHtml(submission.message || 'Not provided')}</td></tr>
