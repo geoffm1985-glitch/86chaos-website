@@ -72,3 +72,12 @@ Public industry facts are linked in-page:
 - 7shifts restaurant turnover cost article
 
 Review public claims before launch if vendor or industry data changes.
+
+
+## Latest updates
+
+- Top navigation link text was increased slightly while keeping the header thin.
+- `pricing.html` now includes a pricing and feature comparison chart for 86 Chaos, 7shifts, MarginEdge, Restaurant365, and Toast POS.
+- Home page now includes a week-one beta testing plan.
+- Features page now clarifies what 86 Chaos is and is not.
+- Beta page now explains what happens after a restaurant applies.
