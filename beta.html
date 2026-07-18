@@ -8,7 +8,7 @@
   <meta property="og:title" content="Apply for 86 Chaos Founder Beta" />
   <meta property="og:description" content="Apply for the 86 Chaos Founder Beta and help shape a restaurant operations app built by a working kitchen manager for real shifts." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="assets/wisconsin-map-logo.webp" />
+  <meta property="og:image" content="assets/map-logo.webp" />
   <meta name="theme-color" content="#0b1117" />
   <link rel="icon" href="assets/app-icon.webp" />
   <link rel="apple-touch-icon" href="assets/app-icon.webp" />
@@ -19,30 +19,30 @@
   <header class="site-header">
     <nav class="nav-shell" aria-label="Main navigation">
       <a class="brand" href="index.html" aria-label="86 Chaos home">
-        <img src="assets/86chaos-logo.png" alt="86 Chaos Kitchen Management OS" />
+        <img src="assets/logo-main.png" alt="86 Chaos Kitchen Management OS" />
       </a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="navLinks" data-nav-toggle>
         <span></span><span></span><span></span><span class="sr-only">Open menu</span>
       </button>
       <div class="nav-links" id="navLinks" data-nav-links>
-        <a href="index.html" class="">Home</a>
-<a href="features.html" class="">Features</a>
-<a href="how-it-works.html" class="">How It Works</a>
-<a href="screenshots.html" class="">Screenshots</a>
-<a href="pricing.html" class="">Pricing</a>
-<a href="faq.html" class="">FAQ</a>
-        <a href="beta.html" class="nav-cta is-active">Apply for Founder Beta</a>
+          <a href="index.html" class="">Home</a>
+          <a href="features.html" class="">Features</a>
+          <a href="how-it-works.html" class="">How It Works</a>
+          <a href="product-tour.html" class="">Product Tour</a>
+          <a href="pricing.html" class="">Pricing</a>
+          <a href="faq.html" class="">FAQ</a>
+          <a href="beta.html" class="nav-cta is-active">Apply</a>
       </div>
     </nav>
   </header>
   <main id="main">
 
-    <section class="page-hero">
+    <section class="page-hero compact-hero">
       <div class="container">
         <div class="reveal">
           <p class="eyebrow">Apply for Founder Beta</p>
           <h1>Help shape the tool your kitchen would actually use.</h1>
-          <p class="page-lede">Tell me who you are, what kind of restaurant you run, and what operational headache you would want 86 Chaos to help with first.</p>
+          <p class="page-lede">Tell me who you are, where the restaurant is, and which operational headache you want 86 Chaos to attack first.</p>
           <div class="chip-row"><span>90 days free</span><span>50% off first paid year</span><span>No credit card during beta</span></div>
         </div>
         <div class="phone-frame reveal delay-1"><img src="assets/maintenance.webp" alt="86 Chaos Maintenance Center screen" /></div>
@@ -62,26 +62,27 @@
           </ul>
         </div>
         <div class="reveal delay-1">
-<form class="beta-form panel" data-beta-form action="/api/beta-application" method="post">
-  <label class="honeypot">Leave this blank<input name="website" tabindex="-1" autocomplete="off" /></label>
-  <div class="form-row">
-    <label>Your name<input name="name" required placeholder="Alex Rivera" autocomplete="name" /></label>
-    <label>Restaurant<input name="restaurant" required placeholder="Ridge & Rail Tavern" /></label>
-  </div>
-  <div class="form-row">
-    <label>City and state<input name="location" required placeholder="Chilton, WI" autocomplete="address-level2" /></label>
-    <label>Email<input name="email" type="email" required placeholder="owner@example.com" autocomplete="email" /></label>
-  </div>
-  <div class="form-row">
-    <label>Phone, optional<input name="phone" placeholder="920-555-0186" autocomplete="tel" /></label>
-    <label>Plan you are most curious about<select name="plan"><option>Not sure yet</option><option>Shift</option><option>Operations</option><option>Smart Kitchen</option><option>Owner Pro</option></select></label>
-  </div>
-  <label>Biggest headache<textarea name="headache" required placeholder="Prep gets missed, inventory is messy, daily close takes forever..."></textarea></label>
-  <label>Anything else, optional<textarea name="message" placeholder="Tell me what kind of restaurant you run or what you want to test first."></textarea></label>
-  <button class="button full" type="submit" data-submit-text="Apply for Founder Beta">Apply for Founder Beta</button>
-  <p class="form-status" data-form-status role="status"></p>
-</form>
-</div>
+          <form class="beta-form panel" data-beta-form action="/api/beta-application" method="post">
+            <label class="honeypot">Leave this blank<input name="website" tabindex="-1" autocomplete="off" /></label>
+            <div class="form-row">
+              <label>Your name<input name="name" required placeholder="Alex Rivera" autocomplete="name" /></label>
+              <label>Restaurant<input name="restaurant" required placeholder="Ridge & Rail Tavern" /></label>
+            </div>
+            <label>Restaurant address<input name="address" required placeholder="123 Main St" autocomplete="street-address" /></label>
+            <div class="form-row">
+              <label>City and state<input name="location" required placeholder="Chilton, WI" autocomplete="address-level2" /></label>
+              <label>Email<input name="email" type="email" required placeholder="owner@example.com" autocomplete="email" /></label>
+            </div>
+            <div class="form-row">
+              <label>Phone<input name="phone" type="tel" required placeholder="920-555-0186" autocomplete="tel" /></label>
+              <label>Plan you are most curious about<select name="plan"><option>Not sure yet</option><option>Shift</option><option>Operations</option><option>Smart Kitchen</option><option>Owner Pro</option></select></label>
+            </div>
+            <label>Biggest headache<textarea name="headache" required placeholder="Prep gets missed, inventory is messy, daily close takes forever..."></textarea></label>
+            <label>Anything else, optional<textarea name="message" placeholder="Tell me what kind of restaurant you run or what you want to test first."></textarea></label>
+            <button class="button full" type="submit" data-submit-text="Apply for Founder Beta">Apply for Founder Beta</button>
+            <p class="form-status" data-form-status role="status"></p>
+          </form>
+        </div>
       </div>
     </section>
 
@@ -90,8 +91,9 @@
     <div class="container">
       <div class="cta-card">
         <div>
+          <span class="eyebrow">Founder Beta</span>
           <h2>Less chaos. More control.</h2>
-          <p>Build the restaurant you are proud of with tools made for real shifts.</p>
+          <p>Start with the parts that hurt most: prep, 86 alerts, schedules, inventory, reminders, and daily visibility.</p>
         </div>
         <a class="button" href="beta.html">Apply for Founder Beta</a>
       </div>
@@ -100,14 +102,14 @@
   <footer class="footer">
     <div class="container footer-grid">
       <div>
-        <img src="assets/86chaos-logo.png" alt="86 Chaos Kitchen Management OS" />
+        <img src="assets/logo-main.png" alt="86 Chaos Kitchen Management OS" />
         <p>Kitchen Management OS for independent restaurants, bars, and real-world teams.</p>
         <small>© 2026 Chilton App Works LLC. All rights reserved.</small>
       </div>
       <div>
         <h3>Product</h3>
         <a href="features.html">Features</a>
-        <a href="screenshots.html">Screenshots</a>
+        <a href="product-tour.html">Product Tour</a>
         <a href="how-it-works.html">How it works</a>
       </div>
       <div>
@@ -117,10 +119,10 @@
         <a href="faq.html">FAQ</a>
       </div>
       <div>
-        <h3>86 Chaos</h3>
-        <a href="index.html">Home</a>
-        <a href="mailto:hello@86chaos.com">Contact</a>
-        <a href="https://86chaos.com">86chaos.com</a>
+        <h3>Sources</h3>
+        <a href="https://restaurant.org/research-and-media/media/press-releases/persistent-cost-increases-and-enduring-demand-will-shape-the-restaurant-industry-in-2026/" target="_blank" rel="noreferrer">NRA 2026 outlook</a>
+        <a href="https://refed.org/downloads/by-sector-foodservice-2025.pdf" target="_blank" rel="noreferrer">ReFED foodservice waste</a>
+        <a href="https://www.7shifts.com/blog/true-cost-of-employee-turnover/" target="_blank" rel="noreferrer">7shifts labor turnover</a>
       </div>
     </div>
   </footer>

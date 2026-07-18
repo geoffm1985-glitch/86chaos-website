@@ -1,9 +1,9 @@
 {
-  "name": "86chaos-multipage-website",
+  "name": "86chaos-website",
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "npx serve .",
-    "lint:html": "echo \"Static site, no build step required.\""
-  }
+    "start": "vercel dev"
+  },
+  "dependencies": {}
 }

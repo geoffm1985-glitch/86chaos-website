@@ -1,3 +1,4 @@
+
 const navToggle = document.querySelector('[data-nav-toggle]');
 const navLinks = document.querySelector('[data-nav-links]');
 
@@ -16,41 +17,41 @@ if (navToggle && navLinks) {
 }
 
 const shotData = {
-  schedule: {
-    src: 'assets/schedule.webp',
-    alt: '86 Chaos Time Clock and Schedule screen',
-    title: 'Time Clock & Schedule',
-    body: 'A real shift view with Kitchen 10a-10p, trade board, request off, month shifts, and schedule builder access.'
-  },
   prep: {
     src: 'assets/prep.webp',
-    alt: '86 Chaos Prep and Tasks screen',
+    alt: '86 Chaos Prep and Tasks screen with restaurant prep data',
     title: 'Prep & Tasks',
-    body: 'Prep work is populated with kitchen items like Pull soups, Ranch, Bacon, Dressings, Pull bread, Pull delis, Wings, Green peppers, and Onion.'
+    body: 'Stations, quantities, completion status, print controls, and mark-done actions show an active kitchen list instead of empty test rows.'
+  },
+  schedule: {
+    src: 'assets/schedule.webp',
+    alt: '86 Chaos Time Clock and Schedule screen with working restaurant data',
+    title: 'Time Clock & Schedule',
+    body: 'My Schedule, month shifts, trade board, request off, and clock-in flow make staffing information visible without manager guesswork.'
   },
   recipes: {
     src: 'assets/recipes.webp',
-    alt: '86 Chaos Recipe Book screen',
+    alt: '86 Chaos Recipe Book screen with realistic restaurant recipes',
     title: 'Recipe Book',
-    body: 'Recipe Book shows working kitchen specs such as Beer Cheese, Beer Dip, Cheesy Potato Bacon Soup, Chili, and House Ranch.'
+    body: 'Recipes include categories, prep times, and yields for real bar-and-grill items like Beer Cheese, Chili, House Ranch, and Sicilian Stuffed Chicken.'
   },
   inventory: {
     src: 'assets/inventory.webp',
-    alt: '86 Chaos Inventory and Invoice History screen',
+    alt: '86 Chaos Inventory and Invoice History screen with vendor invoices',
     title: 'Inventory & Invoices',
-    body: 'Inventory shows vendor and invoice history with Performance Foodservice examples, invoice totals, print controls, and burn log access.'
+    body: 'Vendor invoices, dates, totals, processed-by records, print controls, and burn log access make purchasing history easier to scan.'
   },
   financials: {
     src: 'assets/financials.webp',
-    alt: '86 Chaos Financial Center screen',
+    alt: '86 Chaos Financial Center screen with sales, prime cost, labor, and cash variance',
     title: 'Financial Center',
-    body: 'Financial Center previews daily close, labor, COGS, profit, cash variance, food/beverage targets, and needs-attention alerts.'
+    body: 'Net sales, prime cost, labor, food, beverage, cash variance, and needs-attention items turn daily close into owner-ready signals.'
   },
   maintenance: {
     src: 'assets/maintenance.webp',
-    alt: '86 Chaos Maintenance Center screen',
+    alt: '86 Chaos Maintenance Center screen with equipment repairs',
     title: 'Maintenance Center',
-    body: 'Maintenance Center shows an actual repair-board style flow for Fryer #2, high-priority status, preventative maintenance, and issue notes.'
+    body: 'Repair board items, priority badges, reporters, dates, and costs help equipment issues stop disappearing into hallway conversations.'
   }
 };
 
@@ -74,7 +75,7 @@ shotButtons.forEach((button) => {
 
     mainShot.src = shot.src;
     mainShot.alt = shot.alt;
-    shotNotes.innerHTML = `<h3>${shot.title}</h3><p>${shot.body}</p>`;
+    shotNotes.innerHTML = `<span class="eyebrow">${shot.title}</span><h3>${shot.title}</h3><p>${shot.body}</p>`;
   });
 });
 
@@ -87,8 +88,7 @@ if ('IntersectionObserver' in window) {
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.12 });
-
+  }, { threshold: 0.10 });
   reveals.forEach((element) => observer.observe(element));
 } else {
   reveals.forEach((element) => element.classList.add('is-visible'));

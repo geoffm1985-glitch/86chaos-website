@@ -1,3 +1,4 @@
+
 const MAX_FIELD_LENGTH = 3000;
 
 function clean(value = '') {
@@ -59,6 +60,7 @@ module.exports = async function handler(req, res) {
   const submission = {
     name: clean(body.name),
     restaurant: clean(body.restaurant),
+    address: clean(body.address),
     location: clean(body.location),
     email: clean(body.email).toLowerCase(),
     phone: clean(body.phone),
@@ -71,8 +73,10 @@ module.exports = async function handler(req, res) {
   const missing = [];
   if (!submission.name) missing.push('name');
   if (!submission.restaurant) missing.push('restaurant');
+  if (!submission.address) missing.push('restaurant address');
   if (!submission.location) missing.push('city and state');
   if (!submission.email || !emailLooksValid(submission.email)) missing.push('valid email');
+  if (!submission.phone) missing.push('phone');
   if (!submission.headache) missing.push('biggest headache');
 
   if (missing.length) {
@@ -100,9 +104,10 @@ module.exports = async function handler(req, res) {
     '',
     `Name: ${submission.name}`,
     `Restaurant: ${submission.restaurant}`,
-    `Location: ${submission.location}`,
+    `Address: ${submission.address}`,
+    `City/State: ${submission.location}`,
     `Email: ${submission.email}`,
-    `Phone: ${submission.phone || 'Not provided'}`,
+    `Phone: ${submission.phone}`,
     `Plan: ${submission.plan || 'Not sure yet'}`,
     `Biggest headache: ${submission.headache}`,
     '',
@@ -113,20 +118,20 @@ module.exports = async function handler(req, res) {
   ].join('\n');
 
   const html = `
-    <div style="font-family:Arial,sans-serif;line-height:1.5;color:#17202a;max-width:680px">
+    <div style="font-family:Arial,sans-serif;line-height:1.5;color:#17202a;max-width:700px">
       <h2 style="margin:0 0 12px;color:#c98f6d">New 86 Chaos Founder Beta request</h2>
       <table style="border-collapse:collapse;width:100%">
         <tr><td style="padding:8px;border-bottom:1px solid #eee"><strong>Name</strong></td><td style="padding:8px;border-bottom:1px solid #eee">${escapeHtml(submission.name)}</td></tr>
         <tr><td style="padding:8px;border-bottom:1px solid #eee"><strong>Restaurant</strong></td><td style="padding:8px;border-bottom:1px solid #eee">${escapeHtml(submission.restaurant)}</td></tr>
-        <tr><td style="padding:8px;border-bottom:1px solid #eee"><strong>Location</strong></td><td style="padding:8px;border-bottom:1px solid #eee">${escapeHtml(submission.location)}</td></tr>
+        <tr><td style="padding:8px;border-bottom:1px solid #eee"><strong>Address</strong></td><td style="padding:8px;border-bottom:1px solid #eee">${escapeHtml(submission.address)}</td></tr>
+        <tr><td style="padding:8px;border-bottom:1px solid #eee"><strong>City/State</strong></td><td style="padding:8px;border-bottom:1px solid #eee">${escapeHtml(submission.location)}</td></tr>
         <tr><td style="padding:8px;border-bottom:1px solid #eee"><strong>Email</strong></td><td style="padding:8px;border-bottom:1px solid #eee"><a href="mailto:${escapeHtml(submission.email)}">${escapeHtml(submission.email)}</a></td></tr>
-        <tr><td style="padding:8px;border-bottom:1px solid #eee"><strong>Phone</strong></td><td style="padding:8px;border-bottom:1px solid #eee">${escapeHtml(submission.phone || 'Not provided')}</td></tr>
+        <tr><td style="padding:8px;border-bottom:1px solid #eee"><strong>Phone</strong></td><td style="padding:8px;border-bottom:1px solid #eee">${escapeHtml(submission.phone)}</td></tr>
         <tr><td style="padding:8px;border-bottom:1px solid #eee"><strong>Plan</strong></td><td style="padding:8px;border-bottom:1px solid #eee">${escapeHtml(submission.plan || 'Not sure yet')}</td></tr>
         <tr><td style="padding:8px;border-bottom:1px solid #eee"><strong>Biggest headache</strong></td><td style="padding:8px;border-bottom:1px solid #eee">${escapeHtml(submission.headache)}</td></tr>
+        <tr><td style="padding:8px;border-bottom:1px solid #eee"><strong>Message</strong></td><td style="padding:8px;border-bottom:1px solid #eee;white-space:pre-wrap">${escapeHtml(submission.message || 'Not provided')}</td></tr>
+        <tr><td style="padding:8px"><strong>Submitted</strong></td><td style="padding:8px">${escapeHtml(submission.submittedAt)}</td></tr>
       </table>
-      <h3 style="margin:18px 0 8px">Message</h3>
-      <p style="white-space:pre-wrap;background:#f6f4f1;padding:14px;border-radius:10px">${escapeHtml(submission.message || 'Not provided')}</p>
-      <p style="color:#6b7280;font-size:12px">Submitted: ${escapeHtml(submission.submittedAt)}</p>
     </div>
   `;
 
@@ -147,16 +152,20 @@ module.exports = async function handler(req, res) {
       }),
     });
 
+    const result = await response.json().catch(() => ({}));
+
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error('Resend error:', errorText);
+      console.error('Resend error:', result);
       return res.status(502).json({
         ok: false,
-        message: 'The form could not send right now. Please try again in a few minutes.',
+        message: result?.message || 'The email service could not send the request right now.',
       });
     }
 
-    return res.status(200).json({ ok: true, message: 'Thanks. Your beta request was sent.' });
+    return res.status(200).json({
+      ok: true,
+      message: 'Thanks. Your beta request was sent. I will follow up soon.',
+    });
   } catch (error) {
     console.error('Beta form send failed:', error);
     return res.status(500).json({
