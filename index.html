@@ -3,481 +3,475 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>86 Chaos | Restaurant Operations Hub</title>
-  <meta name="description" content="86 Chaos helps independent restaurants run prep, inventory, schedules, 86 alerts, recipes, reminders, daily close, labor, and team communication in one place." />
-  <meta property="og:title" content="86 Chaos | Restaurant Operations Hub" />
-  <meta property="og:description" content="Built by a working kitchen manager for real restaurant shifts. Founder Beta now open." />
+  <title>86 Chaos | Kitchen Management OS for Independent Restaurants</title>
+  <meta name="description" content="86 Chaos brings prep, schedules, 86 alerts, inventory, recipes, reminders, and team communication into one operations hub for independent restaurants." />
+  <meta property="og:title" content="86 Chaos | Kitchen Management OS" />
+  <meta property="og:description" content="Less chaos. More control. Built by a working kitchen manager for real shifts." />
   <meta property="og:type" content="website" />
-  <meta name="theme-color" content="#07121b" />
-  <link rel="icon" href="/assets/app-icon.png" />
-  <link rel="apple-touch-icon" href="/assets/app-icon.png" />
+  <meta property="og:image" content="assets/wisconsin-map-logo.webp" />
+  <link rel="icon" href="assets/app-icon.webp" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="topbar">
-    <div class="topbar-inner">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" data-header>
+    <nav class="nav-shell" aria-label="Main navigation">
       <a class="brand" href="#top" aria-label="86 Chaos home">
-        <img src="/assets/app-icon.png" alt="" class="brand-icon" />
-        <img src="/assets/86chaos-logo.png" alt="86 Chaos Kitchen Management OS" class="brand-logo" />
+        <img src="assets/brand-horizontal.png" alt="86 Chaos Kitchen Management OS" />
       </a>
-
-      <button class="nav-toggle" id="navToggle" aria-label="Open navigation" aria-expanded="false">
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="navLinks" data-nav-toggle>
         <span></span><span></span><span></span>
+        <span class="sr-only">Open menu</span>
       </button>
-
-      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
-        <a href="#proof">Proof</a>
-        <a href="#product">Product</a>
-        <a href="#voice">86Voice</a>
-        <a href="#plans">Plans</a>
-        <a href="#comparison">Compare</a>
-        <a href="#beta" class="nav-cta">Founder Beta</a>
-      </nav>
-    </div>
+      <div class="nav-links" id="navLinks" data-nav-links>
+        <a href="#features">Features</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#screenshots">App Screens</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+        <a class="button button-small" href="#apply">Apply for Founder Beta</a>
+      </div>
+    </nav>
   </header>
 
-  <main id="top">
-    <section class="hero section">
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="glow glow-one" aria-hidden="true"></div>
+      <div class="glow glow-two" aria-hidden="true"></div>
       <div class="container hero-grid">
-        <div class="hero-copy">
-          <p class="eyebrow">Founder Beta now open</p>
-          <h1>Restaurant operations without the paper trail panic.</h1>
-          <p class="hero-lede">
-            86 Chaos keeps prep, inventory, schedules, 86 alerts, recipes, reminders,
-            labor, daily close, and team communication in one practical command center.
-          </p>
-
+        <div class="hero-copy reveal">
+          <p class="eyebrow">Kitchen Management OS for independent restaurants</p>
+          <h1>Your restaurant already has enough <span>chaos.</span></h1>
+          <p class="hero-lead">86 Chaos brings prep, schedules, inventory, 86 alerts, recipes, reminders, and team communication into one operations hub so your kitchen runs smoother and your team stays in sync.</p>
           <div class="hero-actions">
-            <a class="btn primary" href="#beta">Apply for Founder Beta</a>
-            <a class="btn ghost" href="#comparison">Compare pricing</a>
+            <a class="button" href="#apply">Apply for Founder Beta</a>
+            <a class="button button-ghost" href="#how-it-works">See how it works</a>
           </div>
-
-          <div class="mini-proof">
-            <span><b>60-day</b> Founder Beta</span>
-            <span><b>50% off</b> for 12 months after beta</span>
-            <span><b>86Voice</b> intelligent commands</span>
-            <span><b>Built by</b> a working kitchen manager</span>
+          <div class="trust-row" aria-label="Founder beta highlights">
+            <span><i data-icon="card"></i>No credit card</span>
+            <span><i data-icon="clock"></i>90 days free</span>
+            <span><i data-icon="store"></i>Built for independents</span>
           </div>
         </div>
 
-        <div class="hero-panel" aria-label="86 Chaos product summary">
-          <div class="hero-panel-top">
-            <img src="/assets/86chaos-map-brand.jpg" alt="86 Chaos Wisconsin brand graphic" />
+        <div class="hero-product reveal delay-1" aria-label="86 Chaos dashboard preview">
+          <div class="product-window">
+            <div class="product-topbar">
+              <div class="mini-logo">86 <span>CHAOS</span></div>
+              <div class="restaurant-switcher">The Line Bistro <span>⌄</span></div>
+              <div class="topbar-icons"><span></span><span></span><span></span></div>
+            </div>
+            <div class="product-layout">
+              <aside class="product-sidebar">
+                <b>Dashboard</b><b>Prep</b><b>Inventory</b><b>86 Alerts</b><b>Recipes</b><b>Schedule</b><b>Team</b>
+              </aside>
+              <div class="product-cards">
+                <article class="dash-card prep-card">
+                  <div class="card-heading"><span>Prep List</span><strong>68%</strong></div>
+                  <div class="progress"><span style="width:68%"></span></div>
+                  <ul class="mini-list">
+                    <li><span>✓ Brisket</span><b>10 lb</b></li>
+                    <li><span>✓ Pico de Gallo</span><b>2 qt</b></li>
+                    <li><span>○ Roasted Red Peppers</span><b>1 pan</b></li>
+                    <li><span>○ Chicken Stock</span><b>2 pans</b></li>
+                  </ul>
+                </article>
+                <article class="dash-card alert-card">
+                  <p class="alert-label">86 Alert</p>
+                  <h3>Ribeye Steak</h3>
+                  <p>Out of stock. Removed from prep and menu visibility.</p>
+                  <button type="button">Suggest alternative</button>
+                </article>
+                <article class="dash-card">
+                  <div class="card-heading"><span>Inventory Snapshot</span><small>Updated 10:45 AM</small></div>
+                  <ul class="mini-list inventory-list">
+                    <li><span>Ground Beef</span><b class="good">Good</b></li>
+                    <li><span>Chicken Breast</span><b class="low">Low</b></li>
+                    <li><span>Ribeye Steak</span><b class="out">Out</b></li>
+                    <li><span>Avocados</span><b class="good">Good</b></li>
+                  </ul>
+                </article>
+                <article class="dash-card">
+                  <div class="card-heading"><span>Today’s Schedule</span><small>Friday</small></div>
+                  <ul class="mini-list schedule-list">
+                    <li><span>8:00a</span><b>Sam · Prep</b></li>
+                    <li><span>11:00a</span><b>Alex · Line</b></li>
+                    <li><span>4:00p</span><b>Maria · Line</b></li>
+                    <li><span>5:00p</span><b>Tara · FOH</b></li>
+                  </ul>
+                </article>
+                <article class="dash-card wide-card">
+                  <div class="card-heading"><span>Team Updates</span><small>Live</small></div>
+                  <p><strong>Jay:</strong> Ribeye is out. Sub NY Strip.</p>
+                  <p><strong>Maria:</strong> Oil pan dumped. Board updated.</p>
+                </article>
+                <article class="dash-card">
+                  <div class="card-heading"><span>Reminders</span><small>3 due</small></div>
+                  <ul class="mini-list">
+                    <li><span>Walk-in temp check</span><b>8:00a</b></li>
+                    <li><span>Oil change · Fryer 1</span><b>Noon</b></li>
+                    <li><span>Counts · End of night</span><b>10:00p</b></li>
+                  </ul>
+                </article>
+              </div>
+            </div>
           </div>
-          <div class="hero-tagline-card single-line">
-            <p>Less chaos. More control.</p>
-          </div>
+          <div class="phone-pair" aria-hidden="true">
+            <img src="assets/prep.webp" alt="" />
+            <img src="assets/inventory.webp" alt="" />
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section proof-section" id="proof">
-      <div class="container">
-        <div class="section-header split-header">
+    <section class="founder-strip">
+      <div class="container founder-grid">
+        <div class="founder-badge reveal">
+          <img src="assets/brand-map.png" alt="86 Chaos Wisconsin map logo" />
           <div>
-            <p class="eyebrow">Why owners care</p>
-            <h2>Small misses get expensive when margins are thin.</h2>
+            <h2>Built by a working kitchen manager.</h2>
+            <p>Designed for real shifts, not corporate fantasy.</p>
           </div>
-          <p>
-            These are the pressure points owners already feel: thin profits, wasted product, turnover drag, and hiring headaches.
-            86 Chaos connects the daily operation before those leaks turn into real money.
-          </p>
         </div>
+        <div class="proof-points reveal delay-1">
+          <span><i data-icon="chef"></i>Built from restaurant work</span>
+          <span><i data-icon="store"></i>Independent focused</span>
+          <span><i data-icon="heart"></i>No fluff. Just what works.</span>
+        </div>
+      </div>
+    </section>
 
-        <div class="proof-grid dramatic">
-          <article>
-            <strong>42%</strong>
-            <span>Operators said their restaurants were not profitable in 2025.</span>
-            <a href="https://restaurant.org/education-and-resources/resource-library/report-sales-to-hit-%241-55t-in-2026-despite-challenging-business-environment/" target="_blank" rel="noreferrer">NRA source</a>
+    <section class="problems section" id="features">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Real Problems. Real Solutions.</p>
+          <h2>The stuff that gets lost during service finally has a home.</h2>
+        </div>
+        <div class="problem-grid">
+          <article class="problem-card reveal">
+            <div class="icon-chip"><i data-icon="layers"></i></div>
+            <h3>Scattered information</h3>
+            <p class="problem-text">Prep lives on paper. 86s live in someone’s head. Reminders live in texts from three days ago.</p>
+            <p class="solution-text"><strong>Solution:</strong> One clean hub for the daily work your team actually needs.</p>
           </article>
-          <article>
-            <strong>$157B</strong>
-            <span>Foodservice surplus food was valued at $157 billion in 2024.</span>
-            <a href="https://refed.org/downloads/by-sector-foodservice-2025.pdf" target="_blank" rel="noreferrer">ReFED source</a>
+          <article class="problem-card reveal delay-1">
+            <div class="icon-chip"><i data-icon="alert"></i></div>
+            <h3>Stockouts discovered too late</h3>
+            <p class="problem-text">Guests order something you ran out of thirty minutes ago. Now the team is scrambling.</p>
+            <p class="solution-text"><strong>Solution:</strong> 86 alerts, inventory visibility, and menu-impact thinking in one flow.</p>
           </article>
-          <article>
-            <strong>$29,820</strong>
-            <span>Sales needed to recover one $1,491 BOH replacement cost at a 5% margin.</span>
-            <a href="https://www.7shifts.com/blog/true-cost-of-employee-turnover/" target="_blank" rel="noreferrer">7shifts + math</a>
+          <article class="problem-card reveal delay-2">
+            <div class="icon-chip"><i data-icon="clipboard"></i></div>
+            <h3>Duplicated prep</h3>
+            <p class="problem-text">Two people prep the same thing because nobody knows what was already handled.</p>
+            <p class="solution-text"><strong>Solution:</strong> Smarter prep lists with quantities, stations, and completion tracking.</p>
           </article>
-          <article>
-            <strong>77%</strong>
-            <span>Operators say recruitment and retention remain a significant challenge.</span>
-            <a href="https://restaurant.org/education-and-resources/resource-library/report-workforce-technology-amps-up-hiring-performance/" target="_blank" rel="noreferrer">NRA source</a>
+          <article class="problem-card reveal delay-3">
+            <div class="icon-chip"><i data-icon="team"></i></div>
+            <h3>Managers chasing updates</h3>
+            <p class="problem-text">Constant check-ins steal time from ordering, coaching, training, and fixing the real fires.</p>
+            <p class="solution-text"><strong>Solution:</strong> Team updates, shared reminders, and role-based visibility without the bottleneck.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section product-section" id="product">
+    <section class="flow section" id="how-it-works">
       <div class="container">
-        <div class="section-header center">
-          <p class="eyebrow">Product preview</p>
-          <h2>Clean screens that explain the value fast.</h2>
-          <p>These are polished website mockups using realistic sample restaurant data, not private real-world sales or employee data.</p>
+        <div class="section-heading reveal">
+          <p class="eyebrow">Everything you need. In the flow of service.</p>
+          <h2>Run the shift without duct-taping five tools together.</h2>
         </div>
-
-        <div class="preview-layout">
-          <div class="feature-carousel" aria-label="Product feature selector">
-            <button class="feature-arrow" type="button" data-tab-scroll="-1" aria-label="Previous features">‹</button>
-            <div class="preview-tabs" id="featureTabs" role="tablist" aria-label="Product previews">
-              <button class="active" data-screen="manager" type="button">Manager</button>
-              <button data-screen="voice" type="button">86Voice</button>
-              <button data-screen="financials" type="button">Financials</button>
-              <button data-screen="dailyclose" type="button">Daily Close</button>
-              <button data-screen="labor" type="button">Labor</button>
-              <button data-screen="schedule" type="button">Schedule</button>
-              <button data-screen="timeclock" type="button">Time Clock</button>
-              <button data-screen="prep" type="button">Prep</button>
-              <button data-screen="inventory" type="button">Inventory</button>
-              <button data-screen="menu" type="button">Menu Intel</button>
-              <button data-screen="recipes" type="button">Recipes</button>
-              <button data-screen="reminders" type="button">Reminders</button>
-              <button data-screen="alerts" type="button">86 Alerts</button>
+        <div class="flow-grid">
+          <article class="flow-card reveal">
+            <span class="step-number">1</span>
+            <h3>Run the shift</h3>
+            <div class="mini-schedule">
+              <span>8:00a <b>Prep · Sam</b></span>
+              <span>11:00a <b>Lunch · Alex</b></span>
+              <span>5:00p <b>Dinner · Luis</b></span>
+              <span>9:00p <b>Close · Pat</b></span>
             </div>
-            <button class="feature-arrow" type="button" data-tab-scroll="1" aria-label="Next features">›</button>
-          </div>
+            <ul>
+              <li>Time Clock & Schedule</li>
+              <li>Trade board and request offs</li>
+              <li>Manager visibility for the day</li>
+            </ul>
+          </article>
+          <article class="flow-card reveal delay-1">
+            <span class="step-number">2</span>
+            <h3>Protect the kitchen</h3>
+            <div class="mini-schedule inventory-mini">
+              <span>Ground Beef <b class="good">Good</b></span>
+              <span>Chicken Breast <b class="low">Low</b></span>
+              <span>Ribeye Steak <b class="out">86</b></span>
+              <span>Avocados <b class="good">Good</b></span>
+            </div>
+            <ul>
+              <li>Inventory, invoices, and vendors</li>
+              <li>Prep lists and recipe visibility</li>
+              <li>86 alerts that reach the right people</li>
+            </ul>
+          </article>
+          <article class="flow-card reveal delay-2">
+            <span class="step-number">3</span>
+            <h3>Keep the team aligned</h3>
+            <div class="mini-schedule updates-mini">
+              <span><b>Jay</b> Ribeye is out. Sub NY Strip.</span>
+              <span><b>Maria</b> Oil pan dumped.</span>
+              <span><b>Alex</b> Extra pico and rice ready.</span>
+            </div>
+            <ul>
+              <li>Message board and team updates</li>
+              <li>Personal and shared reminders</li>
+              <li>Role-based access for real kitchens</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
 
-          <div class="preview-body">
-            <div class="phone-shell" id="phoneMockup" aria-live="polite"></div>
-            <div class="screen-copy" id="screenCopy"></div>
-          </div>
+    <section class="impact section">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">The margins are thin. The impact is real.</p>
+          <h2>86 Chaos is built around the small misses that become expensive problems.</h2>
+        </div>
+        <div class="impact-grid reveal">
+          <article><strong>1</strong><span>Operations hub instead of scattered notebooks, texts, and spreadsheets.</span></article>
+          <article><strong>90</strong><span>Days free for Founder Beta restaurants. No card required.</span></article>
+          <article><strong>50%</strong><span>Off the first paid year for beta restaurants after launch.</span></article>
+          <article><strong>$100</strong><span>Referral credit for both restaurants after a successful paid referral.</span></article>
+        </div>
+      </div>
+    </section>
 
-          <div class="screenshot-grid" aria-label="More 86 Chaos screen examples">
-            <button type="button" data-screen="voice">
-              <span>86Voice</span>
-              <b>Add, update, and complete tasks by voice</b>
-            </button>
-            <button type="button" data-screen="dailyclose">
-              <span>Daily Close</span>
-              <b>Cash, cards, tips, deposits</b>
-            </button>
-            <button type="button" data-screen="labor">
-              <span>Labor Command</span>
-              <b>Overtime, punches, payroll</b>
-            </button>
-            <button type="button" data-screen="schedule">
-              <span>Schedule Builder</span>
-              <b>Coverage by roster role</b>
-            </button>
-            <button type="button" data-screen="timeclock">
-              <span>Time Clock</span>
-              <b>Clock-ins, breaks, geofence flags</b>
-            </button>
-            <button type="button" data-screen="recipes">
-              <span>Recipe Book</span>
-              <b>Kitchen standards that stay put</b>
-            </button>
-            <button type="button" data-screen="alerts">
-              <span>86 Alerts</span>
-              <b>Menu impact before guests order</b>
-            </button>
+    <section class="screenshots section" id="screenshots">
+      <div class="container screenshots-grid">
+        <div class="screenshots-copy reveal">
+          <p class="eyebrow">Real app screens</p>
+          <h2>Your team sees the work, not a software maze.</h2>
+          <p>Use 86 Chaos on phones, tablets, or desktops. The app keeps the high-pressure parts of the kitchen visible: schedules, prep, recipes, invoices, financials, maintenance, and the reminders that keep the day from unraveling.</p>
+          <div class="screenshot-tabs" role="tablist" aria-label="Screenshot selector">
+            <button class="is-active" type="button" data-shot="schedule">Schedule</button>
+            <button type="button" data-shot="prep">Prep</button>
+            <button type="button" data-shot="recipes">Recipes</button>
+            <button type="button" data-shot="inventory">Inventory</button>
+            <button type="button" data-shot="financials">Financials</button>
+            <button type="button" data-shot="maintenance">Maintenance</button>
+          </div>
+        </div>
+        <div class="phone-stage reveal delay-1">
+          <div class="phone-frame main-phone">
+            <img src="assets/schedule.webp" alt="86 Chaos Time Clock and Schedule screen" data-main-shot />
+          </div>
+          <div class="shot-notes" data-shot-notes>
+            <h3>Time Clock & Schedule</h3>
+            <p>Clock in, view shifts, request off, trade shifts, and keep the schedule in everyone’s pocket.</p>
           </div>
         </div>
       </div>
     </section>
 
-
-
-    <section class="section voice-section" id="voice">
+    <section class="beta section" id="pricing">
       <div class="container">
-        <div class="voice-card">
+        <div class="beta-panel reveal">
           <div>
-            <p class="eyebrow">Major ease-of-use feature • 86Voice</p>
-            <h2>Talk like you work. 86 Chaos turns it into action.</h2>
-            <p>
-              86Voice is built for real kitchen language, not perfect robot commands. It can add prep,
-              create tasks, match existing items, update quantities, create 86 alerts, and mark work done
-              without making the team dig through screens during the rush.
-            </p>
-          </div>
-
-          <div class="voice-examples">
-            <div>
-              <span>“Prep 2 pans of onions.”</span>
-              <b>Adds or updates onion prep</b>
-            </div>
-            <div>
-              <span>“Mark the tomatoes done.”</span>
-              <b>Finds the matching prep item and completes it</b>
-            </div>
-            <div>
-              <span>“We’re out of chicken breast.”</span>
-              <b>Creates an 86 alert and checks menu impact</b>
-            </div>
-            <div>
-              <span>“Add clean fryer wall to tasks.”</span>
-              <b>Creates a task without digging through tabs</b>
-            </div>
-          </div>
-        </div>
-
-        <div class="voice-points">
-          <article>
-            <strong>Deciphers messy kitchen language</strong>
-            <span>Understands natural phrases like pans, cases, prep, done, out of, and task requests.</span>
-          </article>
-          <article>
-            <strong>Updates instead of duplicating</strong>
-            <span>When it finds a matching prep or task item, it can update the existing row instead of making clutter.</span>
-          </article>
-          <article>
-            <strong>Marks work complete</strong>
-            <span>Voice commands can find the right prep or task item and mark it done when the work is finished.</span>
-          </article>
-          <article>
-            <strong>Respects permissions</strong>
-            <span>Voice obeys the same role, plan, and workspace rules as tapping through the app.</span>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section plans-section" id="plans">
-      <div class="container">
-        <div class="section-header center">
-          <p class="eyebrow">Plans & Founder Pricing</p>
-          <h2>Start simple. Grow into the controls you need.</h2>
-          <p>
-            Founder Beta restaurants use the app free during active beta, then receive 50% off their selected tier for 12 months.
-          </p>
-        </div>
-
-        <div class="plans-grid">
-          <article class="plan-card">
-            <div class="plan-top">
-              <span class="plan-label">Shift</span>
-              <strong>$49<small>/mo</small></strong>
-              <em>Founder: $24.50/mo</em>
-            </div>
-            <p>Basic daily organization for tiny kitchens, bars, and early teams.</p>
-            <ul>
-              <li>Prep lists and kitchen tasks</li>
-              <li>86Voice for basic prep/task commands</li>
-              <li>Messages and basic 86 alerts</li>
-              <li>Recipes and reminders</li>
-              <li>Basic schedule viewing</li>
-            </ul>
-          </article>
-
-          <article class="plan-card">
-            <div class="plan-top">
-              <span class="plan-label">Operations</span>
-              <strong>$99<small>/mo</small></strong>
-              <em>Founder: $49.50/mo</em>
-            </div>
-            <p>Run the shift with scheduling, labor, tips, and daily close workflows.</p>
-            <ul>
-              <li>Everything in Shift</li>
-              <li>Schedule Builder and Time Clock</li>
-              <li>Labor Command and Tip Center</li>
-              <li>Smarter 86Voice shift commands</li>
-              <li>Daily Close and Sales Breakdown</li>
-            </ul>
-          </article>
-
-          <article class="plan-card featured-plan">
-            <div class="plan-top">
-              <span class="plan-label">Smart Kitchen</span>
-              <strong>$179<small>/mo</small></strong>
-              <em>Founder: $89.50/mo</em>
-            </div>
-            <p>The main plan for owners who want labor, cost visibility, inventory, and menu impact in one place.</p>
-            <ul>
-              <li>Everything in Operations</li>
-              <li>Financial Center and Prime Cost snapshots</li>
-              <li>Cost Center and vendor spend visibility</li>
-              <li>86Voice intelligent prep, task, and 86 alert commands</li>
-            </ul>
-          </article>
-
-          <article class="plan-card">
-            <div class="plan-top">
-              <span class="plan-label">Owner Pro</span>
-              <strong>$299<small>/mo</small></strong>
-              <em>Founder: $149.50/mo</em>
-            </div>
-            <p>Advanced owner controls for heavier operators and future multi-location growth.</p>
-            <ul>
-              <li>Everything in Smart Kitchen</li>
-              <li>Higher AI scan limits</li>
-              <li>Advanced reports and audit exports</li>
-              <li>Priority support and onboarding placeholders</li>
-            </ul>
-          </article>
-        </div>
-
-        <div class="plan-note">
-          <strong>Integrations:</strong> POS and accounting integrations are coming soon and are not customer-facing during beta.
-          Manual workflows and reviewed imports remain the starting point.
-        </div>
-      </div>
-    </section>
-
-    <section class="section compare-section" id="comparison">
-      <div class="container">
-        <div class="section-header center">
-          <p class="eyebrow">Feature and price comparison</p>
-          <h2>Position 86 Chaos against the stack owners already pay for.</h2>
-          <p>
-            Public pricing examples are for context only. Products differ, integrations differ, and final customer fit depends on the restaurant.
-          </p>
-        </div>
-
-        <div class="comparison-table-wrap">
-          <table class="comparison-table">
-            <thead>
-              <tr>
-                <th>Feature / Price</th>
-                <th class="highlight-col">86 Chaos<br><span>Smart Kitchen</span></th>
-                <th>7shifts<br><span>Premium</span></th>
-                <th>MarginEdge</th>
-                <th>Restaurant365<br><span>Essential</span></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th>Public monthly price context</th>
-                <td class="highlight-col"><strong>$179/location</strong><small>Launch target<br>Founder: $89.50 for 12 months after beta</small></td>
-                <td><strong>$149.99/location</strong><small>+ $6/month per paid employee</small></td>
-                <td><strong>$350/location</strong><small>Monthly subscription</small></td>
-                <td><strong>$469-$499/location</strong><small>Published comparison range</small></td>
-              </tr>
-              <tr>
-                <th>Prep lists and kitchen tasks</th>
-                <td class="highlight-col yes">Yes</td>
-                <td class="partial">Tasks, not kitchen-first prep</td>
-                <td class="no">Not core</td>
-                <td class="partial">Operations dependent</td>
-              </tr>
-              <tr>
-                <th>Scheduling and time clock</th>
-                <td class="highlight-col yes">Yes</td>
-                <td class="yes">Yes</td>
-                <td class="no">No</td>
-                <td class="partial">Available in platform ecosystem</td>
-              </tr>
-              <tr>
-                <th>Team communication</th>
-                <td class="highlight-col yes">Yes</td>
-                <td class="yes">Yes</td>
-                <td class="no">Not core</td>
-                <td class="partial">Platform dependent</td>
-              </tr>
-              <tr>
-                <th>Daily close and cash variance</th>
-                <td class="highlight-col yes">Yes</td>
-                <td class="partial">Limited / not primary focus</td>
-                <td class="partial">Back-office focus</td>
-                <td class="yes">Yes</td>
-              </tr>
-              <tr>
-                <th>Invoice scanning / invoice workflow</th>
-                <td class="highlight-col yes">Yes</td>
-                <td class="no">No</td>
-                <td class="yes">Yes</td>
-                <td class="yes">Yes</td>
-              </tr>
-              <tr>
-                <th>Inventory and COGS visibility</th>
-                <td class="highlight-col yes">Yes</td>
-                <td class="no">No</td>
-                <td class="yes">Yes</td>
-                <td class="yes">Yes</td>
-              </tr>
-              <tr>
-                <th>86 alerts and menu impact alerts</th>
-                <td class="highlight-col yes">Yes</td>
-                <td class="no">No</td>
-                <td class="partial">Inventory impact, not shift-first 86 system</td>
-                <td class="partial">Platform dependent</td>
-              </tr>
-              <tr>
-                <th>Recipe and kitchen knowledge base</th>
-                <td class="highlight-col yes">Yes</td>
-                <td class="partial">Document storage</td>
-                <td class="partial">Recipes / costing focus</td>
-                <td class="yes">Yes</td>
-              </tr>
-              <tr>
-                <th>Intelligent voice commands</th>
-                <td class="highlight-col yes">86Voice for prep, tasks, 86 alerts, and completion flows</td>
-                <td class="partial">Limited task/team workflows</td>
-                <td class="no">Not core</td>
-                <td class="partial">Platform dependent</td>
-              </tr>
-              <tr>
-                <th>Best fit</th>
-                <td class="highlight-col">Independent restaurants wanting one practical kitchen + owner command center.</td>
-                <td>Restaurants focused on labor, scheduling, payroll, and team management.</td>
-                <td>Restaurants focused on invoices, food cost, inventory, and back-office control.</td>
-                <td>Operators needing a larger accounting and operations platform.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <p class="table-note">
-          Source links: 
-          <a href="https://www.7shifts.com/pricing/" target="_blank" rel="noreferrer">7shifts pricing</a>,
-          <a href="https://www.marginedge.com/pricing/" target="_blank" rel="noreferrer">MarginEdge pricing</a>,
-          <a href="https://www.restaurant365.com/blog/restaurant-operations-platform-cost-comparison-r365-vs-alternatives/" target="_blank" rel="noreferrer">Restaurant365 comparison</a>.
-          Comparison is based on public information and high-level product categories, not a feature-by-feature certification.
-        </p>
-      </div>
-    </section>
-
-    <section class="section beta-section" id="beta">
-      <div class="container">
-        <div class="beta-card">
-          <div>
-            <img src="/assets/86chaos-logo.png" alt="86 Chaos Kitchen Management OS" class="beta-logo" />
             <p class="eyebrow">Founder Beta</p>
-            <h2>Help shape the tool your kitchen would actually use.</h2>
-            <p>
-              Founder Beta is planned for 90 days.
-              Early restaurants use the app free during active beta and receive 50% off their selected tier
-              for 12 months after beta.
-            </p>
-            <div class="beta-perks">
-              <span>Free during active beta</span>
-              <span>Limited spots</span>
-              <span>Built in a real kitchen</span>
+            <h2>Built with you, for you.</h2>
+            <p>We’re looking for independent restaurants, bars, and kitchens that want to help shape 86 Chaos before full launch.</p>
+          </div>
+          <a class="button" href="#apply">Apply for Founder Beta</a>
+        </div>
+        <div class="benefit-grid reveal delay-1">
+          <article><i data-icon="clock"></i><h3>90 days free</h3><p>Use the beta without a credit card.</p></article>
+          <article><i data-icon="tag"></i><h3>50% off year one</h3><p>Founder Beta restaurants receive 50% off their first paid year.</p></article>
+          <article><i data-icon="spark"></i><h3>First access</h3><p>Get early access to new features in your selected plan.</p></article>
+          <article><i data-icon="chat"></i><h3>Direct feedback</h3><p>Tell us what works, what is missing, and what should change.</p></article>
+          <article><i data-icon="card"></i><h3>No credit card</h3><p>No payment required during Founder Beta.</p></article>
+          <article><i data-icon="team"></i><h3>Referral rewards</h3><p>Give $100, get $100 after the referred restaurant becomes a paying customer.</p></article>
+        </div>
+
+        <div class="pricing-wrap" id="plans">
+          <div class="section-heading reveal">
+            <p class="eyebrow">Planned launch pricing</p>
+            <h2>Simple plans per location.</h2>
+            <p>Annual plans available: get 2 months free. Founder Beta restaurants get 50% off the first paid year.</p>
+          </div>
+          <div class="pricing-grid">
+            <article class="price-card reveal">
+              <h3>Shift</h3>
+              <p class="price">$49<span>/month</span></p>
+              <p class="per">per location</p>
+              <ul>
+                <li>Time Clock & Schedule</li>
+                <li>My Schedule and Full Schedule</li>
+                <li>Team visibility</li>
+                <li>Basic reminders</li>
+              </ul>
+            </article>
+            <article class="price-card reveal delay-1">
+              <h3>Operations</h3>
+              <p class="price">$99<span>/month</span></p>
+              <p class="per">per location</p>
+              <ul>
+                <li>Everything in Shift</li>
+                <li>Manager Brief</li>
+                <li>Message Board</li>
+                <li>Tasks and reminders</li>
+              </ul>
+            </article>
+            <article class="price-card featured reveal delay-2">
+              <div class="popular">Most beta teams start here</div>
+              <h3>Smart Kitchen</h3>
+              <p class="price">$179<span>/month</span></p>
+              <p class="per">per location</p>
+              <ul>
+                <li>Everything in Operations</li>
+                <li>Prep, inventory, and invoices</li>
+                <li>86 alerts and menu impact</li>
+                <li>Recipe and menu tools</li>
+              </ul>
+            </article>
+            <article class="price-card reveal delay-3">
+              <h3>Owner Pro</h3>
+              <p class="price">$299<span>/month</span></p>
+              <p class="per">per location</p>
+              <ul>
+                <li>Everything in Smart Kitchen</li>
+                <li>Financials and reports</li>
+                <li>Advanced admin controls</li>
+                <li>Priority support</li>
+              </ul>
+            </article>
+          </div>
+          <div class="referral-box reveal">
+            <div>
+              <h3>Referral Program</h3>
+              <p>Refer another restaurant that becomes a paying customer and both restaurants receive a <strong>$100 account credit</strong>.</p>
+            </div>
+            <div>
+              <h3>Founder Loyalty</h3>
+              <p>Active beta restaurants with 2 successful paid referrals may qualify for <strong>25% off year two</strong>.</p>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
 
-          <form class="beta-form" id="betaForm">
-            <label>
-              Your name
-              <input name="name" required placeholder="Alex Rivera" autocomplete="name" />
-            </label>
-            <label>
-              Restaurant
-              <input name="restaurant" required placeholder="Ridge & Rail Tavern" />
-            </label>
-            <label>
-              Email
-              <input name="email" type="email" required placeholder="owner@example.com" autocomplete="email" />
-            </label>
-            <label>
-              Biggest headache
-              <textarea name="headache" rows="3" placeholder="Prep gets missed, inventory is messy, daily close takes forever..."></textarea>
-            </label>
-            <button class="btn primary full" type="submit">Apply for Founder Beta</button>
-            <p class="form-status" id="formStatus" role="status"></p>
-          </form>
+    <section class="apply section" id="apply">
+      <div class="container apply-grid">
+        <div class="apply-copy reveal">
+          <p class="eyebrow">Apply for Founder Beta</p>
+          <h2>Less chaos. More control. Build the restaurant you’re proud of.</h2>
+          <p>Tell us a little about your restaurant and what part of the daily operation gives your team the most trouble. The first beta wave is focused on independent kitchens that want practical tools, not bloated corporate software.</p>
+          <div class="domain-card">
+            <img src="assets/brand-horizontal.png" alt="86 Chaos" />
+            <span>86chaos.com</span>
+          </div>
+        </div>
+        <form class="beta-form reveal delay-1" id="betaForm" method="POST" action="/api/beta-application" data-beta-form data-endpoint="/api/beta-application">
+          <label>
+            Your name
+            <input name="name" type="text" autocomplete="name" placeholder="Alex Rivera" required />
+          </label>
+          <label>
+            Restaurant / bar name
+            <input name="restaurant" type="text" autocomplete="organization" placeholder="Ridge & Rail Tavern" required />
+          </label>
+          <label>
+            City and state
+            <input name="location" type="text" placeholder="Chilton, WI" required />
+          </label>
+          <label>
+            Email
+            <input name="email" type="email" autocomplete="email" placeholder="owner@example.com" required />
+          </label>
+          <label>
+            Phone <span class="optional-label">optional</span>
+            <input name="phone" type="tel" autocomplete="tel" placeholder="(920) 555-0186" />
+          </label>
+          <label>
+            Biggest headache right now
+            <select name="headache" required>
+              <option value="">Choose one</option>
+              <option>Prep and daily tasks</option>
+              <option>Scheduling and time clock</option>
+              <option>Inventory and invoices</option>
+              <option>86 alerts and communication</option>
+              <option>Financials and reporting</option>
+              <option>Maintenance and reminders</option>
+              <option>Something else</option>
+            </select>
+          </label>
+          <label>
+            Anything we should know?
+            <textarea name="message" rows="4" placeholder="Tell us what kind of kitchen you run and what you want fixed."></textarea>
+          </label>
+          <label class="honeypot" aria-hidden="true">
+            Leave this field blank
+            <input name="website" type="text" tabindex="-1" autocomplete="off" />
+          </label>
+          <button class="button" type="submit" data-submit-text="Send beta request">Send beta request</button>
+          <p class="form-note">This form sends through the built-in Vercel API route in this repo. No Formspree placeholder needed.</p>
+          <p class="form-status" role="status" aria-live="polite" data-form-status></p>
+        </form>
+      </div>
+    </section>
+
+    <section class="faq section" id="faq">
+      <div class="container faq-grid">
+        <div class="section-heading reveal">
+          <p class="eyebrow">FAQ</p>
+          <h2>Quick answers before the rush hits.</h2>
+        </div>
+        <div class="accordion reveal delay-1">
+          <details open>
+            <summary>Is Founder Beta really free?</summary>
+            <p>Yes. Founder Beta includes 90 days free with no credit card required.</p>
+          </details>
+          <details>
+            <summary>What happens after beta?</summary>
+            <p>Beta restaurants can choose a plan and receive 50% off their first paid year after launch.</p>
+          </details>
+          <details>
+            <summary>Does 86 Chaos replace my POS?</summary>
+            <p>No. 86 Chaos is built for the operational work around the POS: prep, schedules, 86 alerts, recipes, reminders, inventory, team updates, and manager visibility.</p>
+          </details>
+          <details>
+            <summary>Can my team use it on phones?</summary>
+            <p>Yes. 86 Chaos is designed for phones, tablets, and desktops so the team can use it where the work happens.</p>
+          </details>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="container footer-inner">
-      <img src="/assets/86chaos-logo.png" alt="86 Chaos Kitchen Management OS" />
-      <p>Built by a working kitchen manager for independent restaurants.</p>
-      <small>© 2026 Chilton App Works. All rights reserved.</small>
-      <small>Public pricing and industry sources are linked in-page. Update claims if vendors change pricing before final launch.</small>
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <img src="assets/brand-horizontal.png" alt="86 Chaos" />
+        <p>The operations hub for independent restaurants.</p>
+      </div>
+      <div>
+        <h3>Product</h3>
+        <a href="#features">Features</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#screenshots">App Screens</a>
+      </div>
+      <div>
+        <h3>Company</h3>
+        <a href="#apply">Apply</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div>
+        <h3>Resources</h3>
+        <a href="#apply">Founder Beta</a>
+        <a href="https://86chaos.com" rel="noopener">86chaos.com</a>
+        <p>© <span data-year></span> Chilton App Works LLC</p>
+      </div>
     </div>
   </footer>
 

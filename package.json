@@ -1,12 +1,15 @@
 {
-  "name": "86chaos-marketing-site",
+  "name": "86chaos-landing-site",
   "version": "1.0.0",
   "private": true,
-  "type": "module",
+  "description": "Static landing page for 86 Chaos Founder Beta.",
   "scripts": {
-    "start": "vercel dev"
+    "start": "vite --host 0.0.0.0",
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0"
   },
-  "dependencies": {
-    "resend": "^4.0.0"
+  "devDependencies": {
+    "vite": "latest"
   }
 }
