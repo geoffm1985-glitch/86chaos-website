@@ -181,3 +181,11 @@ Review public claims before launch if vendor or industry data changes.
 - Removed small release-note-style website copy such as navigation move details and bug-report/admin plumbing.
 - Reframed app alignment into customer-facing sales language: time savings, smarter ordering, prep accountability, 86Voice, Menu Intelligence, Manager Brief, inventory visibility, and human-approved AI.
 - Kept important legal/safety boundaries, but moved away from internal implementation details on the public pages.
+
+## Latest AI-first full website update
+
+- Reworked the pricing page so the AI value is front and center.
+- Rebuilt tier cards to clearly position Shift, Operations, Smart Kitchen, and Owner Pro.
+- Added an AI-by-tier comparison table.
+- Made Smart Kitchen the primary AI/value tier and Owner Pro the advanced intelligence tier.
+- Updated pricing comparison, ROI, Home, Features, AI Tools, AI Ordering, 86Voice, How It Works, Product Tour, Beta, FAQ, and All Features to sell AI-assisted ordering, Python Forecast, Menu Intelligence, invoice intelligence, price warnings, waste/par insights, prep prediction, Manager Brief intelligence, and human-approved AI.

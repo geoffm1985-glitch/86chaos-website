@@ -917,3 +917,74 @@ h2 {
     grid-template-columns: 1fr;
   }
 }
+
+
+/* AI-first pricing and sales updates */
+.ai-pricing-hero,
+.ai-tier-breakdown,
+.ai-roi-section,
+.tier-position-section,
+.smart-kitchen-pitch,
+.ai-first-strip {
+  background:
+    radial-gradient(circle at 10% 0%, rgba(201,143,109,.10), transparent 24rem),
+    radial-gradient(circle at 92% 8%, rgba(68,212,151,.075), transparent 26rem);
+}
+.pricing-tier-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+.plan-card.featured {
+  border-color: rgba(68,212,151,.38);
+  box-shadow: 0 18px 60px rgba(68,212,151,.08);
+}
+.best-badge {
+  display: inline-flex;
+  width: fit-content;
+  margin: 8px 0;
+  padding: 5px 9px;
+  border-radius: 999px;
+  font-size: .72rem;
+  font-weight: 900;
+  color: #dffbed;
+  background: rgba(68,212,151,.14);
+  border: 1px solid rgba(68,212,151,.26);
+}
+.tier-ai-note {
+  margin-top: 12px;
+  padding: 10px;
+  border-radius: 12px;
+  font-size: .8rem;
+  font-weight: 850;
+}
+.muted-note {
+  color: var(--muted);
+  background: rgba(255,255,255,.045);
+  border: 1px solid rgba(255,255,255,.08);
+}
+.strong-note {
+  color: #dffbed;
+  background: rgba(68,212,151,.12);
+  border: 1px solid rgba(68,212,151,.24);
+}
+.ai-tier-table-wrap {
+  overflow-x: auto;
+}
+.ai-tier-table th,
+.ai-tier-table td {
+  min-width: 155px;
+}
+.legal-lite-section {
+  padding-top: 16px;
+}
+@media (max-width: 1100px) {
+  .pricing-tier-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 720px) {
+  .pricing-tier-grid {
+    grid-template-columns: 1fr;
+  }
+}
