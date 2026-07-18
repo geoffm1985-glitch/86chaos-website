@@ -19,16 +19,24 @@ function emailLooksValid(email) {
 
 async function readBody(req) {
   if (req.body && typeof req.body === 'object') return req.body;
+  if (typeof req.body === 'string') {
+    const type = req.headers['content-type'] || '';
+    if (type.includes('application/x-www-form-urlencoded')) {
+      return Object.fromEntries(new URLSearchParams(req.body));
+    }
+    try { return JSON.parse(req.body || '{}'); } catch { return {}; }
+  }
 
   const chunks = [];
   for await (const chunk of req) chunks.push(Buffer.from(chunk));
   const raw = Buffer.concat(chunks).toString('utf8');
+  const type = req.headers['content-type'] || '';
 
-  try {
-    return JSON.parse(raw || '{}');
-  } catch {
-    return {};
+  if (type.includes('application/x-www-form-urlencoded')) {
+    return Object.fromEntries(new URLSearchParams(raw));
   }
+
+  try { return JSON.parse(raw || '{}'); } catch { return {}; }
 }
 
 module.exports = async function handler(req, res) {
@@ -44,7 +52,6 @@ module.exports = async function handler(req, res) {
 
   const body = await readBody(req);
 
-  // Honeypot spam trap. Pretend success so bots do not learn anything.
   if (body.website) {
     return res.status(200).json({ ok: true, message: 'Thanks. Your beta request was sent.' });
   }
@@ -55,6 +62,7 @@ module.exports = async function handler(req, res) {
     location: clean(body.location),
     email: clean(body.email).toLowerCase(),
     phone: clean(body.phone),
+    plan: clean(body.plan),
     headache: clean(body.headache || body.pain_point),
     message: clean(body.message),
     submittedAt: new Date().toISOString(),
@@ -75,7 +83,7 @@ module.exports = async function handler(req, res) {
   }
 
   const to = process.env.BETA_TO_EMAIL;
-  const from = process.env.BETA_FROM_EMAIL || '86 Chaos Beta <onboarding@resend.dev>';
+  const from = process.env.BETA_FROM_EMAIL || '86 Chaos Founder Beta <onboarding@resend.dev>';
   const resendKey = process.env.RESEND_API_KEY;
 
   if (!to || !resendKey) {
@@ -86,7 +94,7 @@ module.exports = async function handler(req, res) {
     });
   }
 
-  const subject = `86 Chaos Founder Beta request — ${submission.restaurant}`;
+  const subject = `86 Chaos Founder Beta request: ${submission.restaurant}`;
   const text = [
     'New 86 Chaos Founder Beta request',
     '',
@@ -95,6 +103,7 @@ module.exports = async function handler(req, res) {
     `Location: ${submission.location}`,
     `Email: ${submission.email}`,
     `Phone: ${submission.phone || 'Not provided'}`,
+    `Plan: ${submission.plan || 'Not sure yet'}`,
     `Biggest headache: ${submission.headache}`,
     '',
     'Message:',
@@ -105,13 +114,14 @@ module.exports = async function handler(req, res) {
 
   const html = `
     <div style="font-family:Arial,sans-serif;line-height:1.5;color:#17202a;max-width:680px">
-      <h2 style="margin:0 0 12px;color:#c65327">New 86 Chaos Founder Beta request</h2>
+      <h2 style="margin:0 0 12px;color:#c98f6d">New 86 Chaos Founder Beta request</h2>
       <table style="border-collapse:collapse;width:100%">
         <tr><td style="padding:8px;border-bottom:1px solid #eee"><strong>Name</strong></td><td style="padding:8px;border-bottom:1px solid #eee">${escapeHtml(submission.name)}</td></tr>
         <tr><td style="padding:8px;border-bottom:1px solid #eee"><strong>Restaurant</strong></td><td style="padding:8px;border-bottom:1px solid #eee">${escapeHtml(submission.restaurant)}</td></tr>
         <tr><td style="padding:8px;border-bottom:1px solid #eee"><strong>Location</strong></td><td style="padding:8px;border-bottom:1px solid #eee">${escapeHtml(submission.location)}</td></tr>
         <tr><td style="padding:8px;border-bottom:1px solid #eee"><strong>Email</strong></td><td style="padding:8px;border-bottom:1px solid #eee"><a href="mailto:${escapeHtml(submission.email)}">${escapeHtml(submission.email)}</a></td></tr>
         <tr><td style="padding:8px;border-bottom:1px solid #eee"><strong>Phone</strong></td><td style="padding:8px;border-bottom:1px solid #eee">${escapeHtml(submission.phone || 'Not provided')}</td></tr>
+        <tr><td style="padding:8px;border-bottom:1px solid #eee"><strong>Plan</strong></td><td style="padding:8px;border-bottom:1px solid #eee">${escapeHtml(submission.plan || 'Not sure yet')}</td></tr>
         <tr><td style="padding:8px;border-bottom:1px solid #eee"><strong>Biggest headache</strong></td><td style="padding:8px;border-bottom:1px solid #eee">${escapeHtml(submission.headache)}</td></tr>
       </table>
       <h3 style="margin:18px 0 8px">Message</h3>

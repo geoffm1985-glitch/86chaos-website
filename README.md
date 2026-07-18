@@ -1,60 +1,46 @@
-# 86 Chaos Landing Site
+# 86 Chaos Landing Website
 
-A GitHub/Vercel-ready landing page for 86 Chaos using the brand assets and real app screenshots you supplied.
+This is a compact, multi-page static/Vercel website for 86 Chaos using the user's actual logo files and actual uploaded app screenshots. The generic generated dashboard artwork has been removed.
 
-## What's included
+## Pages
 
-- `index.html` — landing page with hero, app screenshots, feature sections, Founder Beta pricing, referral offer, FAQ, and application form.
-- `styles.css` — responsive dark/copper design.
-- `script.js` — mobile menu, screenshot switcher, reveal animations, and built-in beta form submission.
-- `api/beta-application.js` — Vercel serverless function that emails Founder Beta applications.
-- `assets/` — optimized logo and app screenshot assets.
-- `package.json` / `vercel.json` — ready for Vercel deployment from GitHub.
+- `index.html` — compact home page
+- `features.html` — feature overview
+- `how-it-works.html` — workflow explanation
+- `screenshots.html` — interactive real app screenshot demo buttons
+- `pricing.html` — Founder Beta pricing, annual billing, referral credit, loyalty option
+- `faq.html` — quick beta questions
+- `beta.html` — beta application form
 
-## How the email form works
+## Email form
 
-The form posts to:
+The beta form posts to:
 
 ```txt
 /api/beta-application
 ```
 
-That API route sends an email using Resend. This keeps the form built into your website instead of using a placeholder Formspree URL.
-
-## Vercel environment variables needed
-
-In Vercel, open the project and go to **Settings → Environment Variables**. Add these:
+The API route sends through Resend. Do **not** hardcode private API keys into public GitHub code. Add these environment variables in Vercel instead:
 
 ```txt
 RESEND_API_KEY=your_resend_api_key
-BETA_TO_EMAIL=where_you_want_beta_requests_sent@example.com
-BETA_FROM_EMAIL=86 Chaos <hello@your-verified-domain.com>
+BETA_TO_EMAIL=your_destination_email
+BETA_FROM_EMAIL=86 Chaos Founder Beta <onboarding@your-verified-domain.com>
 ```
 
-`BETA_FROM_EMAIL` must be a sender/domain that Resend allows. If you do not set it, the route uses `86 Chaos Beta <onboarding@resend.dev>`, which is only good for quick testing in some Resend accounts.
+`BETA_FROM_EMAIL` should use a domain verified in Resend. During quick testing, Resend may allow `onboarding@resend.dev`, depending on your account restrictions.
 
-## How to upload to GitHub and deploy
+## Deploy through GitHub + Vercel
 
-1. Create or open your website repository on GitHub.
-2. Upload all files and folders from this ZIP to the repository root.
-3. Connect the repo to Vercel or redeploy your existing Vercel project.
-4. Add the environment variables above in Vercel.
-5. Submit a test beta request from the live site.
-
-## Founder Beta / pricing content included
-
-- 90 days free
-- No credit card required
-- 50% off first paid year
-- Annual plans available: get 2 months free
-- Referral program: both restaurants receive a $100 account credit after a successful paid referral
-- Founder loyalty: active beta restaurants with 2 successful paid referrals may qualify for 25% off year two
-- Planned tiers:
-  - Shift — $49/month per location
-  - Operations — $99/month per location
-  - Smart Kitchen — $179/month per location
-  - Owner Pro — $299/month per location
+1. Unzip this folder.
+2. Upload/commit the files to your GitHub website repo.
+3. In Vercel, import the repo or let your existing Vercel project redeploy.
+4. Add the env vars above in Vercel Project Settings → Environment Variables.
+5. Redeploy after adding env vars.
+6. Test the beta form from the live Vercel URL.
 
 ## Notes
 
-This is a static frontend with one Vercel API route. GitHub Pages alone cannot send email from a form because it does not run backend code. Deploy through Vercel for the built-in email form to work.
+- The screenshot selector works with plain JavaScript in `script.js`.
+- Screenshots were cropped/cleaned for public marketing so they read like active restaurant workflows and do not show the preview mic badge.
+- Pricing and beta language should be reviewed before launch.

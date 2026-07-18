@@ -1,15 +1,9 @@
 {
-  "name": "86chaos-landing-site",
+  "name": "86chaos-multipage-website",
   "version": "1.0.0",
   "private": true,
-  "description": "Static landing page for 86 Chaos Founder Beta.",
   "scripts": {
-    "start": "vite --host 0.0.0.0",
-    "dev": "vite --host 0.0.0.0",
-    "build": "vite build",
-    "preview": "vite preview --host 0.0.0.0"
-  },
-  "devDependencies": {
-    "vite": "latest"
+    "start": "npx serve .",
+    "lint:html": "echo \"Static site, no build step required.\""
   }
 }
