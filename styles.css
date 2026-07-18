@@ -988,3 +988,157 @@ h2 {
     grid-template-columns: 1fr;
   }
 }
+
+
+/* V19 professional pricing polish */
+.tier-overview-section,
+.ai-tier-breakdown,
+.ai-roi-section,
+.pricing-model-section {
+  background:
+    radial-gradient(circle at 10% 0%, rgba(201,143,109,.075), transparent 24rem),
+    radial-gradient(circle at 94% 4%, rgba(68,212,151,.055), transparent 26rem);
+}
+.professional-tier-cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+.tier-summary {
+  padding: 18px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.035));
+  border: 1px solid rgba(255,255,255,.11);
+  box-shadow: 0 18px 52px rgba(0,0,0,.18);
+}
+.tier-summary.recommended {
+  border-color: rgba(68,212,151,.35);
+  background:
+    linear-gradient(180deg, rgba(68,212,151,.10), rgba(255,255,255,.04));
+}
+.tier-kicker {
+  display: inline-flex;
+  margin-bottom: 10px;
+  color: var(--copper-2);
+  font-size: .72rem;
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.tier-summary h3 {
+  margin: 0 0 8px;
+  font-size: 1.35rem;
+}
+.tier-summary p {
+  color: var(--muted);
+  font-size: .9rem;
+}
+.tier-matrix-wrap {
+  overflow-x: auto;
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,.11);
+  background: rgba(8,12,16,.72);
+  box-shadow: 0 24px 70px rgba(0,0,0,.24);
+}
+.tier-matrix {
+  width: 100%;
+  min-width: 980px;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.tier-matrix th,
+.tier-matrix td {
+  padding: 16px 14px;
+  border-bottom: 1px solid rgba(255,255,255,.075);
+  border-right: 1px solid rgba(255,255,255,.055);
+  vertical-align: middle;
+}
+.tier-matrix thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  color: var(--text);
+  background: rgba(17,24,31,.96);
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  text-align: left;
+}
+.tier-matrix thead th:not(:first-child),
+.tier-matrix tbody td {
+  text-align: center;
+}
+.tier-matrix td:first-child {
+  width: 34%;
+  text-align: left;
+}
+.tier-matrix td:first-child span {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: .78rem;
+  line-height: 1.45;
+}
+.tier-matrix .smart-col {
+  background: linear-gradient(180deg, rgba(201,143,109,.14), rgba(68,212,151,.07));
+  border-left: 1px solid rgba(231,186,145,.38);
+  border-right: 1px solid rgba(231,186,145,.25);
+}
+.tier-matrix .group-row th {
+  padding: 11px 14px;
+  color: var(--copper-2);
+  background: rgba(201,143,109,.09);
+  font-size: .72rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 88px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  font-size: .76rem;
+  font-weight: 900;
+  border: 1px solid rgba(255,255,255,.10);
+}
+.status.included {
+  color: #dffbed;
+  background: rgba(68,212,151,.12);
+  border-color: rgba(68,212,151,.24);
+}
+.status.enhanced {
+  color: #fff5e7;
+  background: rgba(201,143,109,.16);
+  border-color: rgba(231,186,145,.28);
+}
+.status.basic,
+.status.limited {
+  color: var(--copper-2);
+  background: rgba(201,143,109,.10);
+  border-color: rgba(231,186,145,.18);
+}
+.status.not-included {
+  color: rgba(232,238,244,.58);
+  background: rgba(255,255,255,.045);
+}
+.polished-market-table th,
+.polished-market-table td {
+  padding: 15px 14px;
+}
+.polished-market-table td {
+  line-height: 1.5;
+}
+@media (max-width: 1100px) {
+  .professional-tier-cards,
+  .pricing-tier-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 720px) {
+  .professional-tier-cards,
+  .pricing-tier-grid {
+    grid-template-columns: 1fr;
+  }
+}

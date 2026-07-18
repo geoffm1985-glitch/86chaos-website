@@ -189,3 +189,11 @@ Review public claims before launch if vendor or industry data changes.
 - Added an AI-by-tier comparison table.
 - Made Smart Kitchen the primary AI/value tier and Owner Pro the advanced intelligence tier.
 - Updated pricing comparison, ROI, Home, Features, AI Tools, AI Ordering, 86Voice, How It Works, Product Tour, Beta, FAQ, and All Features to sell AI-assisted ordering, Python Forecast, Menu Intelligence, invoice intelligence, price warnings, waste/par insights, prep prediction, Manager Brief intelligence, and human-approved AI.
+
+## Latest pricing professionalism pass
+
+- Removed internal/silly customer-facing language such as “this is where pricing sells the app,” “sales point,” and “upgrade reason.”
+- Rebuilt the Pricing page with professional copy.
+- Moved the actual pricing cards to the bottom of the page, directly above the beta/legal note.
+- Replaced the AI tier chart with a cleaner professional tier matrix.
+- Kept Smart Kitchen and Owner Pro positioned as the strongest AI/intelligence plans.
