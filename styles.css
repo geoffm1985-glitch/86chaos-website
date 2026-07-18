@@ -401,154 +401,107 @@ h3, .nav-links, .button, .eyebrow, .plan-name, .compare-label, .founder-price {
   font-family: "Source Sans 3", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-/* Clean pricing comparison rebuild that makes 86 Chaos the clear winner */
-.winner-callout {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-  padding: 18px;
-  margin-bottom: 14px;
-  border: 1px solid rgba(231,186,145,.36);
-  border-radius: 18px;
+
+/* Uploaded-site style comparison table restored */
+.compare-section {
   background:
-    radial-gradient(circle at 0% 0%, rgba(201,143,109,.20), transparent 22rem),
-    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.025));
-  box-shadow: 0 18px 50px rgba(0,0,0,.24);
+    radial-gradient(circle at 8% 0%, rgba(201,143,109,.12), transparent 24rem),
+    rgba(255,255,255,.015);
 }
-.winner-callout h3 {
-  font-size: 1.22rem;
-  margin-bottom: 6px;
-}
-.winner-callout p {
-  margin: 0;
-  color: var(--muted);
-  max-width: 760px;
-  font-size: .88rem;
-}
-.simple-compare-wrap {
+.comparison-table-wrap {
   overflow-x: auto;
-  border: 1px solid rgba(231,186,145,.22);
+  border: 1px solid rgba(231,186,145,.24);
   border-radius: 18px;
-  background: rgba(5,8,12,.50);
-  box-shadow: 0 18px 50px rgba(0,0,0,.22);
+  background: rgba(5,8,12,.52);
+  box-shadow: 0 18px 52px rgba(0,0,0,.26);
 }
-.simple-compare-table {
+.comparison-table {
   width: 100%;
   min-width: 1040px;
-  border-collapse: separate;
-  border-spacing: 0;
-  font-size: .84rem;
+  border-collapse: collapse;
+  font-size: .8rem;
 }
-.simple-compare-table th {
+.comparison-table th,
+.comparison-table td {
+  padding: 10px 11px;
+  border-bottom: 1px solid rgba(255,255,255,.075);
+  border-right: 1px solid rgba(255,255,255,.055);
+  vertical-align: top;
+  text-align: left;
+}
+.comparison-table th:last-child,
+.comparison-table td:last-child {
+  border-right: 0;
+}
+.comparison-table tr:last-child th,
+.comparison-table tr:last-child td {
+  border-bottom: 0;
+}
+.comparison-table thead th {
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 2;
   background: #111922;
   color: var(--text);
-  text-align: left;
-  padding: 12px 13px;
   font-size: .72rem;
+  line-height: 1.22;
   text-transform: uppercase;
-  letter-spacing: .08em;
-  border-bottom: 1px solid rgba(255,255,255,.11);
+  letter-spacing: .075em;
 }
-.simple-compare-table td {
+.comparison-table thead th span {
+  display: block;
   color: var(--muted);
-  padding: 14px 13px;
-  border-bottom: 1px solid rgba(255,255,255,.075);
-  vertical-align: top;
+  font-size: .68rem;
+  text-transform: none;
+  letter-spacing: 0;
+  margin-top: 3px;
 }
-.simple-compare-table tr:last-child td { border-bottom: 0; }
-.simple-compare-table td:first-child {
-  width: 15%;
+.comparison-table tbody th {
+  width: 190px;
+  color: var(--text);
+  background: rgba(255,255,255,.035);
+  font-weight: 900;
 }
-.simple-compare-table td:nth-child(2) {
-  width: 17%;
+.comparison-table td {
+  color: var(--muted);
+  line-height: 1.32;
 }
-.simple-compare-table td:first-child strong,
-.simple-compare-table td:nth-child(2) strong {
+.comparison-table td strong {
   display: block;
   color: var(--text);
-  font-size: 1rem;
+  font-size: .96rem;
   margin-bottom: 3px;
 }
-.simple-compare-table td:first-child span,
-.simple-compare-table td:nth-child(2) span {
+.comparison-table td small {
   display: block;
   color: var(--muted);
-  font-size: .76rem;
-}
-.simple-compare-table .our-row {
-  background:
-    linear-gradient(90deg, rgba(201,143,109,.20), rgba(201,143,109,.07) 48%, rgba(255,255,255,.025));
-  box-shadow: inset 4px 0 0 var(--copper-2);
-}
-.simple-compare-table .our-row td {
-  color: #eadbd0;
-}
-.simple-compare-table .our-row td:first-child strong,
-.simple-compare-table .our-row td:nth-child(2) strong {
-  color: var(--copper-2);
-  font-size: 1.08rem;
-}
-.fit-high, .fit-mid, .fit-low {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2px 8px;
-  border-radius: 999px;
-  margin: 0 6px 8px 0;
   font-size: .72rem;
-  line-height: 1.45;
-  font-weight: 950;
-}
-.fit-high { color: #071017; background: var(--green); }
-.fit-mid { color: #071017; background: var(--copper-2); }
-.fit-low { color: var(--text); background: rgba(255,255,255,.14); }
-.best-fit {
-  display: block;
-  color: var(--copper-2);
-  font-size: .94rem;
   line-height: 1.25;
 }
-.feature-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  min-width: 230px;
+.comparison-table .highlight-col {
+  background: linear-gradient(180deg, rgba(201,143,109,.16), rgba(201,143,109,.055));
+  color: #f4e6dc;
 }
-.feature-tags span {
-  display: inline-flex;
-  border: 1px solid rgba(231,186,145,.38);
-  background: rgba(201,143,109,.13);
-  color: var(--text);
-  border-radius: 999px;
-  padding: 3px 7px;
-  font-size: .72rem;
+.comparison-table thead .highlight-col {
+  background: linear-gradient(180deg, rgba(231,186,145,.26), rgba(201,143,109,.14));
+  color: var(--copper-2);
+}
+.comparison-table tbody td.highlight-col {
+  box-shadow: inset 3px 0 0 rgba(231,186,145,.62);
+}
+.comparison-table .yes {
+  color: var(--green);
+  font-weight: 950;
+}
+.comparison-table .partial {
+  color: var(--copper-2);
   font-weight: 850;
 }
-.muted-tags span {
-  border-color: rgba(255,255,255,.12);
-  background: rgba(255,255,255,.045);
+.comparison-table .no {
+  color: rgba(167,179,195,.75);
+}
+.table-note {
   color: var(--muted);
-}
-.why-wins-grid {
-  display: grid;
-  grid-template-columns: 1.2fr repeat(2, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 14px;
-}
-.winner-note {
-  border-color: rgba(231,186,145,.38);
-  background: linear-gradient(180deg, rgba(201,143,109,.14), rgba(255,255,255,.025));
-}
-@media (max-width: 920px) {
-  .winner-callout {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-  .why-wins-grid {
-    grid-template-columns: 1fr;
-  }
+  font-size: .78rem;
+  margin-top: 10px;
 }

@@ -99,3 +99,9 @@ Review public claims before launch if vendor or industry data changes.
 - Rebuilt the pricing comparison so prices are in one clear column.
 - Repositioned the chart to make 86 Chaos the obvious best fit for daily independent kitchen operations.
 - Updated the whole site to use Source Sans 3 with Source Serif 4 headings for a more professional feel.
+
+## Latest comparison fix
+
+- Restored the comparison chart to match the table structure from the uploaded website.
+- Moved that restored comparison table above the 86 Chaos tier cards.
+- Removed the experimental comparison card/matrix layouts.
