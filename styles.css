@@ -25,7 +25,7 @@ body {
     radial-gradient(circle at 90% 6%, rgba(85,116,155,.12), transparent 24rem),
     linear-gradient(180deg, #070b0f 0%, #0b1117 48%, #070b0f 100%);
   color: var(--text);
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: "Source Sans 3", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height: 1.45;
   min-height: 100vh;
 }
@@ -388,117 +388,167 @@ input, textarea, select { font-size: .84rem; padding: 8px 9px; }
 }
 
 
-/* Polished pricing comparison rebuild */
-.comparison-cards {
-  display: grid;
-  grid-template-columns: 1.15fr repeat(4, minmax(0, 1fr));
-  gap: 10px;
-  margin: 16px 0 14px;
+/* Professional font refresh */
+body {
+  font-family: "Source Sans 3", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-feature-settings: "kern" 1, "liga" 1;
 }
-.compare-card {
-  border: 1px solid var(--line);
-  border-radius: 15px;
-  padding: 13px;
-  background: linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.025));
-  min-height: 172px;
+h1, h2 {
+  font-family: "Source Serif 4", Georgia, serif;
+  letter-spacing: -.025em;
+}
+h3, .nav-links, .button, .eyebrow, .plan-name, .compare-label, .founder-price {
+  font-family: "Source Sans 3", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Clean pricing comparison rebuild that makes 86 Chaos the clear winner */
+.winner-callout {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: space-between;
+  gap: 18px;
+  padding: 18px;
+  margin-bottom: 14px;
+  border: 1px solid rgba(231,186,145,.36);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(201,143,109,.20), transparent 22rem),
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.025));
+  box-shadow: 0 18px 50px rgba(0,0,0,.24);
 }
-.compare-card.featured-compare {
-  border-color: rgba(231,186,145,.62);
-  background: linear-gradient(180deg, rgba(201,143,109,.18), rgba(255,255,255,.035));
-  box-shadow: 0 18px 46px rgba(0,0,0,.24);
-}
-.compare-label {
-  display: block;
-  color: var(--copper-2);
-  font-size: .72rem;
-  font-weight: 950;
-  letter-spacing: .12em;
-  text-transform: uppercase;
+.winner-callout h3 {
+  font-size: 1.22rem;
   margin-bottom: 6px;
 }
-.compare-card strong {
-  display: block;
-  color: var(--text);
-  font-size: 1.55rem;
-  letter-spacing: -.05em;
-  line-height: 1;
-}
-.compare-card small {
-  display: block;
+.winner-callout p {
+  margin: 0;
   color: var(--muted);
-  font-size: .72rem;
-  margin-top: 4px;
+  max-width: 760px;
+  font-size: .88rem;
 }
-.compare-card p {
-  color: var(--muted);
-  font-size: .78rem;
-  margin: 12px 0 0;
-}
-
-.clean-matrix {
+.simple-compare-wrap {
+  overflow-x: auto;
   border: 1px solid rgba(231,186,145,.22);
   border-radius: 18px;
-  background: rgba(5,8,12,.42);
-  overflow: hidden;
+  background: rgba(5,8,12,.50);
   box-shadow: 0 18px 50px rgba(0,0,0,.22);
 }
-.matrix-row {
-  display: grid;
-  grid-template-columns: minmax(190px, 1.3fr) repeat(5, minmax(110px, .8fr));
-  border-bottom: 1px solid rgba(255,255,255,.075);
+.simple-compare-table {
+  width: 100%;
+  min-width: 1040px;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: .84rem;
 }
-.matrix-row:last-child { border-bottom: 0; }
-.matrix-row > * {
-  padding: 10px 9px;
-  border-right: 1px solid rgba(255,255,255,.06);
-  font-size: .78rem;
+.simple-compare-table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #111922;
+  color: var(--text);
+  text-align: left;
+  padding: 12px 13px;
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  border-bottom: 1px solid rgba(255,255,255,.11);
+}
+.simple-compare-table td {
+  color: var(--muted);
+  padding: 14px 13px;
+  border-bottom: 1px solid rgba(255,255,255,.075);
+  vertical-align: top;
+}
+.simple-compare-table tr:last-child td { border-bottom: 0; }
+.simple-compare-table td:first-child {
+  width: 15%;
+}
+.simple-compare-table td:nth-child(2) {
+  width: 17%;
+}
+.simple-compare-table td:first-child strong,
+.simple-compare-table td:nth-child(2) strong {
+  display: block;
+  color: var(--text);
+  font-size: 1rem;
+  margin-bottom: 3px;
+}
+.simple-compare-table td:first-child span,
+.simple-compare-table td:nth-child(2) span {
+  display: block;
+  color: var(--muted);
+  font-size: .76rem;
+}
+.simple-compare-table .our-row {
+  background:
+    linear-gradient(90deg, rgba(201,143,109,.20), rgba(201,143,109,.07) 48%, rgba(255,255,255,.025));
+  box-shadow: inset 4px 0 0 var(--copper-2);
+}
+.simple-compare-table .our-row td {
+  color: #eadbd0;
+}
+.simple-compare-table .our-row td:first-child strong,
+.simple-compare-table .our-row td:nth-child(2) strong {
+  color: var(--copper-2);
+  font-size: 1.08rem;
+}
+.fit-high, .fit-mid, .fit-low {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  margin: 0 6px 8px 0;
+  font-size: .72rem;
+  line-height: 1.45;
+  font-weight: 950;
+}
+.fit-high { color: #071017; background: var(--green); }
+.fit-mid { color: #071017; background: var(--copper-2); }
+.fit-low { color: var(--text); background: rgba(255,255,255,.14); }
+.best-fit {
+  display: block;
+  color: var(--copper-2);
+  font-size: .94rem;
   line-height: 1.25;
 }
-.matrix-row > *:last-child { border-right: 0; }
-.matrix-row > span:first-child,
-.matrix-row > th:first-child {
+.feature-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  min-width: 230px;
+}
+.feature-tags span {
+  display: inline-flex;
+  border: 1px solid rgba(231,186,145,.38);
+  background: rgba(201,143,109,.13);
   color: var(--text);
-  font-weight: 900;
+  border-radius: 999px;
+  padding: 3px 7px;
+  font-size: .72rem;
+  font-weight: 850;
 }
-.matrix-head {
-  background: linear-gradient(90deg, rgba(201,143,109,.18), rgba(255,255,255,.055));
-}
-.matrix-head span {
-  color: var(--text);
-  font-size: .68rem;
-  font-weight: 950;
-  text-transform: uppercase;
-  letter-spacing: .09em;
-}
-.matrix-row b {
-  font-weight: 900;
+.muted-tags span {
+  border-color: rgba(255,255,255,.12);
+  background: rgba(255,255,255,.045);
   color: var(--muted);
 }
-.matrix-row b:nth-child(2) {
-  background: rgba(201,143,109,.075);
-  color: var(--text);
-}
-.clean-matrix .yes { color: var(--green); }
-.clean-matrix .partial { color: var(--copper-2); }
-.clean-matrix .no { color: rgba(167,179,195,.75); }
-.clean-matrix .fit {
-  color: var(--text);
-  font-size: .74rem;
-}
-.cleaner-sales {
+.why-wins-grid {
+  display: grid;
+  grid-template-columns: 1.2fr repeat(2, minmax(0, 1fr));
+  gap: 12px;
   margin-top: 14px;
 }
-
-@media (max-width: 980px) {
-  .comparison-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .compare-card.featured-compare { grid-column: 1 / -1; }
-  .clean-matrix { overflow-x: auto; }
-  .matrix-row { min-width: 880px; }
+.winner-note {
+  border-color: rgba(231,186,145,.38);
+  background: linear-gradient(180deg, rgba(201,143,109,.14), rgba(255,255,255,.025));
 }
-@media (max-width: 560px) {
-  .comparison-cards { grid-template-columns: 1fr; }
-  .compare-card { min-height: auto; }
+@media (max-width: 920px) {
+  .winner-callout {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .why-wins-grid {
+    grid-template-columns: 1fr;
+  }
 }
