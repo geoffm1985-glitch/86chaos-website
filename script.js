@@ -172,3 +172,89 @@ function updateRoiCalculator() {
   if (input) input.addEventListener('input', updateRoiCalculator);
 });
 updateRoiCalculator();
+
+// Interactive comparison tables: click any data column to bring it forward.
+const comparisonTables = document.querySelectorAll('.comparison-table');
+
+comparisonTables.forEach((table, tableIndex) => {
+  const headerRow = table.tHead?.rows?.[0];
+  if (!headerRow || headerRow.cells.length < 2) return;
+
+  const wrapper = table.closest('.comparison-table-wrap');
+  const hint = document.createElement('p');
+  const hintId = `comparison-hint-${tableIndex + 1}`;
+
+  hint.id = hintId;
+  hint.className = 'comparison-click-hint';
+  hint.textContent = 'Click any plan or comparison column to highlight it. Click the same column again to clear.';
+
+  if (wrapper) {
+    wrapper.insertAdjacentElement('afterend', hint);
+  } else {
+    table.insertAdjacentElement('afterend', hint);
+  }
+
+  table.dataset.columnSelectable = 'true';
+  table.setAttribute('aria-describedby', hintId);
+
+  const headerCells = Array.from(headerRow.cells);
+  headerCells.slice(1).forEach((headerCell, offset) => {
+    const columnIndex = offset + 1;
+    const columnName = headerCell.textContent.trim() || `Column ${columnIndex}`;
+
+    headerCell.classList.add('column-select-control');
+    headerCell.setAttribute('role', 'button');
+    headerCell.setAttribute('tabindex', '0');
+    headerCell.setAttribute('aria-pressed', 'false');
+    headerCell.setAttribute('aria-label', `Highlight ${columnName} column`);
+    headerCell.title = `Highlight ${columnName}`;
+  });
+
+  function clearColumnSelection() {
+    table.classList.remove('has-column-selection');
+    table.removeAttribute('data-selected-column');
+
+    table.querySelectorAll('.is-column-selected, .is-column-muted').forEach((cell) => {
+      cell.classList.remove('is-column-selected', 'is-column-muted');
+    });
+
+    headerCells.slice(1).forEach((headerCell) => {
+      headerCell.setAttribute('aria-pressed', 'false');
+    });
+  }
+
+  function selectColumn(columnIndex) {
+    const currentColumn = Number(table.dataset.selectedColumn || 0);
+    if (currentColumn === columnIndex) {
+      clearColumnSelection();
+      return;
+    }
+
+    clearColumnSelection();
+    table.classList.add('has-column-selection');
+    table.dataset.selectedColumn = String(columnIndex);
+
+    Array.from(table.rows).forEach((row) => {
+      Array.from(row.cells).forEach((cell, cellIndex) => {
+        if (cellIndex === 0) return;
+        cell.classList.add(cellIndex === columnIndex ? 'is-column-selected' : 'is-column-muted');
+      });
+    });
+
+    headerCells[columnIndex]?.setAttribute('aria-pressed', 'true');
+  }
+
+  table.addEventListener('click', (event) => {
+    const cell = event.target.closest('th, td');
+    if (!cell || !table.contains(cell) || cell.cellIndex === 0) return;
+    selectColumn(cell.cellIndex);
+  });
+
+  headerCells.slice(1).forEach((headerCell) => {
+    headerCell.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      selectColumn(headerCell.cellIndex);
+    });
+  });
+});

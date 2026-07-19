@@ -1816,3 +1816,77 @@ body {
     font-size: .78rem;
   }
 }
+
+/* V27 interactive comparison columns */
+.comparison-table[data-column-selectable="true"] th:not(:first-child),
+.comparison-table[data-column-selectable="true"] td:not(:first-child) {
+  cursor: pointer;
+  transition: opacity .18s ease, background-color .18s ease, box-shadow .18s ease, filter .18s ease;
+}
+
+.comparison-table[data-column-selectable="true"] .column-select-control {
+  user-select: none;
+}
+
+.comparison-table[data-column-selectable="true"] .column-select-control:focus-visible {
+  outline: 3px solid rgba(231,186,145,.9);
+  outline-offset: -4px;
+}
+
+.comparison-table.has-column-selection .is-column-muted {
+  opacity: .42;
+  filter: saturate(.55);
+}
+
+.comparison-table.has-column-selection .is-column-selected {
+  opacity: 1;
+  background: linear-gradient(180deg, rgba(231,186,145,.22), rgba(201,143,109,.11)) !important;
+  box-shadow:
+    inset 3px 0 0 rgba(231,186,145,.88),
+    inset -3px 0 0 rgba(231,186,145,.88);
+}
+
+.comparison-table.has-column-selection thead .is-column-selected {
+  color: #fff2e5;
+  box-shadow:
+    inset 3px 0 0 rgba(231,186,145,.95),
+    inset -3px 0 0 rgba(231,186,145,.95),
+    inset 0 3px 0 rgba(231,186,145,.95);
+}
+
+.comparison-table.has-column-selection tbody tr:last-child .is-column-selected {
+  box-shadow:
+    inset 3px 0 0 rgba(231,186,145,.88),
+    inset -3px 0 0 rgba(231,186,145,.88),
+    inset 0 -3px 0 rgba(231,186,145,.88);
+}
+
+.comparison-click-hint {
+  margin: 8px 2px 0;
+  color: #b9c4d0;
+  font-size: .76rem;
+  font-weight: 750;
+  line-height: 1.4;
+}
+
+.comparison-click-hint::before {
+  content: "↕";
+  display: inline-block;
+  margin-right: 6px;
+  color: var(--copper-2);
+  font-weight: 950;
+  transform: rotate(90deg);
+}
+
+@media (hover: hover) {
+  .comparison-table[data-column-selectable="true"] th:not(:first-child):hover,
+  .comparison-table[data-column-selectable="true"] td:not(:first-child):hover {
+    background-color: rgba(231,186,145,.08);
+  }
+}
+
+@media (max-width: 820px) {
+  .comparison-click-hint {
+    font-size: .74rem;
+  }
+}

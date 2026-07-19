@@ -80,3 +80,11 @@ Do not commit real keys. `BETA_FROM_EMAIL` must use a domain verified with the e
 - Increased comparison-table body text, row labels, column headings, and supporting text across Pricing, Features, and AI + Ordering.
 - Kept the charts compact and preserved mobile horizontal scrolling only where needed.
 - Retained the approved Option C warm gray and dusty rose status colors.
+
+## V27 interactive comparison update
+
+- Made every plan and competitor column in the Pricing, Features, and AI + Ordering comparison charts clickable.
+- Clicking any cell or heading highlights the full vertical column and softens the remaining columns for faster visual comparison.
+- Clicking the selected column again clears the highlight.
+- Added keyboard support through the column headings with Enter or Space, plus visible focus styling and screen-reader labels.
+- Preserved compact table sizing, Option C status colors, and mobile horizontal scrolling.
