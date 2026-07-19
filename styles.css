@@ -1592,21 +1592,38 @@ body {
 }
 
 
-/* V23 readability: green remains an accent, never low-contrast body text */
+/* V24 readability: positive/negative labels use softer high-contrast tones */
+:root {
+  --positive-text: #d7dde6;
+  --negative-text: #c58d97;
+}
+
 .mini-row.good strong,
 .form-status.success,
 .comparison-table .yes,
 .compact-plan-table .yes,
-.audit-list span::before,
 .roi-number,
 .calc-result strong,
 .status.included {
-  color: #f4fff9;
+  color: var(--positive-text);
+}
+
+.comparison-table .no,
+.compact-plan-table .no {
+  color: var(--negative-text);
+  font-weight: 900;
+  opacity: 1;
 }
 
 .comparison-table .yes,
-.compact-plan-table .yes {
+.compact-plan-table .yes,
+.comparison-table .no,
+.compact-plan-table .no {
   text-shadow: none;
+}
+
+.audit-list span::before {
+  color: var(--copper-2);
 }
 
 /* Expanded Features page: broad capability map without oversized cards */
