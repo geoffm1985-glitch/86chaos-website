@@ -141,89 +141,109 @@
       <div class="container">
         <div class="section-head center reveal">
           <p class="eyebrow">Real app price + feature comparison</p>
-          <h2>One kitchen-operations layer instead of a stack of separate tools.</h2>
-          <p>This chart keeps the real app names and public price signals visible, but compares the job owners actually care about: prep, 86s, ordering support, inventory visibility, waste, scheduling context, and manager attention during the shift.</p>
+          <h2>One kitchen-operations layer instead of another stack of apps.</h2>
+          <p>Same matrix style as the other charts: real app names, public price signals, and the daily kitchen features owners actually compare.</p>
         </div>
 
         <div class="comparison-table-wrap real-app-comparison-wrap reveal">
-          <table class="comparison-table real-app-comparison-table">
+          <table class="comparison-table real-app-comparison-table option-one-comparison-table" data-column-selectable="true" aria-label="86 Chaos compared with real restaurant apps">
             <colgroup>
-              <col class="need-col" />
+              <col class="feature-col" />
               <col class="chaos-col" />
-              <col class="labor-col" />
-              <col class="inventory-col" />
-              <col class="pos-col" />
+              <col class="app-col" />
+              <col class="app-col" />
+              <col class="app-col" />
+              <col class="app-col" />
+              <col class="app-col" />
             </colgroup>
             <thead>
               <tr>
-                <th>Need</th>
-                <th class="highlight-col"><strong>86 Chaos</strong><span>Smart Kitchen<br>$179/mo/location<br>Founder year one: $89.50/mo</span></th>
-                <th><strong>Labor apps</strong><span>7shifts: $39.99-$134.99/mo<br>Homebase: $0-$120/mo/location</span></th>
-                <th><strong>Inventory / cost apps</strong><span>MarketMan: $199-$249+/mo<br>MarginEdge: $350-$500/mo/location</span></th>
-                <th><strong>POS apps</strong><span>Square: $0/$49/$149/mo/location<br>Toast: quote/package based</span></th>
+                <th>Feature</th>
+                <th class="highlight-col"><strong>86 Chaos</strong><span>Smart Kitchen<br>$179/mo/location<br>Founder: $89.50/mo</span></th>
+                <th><strong>7shifts</strong><span>$39.99-$134.99/mo<br>Labor-focused</span></th>
+                <th><strong>Homebase</strong><span>$24.95-$99.95/mo/location<br>Labor-focused</span></th>
+                <th><strong>MarketMan</strong><span>$199-$249+/mo<br>Inventory-focused</span></th>
+                <th><strong>MarginEdge</strong><span>$350-$500/mo/location<br>Back-office-focused</span></th>
+                <th><strong>Toast / Square</strong><span>Square $0-$149/mo/location<br>Toast varies by package</span></th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <th>What they are best known for</th>
-                <td class="highlight-col yes"><strong>Daily kitchen management</strong><small>Prep, 86s, AI ordering, inventory visibility, invoices, waste, reminders, events, Manager Brief, and 86Voice.</small></td>
-                <td><strong>Scheduling and time clock</strong><small>7shifts and Homebase are strongest around labor, availability, schedules, punches, and team administration.</small></td>
-                <td><strong>Inventory and back office</strong><small>MarketMan and MarginEdge are stronger inventory, purchasing, invoice, and food-cost systems.</small></td>
-                <td><strong>POS and payments</strong><small>Square and Toast are transaction systems for orders, checks, payments, menus, and POS reporting.</small></td>
+                <th>Best known for</th>
+                <td class="highlight-col yes"><strong>Kitchen OS</strong><small>Prep, 86s, ordering, inventory, waste, Manager Brief, 86Voice.</small></td>
+                <td><strong>Scheduling</strong><small>Labor, availability, time clock, team communication.</small></td>
+                <td><strong>Time clock</strong><small>Scheduling, time tracking, payroll add-ons.</small></td>
+                <td><strong>Inventory</strong><small>Purchasing, stock control, supplier workflows.</small></td>
+                <td><strong>Food cost</strong><small>Invoices, recipes, accounting exports, reporting.</small></td>
+                <td><strong>POS</strong><small>Orders, payments, checks, menus, sales reporting.</small></td>
               </tr>
               <tr>
-                <th>Prep, tasks, reminders, 86s</th>
-                <td class="highlight-col yes"><strong>Built in</strong><small>Designed for shift-speed kitchen follow-up.</small></td>
-                <td class="partial"><strong>Limited fit</strong><small>Good staff tools, not a kitchen prep and 86 hub.</small></td>
-                <td class="partial"><strong>Adjacent</strong><small>Inventory data helps, but the workflow is not built around daily prep boards.</small></td>
-                <td class="partial"><strong>Not the main job</strong><small>POS systems track sales and tickets, not manager prep chasing.</small></td>
+                <th>Daily prep, tasks, reminders</th>
+                <td class="highlight-col yes"><strong>Built in</strong><small>Shift-speed kitchen follow-up.</small></td>
+                <td class="partial">Limited</td>
+                <td class="partial">Limited</td>
+                <td class="partial">Inventory related</td>
+                <td class="partial">Back-office related</td>
+                <td class="partial">Not core POS job</td>
+              </tr>
+              <tr>
+                <th>86 alerts + menu impact</th>
+                <td class="highlight-col yes"><strong>Built in</strong><small>Shows affected menu items when stock is out or limited.</small></td>
+                <td class="no">No</td>
+                <td class="no">No</td>
+                <td class="partial">Data dependent</td>
+                <td class="partial">Recipe/costing lane</td>
+                <td class="partial">Menu/POS layer</td>
               </tr>
               <tr>
                 <th>AI-assisted ordering</th>
-                <td class="highlight-col yes"><strong>Built in</strong><small>Drafts orders using stock, pars, events, prep, waste, invoices, vendor history, and manager review.</small></td>
-                <td class="no"><strong>No</strong><small>Labor tools do not replace ordering logic.</small></td>
-                <td class="partial"><strong>Purchasing depth</strong><small>Strong inventory/purchasing lane, but not the same shift-command Kitchen OS.</small></td>
-                <td class="partial"><strong>Add-on / ecosystem</strong><small>POS data can help, but managers still need kitchen ordering workflows around it.</small></td>
+                <td class="highlight-col yes"><strong>Built in</strong><small>Drafts orders from stock, pars, events, waste, invoices, vendor history.</small></td>
+                <td class="no">No</td>
+                <td class="no">No</td>
+                <td class="yes">Purchasing tools</td>
+                <td class="partial">Cost data</td>
+                <td class="partial">Add-ons / ecosystem</td>
               </tr>
               <tr>
-                <th>Menu impact and 86 visibility</th>
-                <td class="highlight-col yes"><strong>Built in</strong><small>Shows what menu items are affected when an ingredient is out or limited.</small></td>
-                <td class="no"><strong>No</strong><small>Not a menu-impact system.</small></td>
-                <td class="partial"><strong>Data dependent</strong><small>Recipe costing may exist, but impact alerts are not the shift-speed focus.</small></td>
-                <td class="partial"><strong>POS/menu layer</strong><small>Good for selling items, weaker for manager 86 impact decisions.</small></td>
+                <th>Invoice, waste, par visibility</th>
+                <td class="highlight-col yes"><strong>Included</strong><small>Price warnings, waste/par insight, Manager Brief visibility.</small></td>
+                <td class="no">No</td>
+                <td class="no">No</td>
+                <td class="yes">Strong</td>
+                <td class="yes">Strong</td>
+                <td class="partial">Varies</td>
               </tr>
               <tr>
-                <th>Invoice, waste, par, price visibility</th>
-                <td class="highlight-col yes"><strong>Strong practical layer</strong><small>Price warnings, waste/par insight, invoice intelligence, and Manager Brief visibility.</small></td>
-                <td class="no"><strong>No</strong><small>Labor lane only.</small></td>
-                <td class="yes"><strong>Strong specialist lane</strong><small>MarketMan and MarginEdge are deeper in inventory, invoices, costing, and back office.</small></td>
-                <td class="partial"><strong>Varies</strong><small>POS reports and add-ons can help, but this is not the core POS job.</small></td>
+                <th>Scheduling + availability context</th>
+                <td class="highlight-col yes">Included</td>
+                <td class="yes">Strong</td>
+                <td class="yes">Strong</td>
+                <td class="no">No</td>
+                <td class="no">No</td>
+                <td class="partial">Varies</td>
               </tr>
               <tr>
-                <th>Scheduling, availability, labor context</th>
-                <td class="highlight-col yes"><strong>Included</strong><small>Built into the operations layer so managers see staffing context with kitchen priorities.</small></td>
-                <td class="yes"><strong>Strong specialist lane</strong><small>Scheduling, time clock, availability, labor, and employee communication are their wheelhouse.</small></td>
-                <td class="no"><strong>No</strong><small>Not their core lane.</small></td>
-                <td class="partial"><strong>Varies by POS/add-on</strong><small>Some labor reporting exists, but POS is still not the kitchen ops layer.</small></td>
+                <th>Voice/text kitchen commands</th>
+                <td class="highlight-col yes"><strong>86Voice</strong><small>Prep, 86s, ordering, waste, reminders, maintenance, status questions.</small></td>
+                <td class="no">No</td>
+                <td class="no">No</td>
+                <td class="no">No</td>
+                <td class="no">No</td>
+                <td class="partial">POS dependent</td>
               </tr>
               <tr>
-                <th>Voice/text command speed</th>
-                <td class="highlight-col yes"><strong>86Voice built in</strong><small>Prep, tasks, reminders, 86 alerts, menu impact, waste, maintenance, events, and ordering commands.</small></td>
-                <td class="no"><strong>No kitchen voice layer</strong><small>Not built around speaking kitchen work into one hub.</small></td>
-                <td class="no"><strong>No kitchen voice layer</strong><small>Inventory tools are not designed as live shift command centers.</small></td>
-                <td class="partial"><strong>POS workflow dependent</strong><small>Voice is not the main manager kitchen-control layer.</small></td>
-              </tr>
-              <tr>
-                <th>Best sales takeaway</th>
-                <td class="highlight-col yes"><strong>Best full kitchen fit</strong><small>One practical layer for the daily chaos managers actually chase.</small></td>
-                <td><strong>Great if labor is the only pain</strong><small>Still leaves ordering, 86s, prep, waste, invoice warnings, and Manager Brief elsewhere.</small></td>
-                <td><strong>Great if back office is the only pain</strong><small>Deeper and often pricier, but not as shift-fast or kitchen-command focused.</small></td>
-                <td><strong>Keep the POS</strong><small>86 Chaos is the operations layer around it, not a POS replacement.</small></td>
+                <th>Sales takeaway</th>
+                <td class="highlight-col yes"><strong>Best full kitchen fit</strong><small>Built for the daily chaos managers chase.</small></td>
+                <td><strong>Great labor tool</strong><small>Still leaves kitchen ops elsewhere.</small></td>
+                <td><strong>Great labor tool</strong><small>Still leaves kitchen ops elsewhere.</small></td>
+                <td><strong>Great inventory tool</strong><small>Deeper purchasing, narrower shift control.</small></td>
+                <td><strong>Great cost tool</strong><small>Stronger back office, less shift-command focused.</small></td>
+                <td><strong>Keep the POS</strong><small>86 Chaos works around it, not instead of it.</small></td>
               </tr>
             </tbody>
           </table>
         </div>
-        <p class="table-note real-app-source-note"><strong>Bottom line:</strong> 86 Chaos is not trying to be the cheapest single-purpose tool. It is built to replace the scattered kitchen layer: prep, 86s, AI-assisted order drafts, menu impact, invoice warnings, waste/par visibility, events, reminders, Manager Brief, and 86Voice. Public competitor pricing can change and may vary by billing term, add-ons, payroll, hardware, processing, implementation, location count, or contract.</p>
+        <p class="table-note real-app-source-note">Public pricing can change and may vary by billing term, add-ons, payroll, hardware, processing, implementation, location count, or contract. Competitor names are used for market comparison only.</p>
       </div>
     </section>
 
