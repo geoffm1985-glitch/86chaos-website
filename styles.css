@@ -1950,3 +1950,78 @@ body {
 .comparison-table.has-column-selection tbody tr:last-child .is-column-selected {
   box-shadow: inset 2px 0 0 rgba(240,197,150,.72), inset -2px 0 0 rgba(240,197,150,.48), inset 0 -2px 0 rgba(240,197,150,.62);
 }
+
+/* V34 real app price + feature comparison: same table language, no desktop side-scroll */
+.real-app-comparison-wrap {
+  overflow-x: visible;
+}
+
+.real-app-comparison-table {
+  min-width: 0;
+  table-layout: fixed;
+  font-size: .82rem;
+}
+
+.real-app-comparison-table .app-col { width: 16%; }
+.real-app-comparison-table .price-col { width: 17%; }
+.real-app-comparison-table .lane-col { width: 19%; }
+.real-app-comparison-table .features-col { width: 25%; }
+.real-app-comparison-table .fit-col { width: 23%; }
+
+.real-app-comparison-table th,
+.real-app-comparison-table td {
+  padding: 10px 10px;
+  line-height: 1.34;
+}
+
+.real-app-comparison-table tbody th {
+  width: auto;
+  background: rgba(255,255,255,.04);
+}
+
+.real-app-comparison-table tbody th strong,
+.real-app-comparison-table td strong {
+  display: block;
+  color: #fff5eb;
+  font-size: .93rem;
+  line-height: 1.22;
+  margin-bottom: 3px;
+}
+
+.real-app-comparison-table tbody th span,
+.real-app-comparison-table td small {
+  display: block;
+  color: #bac6d2;
+  font-size: .72rem;
+  line-height: 1.32;
+}
+
+.real-app-comparison-table .featured-compare-row th,
+.real-app-comparison-table .featured-compare-row td {
+  background: linear-gradient(180deg, rgba(240,197,150,.14), rgba(88,226,166,.045));
+}
+
+.real-app-comparison-table .featured-compare-row th {
+  box-shadow: inset 3px 0 0 rgba(231,186,145,.58);
+}
+
+.real-app-comparison-table .highlight-col {
+  background: linear-gradient(180deg, rgba(240,197,150,.18), rgba(88,226,166,.06)) !important;
+}
+
+.real-app-source-note {
+  max-width: 960px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+@media (max-width: 980px) {
+  .real-app-comparison-wrap {
+    overflow-x: auto;
+  }
+
+  .real-app-comparison-table {
+    min-width: 900px;
+    font-size: .8rem;
+  }
+}
