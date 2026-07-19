@@ -2120,10 +2120,20 @@ body {
 
 .option-one-comparison-table thead th span {
   color: #c2ccd8;
-  font-size: .56rem;
-  line-height: 1.16;
+  font-size: .55rem;
+  line-height: 1.14;
   letter-spacing: 0;
   text-transform: none;
+}
+
+.option-one-comparison-table thead th .app-price {
+  display: block;
+  color: #fff2e3;
+  font-size: .82rem;
+  line-height: 1.02;
+  font-weight: 950;
+  letter-spacing: -.015em;
+  margin: 1px 0 2px;
 }
 
 .option-one-comparison-table tbody th {
@@ -2144,6 +2154,13 @@ body {
   font-size: .73rem;
   line-height: 1.08;
   margin-bottom: 2px;
+}
+
+.option-one-comparison-table td.yes,
+.option-one-comparison-table td.partial,
+.option-one-comparison-table td.no {
+  font-size: .66rem;
+  line-height: 1.16;
 }
 
 .option-one-comparison-table td small {
@@ -2201,7 +2218,10 @@ body {
   }
   .option-one-comparison-table td small,
   .option-one-comparison-table thead th span {
-    font-size: .54rem;
+    font-size: .52rem;
+  }
+  .option-one-comparison-table thead th .app-price {
+    font-size: .76rem;
   }
 }
 
