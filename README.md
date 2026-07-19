@@ -96,3 +96,9 @@ Do not commit real keys. `BETA_FROM_EMAIL` must use a domain verified with the e
 - Added a separate-app stack cost callout under the pricing app comparison.
 - The callout shows the approximate public software range a restaurant may pay when combining separate scheduling, inventory/order, invoice/food-cost, and POS tools.
 - Kept the main app comparison chart readable and desktop-fit.
+
+## V46 Pricing comparison update
+
+- Updated the separate-app stack cost example so it uses only apps shown in the current comparison chart.
+- New example stack: 7shifts + MarketMan + MarginEdge + Restaurant365, shown as approximately $1,078-$1,423+/month before payroll, HotSchedules active-employee billing, implementation, POS hardware, payment processing, vendor integrations, and other add-ons.
+- Added a short explanation of why the main chart compares 7shifts, HotSchedules, MarketMan, MarginEdge, and Restaurant365, while leaving POS-only tools out of the main comparison.
