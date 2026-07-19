@@ -67,3 +67,16 @@ Do not commit real keys. `BETA_FROM_EMAIL` must use a domain verified with the e
 - Expanded the Features page into a detailed, skimmable directory covering more than 60 practical capabilities across daily management, prep, tasks, ordering, inventory, invoices, menu intelligence, scheduling, labor, 86Voice, maintenance, communication, events, owner visibility, and kitchen intelligence.
 - Kept the compact tier comparison near the top so visitors can still understand plan availability quickly.
 - Preserved the existing static HTML/CSS/JavaScript structure, assets, redirects, Founder Beta form, navigation, and overall dark copper/green design direction.
+
+## V25 color update
+
+- Applied the approved Option C comparison colors across the site.
+- Positive / Yes labels use warm gray `#D2CEC8`.
+- Negative / No labels use dusty rose `#D7A0A8`.
+- Preserved the existing copper, navy, and Smart Kitchen highlight styling.
+
+## V26 comparison-chart readability update
+
+- Increased comparison-table body text, row labels, column headings, and supporting text across Pricing, Features, and AI + Ordering.
+- Kept the charts compact and preserved mobile horizontal scrolling only where needed.
+- Retained the approved Option C warm gray and dusty rose status colors.
