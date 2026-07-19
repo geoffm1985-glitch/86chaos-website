@@ -2366,3 +2366,49 @@ body {
     font-size: .86rem;
   }
 }
+
+
+/* V44: separate-app stack cost callout under the app comparison */
+.stack-cost-callout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 14px;
+  max-width: 980px;
+  margin: 18px auto 8px;
+}
+.stack-cost-main {
+  border: 1px solid rgba(231,186,145,.22);
+  border-radius: 18px;
+  padding: 16px 18px;
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.025));
+  box-shadow: 0 14px 36px rgba(0,0,0,.18);
+}
+.stack-cost-chaos {
+  border-color: rgba(231,186,145,.45);
+  background: linear-gradient(180deg, rgba(201,143,109,.18), rgba(88,226,166,.055));
+}
+.stack-kicker {
+  display: block;
+  color: var(--copper-2);
+  font-size: .74rem;
+  font-weight: 950;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.stack-cost-main strong {
+  display: block;
+  color: #fff4e9;
+  font-size: clamp(1.7rem, 3.2vw, 2.65rem);
+  line-height: .98;
+  letter-spacing: -.055em;
+  margin-bottom: 8px;
+}
+.stack-cost-main p {
+  color: #d7e0e8;
+  font-size: .92rem;
+  margin: 0;
+}
+@media (max-width: 760px) {
+  .stack-cost-callout { grid-template-columns: 1fr; }
+}

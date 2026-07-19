@@ -90,3 +90,9 @@ Do not commit real keys. `BETA_FROM_EMAIL` must use a domain verified with the e
 - Clicking the selected column again clears the highlight.
 - Added keyboard support through the column headings with Enter or Space, plus visible focus styling and screen-reader labels.
 - Preserved compact table sizing, Option C status colors, and mobile horizontal scrolling.
+
+
+## V44 Pricing comparison update
+- Added a separate-app stack cost callout under the pricing app comparison.
+- The callout shows the approximate public software range a restaurant may pay when combining separate scheduling, inventory/order, invoice/food-cost, and POS tools.
+- Kept the main app comparison chart readable and desktop-fit.
