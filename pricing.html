@@ -113,11 +113,24 @@
             <div><strong>Manager review</strong><span>AI helps do the thinking work, but managers approve the real business actions.</span></div>
           </div>
         </div>
-        <div class="roi-card panel reveal delay-1">
+        <div class="roi-card calculator-card panel reveal delay-1" id="roi-calculator">
           <p class="eyebrow">Example time value</p>
-          <h3>15 minutes a day can matter.</h3>
-          <div class="roi-number">$180/mo</div>
-          <p>15 minutes per day × 30 days = 7.5 hours. At $24/hour, that is about $180/month in recovered manager time before food-cost improvements.</p>
+          <h3>Adjust the manager time math.</h3>
+          <p>Use the example inputs below to see how even a few saved minutes per day can add up before food-cost improvements.</p>
+          <label>Minutes saved per day
+            <input type="number" min="0" step="5" value="15" data-roi-minutes />
+          </label>
+          <label>Manager hourly value
+            <input type="number" min="0" step="1" value="24" data-roi-rate />
+          </label>
+          <label>Days per month
+            <input type="number" min="0" max="31" step="1" value="30" data-roi-days />
+          </label>
+          <div class="calc-result">
+            <span>Estimated recovered manager time per month</span>
+            <strong data-roi-result>$180.00</strong>
+          </div>
+          <small>Example only. 86 Chaos does not guarantee savings. Actual value depends on staffing, usage, menu, workflow, and manager review.</small>
           <div class="mini-row"><span>Smart Kitchen launch price</span><strong>$179/mo</strong></div>
           <div class="mini-row good"><span>Founder year one</span><strong>$89.50/mo</strong></div>
         </div>
@@ -133,7 +146,7 @@
         </div>
 
         <div class="comparison-table-wrap reveal">
-          <table class="comparison-table polished-market-table">
+          <table class="comparison-table polished-market-table market-comparison-table">
             <thead>
               <tr>
                 <th>Area</th>

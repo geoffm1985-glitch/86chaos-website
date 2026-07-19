@@ -1890,3 +1890,63 @@ body {
     font-size: .74rem;
   }
 }
+
+/* V29 correction: restore adjustable time-value card and keep market comparison styled with the rest */
+.calculator-card .calc-result {
+  margin: 10px 0 8px;
+}
+
+.calculator-card small {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.market-comparison-table {
+  min-width: 980px;
+  font-size: .86rem;
+}
+
+.market-comparison-table th,
+.market-comparison-table td,
+.polished-market-table th,
+.polished-market-table td {
+  padding: 9px 10px;
+  line-height: 1.32;
+}
+
+.market-comparison-table tbody th {
+  width: 190px;
+}
+
+.market-comparison-table td {
+  color: #d5dee8;
+}
+
+.market-comparison-table .highlight-col {
+  background: linear-gradient(180deg, rgba(240,197,150,.18), rgba(88,226,166,.08)) !important;
+  box-shadow: inset 2px 0 0 rgba(240,197,150,.38), inset -2px 0 0 rgba(240,197,150,.22);
+}
+
+.market-comparison-table thead .highlight-col {
+  color: var(--copper-2);
+}
+
+.comparison-table.has-column-selection .is-column-muted {
+  opacity: .58;
+  filter: none;
+}
+
+.comparison-table.has-column-selection .is-column-selected {
+  opacity: 1;
+  background: linear-gradient(180deg, rgba(240,197,150,.20), rgba(88,226,166,.08)) !important;
+  box-shadow: inset 2px 0 0 rgba(240,197,150,.72), inset -2px 0 0 rgba(240,197,150,.48);
+}
+
+.comparison-table.has-column-selection thead .is-column-selected {
+  color: #fff2e5;
+  box-shadow: inset 2px 0 0 rgba(240,197,150,.82), inset -2px 0 0 rgba(240,197,150,.62), inset 0 2px 0 rgba(240,197,150,.72);
+}
+
+.comparison-table.has-column-selection tbody tr:last-child .is-column-selected {
+  box-shadow: inset 2px 0 0 rgba(240,197,150,.72), inset -2px 0 0 rgba(240,197,150,.48), inset 0 -2px 0 rgba(240,197,150,.62);
+}
