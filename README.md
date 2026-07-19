@@ -197,3 +197,11 @@ Review public claims before launch if vendor or industry data changes.
 - Moved the actual pricing cards to the bottom of the page, directly above the beta/legal note.
 - Replaced the AI tier chart with a cleaner professional tier matrix.
 - Kept Smart Kitchen and Owner Pro positioned as the strongest AI/intelligence plans.
+
+## Latest readability and compact tier table update
+
+- Made the site background lighter while preserving the dark 86 Chaos copper/green theme.
+- Increased text contrast and muted text readability.
+- Rebuilt tier comparison tables on Pricing, Features, and AI + Ordering to match the simpler app comparison style.
+- Removed large status pills inside tier tables and replaced them with compact table text.
+- Tuned table sizing so the tier comparison fits in a desktop browser view, with horizontal scroll only on smaller/mobile screens.

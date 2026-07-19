@@ -1353,3 +1353,225 @@ h2 {
     padding: 9px 10px;
   }
 }
+
+
+/* V21 readability + compact table polish */
+:root {
+  --bg: #111923;
+  --bg-2: #162231;
+  --panel: #1c2a36;
+  --panel-2: #172430;
+  --line: rgba(231,186,145,.22);
+  --text: #f8f6f1;
+  --muted: #d0dae6;
+  --soft: #e9c49f;
+  --copper: #c98f6d;
+  --copper-2: #f0c596;
+  --green: #58e2a6;
+  --shadow: 0 18px 46px rgba(0,0,0,.24);
+  --max: 1180px;
+}
+
+html {
+  font-size: 13.5px;
+}
+
+body {
+  background:
+    radial-gradient(circle at 10% 0%, rgba(201,143,109,.16), transparent 30rem),
+    radial-gradient(circle at 88% 8%, rgba(88,226,166,.08), transparent 26rem),
+    linear-gradient(180deg, #121b25 0%, #162230 50%, #101821 100%);
+  color: var(--text);
+}
+
+.site-header {
+  background: rgba(20, 30, 40, .9);
+  border-bottom: 1px solid rgba(240,197,150,.16);
+}
+
+.nav-shell {
+  min-height: 58px;
+}
+
+.nav-links {
+  color: #d7e0ea;
+}
+
+.nav-links a:hover,
+.nav-links a.is-active {
+  color: #fffaf3;
+  background: rgba(240,197,150,.12);
+}
+
+.page-hero.compact-hero {
+  padding-top: clamp(38px, 4vw, 60px);
+  padding-bottom: clamp(28px, 3.5vw, 44px);
+}
+
+.section,
+.compact-section {
+  padding-top: clamp(30px, 3.3vw, 46px);
+  padding-bottom: clamp(30px, 3.3vw, 46px);
+}
+
+.section-head {
+  margin-bottom: 18px;
+}
+
+.section-head h2 {
+  font-size: clamp(1.8rem, 3.1vw, 2.8rem);
+}
+
+.page-hero h1 {
+  font-size: clamp(2.2rem, 5vw, 4.5rem);
+}
+
+.card,
+.panel,
+.note-box,
+.tier-summary,
+.ai-suite-card,
+.ai-order-card,
+.voice-demo-card,
+.roi-card {
+  background: linear-gradient(180deg, rgba(31, 46, 60, .92), rgba(22, 34, 46, .88));
+  border-color: rgba(240,197,150,.16);
+  box-shadow: 0 14px 36px rgba(0,0,0,.18);
+}
+
+.compact-tier-wrap {
+  max-width: 1160px;
+  margin-inline: auto;
+  border-radius: 16px;
+  border: 1px solid rgba(240,197,150,.20);
+  overflow: hidden;
+  background: rgba(18,28,38,.78);
+  box-shadow: 0 18px 46px rgba(0,0,0,.20);
+}
+
+.compact-plan-table {
+  width: 100%;
+  table-layout: fixed;
+  min-width: 0;
+  border-collapse: collapse;
+  font-size: .72rem;
+  line-height: 1.15;
+}
+
+.compact-plan-table th,
+.compact-plan-table td {
+  padding: 7px 8px;
+  border-bottom: 1px solid rgba(255,255,255,.075);
+  border-right: 1px solid rgba(255,255,255,.055);
+  vertical-align: middle;
+}
+
+.compact-plan-table thead th {
+  color: #fff6eb;
+  background: #203044;
+  font-size: .68rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.compact-plan-table th:first-child {
+  width: 34%;
+  text-align: left;
+}
+
+.compact-plan-table td,
+.compact-plan-table thead th:not(:first-child) {
+  width: 16.5%;
+  text-align: center;
+}
+
+.compact-plan-table tbody th {
+  color: #f7efe8;
+  background: rgba(31, 45, 58, .72);
+  font-size: .73rem;
+  font-weight: 850;
+  letter-spacing: .01em;
+}
+
+.compact-plan-table tbody tr:nth-child(even) th,
+.compact-plan-table tbody tr:nth-child(even) td {
+  background-color: rgba(255,255,255,.028);
+}
+
+.compact-plan-table .highlight-col {
+  background:
+    linear-gradient(180deg, rgba(240,197,150,.18), rgba(88,226,166,.08)) !important;
+  box-shadow: inset 2px 0 0 rgba(240,197,150,.38), inset -2px 0 0 rgba(240,197,150,.22);
+}
+
+.compact-plan-table .yes,
+.compact-plan-table .partial,
+.compact-plan-table .no {
+  font-weight: 900;
+}
+
+.compact-plan-table .yes {
+  color: #b8ffd8;
+}
+
+.compact-plan-table .partial {
+  color: #ffdcae;
+}
+
+.compact-plan-table .no {
+  color: #d3dde8;
+  opacity: .8;
+}
+
+.tier-matrix,
+.tier-compare-table,
+.ai-tier-table {
+  font-size: .72rem;
+}
+
+.comparison-table {
+  background: rgba(18,28,38,.84);
+}
+
+.comparison-table th,
+.comparison-table td {
+  color: var(--text);
+}
+
+.comparison-table td {
+  color: #e6edf5;
+}
+
+.comparison-table .highlight-col {
+  background: linear-gradient(180deg, rgba(240,197,150,.16), rgba(88,226,166,.07));
+}
+
+.table-note,
+.small-note {
+  color: #cfd9e4;
+}
+
+.muted,
+.muted-note,
+.page-lede,
+.card p,
+.panel p,
+.note-box span,
+.legal-copy p {
+  color: var(--muted);
+}
+
+@media (max-width: 980px) {
+  .compact-plan-table {
+    min-width: 780px;
+  }
+  .compact-tier-wrap {
+    overflow-x: auto;
+  }
+}
+
+@media (min-width: 981px) {
+  .compact-tier-wrap {
+    overflow-x: visible;
+  }
+}
