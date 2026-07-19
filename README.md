@@ -32,16 +32,16 @@ Static multi-page marketing site for **86 Chaos**, an AI-assisted Kitchen Manage
 - Free setup during beta
 - Beta restaurants help shape the product
 - First access to new features where the selected plan allows
-- 50% off the selected plan for the first paid year
+- 50% off the first location for the first paid year
 
 ## Pricing per location
 
-All plans include unlimited users. No per-user charge for adding staff.
+All plans include unlimited users for normal restaurant use. No per-user charge for adding staff; plan limits still apply to AI scans, storage-heavy uploads, automation, and abusive usage.
 
 - Shift: $49/month, Founder year one $24.50/month
 - Operations: $99/month, Founder year one $49.50/month
 - Smart Kitchen: $179/month, Founder year one $89.50/month
-- Owner Pro: $299/month for the first location, then $129/month for each additional location. Founder year one: $149.50/month first location, then $64.50/month per additional location.
+- Owner Pro: $299/month for the first location, then $129/month for each additional location. Founder year one: $149.50/month for the first location. Additional locations stay full price at $129/month each.
 
 ## Beta application email
 
