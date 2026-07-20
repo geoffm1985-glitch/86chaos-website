@@ -171,3 +171,16 @@ Do not commit real keys. `BETA_FROM_EMAIL` must use a domain verified with the e
 - Rebuilt mobile comparison charts as compact grouped rows with short labels and smaller cells.
 - Flattened oversized mobile cards/panels site-wide to reduce the heavy boxed look.
 - Added public copy noting that the founder currently works full time in a kitchen and tests 86 Chaos in real restaurant conditions.
+
+## V65 blue box removal
+
+- Removed the heavy blue filled box treatment across the public site.
+- Flattened cards, about rows, feature cards, tour cards, pricing panels, and comparison rows into transparent dark glass with subtle copper borders.
+- Kept readability without the oversized blue slab look.
+
+## V66 mobile comparison rebuild
+
+- Replaced mobile comparison-table rendering with compact expandable rows.
+- Desktop still uses normal comparison tables.
+- On mobile, tables are hidden after JS builds tap-to-open comparison rows with short labels.
+- Removed the giant mobile table/card treatment that made comparison sections huge and ugly.

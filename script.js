@@ -366,3 +366,119 @@ comparisonTables.forEach((table, tableIndex) => {
   }
 })();
 
+
+// V66: replace mobile comparison tables with compact expandable comparison rows.
+(function () {
+  function shortHeader(text) {
+    var t = String(text || "").replace(/\s+/g, " ").trim();
+    var lower = t.toLowerCase();
+
+    if (lower.includes("86 chaos")) return "86 Chaos";
+    if (lower.includes("smart kitchen")) return "Smart Kitchen";
+    if (lower.includes("owner pro")) return "Owner Pro";
+    if (lower === "operations" || lower.includes("operations")) return "Operations";
+    if (lower === "shift" || lower.includes("shift")) return "Shift";
+    if (lower.includes("7shifts")) return "7shifts";
+    if (lower.includes("hotschedules")) return "HotSchedules";
+    if (lower.includes("marketman")) return "MarketMan";
+    if (lower.includes("marginedge")) return "MarginEdge";
+    if (lower.includes("restaurant365")) return "Restaurant365";
+    if (lower.includes("toast") || lower.includes("square")) return "POS";
+    if (lower.includes("public price")) return "Price";
+    if (lower.includes("main lane")) return "Lane";
+    if (lower.includes("kitchen coverage")) return "Coverage";
+    if (lower.includes("sales takeaway")) return "Takeaway";
+    return t.split(" ").slice(0, 3).join(" ");
+  }
+
+  function cleanCellText(cell) {
+    return (cell.innerText || cell.textContent || "").replace(/\s+/g, " ").trim();
+  }
+
+  function makeMobileComparison(table) {
+    if (table.dataset.mobileBuilt === "true") return;
+
+    var headers = Array.from(table.querySelectorAll("thead th")).map(function (th) {
+      return shortHeader(th.innerText || th.textContent || "");
+    });
+
+    if (!headers.length) return;
+
+    var list = document.createElement("div");
+    list.className = "mobile-compare-list";
+    list.setAttribute("aria-label", "Mobile comparison list");
+
+    Array.from(table.querySelectorAll("tbody tr")).forEach(function (row, rowIndex) {
+      var cells = Array.from(row.children);
+      if (!cells.length) return;
+
+      var title = cleanCellText(cells[0]);
+      if (!title) title = "Comparison row";
+
+      var item = document.createElement("details");
+      item.className = "mobile-compare-item";
+
+      // Open the first row only when it is very short/helpful, otherwise keep all collapsed.
+      if (rowIndex === 0 && cells.length <= 5) {
+        item.open = true;
+      }
+
+      var summary = document.createElement("summary");
+      summary.textContent = title;
+      item.appendChild(summary);
+
+      var values = document.createElement("div");
+      values.className = "mobile-compare-values";
+
+      cells.slice(1).forEach(function (cell, index) {
+        var valueText = cleanCellText(cell);
+        if (!valueText) valueText = "—";
+
+        var value = document.createElement("div");
+        value.className = "mobile-compare-value";
+
+        var label = document.createElement("span");
+        label.className = "mobile-compare-label";
+        label.textContent = headers[index + 1] || "Value";
+
+        var result = document.createElement("span");
+        result.className = "mobile-compare-result";
+
+        if (cell.classList.contains("yes")) result.classList.add("yes");
+        if (cell.classList.contains("no")) result.classList.add("no");
+        if (cell.classList.contains("partial")) result.classList.add("partial");
+        if (cell.classList.contains("highlight-col")) result.classList.add("highlight-col");
+
+        result.innerHTML = cell.innerHTML.trim() || "—";
+
+        value.appendChild(label);
+        value.appendChild(result);
+        values.appendChild(value);
+      });
+
+      item.appendChild(values);
+      list.appendChild(item);
+    });
+
+    var wrapper = table.closest(".comparison-wrap, .comparison-table-wrap, .real-app-comparison-wrap");
+    if (wrapper && wrapper.parentNode) {
+      wrapper.insertAdjacentElement("afterend", list);
+    } else {
+      table.insertAdjacentElement("afterend", list);
+    }
+
+    table.dataset.mobileBuilt = "true";
+  }
+
+  function initV66MobileComparisons() {
+    document.querySelectorAll(".comparison-table, .real-app-comparison-table").forEach(makeMobileComparison);
+    document.documentElement.classList.add("has-mobile-compare");
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initV66MobileComparisons);
+  } else {
+    initV66MobileComparisons();
+  }
+})();
+

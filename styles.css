@@ -4234,3 +4234,296 @@ h3 {
   }
 }
 
+
+/* V65 remove ugly blue box treatment: transparent glass rows/cards instead of big blue slabs */
+.card,
+.panel,
+.note-box,
+details,
+.plan-card,
+.price-card,
+.feature-card,
+.value-card,
+.about-card,
+.about-block,
+.about-story-panel,
+.tour-card,
+.faq-list details,
+.story-pill,
+.shot-button,
+.mini-dashboard,
+.voice-demo-card,
+.voice-flow,
+.roi-card,
+.stack-cost-card,
+.compare-summary,
+.cta-card {
+  background: rgba(4, 7, 10, .28) !important;
+  background-image: linear-gradient(180deg, rgba(255,255,255,.028), rgba(0,0,0,.10)) !important;
+  border: 1px solid rgba(231,186,145,.18) !important;
+  box-shadow: none !important;
+}
+
+.feature-card,
+.value-card,
+.about-card,
+.tour-card,
+.note-box,
+.story-pill {
+  border-left: 2px solid rgba(231,186,145,.30) !important;
+}
+
+/* About page rows were the worst offenders. Strip the heavy fill and make them compact. */
+.about-card,
+.about-story-panel,
+.about-block .card,
+.about-block .panel {
+  background: rgba(4, 7, 10, .20) !important;
+  background-image: linear-gradient(90deg, rgba(231,186,145,.055), rgba(0,0,0,.06)) !important;
+  min-height: 0 !important;
+}
+
+/* Kill oversized blue/tinted table and comparison fills while keeping headers readable. */
+.comparison-table tbody tr,
+.real-app-comparison-table tbody tr,
+.comparison-table td,
+.real-app-comparison-table td,
+.comparison-table tbody th,
+.real-app-comparison-table tbody th {
+  background-color: rgba(4,7,10,.24) !important;
+}
+
+.comparison-table .highlight-col,
+.real-app-comparison-table .highlight-col,
+.comparison-table tbody td.highlight-col,
+.real-app-comparison-table tbody td.highlight-col,
+.featured-compare-row th,
+.featured-compare-row td {
+  background: rgba(201,143,109,.08) !important;
+  background-image: linear-gradient(180deg, rgba(231,186,145,.08), rgba(0,0,0,.06)) !important;
+}
+
+/* Mobile: no more big blue blocks, just compact separated content rows. */
+@media (max-width: 920px) {
+  .card,
+  .panel,
+  .note-box,
+  details,
+  .plan-card,
+  .price-card,
+  .feature-card,
+  .value-card,
+  .about-card,
+  .about-block,
+  .about-story-panel,
+  .tour-card,
+  .faq-list details,
+  .story-pill,
+  .shot-button,
+  .mini-dashboard,
+  .voice-demo-card,
+  .voice-flow,
+  .roi-card,
+  .stack-cost-card,
+  .compare-summary,
+  .cta-card {
+    background: rgba(4,7,10,.22) !important;
+    background-image: linear-gradient(180deg, rgba(255,255,255,.020), rgba(0,0,0,.08)) !important;
+    border-color: rgba(231,186,145,.16) !important;
+    box-shadow: none !important;
+  }
+
+  .about-card,
+  .about-story-panel,
+  .about-block .card,
+  .about-block .panel {
+    background: rgba(4,7,10,.18) !important;
+    background-image: none !important;
+  }
+
+  .comparison-table tbody tr,
+  .real-app-comparison-table tbody tr {
+    background: rgba(4,7,10,.28) !important;
+    border-color: rgba(231,186,145,.14) !important;
+  }
+
+  .comparison-table tbody th,
+  .real-app-comparison-table tbody th {
+    background: rgba(201,143,109,.09) !important;
+  }
+
+  .comparison-table td,
+  .real-app-comparison-table td {
+    background: rgba(4,7,10,.18) !important;
+  }
+
+  .comparison-table .highlight-col,
+  .real-app-comparison-table .highlight-col,
+  .comparison-table tbody td.highlight-col,
+  .real-app-comparison-table tbody td.highlight-col {
+    background: rgba(201,143,109,.07) !important;
+  }
+}
+
+
+/* V66 mobile comparison rebuild: hide desktop tables on phones and use compact tap-to-open rows */
+.mobile-compare-list {
+  display: none;
+}
+
+@media (max-width: 920px) {
+  html.has-mobile-compare .comparison-wrap,
+  html.has-mobile-compare .comparison-table-wrap,
+  html.has-mobile-compare .real-app-comparison-wrap {
+    display: none !important;
+  }
+
+  .mobile-compare-list {
+    display: grid;
+    gap: 6px;
+    margin: 8px 0 10px;
+  }
+
+  .mobile-compare-item {
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 1px solid rgba(231,186,145,.18) !important;
+    border-radius: 10px !important;
+    background: rgba(4,7,10,.30) !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    overflow: hidden;
+  }
+
+  .mobile-compare-item summary {
+    list-style: none;
+    cursor: pointer;
+    min-height: 38px;
+    padding: 9px 34px 9px 10px;
+    color: var(--text);
+    font-size: .88rem !important;
+    line-height: 1.18 !important;
+    font-weight: 950;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+    position: relative;
+  }
+
+  .mobile-compare-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .mobile-compare-item summary::after {
+    content: "+";
+    position: absolute;
+    right: 11px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--copper-2);
+    font-size: 1rem;
+    font-weight: 950;
+  }
+
+  .mobile-compare-item[open] summary::after {
+    content: "–";
+  }
+
+  .mobile-compare-values {
+    display: grid;
+    grid-template-columns: 1fr;
+    border-top: 1px solid rgba(255,255,255,.08);
+  }
+
+  .mobile-compare-value {
+    display: grid;
+    grid-template-columns: minmax(104px, 38%) 1fr;
+    gap: 8px;
+    align-items: center;
+    padding: 7px 10px;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    background: rgba(0,0,0,.14);
+  }
+
+  .mobile-compare-value:last-child {
+    border-bottom: 0;
+  }
+
+  .mobile-compare-label {
+    color: var(--copper-2);
+    font-size: .68rem !important;
+    line-height: 1.1 !important;
+    font-weight: 950;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+  }
+
+  .mobile-compare-result {
+    color: var(--text);
+    font-size: .86rem !important;
+    line-height: 1.22 !important;
+    font-weight: 800;
+  }
+
+  .mobile-compare-result strong {
+    display: inline;
+    color: var(--text);
+    font-size: .88rem !important;
+    line-height: 1.18 !important;
+    margin: 0;
+  }
+
+  .mobile-compare-result small {
+    display: block;
+    color: var(--muted);
+    font-size: .72rem !important;
+    line-height: 1.18 !important;
+    font-weight: 700;
+    margin-top: 1px;
+  }
+
+  .mobile-compare-result.yes,
+  .mobile-compare-result .yes {
+    color: #D2CEC8 !important;
+  }
+
+  .mobile-compare-result.no,
+  .mobile-compare-result .no {
+    color: #D7A0A8 !important;
+  }
+
+  .mobile-compare-result.partial,
+  .mobile-compare-result .partial {
+    color: var(--copper-2) !important;
+  }
+
+  .mobile-compare-list + .table-note,
+  .mobile-compare-list + .real-app-source-note,
+  .mobile-compare-list + .stack-cost-note {
+    margin-top: 6px;
+  }
+
+  .section-head.center {
+    text-align: left;
+  }
+}
+
+@media (max-width: 420px) {
+  .mobile-compare-value {
+    grid-template-columns: 92px 1fr;
+    padding: 7px 8px;
+  }
+
+  .mobile-compare-item summary {
+    font-size: .82rem !important;
+    padding-left: 8px;
+  }
+
+  .mobile-compare-label {
+    font-size: .64rem !important;
+  }
+
+  .mobile-compare-result {
+    font-size: .82rem !important;
+  }
+}
+
