@@ -142,3 +142,10 @@ Do not commit real keys. `BETA_FROM_EMAIL` must use a domain verified with the e
 - Increased small/body text across the public website, including nav, cards, bullets, pricing details, comparison tables, FAQ, footer, and Product Tour copy.
 - Kept major hero headlines from being intentionally enlarged beyond the existing design.
 - Preserved the v59 clean background without the Wisconsin-logo artifact.
+
+## V61 layout density and POS integration wording
+
+- Tightened site-wide spacing, gaps, card padding, section padding, CTA spacing, pricing-card spacing, and comparison-table cell padding.
+- Kept the larger readable body text from v60.
+- Made footer links, footer description, and copyright text smaller again.
+- Added customer-facing wording that direct POS integrations are planned and being worked on while clarifying 86 Chaos still works around the POS today.

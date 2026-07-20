@@ -2808,3 +2808,236 @@ select,
   }
 }
 
+
+/* V61 density pass: tighter layout without shrinking main body copy */
+:root {
+  --max: 1040px;
+}
+
+.container {
+  padding-left: 14px;
+  padding-right: 14px;
+}
+
+.nav-shell {
+  min-height: 42px;
+  padding-left: 14px;
+  padding-right: 14px;
+  gap: 10px;
+}
+
+.brand img {
+  width: 128px;
+}
+
+.nav-links {
+  gap: 1px;
+  font-size: .78rem;
+}
+
+.nav-links a {
+  padding: 5px 6px;
+}
+
+.nav-links .nav-cta {
+  padding-inline: 9px;
+}
+
+.section-tight {
+  padding: 34px 0 22px !important;
+}
+
+.section {
+  padding: 28px 0 !important;
+}
+
+.page-hero {
+  padding: 28px 0 16px !important;
+}
+
+.section-head {
+  margin-bottom: 16px;
+}
+
+.hero-grid,
+.page-hero .container,
+.split,
+.form-grid,
+.preview-main {
+  gap: 16px;
+}
+
+.grid-2,
+.grid-3,
+.grid-4,
+.timeline,
+.sales-strip,
+.roi-grid,
+.feature-grid,
+.shot-list,
+.screen-story {
+  gap: 10px;
+}
+
+.card,
+.panel,
+.note-box,
+details,
+.plan-card,
+.price-card,
+.feature-card,
+.value-card,
+.about-card,
+.tour-card,
+.faq-list details {
+  padding: 11px !important;
+  border-radius: 12px;
+}
+
+.card p,
+.note-box span,
+.faq-list p,
+.tour-card p,
+.feature-card p,
+.value-card p,
+.about-card p {
+  margin-bottom: 6px;
+}
+
+h1 {
+  margin-bottom: 8px;
+}
+
+h2,
+h3 {
+  margin-bottom: 7px;
+}
+
+.hero-actions {
+  margin: 14px 0 12px;
+}
+
+.mini-proof,
+.chip-row,
+.bullet-cloud {
+  gap: 6px;
+}
+
+.mini-proof span,
+.chip-row span,
+.bullet-cloud span {
+  padding: 4px 7px;
+}
+
+.cta-band {
+  padding: 16px 0 30px !important;
+}
+
+.cta-card {
+  padding: 14px !important;
+  border-radius: 18px;
+}
+
+.price-grid,
+.plan-grid {
+  gap: 10px !important;
+}
+
+.plan-card .price {
+  margin: 6px 0 2px;
+}
+
+.plan-card ul {
+  margin-top: 10px;
+  padding-left: 16px;
+}
+
+.plan-card li {
+  margin-bottom: 4px;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 7px 8px !important;
+  line-height: 1.32;
+}
+
+.comparison-table td strong {
+  margin-bottom: 1px;
+}
+
+.table-note,
+.real-app-source-note,
+.stack-cost-note {
+  margin-top: 6px;
+}
+
+.footer {
+  padding: 18px 0 !important;
+}
+
+.footer-grid {
+  gap: 16px;
+}
+
+.footer img {
+  width: 118px;
+  margin-bottom: 6px;
+}
+
+.footer h3 {
+  font-size: .72rem !important;
+  margin-bottom: 5px;
+}
+
+.footer a,
+.footer p,
+.footer small {
+  font-size: .78rem !important;
+  line-height: 1.35;
+  margin: 3px 0;
+}
+
+.footer p {
+  max-width: 320px;
+}
+
+@media (max-width: 920px) {
+  .nav-links {
+    top: 42px;
+  }
+
+  .section,
+  .section-tight,
+  .page-hero {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .brand img {
+    width: 118px;
+  }
+
+  .nav-shell {
+    min-height: 42px;
+  }
+
+  .nav-links {
+    top: 42px;
+  }
+
+  .section-tight {
+    padding: 28px 0 18px !important;
+  }
+
+  .section {
+    padding: 24px 0 !important;
+  }
+
+  .footer-grid {
+    gap: 10px;
+  }
+}
+
