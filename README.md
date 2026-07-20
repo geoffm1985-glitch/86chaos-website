@@ -113,3 +113,9 @@ Do not commit real keys. `BETA_FROM_EMAIL` must use a domain verified with the e
 - Added `about.html` with a no-name founder story based on nearly 25 years of kitchen experience.
 - Added About to the main navigation and Founder story to the footer.
 - Preserved the existing static site structure and current pricing/comparison updates.
+
+## v52 Product Tour Update
+- Product Tour now uses seven populated demo panels instead of relying on rough screenshots.
+- Screens included: Manager Brief, Prep & Tasks, Schedule Builder, AI Ordering, Menu Impact, Inventory & Invoice Watch, and 86Voice.
+- Demo panels use clean sample data so the tour feels active without exposing private restaurant records.
+
