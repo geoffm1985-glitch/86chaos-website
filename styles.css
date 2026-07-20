@@ -3919,3 +3919,318 @@ h3 {
   }
 }
 
+
+/* V64 mobile cleanup: remove giant boxes and make comparison charts compact/readable */
+@media (max-width: 920px) {
+  .section-tight,
+  .section,
+  .page-hero,
+  .cta-band {
+    padding-top: 18px !important;
+    padding-bottom: 16px !important;
+  }
+
+  .container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .grid-2,
+  .grid-3,
+  .grid-4,
+  .timeline,
+  .sales-strip,
+  .feature-grid,
+  .shot-list,
+  .screen-story,
+  .price-grid,
+  .plan-grid,
+  .form-row {
+    gap: 7px !important;
+  }
+
+  .card,
+  .panel,
+  .note-box,
+  details,
+  .plan-card,
+  .price-card,
+  .feature-card,
+  .value-card,
+  .about-card,
+  .tour-card,
+  .faq-list details,
+  .cta-card,
+  .story-pill,
+  .shot-button {
+    padding: 9px !important;
+    border-radius: 10px !important;
+    box-shadow: none !important;
+  }
+
+  .card,
+  .panel,
+  .note-box,
+  details,
+  .plan-card,
+  .price-card,
+  .feature-card,
+  .value-card,
+  .about-card,
+  .tour-card,
+  .faq-list details {
+    background: rgba(7,10,14,.38) !important;
+  }
+
+  .card p,
+  .card li,
+  .note-box,
+  .note-box span,
+  .faq-list p,
+  .tour-card p,
+  .tour-card li,
+  .feature-card p,
+  .value-card p,
+  .about-card p,
+  .plan-card ul,
+  .story-pill span,
+  .audit-list span,
+  .voice-result span,
+  .voice-step span {
+    font-size: .92rem !important;
+    line-height: 1.36 !important;
+  }
+
+  h1 {
+    font-size: clamp(1.72rem, 8.4vw, 2.35rem) !important;
+  }
+
+  h2 {
+    font-size: clamp(1.18rem, 5.8vw, 1.58rem) !important;
+  }
+
+  h3 {
+    font-size: .96rem !important;
+  }
+
+  .eyebrow,
+  .plan-card .plan-name,
+  .timeline .card span {
+    font-size: .68rem !important;
+  }
+
+  .hero-lede,
+  .page-lede,
+  .section-head p {
+    font-size: .92rem !important;
+    line-height: 1.38 !important;
+  }
+
+  .mini-proof span,
+  .chip-row span,
+  .bullet-cloud span {
+    padding: 4px 6px;
+    font-size: .78rem !important;
+  }
+
+  .button,
+  .nav-cta {
+    min-height: 38px;
+    padding: 8px 10px;
+    font-size: .86rem !important;
+  }
+
+  .plan-card .price strong {
+    font-size: 1.58rem !important;
+  }
+
+  .plan-card ul {
+    margin-top: 7px;
+    padding-left: 16px;
+  }
+
+  .plan-card li {
+    margin-bottom: 2px;
+  }
+
+  /* Compact mobile comparison charts */
+  .comparison-wrap,
+  .comparison-table-wrap,
+  .real-app-comparison-wrap {
+    overflow: visible !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+
+  .comparison-table,
+  .real-app-comparison-table {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    table-layout: auto !important;
+    border-collapse: collapse !important;
+    border-spacing: 0 !important;
+    font-size: .86rem !important;
+  }
+
+  .comparison-table thead,
+  .real-app-comparison-table thead,
+  .comparison-table colgroup,
+  .real-app-comparison-table colgroup {
+    display: none !important;
+  }
+
+  .comparison-table tbody,
+  .real-app-comparison-table tbody {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  .comparison-table tbody tr,
+  .real-app-comparison-table tbody tr {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(74px, 1fr));
+    gap: 0;
+    width: 100% !important;
+    margin: 0 0 8px !important;
+    padding: 0 !important;
+    border: 1px solid rgba(231,186,145,.16);
+    border-radius: 9px;
+    overflow: hidden;
+    background: rgba(6,9,12,.46) !important;
+    box-shadow: none !important;
+  }
+
+  .comparison-table tbody th,
+  .real-app-comparison-table tbody th {
+    display: block !important;
+    grid-column: 1 / -1;
+    width: 100% !important;
+    padding: 7px 8px !important;
+    border: 0 !important;
+    border-bottom: 1px solid rgba(255,255,255,.08) !important;
+    background: rgba(201,143,109,.12) !important;
+    color: var(--text) !important;
+    font-size: .82rem !important;
+    line-height: 1.18 !important;
+    text-align: left !important;
+    letter-spacing: .02em !important;
+  }
+
+  .comparison-table td,
+  .real-app-comparison-table td {
+    display: block !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    padding: 6px 5px !important;
+    border: 0 !important;
+    border-right: 1px solid rgba(255,255,255,.055) !important;
+    border-top: 0 !important;
+    background: rgba(3,6,9,.28) !important;
+    color: var(--text) !important;
+    text-align: center !important;
+    line-height: 1.15 !important;
+  }
+
+  .comparison-table td:last-child,
+  .real-app-comparison-table td:last-child {
+    border-right: 0 !important;
+  }
+
+  .comparison-table td::before,
+  .real-app-comparison-table td::before {
+    content: attr(data-label);
+    display: block;
+    min-height: 1.8em;
+    margin-bottom: 3px;
+    color: var(--copper-2);
+    font-weight: 950;
+    font-size: .58rem !important;
+    line-height: 1.05;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+  }
+
+  .comparison-table td strong,
+  .real-app-comparison-table td strong {
+    display: block;
+    font-size: .78rem !important;
+    line-height: 1.1 !important;
+    margin: 0 !important;
+  }
+
+  .comparison-table td small,
+  .real-app-comparison-table td small {
+    display: block;
+    font-size: .66rem !important;
+    line-height: 1.1 !important;
+  }
+
+  .comparison-table .highlight-col,
+  .real-app-comparison-table .highlight-col,
+  .comparison-table tbody td.highlight-col,
+  .real-app-comparison-table tbody td.highlight-col {
+    background: rgba(201,143,109,.10) !important;
+    box-shadow: inset 2px 0 0 rgba(231,186,145,.54);
+  }
+
+  .comparison-table .yes,
+  .real-app-comparison-table .yes,
+  .comparison-table .no,
+  .real-app-comparison-table .no,
+  .comparison-table .partial,
+  .real-app-comparison-table .partial {
+    font-size: .82rem !important;
+    font-weight: 950 !important;
+  }
+
+  .table-note,
+  .real-app-source-note,
+  .stack-cost-note {
+    font-size: .78rem !important;
+    line-height: 1.32 !important;
+  }
+
+  .footer {
+    padding: 14px 0 !important;
+  }
+
+  .footer a,
+  .footer p,
+  .footer small {
+    font-size: .72rem !important;
+    line-height: 1.28 !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .comparison-table tbody tr,
+  .real-app-comparison-table tbody tr {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .comparison-table td,
+  .real-app-comparison-table td {
+    text-align: left !important;
+    padding: 7px 8px !important;
+  }
+
+  .comparison-table td:nth-child(odd),
+  .real-app-comparison-table td:nth-child(odd) {
+    border-right: 0 !important;
+  }
+
+  .comparison-table td::before,
+  .real-app-comparison-table td::before {
+    min-height: 0;
+    font-size: .62rem !important;
+  }
+
+  .comparison-table td strong,
+  .real-app-comparison-table td strong {
+    font-size: .82rem !important;
+  }
+}
+

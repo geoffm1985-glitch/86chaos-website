@@ -322,3 +322,47 @@ comparisonTables.forEach((table, tableIndex) => {
   window.addEventListener("resize", updateMobileState, { passive: true });
 })();
 
+
+// V64: shorten mobile comparison labels so compact charts do not become giant blocks.
+(function () {
+  function shortLabel(label) {
+    var cleaned = String(label || "").replace(/\s+/g, " ").trim();
+    var lower = cleaned.toLowerCase();
+
+    if (lower.includes("86 chaos")) return "86 Chaos";
+    if (lower.includes("smart kitchen")) return "Smart Kitchen";
+    if (lower.includes("owner pro")) return "Owner Pro";
+    if (lower.includes("operations")) return "Operations";
+    if (lower.includes("shift")) return "Shift";
+    if (lower.includes("7shifts")) return "7shifts";
+    if (lower.includes("hotschedules")) return "HotSchedules";
+    if (lower.includes("marketman")) return "MarketMan";
+    if (lower.includes("marginedge")) return "MarginEdge";
+    if (lower.includes("restaurant365")) return "R365";
+    if (lower.includes("toast")) return "POS";
+    if (lower.includes("square")) return "POS";
+    return cleaned.split(" ").slice(0, 3).join(" ");
+  }
+
+  function relabelComparisonTables() {
+    document.querySelectorAll(".comparison-table, .real-app-comparison-table").forEach(function (table) {
+      var headers = Array.from(table.querySelectorAll("thead th")).map(function (th) {
+        return shortLabel(th.innerText || th.textContent || "");
+      });
+
+      table.querySelectorAll("tbody tr").forEach(function (row) {
+        Array.from(row.children).forEach(function (cell, index) {
+          if (index === 0) return;
+          cell.setAttribute("data-label", headers[index] || "Plan");
+        });
+      });
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", relabelComparisonTables);
+  } else {
+    relabelComparisonTables();
+  }
+})();
+

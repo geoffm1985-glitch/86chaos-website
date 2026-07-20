@@ -164,3 +164,10 @@ Do not commit real keys. `BETA_FROM_EMAIL` must use a domain verified with the e
 - Updated `script.js` to add table header labels as `data-label` values for mobile comparison cards.
 - Added safer mobile nav behavior so tapping a menu link closes the mobile menu.
 - Kept desktop density fixes, readable body text, POS integration planned wording, and the clean v59 background.
+
+## V64 mobile comparison cleanup and founder testing copy
+
+- Removed the giant stacked-card treatment from mobile comparison charts.
+- Rebuilt mobile comparison charts as compact grouped rows with short labels and smaller cells.
+- Flattened oversized mobile cards/panels site-wide to reduce the heavy boxed look.
+- Added public copy noting that the founder currently works full time in a kitchen and tests 86 Chaos in real restaurant conditions.
