@@ -219,3 +219,11 @@ Do not commit real keys. `BETA_FROM_EMAIL` must use a domain verified with the e
 - Slightly increased text size on mobile and desktop without expanding the chart layout back into oversized blocks.
 - Added About page copy noting more than a year of work, 1,000+ founder hours, full-time kitchen work, and real kitchen workflow testing.
 - Kept comparison charts compressed to fit in a single desktop view as much as possible.
+
+## V72 chart placement and founder wording
+
+- Increased poster chart text and partial symbols slightly on mobile and desktop.
+- Added a Back Office Suite / owner tools row to the app comparison chart.
+- Ensured the cost/price comparison section sits directly under the different-app comparison chart.
+- Kept poster chart styling consistent for comparison charts.
+- Rewrote the About page founder-hours sentence to sound more professional and human.

@@ -5732,3 +5732,204 @@ details,
   .ai-comparison-poster { grid-template-columns: 1.42fr repeat(4, minmax(0, 1fr)) !important; }
 }
 
+
+/* V72 chart polish: slightly bigger text/symbols and consistent poster charts */
+@media (min-width: 921px) {
+  .comparison-poster-head .eyebrow {
+    font-size: .88rem !important;
+  }
+
+  .comparison-poster-head h2 {
+    font-size: clamp(1.22rem, 1.92vw, 1.68rem) !important;
+  }
+
+  .poster-logo-word {
+    font-size: 1.68rem !important;
+  }
+
+  .poster-intro p {
+    font-size: .80rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .poster-intro small {
+    font-size: .66rem !important;
+  }
+
+  .poster-col h3 {
+    font-size: .74rem !important;
+  }
+
+  .poster-col p {
+    font-size: .56rem !important;
+  }
+
+  .poster-circle {
+    width: 50px !important;
+    height: 50px !important;
+    font-size: .70rem !important;
+  }
+
+  .poster-col small {
+    font-size: .48rem !important;
+  }
+
+  .poster-row-label {
+    font-size: .68rem !important;
+  }
+
+  .poster-mark::before {
+    width: 30px !important;
+    height: 30px !important;
+    font-size: .96rem !important;
+  }
+
+  .poster-mark.partial::before {
+    font-size: 1rem !important;
+  }
+
+  .poster-mark.text {
+    font-size: .57rem !important;
+  }
+
+  .comparison-poster-foot {
+    font-size: .68rem !important;
+  }
+
+  .cost-card strong {
+    font-size: clamp(2rem, 3.8vw, 3rem) !important;
+  }
+}
+
+@media (max-width: 920px) {
+  .comparison-poster-head .eyebrow {
+    font-size: .64rem !important;
+  }
+
+  .comparison-poster-head h2 {
+    font-size: 1.05rem !important;
+  }
+
+  .poster-intro p {
+    font-size: .48rem !important;
+  }
+
+  .poster-intro small {
+    font-size: .38rem !important;
+  }
+
+  .poster-col h3 {
+    font-size: .40rem !important;
+  }
+
+  .poster-col p {
+    font-size: .29rem !important;
+  }
+
+  .poster-circle {
+    width: 24px !important;
+    height: 24px !important;
+    font-size: .28rem !important;
+  }
+
+  .poster-col small {
+    font-size: .23rem !important;
+  }
+
+  .poster-row-label {
+    font-size: .46rem !important;
+    line-height: 1.06 !important;
+  }
+
+  .poster-mark::before {
+    width: 17px !important;
+    height: 17px !important;
+    font-size: .57rem !important;
+  }
+
+  .poster-mark.partial::before {
+    font-size: .61rem !important;
+  }
+
+  .poster-mark.text {
+    font-size: .26rem !important;
+  }
+
+  .comparison-poster-foot {
+    font-size: .61rem !important;
+  }
+}
+
+/* Ensure cost comparison immediately under app chart feels like the same chart family */
+.cost-poster-shell {
+  margin-top: 14px;
+}
+
+.cost-poster-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  background: #142033;
+}
+
+.cost-card {
+  padding: 18px;
+  border-top: 8px solid #142033;
+  color: #f6f1ea;
+  background: rgba(64,80,106,.68);
+}
+
+.cost-card + .cost-card {
+  border-left: 8px solid #142033;
+}
+
+.cost-card.chaos {
+  background: linear-gradient(180deg, rgba(231,186,145,.72), rgba(201,143,109,.54));
+  color: #142033;
+}
+
+.cost-card .eyebrow {
+  color: inherit;
+  margin-bottom: 5px;
+}
+
+.cost-card strong {
+  display: block;
+  color: inherit;
+  font-size: clamp(1.8rem, 4vw, 3.1rem);
+  line-height: .95;
+  letter-spacing: -.06em;
+  margin-bottom: 8px;
+}
+
+.cost-card span {
+  display: block;
+  max-width: 680px;
+  font-size: .95rem;
+  line-height: 1.28;
+  font-weight: 800;
+}
+
+@media (max-width: 920px) {
+  .cost-poster-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cost-card {
+    padding: 12px;
+    border-top-width: 5px;
+  }
+
+  .cost-card + .cost-card {
+    border-left: 0;
+  }
+
+  .cost-card strong {
+    font-size: 1.9rem !important;
+  }
+
+  .cost-card span {
+    font-size: .84rem;
+  }
+}
+
