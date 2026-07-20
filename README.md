@@ -184,3 +184,11 @@ Do not commit real keys. `BETA_FROM_EMAIL` must use a domain verified with the e
 - Desktop still uses normal comparison tables.
 - On mobile, tables are hidden after JS builds tap-to-open comparison rows with short labels.
 - Removed the giant mobile table/card treatment that made comparison sections huge and ugly.
+
+## V67 poster-style comparison charts
+
+- Replaced the pricing app comparison with a sales-poster style matrix inspired by the supplied example.
+- Added the actual other-app comparison directly into the poster chart: 7shifts, HotSchedules, MarketMan, MarginEdge, and Restaurant365.
+- Replaced the tier comparison table with a matching poster-style plan matrix where available.
+- Added mobile labels for poster chart cells so the matrix is still readable on phones.
+- Kept POS integration marked as planned / being worked on, not live.

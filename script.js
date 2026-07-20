@@ -482,3 +482,35 @@ comparisonTables.forEach((table, tableIndex) => {
   }
 })();
 
+
+// V67: label poster comparison cells for mobile readability.
+(function () {
+  function labelPosterChart(chart) {
+    if (chart.dataset.posterLabeled === "true") return;
+
+    var plans = Array.from(chart.querySelectorAll(":scope > .poster-plan")).map(function (plan) {
+      var name = plan.querySelector(".poster-plan-name");
+      return name ? name.textContent.replace(/\s+/g, " ").trim() : "Plan";
+    });
+
+    var cells = Array.from(chart.querySelectorAll(":scope > .poster-cell"));
+    var count = plans.length || 1;
+
+    cells.forEach(function (cell, index) {
+      cell.setAttribute("data-label", plans[index % count] || "Plan");
+    });
+
+    chart.dataset.posterLabeled = "true";
+  }
+
+  function initPosterLabels() {
+    document.querySelectorAll(".poster-chart").forEach(labelPosterChart);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initPosterLabels);
+  } else {
+    initPosterLabels();
+  }
+})();
+
