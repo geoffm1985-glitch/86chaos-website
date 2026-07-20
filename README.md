@@ -136,3 +136,9 @@ Do not commit real keys. `BETA_FROM_EMAIL` must use a domain verified with the e
 - Replaced the active site background with the clean no-Wisconsin version directly.
 - Removed the extra patched/blurred background treatment that created a ghost checkmark artifact.
 - CSS now references `assets/site-background-clean-v59.png` to avoid cache collisions.
+
+## V60 readability update
+
+- Increased small/body text across the public website, including nav, cards, bullets, pricing details, comparison tables, FAQ, footer, and Product Tour copy.
+- Kept major hero headlines from being intentionally enlarged beyond the existing design.
+- Preserved the v59 clean background without the Wisconsin-logo artifact.

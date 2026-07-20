@@ -2672,3 +2672,139 @@ body[data-page="about"] .founder-story-panel p {
   .mock-stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .schedule-grid-demo { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+
+/* V60 readability pass: increase small text across the whole public site without inflating the hero headlines */
+html {
+  font-size: 15px;
+}
+
+body {
+  font-size: 1rem;
+}
+
+.nav-links,
+.button,
+.eyebrow,
+.hero-lede,
+.page-lede,
+.section-head p,
+.card p,
+.card li,
+.note-box,
+.note-box span,
+.faq-list p,
+.footer p,
+.footer small,
+.footer a,
+.mini-proof span,
+.chip-row span,
+.bullet-cloud span,
+.cred-items,
+.fact-card span,
+.fact-card a,
+.mini-row,
+.shot-button strong,
+.shot-button span,
+.story-pill span,
+.plan-card .price span,
+.plan-card ul,
+.founder-price,
+label,
+input,
+textarea,
+select,
+.form-status,
+.timeline .card span,
+.audit-list span,
+.voice-result span,
+.voice-step span,
+.table-note,
+.comparison-table,
+.comparison-table thead th,
+.comparison-table thead th span,
+.comparison-table td,
+.comparison-table td small,
+.real-app-source-note,
+.stack-cost-note,
+.tour-card,
+.tour-card p,
+.tour-card li,
+.tour-meta,
+.tour-tag,
+.mock-label,
+.mock-item,
+.mock-row,
+.mock-note,
+.mock-table,
+.about-lede,
+.about-story-panel p,
+.about-card p,
+.value-card p,
+.feature-card p,
+.price-card p {
+  font-size: max(0.94rem, 15px);
+  line-height: 1.5;
+}
+
+.nav-links {
+  font-size: 0.9rem;
+}
+
+.eyebrow,
+.plan-card .plan-name,
+.footer h3,
+.timeline .card span {
+  font-size: 0.86rem;
+}
+
+.comparison-table thead th,
+.comparison-table tbody th {
+  font-size: 0.9rem;
+}
+
+.comparison-table td strong {
+  font-size: 1.08rem;
+}
+
+.comparison-table td small,
+.comparison-table thead th span {
+  font-size: 0.88rem;
+}
+
+.plan-card ul {
+  font-size: 0.96rem;
+}
+
+.plan-card .price span,
+.founder-price {
+  font-size: 0.88rem;
+}
+
+.footer a,
+.footer p,
+.footer small {
+  font-size: 0.92rem;
+}
+
+@media (max-width: 560px) {
+  html {
+    font-size: 15px;
+  }
+
+  .nav-links,
+  .button,
+  .card p,
+  .card li,
+  .page-lede,
+  .hero-lede,
+  .section-head p,
+  .plan-card ul,
+  .comparison-table,
+  .footer a,
+  .footer p,
+  .footer small {
+    font-size: 0.96rem;
+  }
+}
+
