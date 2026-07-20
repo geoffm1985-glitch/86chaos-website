@@ -543,3 +543,16 @@ comparisonTables.forEach((table, tableIndex) => {
     markPosterMatrices();
   }
 })();
+
+// V70: poster comparison is the active mobile/desktop comparison layout.
+(function () {
+  function markPosterComparison() {
+    document.documentElement.classList.add("v70-poster-comparison");
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", markPosterComparison);
+  } else {
+    markPosterComparison();
+  }
+})();
+

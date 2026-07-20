@@ -5179,3 +5179,425 @@ details,
   .poster-cell.partial::before { width: 15px !important; height: 15px !important; font-size: .50rem !important; }
   .poster-cell span { font-size: .23rem !important; }
 }
+
+
+/* V70 actual poster-style comparison chart */
+.comparison-poster-shell {
+  overflow: hidden;
+  border: 1px solid rgba(231,186,145,.22);
+  border-radius: 14px;
+  background: rgba(8,12,17,.78);
+  box-shadow: 0 16px 42px rgba(0,0,0,.25);
+}
+
+.comparison-poster-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 24px;
+  background: linear-gradient(135deg, #e7ba91, #c98f6d);
+  color: #142033;
+}
+
+.comparison-poster-head .eyebrow {
+  color: #142033;
+  margin: 0 0 2px;
+  font-size: .82rem !important;
+}
+
+.comparison-poster-head h2 {
+  color: #142033;
+  margin: 0;
+  font-size: clamp(1.35rem, 2.3vw, 2.05rem) !important;
+  line-height: 1;
+}
+
+.poster-logo-word {
+  white-space: nowrap;
+  font-size: 2rem;
+  line-height: 1;
+  font-weight: 950;
+  letter-spacing: -.05em;
+}
+
+.comparison-poster-grid {
+  display: grid;
+  grid-template-columns: 1.22fr repeat(6, minmax(0, 1fr));
+  gap: 0;
+  background: #142033;
+}
+
+.poster-intro {
+  grid-row: span 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  padding: 18px;
+  color: #f6f1ea;
+  background: #142033;
+}
+
+.poster-intro p {
+  margin: 0;
+  font-size: .92rem;
+  line-height: 1.28;
+  font-weight: 780;
+}
+
+.poster-intro small {
+  font-size: .72rem;
+  line-height: 1.25;
+  color: rgba(246,241,234,.78);
+  font-weight: 700;
+}
+
+.poster-col {
+  min-height: 158px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 7px;
+  padding: 14px 12px;
+  color: #142033;
+  background: #cfd1d4;
+  border-left: 8px solid #142033;
+}
+
+.poster-col.poster-featured {
+  background: linear-gradient(180deg, #e7ba91, #c98f6d);
+}
+
+.poster-col h3 {
+  margin: 0;
+  color: #142033;
+  font-size: .98rem !important;
+  line-height: 1.05;
+  font-weight: 950;
+}
+
+.poster-col p {
+  min-height: 2.4em;
+  margin: 0;
+  padding-top: 8px;
+  border-top: 4px solid #142033;
+  color: #243248;
+  font-size: .74rem !important;
+  line-height: 1.14;
+  font-weight: 760;
+}
+
+.poster-circle {
+  width: 78px;
+  height: 78px;
+  display: grid;
+  place-items: center;
+  margin: 5px auto 0;
+  border-radius: 999px;
+  color: #142033;
+  background: rgba(255,255,255,.58);
+  font-size: 1.14rem;
+  font-weight: 950;
+  letter-spacing: -.04em;
+  text-align: center;
+}
+
+.poster-col small {
+  color: #243248;
+  text-align: center;
+  font-size: .66rem;
+  line-height: 1.05;
+  font-weight: 850;
+}
+
+.poster-row-label {
+  min-height: 62px;
+  display: flex;
+  align-items: center;
+  padding: 10px 18px;
+  color: #f6f1ea;
+  background: #40506a;
+  border-top: 8px solid #142033;
+  font-size: .83rem;
+  line-height: 1.18;
+  font-weight: 780;
+}
+
+.poster-mark {
+  min-height: 62px;
+  display: grid;
+  place-items: center;
+  padding: 8px 5px;
+  color: #142033;
+  background: rgba(207,209,212,.82);
+  border-top: 8px solid #142033;
+  border-left: 8px solid #142033;
+  font-size: 0;
+  font-weight: 950;
+  text-align: center;
+}
+
+.poster-mark::before {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  font-size: 1.25rem;
+  line-height: 1;
+  font-weight: 950;
+}
+
+.poster-mark.yes::before {
+  content: "✓";
+  background: #142033;
+  color: #dce0e4;
+}
+
+.poster-mark.no::before {
+  content: "×";
+  background: rgba(20,32,51,.18);
+  color: rgba(20,32,51,.38);
+}
+
+.poster-mark.partial::before {
+  content: "◐";
+  background: rgba(20,32,51,.18);
+  color: #142033;
+}
+
+.poster-mark.text {
+  font-size: .68rem;
+  line-height: 1.05;
+  color: #142033;
+}
+
+.poster-mark.text::before {
+  content: none;
+}
+
+.comparison-poster-foot {
+  margin: 0;
+  padding: 12px 18px;
+  color: rgba(246,241,234,.86);
+  background: #142033;
+  font-size: .76rem;
+  line-height: 1.35;
+  text-align: center;
+}
+
+/* desktop compression so the whole chart fits in one normal screen better */
+@media (min-width: 921px) {
+  .compare-section.compact-section {
+    padding-top: 18px !important;
+    padding-bottom: 18px !important;
+  }
+
+  .comparison-poster-head {
+    padding: 12px 18px;
+  }
+
+  .comparison-poster-head h2 {
+    font-size: clamp(1.12rem, 1.8vw, 1.58rem) !important;
+  }
+
+  .poster-logo-word {
+    font-size: 1.55rem;
+  }
+
+  .poster-intro {
+    padding: 12px;
+  }
+
+  .poster-intro p {
+    font-size: .74rem;
+  }
+
+  .poster-intro small {
+    font-size: .60rem;
+  }
+
+  .poster-col {
+    min-height: 112px;
+    padding: 8px 7px;
+    gap: 4px;
+    border-left-width: 5px;
+  }
+
+  .poster-col h3 {
+    font-size: .68rem !important;
+    text-align: center;
+  }
+
+  .poster-col p {
+    min-height: 2.1em;
+    padding-top: 4px;
+    border-top-width: 2px;
+    font-size: .50rem !important;
+    text-align: center;
+  }
+
+  .poster-circle {
+    width: 46px;
+    height: 46px;
+    font-size: .64rem;
+  }
+
+  .poster-col small {
+    font-size: .42rem;
+  }
+
+  .poster-row-label {
+    min-height: 38px;
+    padding: 6px 9px;
+    border-top-width: 4px;
+    font-size: .62rem;
+  }
+
+  .poster-mark {
+    min-height: 38px;
+    border-top-width: 4px;
+    border-left-width: 5px;
+    padding: 4px;
+  }
+
+  .poster-mark::before {
+    width: 27px;
+    height: 27px;
+    font-size: .82rem;
+  }
+
+  .poster-mark.text {
+    font-size: .50rem;
+  }
+
+  .comparison-poster-foot {
+    padding: 7px 12px;
+    font-size: .61rem;
+    line-height: 1.22;
+  }
+}
+
+/* mobile keeps the same poster structure: feature labels left, app columns across the top */
+@media (max-width: 920px) {
+  .comparison-poster-shell {
+    border-radius: 8px;
+  }
+
+  .comparison-poster-head {
+    padding: 8px 10px;
+  }
+
+  .comparison-poster-head .eyebrow {
+    font-size: .58rem !important;
+  }
+
+  .comparison-poster-head h2 {
+    font-size: .95rem !important;
+  }
+
+  .poster-logo-word {
+    display: none;
+  }
+
+  .comparison-poster-grid {
+    grid-template-columns: 1.55fr repeat(6, minmax(0, 1fr));
+  }
+
+  .poster-intro {
+    grid-row: span 2;
+    padding: 5px;
+  }
+
+  .poster-intro p {
+    font-size: .44rem;
+    line-height: 1.08;
+  }
+
+  .poster-intro small {
+    font-size: .34rem;
+    line-height: 1.05;
+  }
+
+  .poster-col {
+    min-height: 72px;
+    padding: 4px 2px;
+    gap: 2px;
+    border-left-width: 3px;
+  }
+
+  .poster-col h3 {
+    font-size: .36rem !important;
+    line-height: 1;
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+
+  .poster-col p {
+    min-height: 1.8em;
+    padding-top: 2px;
+    border-top-width: 2px;
+    font-size: .25rem !important;
+    line-height: 1;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .poster-circle {
+    width: 22px;
+    height: 22px;
+    margin-top: 1px;
+    font-size: .23rem;
+  }
+
+  .poster-col small {
+    font-size: .20rem;
+    line-height: 1;
+  }
+
+  .poster-row-label {
+    min-height: 30px;
+    padding: 3px 4px;
+    border-top-width: 3px;
+    font-size: .42rem;
+    line-height: 1.02;
+  }
+
+  .poster-mark {
+    min-height: 30px;
+    padding: 2px;
+    border-top-width: 3px;
+    border-left-width: 3px;
+  }
+
+  .poster-mark::before {
+    width: 15px;
+    height: 15px;
+    font-size: .48rem;
+  }
+
+  .poster-mark.text {
+    font-size: .22rem;
+    line-height: 1;
+  }
+
+  .comparison-poster-foot {
+    padding: 6px 8px;
+    font-size: .56rem;
+    line-height: 1.14;
+    text-align: left;
+  }
+}
+
+@media (max-width: 420px) {
+  .container {
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+  }
+
+  .comparison-poster-grid {
+    grid-template-columns: 1.48fr repeat(6, minmax(0, 1fr));
+  }
+}
+

@@ -205,3 +205,9 @@ Do not commit real keys. `BETA_FROM_EMAIL` must use a domain verified with the e
 - Forced app and plan comparison charts into a real grid on mobile.
 - Prevented mobile headers from stacking vertically.
 - Compressed plan headers, price circles, feature labels, and check/X cells to keep the whole chart visible on phones.
+
+## V70 actual poster-style comparison chart
+
+- Rebuilt the pricing app comparison section as a true poster-style matrix matching the supplied reference: header band, intro block, app columns across the top, feature labels down the left, and check/X/partial icons in the grid.
+- Desktop is compressed to fit the full chart in one normal screen better.
+- Mobile preserves the same matrix structure instead of stacking app headers or creating accordions.
