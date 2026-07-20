@@ -235,3 +235,10 @@ Do not commit real keys. `BETA_FROM_EMAIL` must use a domain verified with the e
 - Moved the cost/price comparison directly under the different-app comparison section.
 - Added Back Office Suite / owner tools to the different-app comparison chart.
 - Ensured tier charts include Back Office owner tooling where present.
+
+## V74 pricing comparison order fix
+
+- Moved Sales Pricing Comparison above the tier comparison chart.
+- Final order is now: hero, Sales Pricing Comparison, cost comparison, tier comparison, then the rest of pricing.
+- Added a stronger final CSS override to actually enlarge chart text and partial/half-circle symbols.
+- Kept the working poster-style comparison chart layout.

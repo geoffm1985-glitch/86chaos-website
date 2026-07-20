@@ -6173,3 +6173,218 @@ details,
   }
 }
 
+
+/* V74 final comparison order + stronger chart readability override */
+@media (min-width: 921px) {
+  .comparison-poster-head .eyebrow {
+    font-size: 1rem !important;
+  }
+
+  .comparison-poster-head h2 {
+    font-size: clamp(1.45rem, 2.25vw, 1.95rem) !important;
+  }
+
+  .poster-logo-word {
+    font-size: 1.85rem !important;
+  }
+
+  .poster-intro p {
+    font-size: .92rem !important;
+    line-height: 1.3 !important;
+  }
+
+  .poster-intro small {
+    font-size: .78rem !important;
+    line-height: 1.22 !important;
+  }
+
+  .poster-col h3 {
+    font-size: .92rem !important;
+    line-height: 1.05 !important;
+  }
+
+  .poster-col p {
+    font-size: .68rem !important;
+    line-height: 1.1 !important;
+  }
+
+  .poster-circle {
+    width: 62px !important;
+    height: 62px !important;
+    font-size: .88rem !important;
+  }
+
+  .poster-col small {
+    font-size: .62rem !important;
+  }
+
+  .poster-row-label,
+  .poster-feature {
+    font-size: .86rem !important;
+    line-height: 1.14 !important;
+  }
+
+  .poster-mark::before,
+  .poster-cell.yes::before,
+  .poster-cell.no::before,
+  .poster-cell.partial::before {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 1.22rem !important;
+  }
+
+  .poster-mark.partial::before,
+  .poster-cell.partial::before {
+    font-size: 1.36rem !important;
+    font-weight: 950 !important;
+  }
+
+  .poster-mark.text,
+  .poster-cell span {
+    font-size: .74rem !important;
+    line-height: 1.08 !important;
+  }
+
+  .comparison-poster-foot,
+  .poster-legend {
+    font-size: .80rem !important;
+    line-height: 1.28 !important;
+  }
+
+  /* Keep charts fitting desktop while text gets bigger */
+  .comparison-poster-grid.app-comparison-poster {
+    grid-template-columns: 1.16fr repeat(6, minmax(0, 1fr)) !important;
+  }
+
+  .comparison-poster-grid.tier-comparison-poster {
+    grid-template-columns: 1.14fr repeat(4, minmax(0, 1fr)) !important;
+  }
+
+  .poster-row-label {
+    min-height: 40px !important;
+    padding: 7px 10px !important;
+  }
+
+  .poster-mark {
+    min-height: 40px !important;
+  }
+}
+
+@media (max-width: 920px) {
+  .comparison-poster-head .eyebrow {
+    font-size: .76rem !important;
+  }
+
+  .comparison-poster-head h2 {
+    font-size: 1.20rem !important;
+    line-height: 1.05 !important;
+  }
+
+  .poster-intro p {
+    font-size: .58rem !important;
+    line-height: 1.12 !important;
+  }
+
+  .poster-intro small {
+    font-size: .48rem !important;
+  }
+
+  .poster-col h3 {
+    font-size: .50rem !important;
+    line-height: 1.02 !important;
+  }
+
+  .poster-col p {
+    font-size: .36rem !important;
+    line-height: 1.02 !important;
+  }
+
+  .poster-circle {
+    width: 30px !important;
+    height: 30px !important;
+    font-size: .36rem !important;
+  }
+
+  .poster-col small {
+    font-size: .30rem !important;
+  }
+
+  .poster-row-label,
+  .poster-feature {
+    font-size: .58rem !important;
+    line-height: 1.08 !important;
+  }
+
+  .poster-mark::before,
+  .poster-cell.yes::before,
+  .poster-cell.no::before,
+  .poster-cell.partial::before {
+    width: 22px !important;
+    height: 22px !important;
+    font-size: .76rem !important;
+  }
+
+  .poster-mark.partial::before,
+  .poster-cell.partial::before {
+    font-size: .86rem !important;
+    font-weight: 950 !important;
+  }
+
+  .poster-mark.text,
+  .poster-cell span {
+    font-size: .36rem !important;
+    line-height: 1.02 !important;
+  }
+
+  .comparison-poster-foot,
+  .poster-legend {
+    font-size: .70rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .poster-row-label,
+  .poster-feature {
+    min-height: 32px !important;
+  }
+
+  .poster-mark {
+    min-height: 32px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .poster-row-label,
+  .poster-feature {
+    font-size: .53rem !important;
+  }
+
+  .poster-mark::before,
+  .poster-cell.yes::before,
+  .poster-cell.no::before,
+  .poster-cell.partial::before {
+    width: 20px !important;
+    height: 20px !important;
+    font-size: .70rem !important;
+  }
+
+  .poster-mark.partial::before,
+  .poster-cell.partial::before {
+    font-size: .80rem !important;
+  }
+
+  .poster-mark.text,
+  .poster-cell span {
+    font-size: .33rem !important;
+  }
+}
+
+/* Correct pricing page comparison order spacing */
+.app-comparison-section {
+  padding-bottom: 10px !important;
+}
+
+.app-comparison-section + .stack-cost-section,
+#comparison + #cost-comparison {
+  padding-top: 10px !important;
+}
+
