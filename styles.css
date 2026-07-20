@@ -2412,3 +2412,34 @@ body {
 @media (max-width: 760px) {
   .stack-cost-callout { grid-template-columns: 1fr; }
 }
+
+
+/* V48 pricing cards: show unlimited users once instead of repeating it on every tier. */
+.pricing-included-line {
+  margin: 0 auto 16px;
+  max-width: 760px;
+  padding: 12px 16px;
+  border: 1px solid rgba(231,186,145,.28);
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(231,186,145,.16), rgba(68,212,151,.08));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+}
+.pricing-included-line strong {
+  color: #fff5eb;
+  font-weight: 950;
+}
+.pricing-included-line span {
+  color: var(--muted);
+  font-size: .86rem;
+}
+@media (max-width: 760px) {
+  .pricing-included-line {
+    border-radius: 18px;
+    display: grid;
+    gap: 4px;
+  }
+}
