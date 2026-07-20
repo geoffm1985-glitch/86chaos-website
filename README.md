@@ -119,3 +119,8 @@ Do not commit real keys. `BETA_FROM_EMAIL` must use a domain verified with the e
 - Screens included: Manager Brief, Prep & Tasks, Schedule Builder, AI Ordering, Menu Impact, Inventory & Invoice Watch, and 86Voice.
 - Demo panels use clean sample data so the tour feels active without exposing private restaurant records.
 
+
+## V57 background update
+
+- Replaced the site-wide background image with the updated branded kitchen/tech background that removes the Wisconsin logo.
+- Kept the background visible across all public pages while preserving readability with the existing transparent panel treatment.
