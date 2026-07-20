@@ -192,3 +192,9 @@ Do not commit real keys. `BETA_FROM_EMAIL` must use a domain verified with the e
 - Replaced the tier comparison table with a matching poster-style plan matrix where available.
 - Added mobile labels for poster chart cells so the matrix is still readable on phones.
 - Kept POS integration marked as planned / being worked on, not live.
+
+## V68 mobile and desktop comparison correction
+
+- Mobile comparison charts now stay as true poster-style matrices like the supplied example, not accordions or stacked cards.
+- Desktop poster comparison charts are compacted to fit on one screen better.
+- Reduced app-comparison chart headers, row heights, icon size, price circles, and legend size.

@@ -514,3 +514,17 @@ comparisonTables.forEach((table, tableIndex) => {
   }
 })();
 
+
+// V68: poster matrix mode for mobile comparison charts.
+(function () {
+  function enablePosterMatrixMode() {
+    document.documentElement.classList.add("poster-matrix-mode");
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", enablePosterMatrixMode);
+  } else {
+    enablePosterMatrixMode();
+  }
+})();
+
