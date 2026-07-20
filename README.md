@@ -211,3 +211,11 @@ Do not commit real keys. `BETA_FROM_EMAIL` must use a domain verified with the e
 - Rebuilt the pricing app comparison section as a true poster-style matrix matching the supplied reference: header band, intro block, app columns across the top, feature labels down the left, and check/X/partial icons in the grid.
 - Desktop is compressed to fit the full chart in one normal screen better.
 - Mobile preserves the same matrix structure instead of stacking app headers or creating accordions.
+
+## V71 poster charts everywhere and founder-hours copy
+
+- Kept the winning poster-style competitor comparison chart and fixed its grid alignment so row labels stay on the left and app columns stay across the top.
+- Converted the tier comparison charts on Pricing, Features, and AI + Ordering into the same poster-style matrix.
+- Slightly increased text size on mobile and desktop without expanding the chart layout back into oversized blocks.
+- Added About page copy noting more than a year of work, 1,000+ founder hours, full-time kitchen work, and real kitchen workflow testing.
+- Kept comparison charts compressed to fit in a single desktop view as much as possible.

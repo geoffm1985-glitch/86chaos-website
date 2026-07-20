@@ -5601,3 +5601,134 @@ details,
   }
 }
 
+/* V71 chart polish: same poster style everywhere, slightly larger text, correct grid alignment */
+.comparison-poster-grid .poster-intro {
+  grid-row: auto !important;
+}
+
+.tier-comparison-poster,
+.ai-comparison-poster {
+  grid-template-columns: 1.18fr repeat(4, minmax(0, 1fr));
+}
+
+.tier-comparison-poster .poster-col,
+.ai-comparison-poster .poster-col {
+  min-height: 136px;
+}
+
+.tier-comparison-poster .poster-row-label,
+.ai-comparison-poster .poster-row-label,
+.tier-comparison-poster .poster-mark,
+.ai-comparison-poster .poster-mark {
+  min-height: 50px;
+}
+
+/* Tiny overall readability bump, without returning to oversized desktop cards. */
+@media (min-width: 921px) {
+  body { font-size: .965rem; }
+
+  .card p,
+  .card li,
+  .feature-card p,
+  .value-card p,
+  .about-card p,
+  .tour-card p,
+  .faq-list p,
+  .section-head p,
+  .page-lede,
+  .hero-lede,
+  .note-box,
+  .note-box span {
+    font-size: .88rem !important;
+    line-height: 1.42 !important;
+  }
+
+  .comparison-poster-head .eyebrow { font-size: .86rem !important; }
+  .comparison-poster-head h2 { font-size: clamp(1.20rem, 1.9vw, 1.66rem) !important; }
+  .poster-intro p { font-size: .80rem !important; }
+  .poster-intro small { font-size: .64rem !important; }
+  .poster-col h3 { font-size: .73rem !important; }
+  .poster-col p { font-size: .54rem !important; }
+  .poster-circle { font-size: .69rem !important; }
+  .poster-col small { font-size: .46rem !important; }
+  .poster-row-label { font-size: .66rem !important; }
+  .poster-mark.text { font-size: .54rem !important; }
+  .comparison-poster-foot { font-size: .66rem !important; }
+
+  .app-comparison-poster .poster-row-label,
+  .app-comparison-poster .poster-mark {
+    min-height: 39px !important;
+  }
+
+  .tier-comparison-poster .poster-row-label,
+  .tier-comparison-poster .poster-mark,
+  .ai-comparison-poster .poster-row-label,
+  .ai-comparison-poster .poster-mark {
+    min-height: 38px !important;
+  }
+
+  .tier-comparison-poster .poster-col,
+  .ai-comparison-poster .poster-col,
+  .app-comparison-poster .poster-col {
+    min-height: 112px !important;
+  }
+}
+
+@media (max-width: 920px) {
+  body { font-size: 1.015rem; }
+
+  .card p,
+  .card li,
+  .feature-card p,
+  .value-card p,
+  .about-card p,
+  .tour-card p,
+  .faq-list p,
+  .section-head p,
+  .page-lede,
+  .hero-lede,
+  .note-box,
+  .note-box span {
+    font-size: .94rem !important;
+    line-height: 1.38 !important;
+  }
+
+  .comparison-poster-head .eyebrow { font-size: .62rem !important; }
+  .comparison-poster-head h2 { font-size: 1.02rem !important; }
+  .poster-intro p { font-size: .48rem !important; }
+  .poster-intro small { font-size: .38rem !important; }
+  .poster-col h3 { font-size: .40rem !important; }
+  .poster-col p { font-size: .28rem !important; }
+  .poster-circle { font-size: .27rem !important; }
+  .poster-col small { font-size: .24rem !important; }
+  .poster-row-label { font-size: .46rem !important; }
+  .poster-mark.text { font-size: .27rem !important; }
+  .comparison-poster-foot { font-size: .60rem !important; }
+
+  .tier-comparison-poster,
+  .ai-comparison-poster {
+    grid-template-columns: 1.45fr repeat(4, minmax(0, 1fr)) !important;
+  }
+
+  .tier-comparison-poster .poster-col,
+  .ai-comparison-poster .poster-col {
+    min-height: 76px !important;
+  }
+
+  .tier-comparison-poster .poster-row-label,
+  .tier-comparison-poster .poster-mark,
+  .ai-comparison-poster .poster-row-label,
+  .ai-comparison-poster .poster-mark {
+    min-height: 32px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .poster-intro p { font-size: .47rem !important; }
+  .poster-intro small { font-size: .37rem !important; }
+  .poster-row-label { font-size: .44rem !important; }
+  .poster-col h3 { font-size: .38rem !important; }
+  .tier-comparison-poster,
+  .ai-comparison-poster { grid-template-columns: 1.42fr repeat(4, minmax(0, 1fr)) !important; }
+}
+
