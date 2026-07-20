@@ -38,7 +38,7 @@ Static multi-page marketing site for **86 Chaos**, an AI-assisted Kitchen Manage
 
 All plans include unlimited users for normal restaurant use. No per-user charge for adding staff; plan limits still apply to AI scans, storage-heavy uploads, automation, and abusive usage.
 
-- Shift: $49/month, Founder year one $24.50/month
+- Shift: $49/month, Founder year one $24.50/month. Includes Schedule Builder, but not Time Clock.
 - Operations: $99/month, Founder year one $49.50/month
 - Smart Kitchen: $179/month, Founder year one $89.50/month
 - Owner Pro: $299/month for the first location, then $129/month for each additional location. Founder year one: $149.50/month for the first location. Additional locations stay full price at $129/month each.
@@ -102,3 +102,9 @@ Do not commit real keys. `BETA_FROM_EMAIL` must use a domain verified with the e
 - Updated the separate-app stack cost example so it uses only apps shown in the current comparison chart.
 - New example stack: 7shifts + MarketMan + MarginEdge + Restaurant365, shown as approximately $1,078-$1,423+/month before payroll, HotSchedules active-employee billing, implementation, POS hardware, payment processing, vendor integrations, and other add-ons.
 - Added a short explanation of why the main chart compares 7shifts, HotSchedules, MarketMan, MarginEdge, and Restaurant365, while leaving POS-only tools out of the main comparison.
+
+
+## v47 update notes
+
+- Reworded the “Everything in one place” section to sound more professional.
+- Clarified that Shift includes Schedule Builder, but Time Clock starts in Operations.
