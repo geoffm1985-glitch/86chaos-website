@@ -227,3 +227,11 @@ Do not commit real keys. `BETA_FROM_EMAIL` must use a domain verified with the e
 - Ensured the cost/price comparison section sits directly under the different-app comparison chart.
 - Kept poster chart styling consistent for comparison charts.
 - Rewrote the About page founder-hours sentence to sound more professional and human.
+
+## V73 chart fixes
+
+- Left the About sentence alone.
+- Forced chart text and partial/half-circle symbols larger with a final CSS override.
+- Moved the cost/price comparison directly under the different-app comparison section.
+- Added Back Office Suite / owner tools to the different-app comparison chart.
+- Ensured tier charts include Back Office owner tooling where present.

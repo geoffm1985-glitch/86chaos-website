@@ -5933,3 +5933,243 @@ details,
   }
 }
 
+
+/* V73 final chart readability and placement fixes */
+@media (min-width: 921px) {
+  .comparison-poster-head .eyebrow {
+    font-size: .92rem !important;
+    letter-spacing: .16em !important;
+  }
+
+  .comparison-poster-head h2 {
+    font-size: clamp(1.32rem, 2.05vw, 1.82rem) !important;
+  }
+
+  .poster-intro p {
+    font-size: .86rem !important;
+    line-height: 1.28 !important;
+  }
+
+  .poster-intro small {
+    font-size: .72rem !important;
+  }
+
+  .poster-col h3 {
+    font-size: .82rem !important;
+  }
+
+  .poster-col p {
+    font-size: .62rem !important;
+    line-height: 1.08 !important;
+  }
+
+  .poster-circle {
+    width: 56px !important;
+    height: 56px !important;
+    font-size: .78rem !important;
+  }
+
+  .poster-col small {
+    font-size: .54rem !important;
+  }
+
+  .poster-row-label,
+  .poster-feature {
+    font-size: .76rem !important;
+    line-height: 1.12 !important;
+  }
+
+  .poster-mark::before,
+  .poster-cell.yes::before,
+  .poster-cell.no::before,
+  .poster-cell.partial::before {
+    width: 34px !important;
+    height: 34px !important;
+    font-size: 1.08rem !important;
+  }
+
+  .poster-mark.partial::before,
+  .poster-cell.partial::before {
+    font-size: 1.18rem !important;
+  }
+
+  .poster-mark.text,
+  .poster-cell span {
+    font-size: .66rem !important;
+    line-height: 1.06 !important;
+  }
+
+  .comparison-poster-foot,
+  .poster-legend {
+    font-size: .72rem !important;
+    line-height: 1.25 !important;
+  }
+}
+
+@media (max-width: 920px) {
+  .comparison-poster-head .eyebrow {
+    font-size: .70rem !important;
+  }
+
+  .comparison-poster-head h2 {
+    font-size: 1.13rem !important;
+  }
+
+  .poster-intro p {
+    font-size: .53rem !important;
+    line-height: 1.1 !important;
+  }
+
+  .poster-intro small {
+    font-size: .43rem !important;
+  }
+
+  .poster-col h3 {
+    font-size: .46rem !important;
+  }
+
+  .poster-col p {
+    font-size: .33rem !important;
+  }
+
+  .poster-circle {
+    width: 27px !important;
+    height: 27px !important;
+    font-size: .32rem !important;
+  }
+
+  .poster-col small {
+    font-size: .27rem !important;
+  }
+
+  .poster-row-label,
+  .poster-feature {
+    font-size: .52rem !important;
+    line-height: 1.08 !important;
+  }
+
+  .poster-mark::before,
+  .poster-cell.yes::before,
+  .poster-cell.no::before,
+  .poster-cell.partial::before {
+    width: 19px !important;
+    height: 19px !important;
+    font-size: .66rem !important;
+  }
+
+  .poster-mark.partial::before,
+  .poster-cell.partial::before {
+    font-size: .74rem !important;
+  }
+
+  .poster-mark.text,
+  .poster-cell span {
+    font-size: .31rem !important;
+    line-height: 1.02 !important;
+  }
+
+  .comparison-poster-foot,
+  .poster-legend {
+    font-size: .66rem !important;
+    line-height: 1.2 !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .poster-row-label,
+  .poster-feature {
+    font-size: .48rem !important;
+  }
+
+  .poster-mark::before,
+  .poster-cell.yes::before,
+  .poster-cell.no::before,
+  .poster-cell.partial::before {
+    width: 18px !important;
+    height: 18px !important;
+    font-size: .62rem !important;
+  }
+
+  .poster-mark.partial::before,
+  .poster-cell.partial::before {
+    font-size: .70rem !important;
+  }
+}
+
+/* Cost comparison belongs directly under app comparison and shares the poster style */
+.stack-cost-section {
+  padding-top: 14px !important;
+}
+
+.cost-poster-shell {
+  margin-top: 0 !important;
+}
+
+.cost-poster-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  background: #142033;
+}
+
+.cost-card {
+  padding: 18px;
+  border-top: 8px solid #142033;
+  color: #f6f1ea;
+  background: rgba(64,80,106,.68);
+}
+
+.cost-card + .cost-card {
+  border-left: 8px solid #142033;
+}
+
+.cost-card.chaos {
+  background: linear-gradient(180deg, rgba(231,186,145,.76), rgba(201,143,109,.58));
+  color: #142033;
+}
+
+.cost-card .eyebrow {
+  color: inherit;
+  margin-bottom: 5px;
+}
+
+.cost-card strong {
+  display: block;
+  color: inherit;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: .95;
+  letter-spacing: -.06em;
+  margin-bottom: 8px;
+}
+
+.cost-card span {
+  display: block;
+  max-width: 680px;
+  font-size: .98rem;
+  line-height: 1.28;
+  font-weight: 800;
+}
+
+@media (max-width: 920px) {
+  .cost-poster-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cost-card {
+    padding: 12px;
+    border-top-width: 5px;
+  }
+
+  .cost-card + .cost-card {
+    border-left: 0;
+  }
+
+  .cost-card strong {
+    font-size: 2rem !important;
+  }
+
+  .cost-card span {
+    font-size: .88rem;
+  }
+}
+
