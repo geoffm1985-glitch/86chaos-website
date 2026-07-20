@@ -130,3 +130,9 @@ Do not commit real keys. `BETA_FROM_EMAIL` must use a domain verified with the e
 - Replaced the site-wide CSS background reference with `assets/site-background-clean-v58.png`.
 - The new asset filename prevents browsers and Vercel from reusing the older Wisconsin-logo background from cache.
 - Added an extra cleanup pass over the lower-right badge area so the Wisconsin logo is not present in the active background asset.
+
+## V59 background artifact fix
+
+- Replaced the active site background with the clean no-Wisconsin version directly.
+- Removed the extra patched/blurred background treatment that created a ghost checkmark artifact.
+- CSS now references `assets/site-background-clean-v59.png` to avoid cache collisions.
