@@ -4965,3 +4965,217 @@ details,
   .app-poster-chart .poster-price { width: 25px !important; height: 25px !important; font-size: .30rem !important; }
 }
 
+
+/* V69 real mobile poster matrix: headers across the top like supplied image */
+@media (max-width: 920px) {
+  html.has-mobile-compare .comparison-wrap,
+  html.has-mobile-compare .comparison-table-wrap,
+  html.has-mobile-compare .real-app-comparison-wrap,
+  .mobile-compare-list { display: none !important; }
+
+  .app-poster-chart,
+  .tier-poster-chart {
+    display: grid !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    gap: 0 !important;
+    overflow: hidden !important;
+    border: 1px solid rgba(231,186,145,.18) !important;
+    border-radius: 8px !important;
+    background: rgba(5,8,12,.42) !important;
+    box-shadow: none !important;
+  }
+
+  .app-poster-chart {
+    grid-template-columns: 1.55fr repeat(6, minmax(0, 1fr)) !important;
+  }
+
+  .tier-poster-chart {
+    grid-template-columns: 1.5fr repeat(4, minmax(0, 1fr)) !important;
+  }
+
+  .app-poster-chart > *,
+  .tier-poster-chart > * {
+    width: auto !important;
+    max-width: none !important;
+  }
+
+  .app-poster-chart .poster-side,
+  .tier-poster-chart .poster-side {
+    grid-column: 1 !important;
+    grid-row: 1 / span 1 !important;
+    display: flex !important;
+    min-height: 76px !important;
+    padding: 5px !important;
+    justify-content: center !important;
+    border: 0 !important;
+    border-right: 3px solid rgba(7,11,16,.82) !important;
+    border-bottom: 3px solid rgba(7,11,16,.82) !important;
+    border-radius: 0 !important;
+    background: rgba(20,31,43,.78) !important;
+  }
+
+  .poster-side p {
+    font-size: .50rem !important;
+    line-height: 1.10 !important;
+    font-weight: 850 !important;
+    margin: 0 !important;
+  }
+
+  .poster-side small {
+    display: none !important;
+  }
+
+  .app-poster-chart .poster-plan,
+  .tier-poster-chart .poster-plan {
+    display: flex !important;
+    min-height: 76px !important;
+    padding: 4px 2px !important;
+    gap: 2px !important;
+    justify-content: flex-start !important;
+    border: 0 !important;
+    border-left: 3px solid rgba(7,11,16,.82) !important;
+    border-bottom: 3px solid rgba(7,11,16,.82) !important;
+    background: rgba(224,226,228,.78) !important;
+    color: #142033 !important;
+  }
+
+  .app-poster-chart .poster-plan.featured,
+  .tier-poster-chart .poster-plan.featured {
+    background: linear-gradient(180deg, rgba(231,186,145,.94), rgba(201,143,109,.78)) !important;
+  }
+
+  .poster-plan-name {
+    font-size: .42rem !important;
+    line-height: 1.02 !important;
+    text-align: center !important;
+    font-weight: 950 !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  .poster-plan-sub {
+    min-height: 1.65em !important;
+    padding-top: 2px !important;
+    border-top: 2px solid #17243a !important;
+    font-size: .29rem !important;
+    line-height: 1.02 !important;
+    text-align: center !important;
+    overflow: hidden !important;
+  }
+
+  .poster-price {
+    width: 24px !important;
+    height: 24px !important;
+    margin: 2px auto 0 !important;
+    font-size: .28rem !important;
+    line-height: 1 !important;
+    border-radius: 999px !important;
+  }
+
+  .poster-price-note {
+    font-size: .24rem !important;
+    line-height: 1 !important;
+    text-align: center !important;
+  }
+
+  .tier-poster-chart .poster-plan-name { font-size: .48rem !important; }
+  .tier-poster-chart .poster-price { width: 28px !important; height: 28px !important; font-size: .36rem !important; }
+  .tier-poster-chart .poster-price-note { font-size: .29rem !important; }
+
+  .poster-feature {
+    min-height: 31px !important;
+    margin: 0 !important;
+    padding: 3px 4px !important;
+    display: flex !important;
+    align-items: center !important;
+    border: 0 !important;
+    border-right: 3px solid rgba(7,11,16,.82) !important;
+    border-top: 3px solid rgba(7,11,16,.82) !important;
+    border-radius: 0 !important;
+    background: rgba(34,48,68,.74) !important;
+    color: #f4eee6 !important;
+    font-size: .45rem !important;
+    line-height: 1.04 !important;
+    font-weight: 900 !important;
+    text-align: left !important;
+  }
+
+  .poster-cell {
+    min-height: 31px !important;
+    display: grid !important;
+    place-items: center !important;
+    padding: 2px !important;
+    border: 0 !important;
+    border-left: 3px solid rgba(7,11,16,.82) !important;
+    border-top: 3px solid rgba(7,11,16,.82) !important;
+    border-radius: 0 !important;
+    background: rgba(224,226,228,.64) !important;
+    color: #17243a !important;
+    text-align: center !important;
+  }
+
+  .poster-cell::after { content: none !important; }
+  .poster-cell.yes, .poster-cell.no, .poster-cell.partial { font-size: 0 !important; }
+
+  .poster-cell.yes::before,
+  .poster-cell.no::before,
+  .poster-cell.partial::before {
+    width: 18px !important;
+    height: 18px !important;
+    display: grid !important;
+    place-items: center !important;
+    border-radius: 999px !important;
+    font-size: .58rem !important;
+    line-height: 1 !important;
+    font-weight: 950 !important;
+  }
+
+  .poster-cell.yes::before { background: #14243d !important; color: #d7dbe0 !important; }
+  .poster-cell.no::before { background: rgba(20,36,61,.20) !important; color: rgba(20,36,61,.42) !important; }
+  .poster-cell.partial::before { background: rgba(20,36,61,.18) !important; color: #14243d !important; }
+
+  .poster-cell span {
+    display: inline-flex !important;
+    min-height: 14px !important;
+    max-width: 100% !important;
+    padding: 1px 2px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 999px !important;
+    background: rgba(20,36,61,.14) !important;
+    color: #14243d !important;
+    font-size: .27rem !important;
+    line-height: 1 !important;
+    font-weight: 950 !important;
+    text-align: center !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  .tier-poster-chart .poster-cell span { font-size: .34rem !important; }
+
+  .poster-legend {
+    margin-top: 5px !important;
+    text-align: left !important;
+    font-size: .62rem !important;
+    line-height: 1.18 !important;
+  }
+
+  .compare-section .section-head h2 { font-size: 1.22rem !important; }
+  .compare-section .section-head p { font-size: .82rem !important; }
+}
+
+@media (max-width: 420px) {
+  .container { padding-left: 4px !important; padding-right: 4px !important; }
+  .app-poster-chart { grid-template-columns: 1.48fr repeat(6, minmax(0, 1fr)) !important; }
+  .tier-poster-chart { grid-template-columns: 1.42fr repeat(4, minmax(0, 1fr)) !important; }
+  .poster-side p { font-size: .43rem !important; }
+  .poster-plan-name { font-size: .35rem !important; }
+  .poster-plan-sub { font-size: .25rem !important; }
+  .poster-price { width: 21px !important; height: 21px !important; font-size: .24rem !important; }
+  .poster-price-note { font-size: .20rem !important; }
+  .poster-feature { font-size: .40rem !important; padding: 3px 3px !important; }
+  .poster-cell.yes::before,
+  .poster-cell.no::before,
+  .poster-cell.partial::before { width: 15px !important; height: 15px !important; font-size: .50rem !important; }
+  .poster-cell span { font-size: .23rem !important; }
+}

@@ -198,3 +198,10 @@ Do not commit real keys. `BETA_FROM_EMAIL` must use a domain verified with the e
 - Mobile comparison charts now stay as true poster-style matrices like the supplied example, not accordions or stacked cards.
 - Desktop poster comparison charts are compacted to fit on one screen better.
 - Reduced app-comparison chart headers, row heights, icon size, price circles, and legend size.
+
+## V69 true mobile poster matrix fix
+
+- Fixed mobile poster charts so column headers stay across the top like the supplied image.
+- Forced app and plan comparison charts into a real grid on mobile.
+- Prevented mobile headers from stacking vertically.
+- Compressed plan headers, price circles, feature labels, and check/X cells to keep the whole chart visible on phones.

@@ -528,3 +528,18 @@ comparisonTables.forEach((table, tableIndex) => {
   }
 })();
 
+
+// V69: flag true poster matrix comparison charts.
+(function () {
+  function markPosterMatrices() {
+    document.querySelectorAll(".poster-chart").forEach(function (chart) {
+      chart.setAttribute("data-poster-matrix", "true");
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", markPosterMatrices);
+  } else {
+    markPosterMatrices();
+  }
+})();
