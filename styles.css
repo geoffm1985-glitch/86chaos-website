@@ -21,8 +21,10 @@ html { scroll-behavior: smooth; font-size: 14px; }
 body {
   margin: 0;
   background:
+    linear-gradient(180deg, rgba(7,11,15,.84) 0%, rgba(9,14,20,.88) 48%, rgba(6,9,13,.92) 100%),
     radial-gradient(circle at 10% 2%, rgba(201,143,109,.13), transparent 30rem),
     radial-gradient(circle at 90% 6%, rgba(85,116,155,.12), transparent 24rem),
+    url("assets/site-background.png") center center / cover fixed no-repeat,
     linear-gradient(180deg, #070b0f 0%, #0b1117 48%, #070b0f 100%);
   color: var(--text);
   font-family: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -55,7 +57,7 @@ button, input, textarea, select { font: inherit; }
 .nav-links a:hover, .nav-links a.is-active { color: var(--text); background: rgba(255,255,255,.07); }
 .nav-links .nav-cta { color: #081016; background: linear-gradient(135deg, var(--copper-2), var(--copper)); margin-left: 4px; }
 .nav-links .nav-cta:hover, .nav-links .nav-cta.is-active { color: #081016; filter: brightness(1.05); }
-.nav-toggle { display: none; width: 36px; height: 32px; border: 1px solid rgba(255,255,255,.12); border-radius: 10px; background: rgba(255,255,255,.04); }
+.nav-toggle { display: none; width: 36px; height: 32px; border: 1px solid rgba(255,255,255,.12); border-radius: 10px; background: rgba(16,23,32,.68); }
 .nav-toggle span:not(.sr-only) { display: block; width: 16px; height: 2px; background: var(--copper-2); margin: 3px auto; border-radius: 2px; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
 
@@ -79,10 +81,10 @@ h3 { font-size: 1.05rem; line-height: 1.18; margin-bottom: 8px; }
   box-shadow: 0 12px 24px rgba(201,143,109,.18);
   cursor: pointer;
 }
-.button.ghost { background: rgba(255,255,255,.05); color: var(--text); border: 1px solid rgba(255,255,255,.14); box-shadow: none; }
+.button.ghost { background: rgba(14,21,29,.74); color: var(--text); border: 1px solid rgba(255,255,255,.14); box-shadow: none; }
 .button.full { width: 100%; }
 .mini-proof span, .chip-row span, .bullet-cloud span {
-  border: 1px solid var(--line); background: rgba(255,255,255,.04);
+  border: 1px solid var(--line); background: rgba(16,23,32,.68);
   border-radius: 999px; padding: 5px 8px; color: var(--muted); font-size: .78rem; font-weight: 800;
 }
 .mini-proof b { color: var(--text); }
@@ -98,7 +100,7 @@ h3 { font-size: 1.05rem; line-height: 1.18; margin-bottom: 8px; }
 .floating-shot.one { left: 0; top: 52px; transform: rotate(-5deg); }
 .floating-shot.two { left: 76px; bottom: 18px; transform: rotate(4deg); }
 
-.cred-strip { border-block: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.035); padding: 14px 0; }
+.cred-strip { border-block: 1px solid rgba(255,255,255,.08); background: rgba(13,20,27,.72); padding: 14px 0; }
 .cred-grid { display: grid; grid-template-columns: 92px 1fr 1fr; gap: 14px; align-items: center; }
 .cred-grid img { width: 84px; border-radius: 18px; }
 .cred-grid h2 { font-size: 1.28rem; margin-bottom: 0; }
@@ -128,7 +130,7 @@ h3 { font-size: 1.05rem; line-height: 1.18; margin-bottom: 8px; }
 .fact-card a { color: var(--copper-2); font-weight: 900; font-size: .78rem; text-decoration: none; }
 .feature-band {
   border-block: 1px solid rgba(255,255,255,.08);
-  background: linear-gradient(135deg, rgba(201,143,109,.08), rgba(66,94,125,.07));
+  background: linear-gradient(135deg, rgba(201,143,109,.12), rgba(20,31,43,.82));
 }
 .split { display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; align-items: center; }
 .mini-dashboard { padding: 18px; }
@@ -167,14 +169,14 @@ h3 { font-size: 1.05rem; line-height: 1.18; margin-bottom: 8px; }
 .shot-button {
   display: flex; align-items: center; gap: 12px; text-align: left;
   padding: 10px; border-radius: 16px; border: 1px solid var(--line);
-  background: rgba(255,255,255,.035); color: var(--text); cursor: pointer;
+  background: rgba(13,20,27,.72); color: var(--text); cursor: pointer;
 }
 .shot-button.is-active { border-color: rgba(231,186,145,.58); background: rgba(201,143,109,.12); }
 .shot-button img { width: 44px; height: 70px; object-fit: cover; border-radius: 10px; border: 1px solid rgba(255,255,255,.1); }
 .shot-button strong { display: block; font-size: .84rem; }
 .shot-button span span, .shot-button span { color: var(--muted); font-size: .8rem; }
 .screen-story { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-.story-pill { border: 1px solid var(--line); background: rgba(255,255,255,.035); border-radius: 16px; padding: 11px; }
+.story-pill { border: 1px solid var(--line); background: rgba(13,20,27,.72); border-radius: 16px; padding: 11px; }
 .story-pill strong { display: block; margin-bottom: 4px; }
 .story-pill span { color: var(--muted); font-size: .85rem; }
 
@@ -314,7 +316,7 @@ input, textarea, select { font-size: .84rem; padding: 8px 9px; }
   overflow-x: auto;
   border: 1px solid var(--line);
   border-radius: 16px;
-  background: rgba(255,255,255,.035);
+  background: rgba(13,20,27,.72);
   box-shadow: 0 14px 42px rgba(0,0,0,.18);
 }
 .comparison-table {
@@ -389,7 +391,7 @@ input, textarea, select { font-size: .84rem; padding: 8px 9px; }
 .compare-section {
   background:
     radial-gradient(circle at 8% 0%, rgba(201,143,109,.12), transparent 24rem),
-    rgba(255,255,255,.015);
+    rgba(10,15,21,.72);
 }
 .comparison-table-wrap {
   overflow-x: auto;
@@ -442,7 +444,7 @@ input, textarea, select { font-size: .84rem; padding: 8px 9px; }
 .comparison-table tbody th {
   width: 190px;
   color: var(--text);
-  background: rgba(255,255,255,.035);
+  background: rgba(13,20,27,.72);
   font-weight: 900;
 }
 .comparison-table td {
@@ -2000,7 +2002,7 @@ body {
 .real-app-comparison-table tbody th {
   width: auto;
   color: #fff7ef;
-  background: rgba(255,255,255,.04);
+  background: rgba(16,23,32,.68);
   font-size: .76rem;
   line-height: 1.18;
 }
@@ -2141,7 +2143,7 @@ body {
   color: #fff7ef;
   font-size: .7rem;
   line-height: 1.12;
-  background: rgba(255,255,255,.04);
+  background: rgba(16,23,32,.68);
 }
 
 .option-one-comparison-table td {
