@@ -108,3 +108,8 @@ Do not commit real keys. `BETA_FROM_EMAIL` must use a domain verified with the e
 
 - Reworded the “Everything in one place” section to sound more professional.
 - Clarified that Shift includes Schedule Builder, but Time Clock starts in Operations.
+
+## v49 founder story page update
+- Added `about.html` with a no-name founder story based on nearly 25 years of kitchen experience.
+- Added About to the main navigation and Founder story to the footer.
+- Preserved the existing static site structure and current pricing/comparison updates.
