@@ -258,3 +258,67 @@ comparisonTables.forEach((table, tableIndex) => {
     });
   });
 });
+
+
+// V63 mobile comparison labels and safer mobile interactions.
+(function () {
+  function labelComparisonTables() {
+    var tables = document.querySelectorAll(".comparison-table, .real-app-comparison-table");
+    tables.forEach(function (table) {
+      var headers = Array.from(table.querySelectorAll("thead th")).map(function (th) {
+        return (th.innerText || th.textContent || "").replace(/\s+/g, " ").trim();
+      });
+
+      Array.from(table.querySelectorAll("tbody tr")).forEach(function (row) {
+        Array.from(row.children).forEach(function (cell, index) {
+          if (index === 0) {
+            cell.setAttribute("data-row-title", "true");
+            return;
+          }
+
+          var label = headers[index] || "Plan";
+          if (!cell.getAttribute("data-label")) {
+            cell.setAttribute("data-label", label);
+          }
+
+          cell.setAttribute("data-comparison-cell", "true");
+        });
+      });
+    });
+  }
+
+  function updateMobileState() {
+    var isMobile = window.matchMedia("(max-width: 920px)").matches;
+    document.documentElement.toggleAttribute("data-mobile-layout", isMobile);
+  }
+
+  function closeMobileNavOnLinkTap() {
+    var nav = document.querySelector(".nav-links");
+    if (!nav) return;
+
+    nav.addEventListener("click", function (event) {
+      var link = event.target.closest("a");
+      if (!link) return;
+      if (window.matchMedia("(max-width: 920px)").matches) {
+        nav.classList.remove("is-open");
+        var toggle = document.querySelector(".nav-toggle");
+        if (toggle) toggle.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
+
+  function initMobilePass() {
+    labelComparisonTables();
+    updateMobileState();
+    closeMobileNavOnLinkTap();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initMobilePass);
+  } else {
+    initMobilePass();
+  }
+
+  window.addEventListener("resize", updateMobileState, { passive: true });
+})();
+

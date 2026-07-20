@@ -149,3 +149,18 @@ Do not commit real keys. `BETA_FROM_EMAIL` must use a domain verified with the e
 - Kept the larger readable body text from v60.
 - Made footer links, footer description, and copyright text smaller again.
 - Added customer-facing wording that direct POS integrations are planned and being worked on while clarifying 86 Chaos still works around the POS today.
+
+## V62 desktop density correction
+
+- Added a desktop-only density pass to reduce oversized desktop layout scale.
+- Reduced desktop headline size, section padding, grid gaps, card padding, pricing-card spacing, table cell padding, nav height, and footer footprint.
+- Kept mobile readable and kept the larger body text from becoming tiny.
+- Preserved the clean v59 background and POS integration planned wording.
+
+## V63 full mobile-first update
+
+- Added full mobile layout overrides for navigation, hero sections, grids, cards, pricing, forms, CTAs, footer, product tour, and stacked content.
+- Converted comparison tables into mobile card-style rows with readable labels instead of cramped sideways-scroll desktop tables.
+- Updated `script.js` to add table header labels as `data-label` values for mobile comparison cards.
+- Added safer mobile nav behavior so tapping a menu link closes the mobile menu.
+- Kept desktop density fixes, readable body text, POS integration planned wording, and the clean v59 background.

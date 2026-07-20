@@ -3041,3 +3041,881 @@ h3 {
   }
 }
 
+
+/* V62 desktop density correction: reduce oversized desktop scale while preserving readable copy */
+@media (min-width: 921px) {
+  :root {
+    --max: 1160px;
+    --radius: 12px;
+  }
+
+  html {
+    font-size: 14px;
+  }
+
+  body {
+    font-size: .94rem;
+  }
+
+  .container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .site-header {
+    background: rgba(7, 12, 17, .66);
+  }
+
+  .nav-shell {
+    min-height: 38px;
+    padding-left: 12px;
+    padding-right: 12px;
+    gap: 8px;
+  }
+
+  .brand img {
+    width: 116px;
+  }
+
+  .nav-links {
+    font-size: .72rem;
+    gap: 0;
+  }
+
+  .nav-links a {
+    padding: 4px 6px;
+  }
+
+  .nav-links .nav-cta {
+    padding-inline: 8px;
+  }
+
+  .section-tight {
+    padding: 24px 0 14px !important;
+  }
+
+  .section {
+    padding: 20px 0 !important;
+  }
+
+  .page-hero {
+    padding: 22px 0 12px !important;
+  }
+
+  .section-head {
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-size: clamp(1.85rem, 3.55vw, 3.05rem) !important;
+    line-height: .96;
+    margin-bottom: 7px;
+  }
+
+  h2 {
+    font-size: clamp(1.18rem, 2.1vw, 1.62rem) !important;
+    line-height: 1.08;
+    margin-bottom: 6px;
+  }
+
+  h3 {
+    font-size: .94rem !important;
+    margin-bottom: 5px;
+  }
+
+  .eyebrow,
+  .plan-card .plan-name,
+  .footer h3,
+  .timeline .card span {
+    font-size: .68rem !important;
+    letter-spacing: .13em;
+  }
+
+  .hero-lede,
+  .page-lede,
+  .section-head p {
+    font-size: .88rem !important;
+    line-height: 1.42;
+    max-width: 720px;
+  }
+
+  .hero-grid,
+  .page-hero .container,
+  .split,
+  .form-grid,
+  .preview-main {
+    gap: 12px;
+  }
+
+  .grid-2,
+  .grid-3,
+  .grid-4,
+  .timeline,
+  .sales-strip,
+  .roi-grid,
+  .feature-grid,
+  .shot-list,
+  .screen-story {
+    gap: 8px;
+  }
+
+  .card,
+  .panel,
+  .note-box,
+  details,
+  .plan-card,
+  .price-card,
+  .feature-card,
+  .value-card,
+  .about-card,
+  .tour-card,
+  .faq-list details,
+  .cta-card {
+    padding: 9px !important;
+    border-radius: 11px !important;
+  }
+
+  .card p,
+  .card li,
+  .note-box,
+  .note-box span,
+  .faq-list p,
+  .tour-card p,
+  .tour-card li,
+  .feature-card p,
+  .value-card p,
+  .about-card p,
+  .mini-row,
+  .audit-list span,
+  .voice-result span,
+  .voice-step span,
+  .story-pill span,
+  .fact-card span,
+  .shot-button span,
+  .shot-button strong {
+    font-size: .84rem !important;
+    line-height: 1.36 !important;
+  }
+
+  .button {
+    min-height: 30px;
+    padding: 6px 10px;
+    font-size: .78rem !important;
+    border-radius: 9px;
+  }
+
+  .hero-actions {
+    margin: 10px 0 8px;
+  }
+
+  .mini-proof,
+  .chip-row,
+  .bullet-cloud {
+    gap: 5px;
+  }
+
+  .mini-proof span,
+  .chip-row span,
+  .bullet-cloud span {
+    padding: 3px 6px;
+    font-size: .74rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .icon-mark {
+    min-width: 30px;
+    height: 24px;
+    padding: 0 8px;
+    font-size: .68rem;
+    margin-bottom: 7px;
+  }
+
+  .fact-card strong {
+    font-size: 1.35rem;
+    margin-bottom: 4px;
+  }
+
+  .timeline .card {
+    min-height: auto;
+  }
+
+  .detailed-timeline .card {
+    min-height: 150px;
+  }
+
+  .plan-card .price {
+    margin: 4px 0 2px;
+  }
+
+  .plan-card .price strong {
+    font-size: 1.42rem;
+  }
+
+  .plan-card .price span,
+  .founder-price {
+    font-size: .74rem !important;
+  }
+
+  .plan-card ul {
+    margin-top: 7px;
+    padding-left: 15px;
+    font-size: .82rem !important;
+    line-height: 1.35 !important;
+  }
+
+  .plan-card li {
+    margin-bottom: 2px;
+  }
+
+  .comparison-wrap,
+  .comparison-table-wrap {
+    border-radius: 12px;
+  }
+
+  .comparison-table {
+    font-size: .78rem !important;
+  }
+
+  .comparison-table th,
+  .comparison-table td {
+    padding: 5px 7px !important;
+    line-height: 1.24 !important;
+  }
+
+  .comparison-table thead th,
+  .comparison-table tbody th {
+    font-size: .72rem !important;
+    line-height: 1.18 !important;
+  }
+
+  .comparison-table thead th span,
+  .comparison-table td small {
+    font-size: .68rem !important;
+    line-height: 1.18 !important;
+  }
+
+  .comparison-table td strong {
+    font-size: .86rem !important;
+    line-height: 1.18 !important;
+    margin-bottom: 1px;
+  }
+
+  .table-note,
+  .real-app-source-note,
+  .stack-cost-note {
+    font-size: .72rem !important;
+    line-height: 1.35;
+    margin-top: 5px;
+  }
+
+  .cta-band {
+    padding: 12px 0 24px !important;
+  }
+
+  .cta-card {
+    gap: 10px;
+  }
+
+  .footer {
+    padding: 14px 0 !important;
+  }
+
+  .footer-grid {
+    gap: 12px;
+  }
+
+  .footer img {
+    width: 106px;
+    margin-bottom: 4px;
+  }
+
+  .footer a,
+  .footer p,
+  .footer small {
+    font-size: .72rem !important;
+    line-height: 1.28 !important;
+    margin: 2px 0;
+  }
+
+  .footer p {
+    max-width: 280px;
+  }
+
+  input,
+  textarea,
+  select,
+  label,
+  .form-status {
+    font-size: .82rem !important;
+  }
+
+  input,
+  textarea,
+  select {
+    padding: 6px 8px;
+  }
+
+  label {
+    margin-bottom: 7px;
+  }
+
+  .screen-stack {
+    height: 430px;
+  }
+
+  .primary-shot {
+    width: 260px;
+  }
+
+  .floating-shot {
+    width: 160px;
+  }
+
+  .shot-button {
+    padding: 7px;
+    border-radius: 11px;
+  }
+
+  .shot-button img {
+    width: 38px;
+    height: 58px;
+  }
+
+  .story-pill {
+    padding: 8px;
+  }
+}
+
+
+/* V63 full mobile-first pass: phone layout, touch targets, tables, pricing, forms, and footer */
+@media (max-width: 920px) {
+  html {
+    font-size: 15px;
+  }
+
+  body {
+    overflow-x: hidden;
+    background-color: #05080c;
+  }
+
+  body::before {
+    background-position: center top;
+    opacity: .58;
+  }
+
+  body::after {
+    background:
+      linear-gradient(180deg, rgba(5,8,12,.48) 0%, rgba(5,8,12,.56) 42%, rgba(5,8,12,.66) 100%),
+      radial-gradient(circle at 20% 8%, rgba(201,143,109,.11), transparent 22rem);
+  }
+
+  .container {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .site-header {
+    background: rgba(7,12,17,.92);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  .nav-shell {
+    min-height: 52px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .brand img {
+    width: 128px;
+  }
+
+  .nav-toggle {
+    display: block;
+    width: 42px;
+    height: 38px;
+    flex: 0 0 auto;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 54px;
+    left: 10px;
+    right: 10px;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+    max-height: calc(100vh - 70px);
+    overflow-y: auto;
+    padding: 10px;
+    background: rgba(8,13,18,.97);
+    border: 1px solid rgba(231,186,145,.20);
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.42);
+    z-index: 80;
+  }
+
+  .nav-links.is-open {
+    display: flex;
+  }
+
+  .nav-links a {
+    min-height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 12px;
+    font-size: .96rem;
+    border-radius: 12px;
+  }
+
+  .nav-links .nav-cta {
+    margin-left: 0;
+  }
+
+  .section-tight,
+  .section,
+  .page-hero,
+  .cta-band {
+    padding-top: 26px !important;
+    padding-bottom: 22px !important;
+  }
+
+  .hero-grid,
+  .page-hero .container,
+  .split,
+  .form-grid,
+  .preview-main,
+  .owner-grid,
+  .stack-row,
+  .split-compare,
+  .roi-grid,
+  .stack-cost-grid,
+  .stack-cost-cards,
+  .stack-cost-board {
+    grid-template-columns: 1fr !important;
+  }
+
+  .grid-2,
+  .grid-3,
+  .grid-4,
+  .timeline,
+  .sales-strip,
+  .feature-grid,
+  .shot-list,
+  .screen-story,
+  .price-grid,
+  .plan-grid,
+  .form-row {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  .section-head,
+  .section-head.center {
+    text-align: left;
+    margin-inline: 0;
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    font-size: clamp(2.05rem, 10vw, 3rem) !important;
+    line-height: .98;
+    letter-spacing: -.045em;
+  }
+
+  h2 {
+    font-size: clamp(1.38rem, 7.2vw, 2.05rem) !important;
+    line-height: 1.08;
+  }
+
+  h3 {
+    font-size: 1.02rem !important;
+  }
+
+  .hero-lede,
+  .page-lede,
+  .section-head p,
+  .card p,
+  .card li,
+  .note-box,
+  .note-box span,
+  .faq-list p,
+  .tour-card p,
+  .tour-card li,
+  .feature-card p,
+  .value-card p,
+  .about-card p,
+  .plan-card ul,
+  .story-pill span,
+  .audit-list span,
+  .voice-result span,
+  .voice-step span {
+    font-size: .98rem !important;
+    line-height: 1.48 !important;
+  }
+
+  .eyebrow,
+  .plan-card .plan-name,
+  .timeline .card span {
+    font-size: .78rem !important;
+  }
+
+  .hero-actions,
+  .mini-proof,
+  .chip-row,
+  .bullet-cloud {
+    gap: 7px;
+  }
+
+  .hero-actions {
+    margin: 14px 0 12px;
+  }
+
+  .button,
+  .nav-cta {
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 13px;
+    font-size: .95rem !important;
+  }
+
+  .hero-actions .button,
+  .cta-card .button {
+    width: 100%;
+  }
+
+  .mini-proof span,
+  .chip-row span,
+  .bullet-cloud span {
+    padding: 6px 8px;
+    font-size: .88rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .card,
+  .panel,
+  .note-box,
+  details,
+  .plan-card,
+  .price-card,
+  .feature-card,
+  .value-card,
+  .about-card,
+  .tour-card,
+  .faq-list details,
+  .cta-card {
+    padding: 13px !important;
+    border-radius: 14px !important;
+  }
+
+  .cta-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .page-logo-card {
+    display: none;
+  }
+
+  .hero-product,
+  .screen-stack {
+    min-height: auto;
+    height: auto;
+  }
+
+  .screen-stack {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    max-width: 340px;
+    margin-inline: auto;
+  }
+
+  .primary-shot,
+  .floating-shot {
+    position: static !important;
+    width: min(100%, 290px) !important;
+    transform: none !important;
+    margin: 0 auto;
+  }
+
+  .floating-shot.two {
+    display: none;
+  }
+
+  .phone-frame {
+    width: min(100%, 300px);
+  }
+
+  .cred-grid {
+    grid-template-columns: 64px 1fr !important;
+    gap: 10px;
+  }
+
+  .cred-grid img {
+    width: 62px;
+    border-radius: 14px;
+  }
+
+  .cred-items {
+    grid-column: 1 / -1;
+    grid-template-columns: 1fr !important;
+  }
+
+  .preview-main {
+    gap: 12px;
+  }
+
+  .shot-copy {
+    padding: 12px !important;
+  }
+
+  .shot-button {
+    min-height: 64px;
+    padding: 10px;
+  }
+
+  .shot-button img {
+    width: 46px;
+    height: 62px;
+  }
+
+  .plan-card .price strong {
+    font-size: 2rem;
+  }
+
+  .plan-card .price span,
+  .founder-price {
+    font-size: .9rem !important;
+  }
+
+  .plan-card ul {
+    margin-top: 10px;
+    padding-left: 18px;
+  }
+
+  .comparison-wrap,
+  .comparison-table-wrap,
+  .real-app-comparison-wrap {
+    overflow: visible !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .comparison-table,
+  .real-app-comparison-table {
+    width: 100% !important;
+    min-width: 0 !important;
+    table-layout: auto !important;
+    border-collapse: separate !important;
+    border-spacing: 0 10px !important;
+    font-size: 1rem !important;
+  }
+
+  .comparison-table thead,
+  .real-app-comparison-table thead,
+  .comparison-table colgroup,
+  .real-app-comparison-table colgroup {
+    display: none !important;
+  }
+
+  .comparison-table tbody,
+  .real-app-comparison-table tbody,
+  .comparison-table tr,
+  .real-app-comparison-table tr,
+  .comparison-table th,
+  .real-app-comparison-table th,
+  .comparison-table td,
+  .real-app-comparison-table td {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  .comparison-table tbody tr,
+  .real-app-comparison-table tbody tr {
+    border: 1px solid rgba(231,186,145,.24);
+    border-radius: 15px;
+    overflow: hidden;
+    background: rgba(8,12,16,.72);
+    box-shadow: 0 12px 32px rgba(0,0,0,.24);
+    margin: 0 0 10px;
+  }
+
+  .comparison-table tbody th,
+  .real-app-comparison-table tbody th {
+    position: relative !important;
+    top: auto !important;
+    width: 100% !important;
+    padding: 11px 12px !important;
+    border: 0 !important;
+    background: linear-gradient(135deg, rgba(201,143,109,.24), rgba(10,14,18,.78)) !important;
+    color: var(--text) !important;
+    font-size: .9rem !important;
+    line-height: 1.28 !important;
+    letter-spacing: .035em !important;
+  }
+
+  .comparison-table td,
+  .real-app-comparison-table td {
+    display: grid !important;
+    grid-template-columns: minmax(118px, 42%) 1fr;
+    gap: 10px;
+    align-items: center;
+    min-height: 42px;
+    padding: 9px 12px !important;
+    border: 0 !important;
+    border-top: 1px solid rgba(255,255,255,.075) !important;
+    background: rgba(10,14,18,.42) !important;
+    color: var(--text) !important;
+    line-height: 1.32 !important;
+  }
+
+  .comparison-table td::before,
+  .real-app-comparison-table td::before {
+    content: attr(data-label);
+    color: var(--copper-2);
+    font-weight: 950;
+    font-size: .76rem;
+    line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: .045em;
+  }
+
+  .comparison-table td:empty::after,
+  .real-app-comparison-table td:empty::after {
+    content: "—";
+    color: var(--muted);
+  }
+
+  .comparison-table .highlight-col,
+  .real-app-comparison-table .highlight-col,
+  .comparison-table tbody td.highlight-col,
+  .real-app-comparison-table tbody td.highlight-col {
+    background: linear-gradient(135deg, rgba(201,143,109,.22), rgba(68,212,151,.08)) !important;
+    box-shadow: inset 3px 0 0 rgba(231,186,145,.58);
+  }
+
+  .comparison-table td strong,
+  .real-app-comparison-table td strong {
+    font-size: 1rem !important;
+    line-height: 1.22 !important;
+    margin: 0;
+  }
+
+  .comparison-table td small,
+  .real-app-comparison-table td small {
+    font-size: .84rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .comparison-table .yes,
+  .real-app-comparison-table .yes {
+    color: #D2CEC8 !important;
+  }
+
+  .comparison-table .no,
+  .real-app-comparison-table .no {
+    color: #D7A0A8 !important;
+    opacity: 1 !important;
+  }
+
+  .comparison-table .partial,
+  .real-app-comparison-table .partial {
+    color: var(--copper-2) !important;
+  }
+
+  .comparison-table [data-column-highlight="true"],
+  .real-app-comparison-table [data-column-highlight="true"] {
+    outline: none !important;
+  }
+
+  .table-note,
+  .real-app-source-note,
+  .stack-cost-note {
+    font-size: .9rem !important;
+    line-height: 1.42;
+    text-align: left !important;
+  }
+
+  .form-grid {
+    gap: 12px;
+  }
+
+  input,
+  textarea,
+  select {
+    min-height: 44px;
+    font-size: 1rem !important;
+    padding: 10px 11px;
+  }
+
+  label {
+    font-size: .92rem !important;
+    margin-bottom: 10px;
+  }
+
+  textarea {
+    min-height: 110px;
+  }
+
+  .footer {
+    padding: 20px 0 !important;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px;
+  }
+
+  .footer img {
+    width: 118px;
+  }
+
+  .footer a,
+  .footer p,
+  .footer small {
+    font-size: .82rem !important;
+    line-height: 1.35 !important;
+  }
+
+  .footer a {
+    min-height: 28px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+@media (max-width: 420px) {
+  .container {
+    padding-left: 11px;
+    padding-right: 11px;
+  }
+
+  h1 {
+    font-size: clamp(1.85rem, 11vw, 2.45rem) !important;
+  }
+
+  .comparison-table td,
+  .real-app-comparison-table td {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .comparison-table td::before,
+  .real-app-comparison-table td::before {
+    font-size: .72rem;
+  }
+
+  .mini-proof span,
+  .chip-row span,
+  .bullet-cloud span {
+    width: 100%;
+  }
+}
+
