@@ -124,3 +124,9 @@ Do not commit real keys. `BETA_FROM_EMAIL` must use a domain verified with the e
 
 - Replaced the site-wide background image with the updated branded kitchen/tech background that removes the Wisconsin logo.
 - Kept the background visible across all public pages while preserving readability with the existing transparent panel treatment.
+
+## V58 background cache-bust fix
+
+- Replaced the site-wide CSS background reference with `assets/site-background-clean-v58.png`.
+- The new asset filename prevents browsers and Vercel from reusing the older Wisconsin-logo background from cache.
+- Added an extra cleanup pass over the lower-right badge area so the Wisconsin logo is not present in the active background asset.
