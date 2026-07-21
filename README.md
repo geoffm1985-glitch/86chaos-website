@@ -4,15 +4,14 @@ Astro-based marketing website for 86chaos.com.
 
 ## Current build
 
-v91 visual polish pass.
+v92 scaled visual polish pass.
 
-## What changed in v91
+## What changed in v92
 
 - Kept the Astro structure from v90.
-- Added visible polish, not just under-the-hood cleanup.
-- Upgraded the home hero into a more premium app-preview frame.
-- Improved navigation, buttons, cards, panels, pricing cards, page hero sections, and background contrast.
-- Kept the dark/copper 86 Chaos brand.
+- Scaled back the v91 polish so the page feels cleaner and less oversized.
+- Reduced hero type, hero preview frame, nav, buttons, cards, pricing cards, section spacing, and mobile visual weight.
+- Kept the polished dark/copper 86 Chaos brand without the bloated sizing.
 - Preserved the current poster-style comparison matrices and tier/pricing content.
 
 ## Local commands
