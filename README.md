@@ -4,7 +4,7 @@ Astro-based marketing website for 86chaos.com.
 
 ## Current build
 
-v93 beta reality copy cleanup.
+v94 visitor analytics.
 
 ## What changed in v93
 
@@ -39,3 +39,14 @@ Do not upload these folders to GitHub:
 - Updated the home page Current beta reality section so it reflects broader real-world testing without overstating Founder Beta tools.
 - Kept advanced owner/back-office tools described as controlled Founder Beta testing.
 - Updated cache-busting query strings to v93.
+
+## v94 visitor analytics
+
+- Added Vercel Web Analytics support through `@vercel/analytics/astro`.
+- Page visits can be viewed in the Vercel project dashboard after Web Analytics is enabled.
+- Updated the public legal/privacy page with plain-English website analytics wording.
+- Updated cache-busting query strings to v94.
+
+### Important analytics note
+
+This code adds the analytics script, but Vercel Web Analytics still has to be enabled for the deployed project in the Vercel dashboard.
