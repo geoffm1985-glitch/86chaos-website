@@ -4,9 +4,9 @@ Astro-based marketing website for 86chaos.com.
 
 ## Current build
 
-v92 scaled visual polish pass.
+v93 beta reality copy cleanup.
 
-## What changed in v92
+## What changed in v93
 
 - Kept the Astro structure from v90.
 - Scaled back the v91 polish so the page feels cleaner and less oversized.
@@ -33,3 +33,9 @@ Do not upload these folders to GitHub:
 - `.astro/`
 - `.vercel/`
 
+
+
+## v93 beta reality copy cleanup
+- Updated the home page Current beta reality section so it reflects broader real-world testing without overstating Founder Beta tools.
+- Kept advanced owner/back-office tools described as controlled Founder Beta testing.
+- Updated cache-busting query strings to v93.
