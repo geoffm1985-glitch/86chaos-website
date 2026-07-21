@@ -7453,3 +7453,52 @@ details,
     font-size: .55rem !important;
   }
 }
+
+/* V82: huge comparison-chart prices without making the chart boxes bigger */
+.app-comparison-poster .poster-circle,
+.tier-comparison-poster .poster-circle {
+  width: auto !important;
+  height: auto !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  max-width: 100% !important;
+  margin: 3px auto 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: #142033 !important;
+  font-size: 1.72rem !important;
+  line-height: .82 !important;
+  letter-spacing: -.095em !important;
+  font-weight: 1000 !important;
+  white-space: nowrap !important;
+  text-align: center !important;
+}
+
+@media (min-width: 921px) {
+  .app-comparison-poster .poster-circle,
+  .tier-comparison-poster .poster-circle {
+    font-size: 1.82rem !important;
+    line-height: .80 !important;
+    letter-spacing: -.105em !important;
+  }
+}
+
+@media (max-width: 920px) {
+  .app-comparison-poster .poster-circle,
+  .tier-comparison-poster .poster-circle {
+    font-size: .94rem !important;
+    line-height: .80 !important;
+    letter-spacing: -.115em !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .app-comparison-poster .poster-circle,
+  .tier-comparison-poster .poster-circle {
+    font-size: .88rem !important;
+    line-height: .78 !important;
+    letter-spacing: -.12em !important;
+  }
+}
