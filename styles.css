@@ -7227,3 +7227,171 @@ details,
     line-height: 1.12 !important;
   }
 }
+
+
+/* V79 mobile comparison fix: readable poster matrix without giant wrapped column names */
+@media (max-width: 920px) {
+  .app-comparison-poster {
+    grid-template-columns: 1.23fr repeat(6, minmax(0, 1fr)) !important;
+  }
+
+  .tier-comparison-poster {
+    grid-template-columns: 1.26fr repeat(4, minmax(0, 1fr)) !important;
+  }
+
+  .app-comparison-poster .poster-intro,
+  .tier-comparison-poster .poster-intro {
+    padding: 5px !important;
+  }
+
+  .app-comparison-poster .poster-intro p {
+    font-size: .58rem !important;
+    line-height: 1.08 !important;
+  }
+
+  .app-comparison-poster .poster-intro small {
+    font-size: .47rem !important;
+    line-height: 1.06 !important;
+  }
+
+  .app-comparison-poster .poster-col,
+  .tier-comparison-poster .poster-col {
+    min-height: 92px !important;
+    padding: 4px 2px !important;
+  }
+
+  .app-comparison-poster .poster-col h3,
+  .tier-comparison-poster .poster-col h3 {
+    font-size: 0 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+  }
+
+  .app-comparison-poster .poster-col h3::after,
+  .tier-comparison-poster .poster-col h3::after {
+    content: attr(data-short);
+    display: block;
+    font-size: .58rem !important;
+    line-height: .96 !important;
+    font-weight: 950 !important;
+    letter-spacing: -.02em !important;
+    text-align: center;
+    color: #142033;
+  }
+
+  .app-comparison-poster .poster-col p,
+  .tier-comparison-poster .poster-col p {
+    min-height: 2.25em !important;
+    padding-top: 2px !important;
+    font-size: .36rem !important;
+    line-height: 1.02 !important;
+    overflow: hidden !important;
+  }
+
+  .app-comparison-poster .poster-circle,
+  .tier-comparison-poster .poster-circle {
+    width: 27px !important;
+    height: 27px !important;
+    font-size: .34rem !important;
+    margin-top: 2px !important;
+  }
+
+  .app-comparison-poster .poster-col small,
+  .tier-comparison-poster .poster-col small {
+    font-size: .28rem !important;
+    line-height: 1 !important;
+  }
+
+  .app-comparison-poster .poster-row-label,
+  .tier-comparison-poster .poster-row-label,
+  .app-comparison-poster .poster-feature,
+  .tier-comparison-poster .poster-feature {
+    min-height: 40px !important;
+    padding: 4px 5px !important;
+    font-size: .56rem !important;
+    line-height: 1.04 !important;
+  }
+
+  .app-comparison-poster .poster-mark,
+  .tier-comparison-poster .poster-mark,
+  .app-comparison-poster .poster-cell,
+  .tier-comparison-poster .poster-cell {
+    min-height: 40px !important;
+    padding: 2px !important;
+  }
+
+  .app-comparison-poster .poster-mark::before,
+  .tier-comparison-poster .poster-mark::before,
+  .app-comparison-poster .poster-cell.yes::before,
+  .app-comparison-poster .poster-cell.no::before,
+  .app-comparison-poster .poster-cell.partial::before,
+  .tier-comparison-poster .poster-cell.yes::before,
+  .tier-comparison-poster .poster-cell.no::before,
+  .tier-comparison-poster .poster-cell.partial::before {
+    width: 24px !important;
+    height: 24px !important;
+    font-size: .82rem !important;
+  }
+
+  .app-comparison-poster .poster-mark.partial::before,
+  .tier-comparison-poster .poster-mark.partial::before,
+  .app-comparison-poster .poster-cell.partial::before,
+  .tier-comparison-poster .poster-cell.partial::before {
+    font-size: .92rem !important;
+  }
+
+  .app-comparison-poster .poster-mark.text,
+  .tier-comparison-poster .poster-mark.text,
+  .app-comparison-poster .poster-cell span,
+  .tier-comparison-poster .poster-cell span {
+    font-size: .39rem !important;
+    line-height: 1 !important;
+  }
+
+  .comparison-poster-foot,
+  .poster-legend {
+    font-size: .66rem !important;
+    line-height: 1.14 !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .comparison-poster-head h2 {
+    font-size: 1.05rem !important;
+  }
+
+  .app-comparison-poster {
+    grid-template-columns: 1.18fr repeat(6, minmax(0, 1fr)) !important;
+  }
+
+  .tier-comparison-poster {
+    grid-template-columns: 1.20fr repeat(4, minmax(0, 1fr)) !important;
+  }
+
+  .app-comparison-poster .poster-intro p {
+    font-size: .52rem !important;
+  }
+
+  .app-comparison-poster .poster-intro small {
+    font-size: .42rem !important;
+  }
+
+  .app-comparison-poster .poster-col h3::after,
+  .tier-comparison-poster .poster-col h3::after {
+    font-size: .52rem !important;
+  }
+
+  .app-comparison-poster .poster-col p,
+  .tier-comparison-poster .poster-col p {
+    font-size: .32rem !important;
+  }
+
+  .app-comparison-poster .poster-row-label,
+  .tier-comparison-poster .poster-row-label,
+  .app-comparison-poster .poster-feature,
+  .tier-comparison-poster .poster-feature {
+    font-size: .52rem !important;
+  }
+}
+

@@ -255,3 +255,10 @@ Do not commit real keys. `BETA_FROM_EMAIL` must use a domain verified with the e
 - Increased desktop chart text slightly without increasing chart box dimensions.
 - Increased desktop comparison symbols slightly for better readability.
 - Preserved compact desktop chart geometry so the chart can still fit in one screen.
+
+## V79 mobile comparison chart fix
+
+- Fixed mobile app comparison chart so column names no longer wrap into unusable vertical chunks.
+- Added short mobile labels for comparison columns while preserving full desktop names.
+- Tightened mobile feature/intro text and restored a readable poster-matrix layout.
+- Left desktop chart sizing alone.
