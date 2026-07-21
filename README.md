@@ -242,3 +242,10 @@ Do not commit real keys. `BETA_FROM_EMAIL` must use a domain verified with the e
 - Final order is now: hero, Sales Pricing Comparison, cost comparison, tier comparison, then the rest of pricing.
 - Added a stronger final CSS override to actually enlarge chart text and partial/half-circle symbols.
 - Kept the working poster-style comparison chart layout.
+
+## V75 desktop chart fit
+
+- Kept the accepted poster-style comparison design.
+- Compacted desktop-only chart geometry so comparison charts fit in one desktop viewport better.
+- Reduced desktop chart header height, row height, plan-card height, icon size, and legend spacing.
+- Left the mobile chart style readable and separate from desktop fitting rules.
