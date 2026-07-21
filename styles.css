@@ -7413,9 +7413,9 @@ details,
 @media (min-width: 921px) {
   .app-comparison-poster .poster-circle,
   .tier-comparison-poster .poster-circle {
-    font-size: .68rem !important;
-    line-height: .92 !important;
-    letter-spacing: -.075em !important;
+    font-size: .76rem !important;
+    line-height: .88 !important;
+    letter-spacing: -.085em !important;
   }
 
   .comparison-poster-note {
@@ -7428,9 +7428,9 @@ details,
 @media (max-width: 920px) {
   .app-comparison-poster .poster-circle,
   .tier-comparison-poster .poster-circle {
-    font-size: .46rem !important;
-    line-height: .90 !important;
-    letter-spacing: -.08em !important;
+    font-size: .50rem !important;
+    line-height: .88 !important;
+    letter-spacing: -.09em !important;
   }
 
   .comparison-poster-note {
@@ -7444,7 +7444,9 @@ details,
 @media (max-width: 420px) {
   .app-comparison-poster .poster-circle,
   .tier-comparison-poster .poster-circle {
-    font-size: .43rem !important;
+    font-size: .46rem !important;
+    line-height: .86 !important;
+    letter-spacing: -.10em !important;
   }
 
   .comparison-poster-note {
