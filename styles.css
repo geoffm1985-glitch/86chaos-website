@@ -287,7 +287,6 @@ input:focus, textarea:focus, select:focus { border-color: var(--copper-2); box-s
   .fact-card span { min-height: auto; }
 }
 
-/* Extra compact pass requested for a thinner, tighter site */
 .site-header { border-bottom-color: rgba(255,255,255,.065); }
 .nav-shell { min-height: 46px; }
 .brand img { width: 140px; }
@@ -328,7 +327,6 @@ input, textarea, select { font-size: .84rem; padding: 8px 9px; }
   .section { padding: 32px 0; }
 }
 
-/* Pricing comparison and sales polish */
 .comparison-wrap {
   overflow-x: auto;
   border: 1px solid var(--line);
@@ -404,7 +402,6 @@ input, textarea, select { font-size: .84rem; padding: 8px 9px; }
   .sales-strip { grid-template-columns: 1fr; }
 }
 
-/* Uploaded-site style comparison table restored */
 .compare-section {
   background:
     radial-gradient(circle at 8% 0%, rgba(201,143,109,.12), transparent 24rem),
@@ -508,7 +505,6 @@ input, textarea, select { font-size: .84rem; padding: 8px 9px; }
   margin-top: 10px;
 }
 
-/* Site-wide font reset requested: no serif/comic-looking headings */
 body,
 button,
 input,
@@ -535,7 +531,6 @@ h2 {
   letter-spacing: -.04em;
 }
 
-/* More prominent beta deadline + 86Voice promotional sections */
 
 .voice-home-section {
   border-block: 1px solid rgba(255,255,255,.08);
@@ -626,7 +621,6 @@ h2 {
   
 }
 
-/* ROI / pay-for-itself sections */
 .roi-section {
   background:
     radial-gradient(circle at 8% 0%, rgba(68,212,151,.09), transparent 24rem),
@@ -683,7 +677,6 @@ h2 {
   }
 }
 
-/* Full feature map and expanded 86Voice */
 .feature-map-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -759,7 +752,6 @@ h2 {
 }
 
 
-/* AI assisted ordering sections */
 .ai-order-section {
   background:
     radial-gradient(circle at 8% 0%, rgba(68,212,151,.08), transparent 24rem),
@@ -811,7 +803,6 @@ h2 {
 }
 
 
-/* AI capability suite sections */
 .ai-tools-section,
 .ai-tools-hero {
   background:
@@ -846,7 +837,6 @@ h2 {
 }
 
 
-/* Legal page styling */
 .legal-section {
   background:
     radial-gradient(circle at 8% 0%, rgba(201,143,109,.08), transparent 24rem),
@@ -917,7 +907,6 @@ h2 {
 }
 
 
-/* App alignment sections */
 .app-alignment-section {
   background:
     radial-gradient(circle at 10% 0%, rgba(201,143,109,.08), transparent 24rem),
@@ -938,7 +927,6 @@ h2 {
 }
 
 
-/* AI-first pricing and sales updates */
 .ai-pricing-hero,
 .ai-tier-breakdown,
 .ai-roi-section,
@@ -1009,7 +997,6 @@ h2 {
 }
 
 
-/* V19 professional pricing polish */
 .tier-overview-section,
 .ai-tier-breakdown,
 .ai-roi-section,
@@ -1163,7 +1150,6 @@ h2 {
 }
 
 
-/* V20 site simplification and compact polish */
 :root {
   --compact-radius: 16px;
 }
@@ -1374,7 +1360,6 @@ h2 {
 }
 
 
-/* V21 readability + compact table polish */
 :root {
   --bg: #111923;
   --bg-2: #162231;
@@ -1596,7 +1581,6 @@ body {
 }
 
 
-/* V22 sales-focused refinement */
 .hero-copy .hero-lede { max-width: 690px; }
 .compact-feature-list > div { min-height: 0; }
 .compact-feature-list strong { color: #fff7ef; }
@@ -1611,7 +1595,6 @@ body {
 }
 
 
-/* V25 readability: Option C warm gray and dusty rose table labels */
 :root {
   --positive-text: #d2cec8;
   --negative-text: #d7a0a8;
@@ -1645,7 +1628,6 @@ body {
   color: var(--copper-2);
 }
 
-/* Expanded Features page: broad capability map without oversized cards */
 .feature-directory-section {
   border-top: 1px solid rgba(255,255,255,.07);
   background:
@@ -1783,7 +1765,6 @@ body {
   }
 }
 
-/* V26 comparison-chart readability: slightly larger without making tables bulky */
 .comparison-table {
   font-size: .88rem;
 }
@@ -1836,7 +1817,6 @@ body {
   }
 }
 
-/* V27 interactive comparison columns */
 .comparison-table[data-column-selectable="true"] th:not(:first-child),
 .comparison-table[data-column-selectable="true"] td:not(:first-child) {
   cursor: pointer;
@@ -1910,7 +1890,6 @@ body {
   }
 }
 
-/* V29 correction: restore adjustable time-value card and keep market comparison styled with the rest */
 .calculator-card .calc-result {
   margin: 10px 0 8px;
 }
@@ -1970,7 +1949,6 @@ body {
   box-shadow: inset 2px 0 0 rgba(240,197,150,.72), inset -2px 0 0 rgba(240,197,150,.48), inset 0 -2px 0 rgba(240,197,150,.62);
 }
 
-/* V37 Option 1 app price + feature comparison: same table style, desktop-fit */
 .real-app-comparison-wrap {
   overflow-x: visible;
 }
@@ -2096,7 +2074,6 @@ body {
   }
 }
 
-/* V38: true Option 1 app comparison table, desktop-fit without changing the chart style */
 .real-app-comparison-wrap {
   overflow-x: visible;
 }
@@ -2254,7 +2231,6 @@ body {
   }
 }
 
-/* V40: app comparison readability pass - simple Yes/No cells, bigger prices */
 .real-app-comparison-wrap {
   overflow-x: visible;
 }
@@ -2387,7 +2363,6 @@ body {
 }
 
 
-/* V44: separate-app stack cost callout under the app comparison */
 .stack-cost-callout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -2433,7 +2408,6 @@ body {
 }
 
 
-/* V48 pricing cards: show unlimited users once instead of repeating it on every tier. */
 .pricing-included-line {
   margin: 0 auto 16px;
   max-width: 760px;
@@ -2464,7 +2438,6 @@ body {
 }
 
 
-/* V51 founder/about page readability: increase body copy, not headline scale */
 body[data-page="about"] .page-lede {
   max-width: 980px;
   font-size: clamp(1.16rem, 1.35vw, 1.28rem);
@@ -2498,7 +2471,6 @@ body[data-page="about"] .founder-story-panel p {
   color: #dbe5ef;
 }
 
-/* V52 populated Product Tour demo panels */
 .tour-hero .page-lede { font-size: 1rem; max-width: 720px; }
 .tour-chips { margin-top: 18px; }
 .tour-mini-board { padding: 18px; }
@@ -2674,7 +2646,6 @@ body[data-page="about"] .founder-story-panel p {
 }
 
 
-/* V60 readability pass: increase small text across the whole public site without inflating the hero headlines */
 html {
   font-size: 15px;
 }
@@ -2809,7 +2780,6 @@ select,
 }
 
 
-/* V61 density pass: tighter layout without shrinking main body copy */
 :root {
   --max: 1040px;
 }
@@ -3042,7 +3012,6 @@ h3 {
 }
 
 
-/* V62 desktop density correction: reduce oversized desktop scale while preserving readable copy */
 @media (min-width: 921px) {
   :root {
     --max: 1160px;
@@ -3387,7 +3356,6 @@ h3 {
 }
 
 
-/* V63 full mobile-first pass: phone layout, touch targets, tables, pricing, forms, and footer */
 @media (max-width: 920px) {
   html {
     font-size: 15px;
@@ -3920,7 +3888,6 @@ h3 {
 }
 
 
-/* V64 mobile cleanup: remove giant boxes and make comparison charts compact/readable */
 @media (max-width: 920px) {
   .section-tight,
   .section,
@@ -4053,8 +4020,7 @@ h3 {
     margin-bottom: 2px;
   }
 
-  /* Compact mobile comparison charts */
-  .comparison-wrap,
+    .comparison-wrap,
   .comparison-table-wrap,
   .real-app-comparison-wrap {
     overflow: visible !important;
@@ -4235,7 +4201,6 @@ h3 {
 }
 
 
-/* V65 remove ugly blue box treatment: transparent glass rows/cards instead of big blue slabs */
 .card,
 .panel,
 .note-box,
@@ -4273,7 +4238,6 @@ details,
   border-left: 2px solid rgba(231,186,145,.30) !important;
 }
 
-/* About page rows were the worst offenders. Strip the heavy fill and make them compact. */
 .about-card,
 .about-story-panel,
 .about-block .card,
@@ -4283,7 +4247,6 @@ details,
   min-height: 0 !important;
 }
 
-/* Kill oversized blue/tinted table and comparison fills while keeping headers readable. */
 .comparison-table tbody tr,
 .real-app-comparison-table tbody tr,
 .comparison-table td,
@@ -4303,7 +4266,6 @@ details,
   background-image: linear-gradient(180deg, rgba(231,186,145,.08), rgba(0,0,0,.06)) !important;
 }
 
-/* Mobile: no more big blue blocks, just compact separated content rows. */
 @media (max-width: 920px) {
   .card,
   .panel,
@@ -4366,7 +4328,6 @@ details,
 }
 
 
-/* V66 mobile comparison rebuild: hide desktop tables on phones and use compact tap-to-open rows */
 .mobile-compare-list {
   display: none;
 }
@@ -4525,700 +4486,6 @@ details,
   .mobile-compare-result {
     font-size: .82rem !important;
   }
-}
-
-
-/* V67 poster-style comparison charts inspired by the supplied sales-pricing matrix */
-.poster-chart {
-  display: grid;
-  grid-template-columns: 1.05fr repeat(4, minmax(0, 1fr));
-  gap: 0;
-  border: 1px solid rgba(231,186,145,.22);
-  border-radius: 16px;
-  overflow: hidden;
-  background: rgba(5,8,12,.34);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  box-shadow: 0 16px 42px rgba(0,0,0,.22);
-}
-
-.app-poster-chart {
-  grid-template-columns: 1.05fr repeat(6, minmax(0, 1fr));
-}
-
-.poster-side {
-  grid-row: span 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 10px;
-  padding: 18px;
-  color: var(--text);
-  background: rgba(7,11,16,.58);
-  border-right: 1px solid rgba(255,255,255,.08);
-}
-
-.poster-side p {
-  margin: 0;
-  color: var(--text);
-  font-size: .96rem;
-  line-height: 1.35;
-  font-weight: 800;
-}
-
-.poster-side small {
-  color: var(--muted);
-  font-size: .78rem;
-  line-height: 1.3;
-  font-weight: 750;
-}
-
-.poster-plan {
-  min-height: 150px;
-  padding: 14px 12px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 5px;
-  background: rgba(221,224,226,.78);
-  color: #142033;
-  border-right: 8px solid rgba(7,11,16,.58);
-}
-
-.poster-plan.featured {
-  background: linear-gradient(180deg, rgba(231,186,145,.92), rgba(201,143,109,.78));
-  color: #091018;
-}
-
-.poster-plan-name {
-  font-size: .96rem;
-  line-height: 1.1;
-  font-weight: 950;
-}
-
-.poster-plan-sub {
-  min-height: 2.35em;
-  padding-top: 6px;
-  border-top: 3px solid #17243a;
-  color: rgba(20,32,51,.86);
-  font-size: .74rem;
-  line-height: 1.15;
-  font-weight: 800;
-}
-
-.poster-price {
-  width: 78px;
-  height: 78px;
-  margin: 7px auto 1px;
-  display: grid;
-  place-items: center;
-  border-radius: 999px;
-  color: #17243a;
-  background: rgba(255,255,255,.56);
-  font-size: 1.28rem;
-  line-height: 1;
-  font-weight: 950;
-  letter-spacing: -.04em;
-  text-align: center;
-}
-
-.poster-price-note {
-  text-align: center;
-  color: rgba(20,32,51,.86);
-  font-size: .68rem;
-  font-weight: 850;
-  line-height: 1.1;
-}
-
-.poster-feature {
-  min-height: 58px;
-  padding: 10px 14px;
-  display: flex;
-  align-items: center;
-  color: var(--text);
-  background: rgba(34,48,68,.74);
-  border-top: 6px solid rgba(7,11,16,.70);
-  font-size: .82rem;
-  line-height: 1.18;
-  font-weight: 850;
-}
-
-.poster-cell {
-  min-height: 58px;
-  display: grid;
-  place-items: center;
-  text-align: center;
-  padding: 7px 5px;
-  background: rgba(221,224,226,.64);
-  color: #17243a;
-  border-top: 6px solid rgba(7,11,16,.70);
-  border-right: 8px solid rgba(7,11,16,.58);
-  font-size: 1.25rem;
-  font-weight: 950;
-}
-
-.poster-cell.yes,
-.poster-cell.no,
-.poster-cell.partial {
-  font-size: 0;
-}
-
-.poster-cell.yes::before,
-.poster-cell.no::before,
-.poster-cell.partial::before {
-  display: grid;
-  place-items: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 999px;
-  font-size: 1.15rem;
-  line-height: 1;
-  font-weight: 950;
-}
-
-.poster-cell.yes::before {
-  content: "✓";
-  background: #14243d;
-  color: #d7dbe0;
-}
-
-.poster-cell.no::before {
-  content: "×";
-  background: rgba(20,36,61,.22);
-  color: rgba(20,36,61,.42);
-}
-
-.poster-cell.partial::before {
-  content: "◐";
-  background: rgba(20,36,61,.20);
-  color: #14243d;
-}
-
-.poster-cell span {
-  display: inline-flex;
-  min-height: 28px;
-  align-items: center;
-  justify-content: center;
-  padding: 4px 6px;
-  border-radius: 999px;
-  background: rgba(20,36,61,.13);
-  color: #14243d;
-  font-size: .72rem;
-  line-height: 1.05;
-  font-weight: 950;
-}
-
-.poster-cell.yes span,
-.poster-cell.no span,
-.poster-cell.partial span {
-  font-size: .72rem;
-}
-
-.poster-legend {
-  max-width: 980px;
-  margin: 10px auto 0;
-  color: var(--muted);
-  text-align: center;
-  font-size: .82rem;
-  line-height: 1.4;
-  font-weight: 750;
-}
-
-@media (max-width: 1100px) and (min-width: 921px) {
-  .app-poster-chart {
-    grid-template-columns: .95fr repeat(6, minmax(92px, 1fr));
-  }
-  .poster-side { padding: 12px; }
-  .poster-plan { min-height: 132px; padding: 11px 9px; border-right-width: 5px; }
-  .poster-price { width: 64px; height: 64px; font-size: 1.05rem; }
-  .poster-cell { border-right-width: 5px; }
-  .poster-feature { font-size: .76rem; }
-}
-
-@media (max-width: 920px) {
-  /* Disable prior mobile comparison-table experiments now that poster charts are the active layout. */
-  html.has-mobile-compare .poster-chart {
-    display: block !important;
-  }
-
-  .poster-chart,
-  .app-poster-chart,
-  .tier-poster-chart {
-    display: block;
-    border: 0;
-    border-radius: 0;
-    background: transparent;
-    box-shadow: none;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
-
-  .poster-side {
-    display: block;
-    margin-bottom: 8px;
-    padding: 9px;
-    border: 1px solid rgba(231,186,145,.16);
-    border-radius: 9px;
-    background: rgba(4,7,10,.24);
-  }
-
-  .poster-side p {
-    font-size: .86rem;
-  }
-
-  .poster-side small {
-    display: block;
-    margin-top: 5px;
-    font-size: .72rem;
-  }
-
-  .poster-plan {
-    display: none;
-  }
-
-  .poster-feature {
-    min-height: 0;
-    margin-top: 7px;
-    padding: 7px 8px;
-    border: 1px solid rgba(231,186,145,.16);
-    border-bottom: 0;
-    border-radius: 8px 8px 0 0;
-    background: rgba(201,143,109,.12);
-    font-size: .8rem;
-    line-height: 1.16;
-  }
-
-  .poster-cell {
-    min-height: 0;
-    display: grid;
-    grid-template-columns: minmax(76px, 34%) 1fr;
-    place-items: center stretch;
-    gap: 7px;
-    padding: 6px 8px;
-    border-top: 1px solid rgba(255,255,255,.06);
-    border-right: 1px solid rgba(231,186,145,.16);
-    border-left: 1px solid rgba(231,186,145,.16);
-    background: rgba(4,7,10,.25);
-    color: var(--text);
-    font-size: .82rem;
-    text-align: left;
-  }
-
-  .poster-cell::after {
-    content: attr(data-label);
-    grid-column: 1;
-    grid-row: 1;
-    color: var(--copper-2);
-    font-size: .63rem;
-    line-height: 1.1;
-    font-weight: 950;
-    text-transform: uppercase;
-    letter-spacing: .04em;
-  }
-
-  .poster-cell.yes,
-  .poster-cell.no,
-  .poster-cell.partial {
-    font-size: 0;
-  }
-
-  .poster-cell.yes::before,
-  .poster-cell.no::before,
-  .poster-cell.partial::before {
-    grid-column: 2;
-    width: 25px;
-    height: 25px;
-    justify-self: start;
-    font-size: .84rem;
-  }
-
-  .poster-cell span {
-    grid-column: 2;
-    justify-self: start;
-    min-height: 23px;
-    background: rgba(231,186,145,.12);
-    color: var(--text);
-    font-size: .72rem !important;
-  }
-
-  .poster-cell:last-child {
-    border-bottom: 1px solid rgba(231,186,145,.16);
-    border-radius: 0 0 8px 8px;
-  }
-
-  .poster-legend {
-    text-align: left;
-    font-size: .74rem;
-  }
-}
-
-@media (max-width: 420px) {
-  .poster-cell {
-    grid-template-columns: 86px 1fr;
-  }
-}
-
-
-/* V68 comparison chart correction: desktop fits one screen, mobile stays a true poster matrix */
-@media (min-width: 921px) {
-  .compare-section.compact-section { padding-top: 18px !important; padding-bottom: 18px !important; }
-  .compare-section .section-head { margin-bottom: 10px !important; }
-  .compare-section .section-head h2 { font-size: clamp(1.12rem, 1.8vw, 1.45rem) !important; margin-bottom: 5px !important; }
-  .compare-section .section-head p { font-size: .78rem !important; line-height: 1.28 !important; }
-  .poster-chart { max-width: 100%; border-radius: 10px !important; }
-  .app-poster-chart { grid-template-columns: .88fr repeat(6, minmax(76px, 1fr)) !important; }
-  .tier-poster-chart { grid-template-columns: .95fr repeat(4, minmax(100px, 1fr)) !important; }
-  .poster-side { padding: 10px !important; gap: 5px !important; }
-  .poster-side p { font-size: .74rem !important; line-height: 1.22 !important; }
-  .poster-side small { font-size: .62rem !important; line-height: 1.18 !important; }
-  .poster-plan { min-height: 104px !important; padding: 8px 6px !important; gap: 3px !important; border-right-width: 4px !important; }
-  .poster-plan-name { font-size: .74rem !important; line-height: 1.04 !important; text-align: center !important; }
-  .poster-plan-sub { min-height: 2em !important; padding-top: 4px !important; border-top-width: 2px !important; font-size: .54rem !important; line-height: 1.05 !important; text-align: center !important; }
-  .poster-price { width: 48px !important; height: 48px !important; margin-top: 4px !important; font-size: .78rem !important; }
-  .poster-price-note { font-size: .50rem !important; line-height: 1.05 !important; }
-  .app-poster-chart .poster-plan-name { font-size: .62rem !important; }
-  .app-poster-chart .poster-plan-sub { font-size: .47rem !important; }
-  .app-poster-chart .poster-price { width: 42px !important; height: 42px !important; font-size: .60rem !important; }
-  .app-poster-chart .poster-price-note { font-size: .42rem !important; }
-  .poster-feature { min-height: 36px !important; padding: 6px 8px !important; border-top-width: 4px !important; font-size: .68rem !important; line-height: 1.08 !important; }
-  .poster-cell { min-height: 36px !important; padding: 4px !important; border-top-width: 4px !important; border-right-width: 4px !important; }
-  .poster-cell.yes::before, .poster-cell.no::before, .poster-cell.partial::before { width: 26px !important; height: 26px !important; font-size: .82rem !important; }
-  .poster-cell span { min-height: 22px !important; padding: 3px 5px !important; font-size: .56rem !important; line-height: 1.02 !important; }
-  .poster-legend { margin-top: 5px !important; font-size: .64rem !important; line-height: 1.22 !important; }
-}
-
-@media (max-width: 920px) {
-  html.has-mobile-compare .comparison-wrap,
-  html.has-mobile-compare .comparison-table-wrap,
-  html.has-mobile-compare .real-app-comparison-wrap,
-  .mobile-compare-list { display: none !important; }
-
-  .poster-chart, .app-poster-chart, .tier-poster-chart {
-    display: grid !important; width: 100% !important; max-width: 100% !important; gap: 0 !important;
-    border: 1px solid rgba(231,186,145,.18) !important; border-radius: 9px !important; overflow: hidden !important;
-    background: rgba(5,8,12,.32) !important; box-shadow: none !important;
-  }
-
-  .tier-poster-chart { grid-template-columns: 1.42fr repeat(4, minmax(0, .72fr)) !important; }
-  .app-poster-chart { grid-template-columns: 1.50fr repeat(6, minmax(0, .52fr)) !important; }
-
-  .poster-side {
-    grid-column: 1 / -1 !important; grid-row: auto !important; display: block !important;
-    padding: 7px 8px !important; border: 0 !important; border-bottom: 4px solid rgba(7,11,16,.78) !important;
-    border-radius: 0 !important; background: rgba(7,11,16,.64) !important;
-  }
-  .poster-side p { font-size: .74rem !important; line-height: 1.18 !important; font-weight: 850 !important; }
-  .poster-side small { display: block !important; margin-top: 4px !important; font-size: .58rem !important; line-height: 1.14 !important; }
-
-  .poster-plan {
-    display: flex !important; min-height: 78px !important; padding: 5px 3px !important; gap: 2px !important;
-    border: 0 !important; border-left: 3px solid rgba(7,11,16,.80) !important;
-    background: rgba(221,224,226,.74) !important; color: #142033 !important;
-  }
-  .poster-plan.featured { background: linear-gradient(180deg, rgba(231,186,145,.92), rgba(201,143,109,.78)) !important; }
-  .poster-plan-name { font-size: .52rem !important; line-height: 1.02 !important; text-align: center !important; overflow-wrap: anywhere !important; }
-  .poster-plan-sub { min-height: 1.85em !important; padding-top: 3px !important; border-top: 2px solid #17243a !important; font-size: .39rem !important; line-height: 1.02 !important; text-align: center !important; overflow: hidden !important; }
-  .poster-price { width: 31px !important; height: 31px !important; margin: 2px auto 0 !important; font-size: .43rem !important; line-height: 1 !important; }
-  .poster-price-note { font-size: .34rem !important; line-height: 1.02 !important; }
-  .app-poster-chart .poster-plan-name { font-size: .43rem !important; }
-  .app-poster-chart .poster-plan-sub { font-size: .32rem !important; }
-  .app-poster-chart .poster-price { width: 28px !important; height: 28px !important; font-size: .34rem !important; }
-  .app-poster-chart .poster-price-note { font-size: .30rem !important; }
-
-  .poster-feature {
-    min-height: 36px !important; margin: 0 !important; padding: 5px 5px !important; display: flex !important; align-items: center !important;
-    border: 0 !important; border-top: 3px solid rgba(7,11,16,.76) !important; border-radius: 0 !important;
-    background: rgba(34,48,68,.62) !important; color: var(--text) !important; font-size: .52rem !important;
-    line-height: 1.05 !important; font-weight: 900 !important; text-align: left !important;
-  }
-
-  .poster-cell {
-    min-height: 36px !important; display: grid !important; grid-template-columns: 1fr !important; place-items: center !important;
-    gap: 0 !important; padding: 3px 1px !important; border: 0 !important; border-left: 3px solid rgba(7,11,16,.80) !important;
-    border-top: 3px solid rgba(7,11,16,.76) !important; border-radius: 0 !important;
-    background: rgba(221,224,226,.58) !important; color: #17243a !important; text-align: center !important;
-  }
-  .poster-cell::after { content: none !important; }
-  .poster-cell.yes, .poster-cell.no, .poster-cell.partial { font-size: 0 !important; }
-  .poster-cell.yes::before, .poster-cell.no::before, .poster-cell.partial::before {
-    grid-column: auto !important; width: 22px !important; height: 22px !important; justify-self: center !important;
-    font-size: .72rem !important; line-height: 1 !important;
-  }
-  .app-poster-chart .poster-cell.yes::before, .app-poster-chart .poster-cell.no::before, .app-poster-chart .poster-cell.partial::before {
-    width: 18px !important; height: 18px !important; font-size: .58rem !important;
-  }
-  .poster-cell span {
-    grid-column: auto !important; justify-self: center !important; min-height: 18px !important; padding: 2px 2px !important;
-    border-radius: 999px !important; background: rgba(20,36,61,.15) !important; color: #14243d !important;
-    font-size: .36rem !important; line-height: 1 !important; text-align: center !important; max-width: 100% !important; overflow-wrap: anywhere !important;
-  }
-  .app-poster-chart .poster-cell span { font-size: .30rem !important; }
-  .poster-legend { margin-top: 6px !important; text-align: left !important; font-size: .66rem !important; line-height: 1.18 !important; }
-}
-
-@media (max-width: 420px) {
-  .container { padding-left: 6px !important; padding-right: 6px !important; }
-  .app-poster-chart { grid-template-columns: 1.60fr repeat(6, minmax(0, .48fr)) !important; }
-  .tier-poster-chart { grid-template-columns: 1.45fr repeat(4, minmax(0, .70fr)) !important; }
-  .poster-feature { font-size: .48rem !important; padding-left: 4px !important; }
-  .app-poster-chart .poster-plan-name { font-size: .38rem !important; }
-  .app-poster-chart .poster-price { width: 25px !important; height: 25px !important; font-size: .30rem !important; }
-}
-
-
-/* V69 real mobile poster matrix: headers across the top like supplied image */
-@media (max-width: 920px) {
-  html.has-mobile-compare .comparison-wrap,
-  html.has-mobile-compare .comparison-table-wrap,
-  html.has-mobile-compare .real-app-comparison-wrap,
-  .mobile-compare-list { display: none !important; }
-
-  .app-poster-chart,
-  .tier-poster-chart {
-    display: grid !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    gap: 0 !important;
-    overflow: hidden !important;
-    border: 1px solid rgba(231,186,145,.18) !important;
-    border-radius: 8px !important;
-    background: rgba(5,8,12,.42) !important;
-    box-shadow: none !important;
-  }
-
-  .app-poster-chart {
-    grid-template-columns: 1.55fr repeat(6, minmax(0, 1fr)) !important;
-  }
-
-  .tier-poster-chart {
-    grid-template-columns: 1.5fr repeat(4, minmax(0, 1fr)) !important;
-  }
-
-  .app-poster-chart > *,
-  .tier-poster-chart > * {
-    width: auto !important;
-    max-width: none !important;
-  }
-
-  .app-poster-chart .poster-side,
-  .tier-poster-chart .poster-side {
-    grid-column: 1 !important;
-    grid-row: 1 / span 1 !important;
-    display: flex !important;
-    min-height: 76px !important;
-    padding: 5px !important;
-    justify-content: center !important;
-    border: 0 !important;
-    border-right: 3px solid rgba(7,11,16,.82) !important;
-    border-bottom: 3px solid rgba(7,11,16,.82) !important;
-    border-radius: 0 !important;
-    background: rgba(20,31,43,.78) !important;
-  }
-
-  .poster-side p {
-    font-size: .50rem !important;
-    line-height: 1.10 !important;
-    font-weight: 850 !important;
-    margin: 0 !important;
-  }
-
-  .poster-side small {
-    display: none !important;
-  }
-
-  .app-poster-chart .poster-plan,
-  .tier-poster-chart .poster-plan {
-    display: flex !important;
-    min-height: 76px !important;
-    padding: 4px 2px !important;
-    gap: 2px !important;
-    justify-content: flex-start !important;
-    border: 0 !important;
-    border-left: 3px solid rgba(7,11,16,.82) !important;
-    border-bottom: 3px solid rgba(7,11,16,.82) !important;
-    background: rgba(224,226,228,.78) !important;
-    color: #142033 !important;
-  }
-
-  .app-poster-chart .poster-plan.featured,
-  .tier-poster-chart .poster-plan.featured {
-    background: linear-gradient(180deg, rgba(231,186,145,.94), rgba(201,143,109,.78)) !important;
-  }
-
-  .poster-plan-name {
-    font-size: .42rem !important;
-    line-height: 1.02 !important;
-    text-align: center !important;
-    font-weight: 950 !important;
-    overflow-wrap: anywhere !important;
-  }
-
-  .poster-plan-sub {
-    min-height: 1.65em !important;
-    padding-top: 2px !important;
-    border-top: 2px solid #17243a !important;
-    font-size: .29rem !important;
-    line-height: 1.02 !important;
-    text-align: center !important;
-    overflow: hidden !important;
-  }
-
-  .poster-price {
-    width: 24px !important;
-    height: 24px !important;
-    margin: 2px auto 0 !important;
-    font-size: .28rem !important;
-    line-height: 1 !important;
-    border-radius: 999px !important;
-  }
-
-  .poster-price-note {
-    font-size: .24rem !important;
-    line-height: 1 !important;
-    text-align: center !important;
-  }
-
-  .tier-poster-chart .poster-plan-name { font-size: .48rem !important; }
-  .tier-poster-chart .poster-price { width: 28px !important; height: 28px !important; font-size: .36rem !important; }
-  .tier-poster-chart .poster-price-note { font-size: .29rem !important; }
-
-  .poster-feature {
-    min-height: 31px !important;
-    margin: 0 !important;
-    padding: 3px 4px !important;
-    display: flex !important;
-    align-items: center !important;
-    border: 0 !important;
-    border-right: 3px solid rgba(7,11,16,.82) !important;
-    border-top: 3px solid rgba(7,11,16,.82) !important;
-    border-radius: 0 !important;
-    background: rgba(34,48,68,.74) !important;
-    color: #f4eee6 !important;
-    font-size: .45rem !important;
-    line-height: 1.04 !important;
-    font-weight: 900 !important;
-    text-align: left !important;
-  }
-
-  .poster-cell {
-    min-height: 31px !important;
-    display: grid !important;
-    place-items: center !important;
-    padding: 2px !important;
-    border: 0 !important;
-    border-left: 3px solid rgba(7,11,16,.82) !important;
-    border-top: 3px solid rgba(7,11,16,.82) !important;
-    border-radius: 0 !important;
-    background: rgba(224,226,228,.64) !important;
-    color: #17243a !important;
-    text-align: center !important;
-  }
-
-  .poster-cell::after { content: none !important; }
-  .poster-cell.yes, .poster-cell.no, .poster-cell.partial { font-size: 0 !important; }
-
-  .poster-cell.yes::before,
-  .poster-cell.no::before,
-  .poster-cell.partial::before {
-    width: 18px !important;
-    height: 18px !important;
-    display: grid !important;
-    place-items: center !important;
-    border-radius: 999px !important;
-    font-size: .58rem !important;
-    line-height: 1 !important;
-    font-weight: 950 !important;
-  }
-
-  .poster-cell.yes::before { background: #14243d !important; color: #d7dbe0 !important; }
-  .poster-cell.no::before { background: rgba(20,36,61,.20) !important; color: rgba(20,36,61,.42) !important; }
-  .poster-cell.partial::before { background: rgba(20,36,61,.18) !important; color: #14243d !important; }
-
-  .poster-cell span {
-    display: inline-flex !important;
-    min-height: 14px !important;
-    max-width: 100% !important;
-    padding: 1px 2px !important;
-    align-items: center !important;
-    justify-content: center !important;
-    border-radius: 999px !important;
-    background: rgba(20,36,61,.14) !important;
-    color: #14243d !important;
-    font-size: .27rem !important;
-    line-height: 1 !important;
-    font-weight: 950 !important;
-    text-align: center !important;
-    overflow-wrap: anywhere !important;
-  }
-
-  .tier-poster-chart .poster-cell span { font-size: .34rem !important; }
-
-  .poster-legend {
-    margin-top: 5px !important;
-    text-align: left !important;
-    font-size: .62rem !important;
-    line-height: 1.18 !important;
-  }
-
-  .compare-section .section-head h2 { font-size: 1.22rem !important; }
-  .compare-section .section-head p { font-size: .82rem !important; }
-}
-
-@media (max-width: 420px) {
-  .container { padding-left: 4px !important; padding-right: 4px !important; }
-  .app-poster-chart { grid-template-columns: 1.48fr repeat(6, minmax(0, 1fr)) !important; }
-  .tier-poster-chart { grid-template-columns: 1.42fr repeat(4, minmax(0, 1fr)) !important; }
-  .poster-side p { font-size: .43rem !important; }
-  .poster-plan-name { font-size: .35rem !important; }
-  .poster-plan-sub { font-size: .25rem !important; }
-  .poster-price { width: 21px !important; height: 21px !important; font-size: .24rem !important; }
-  .poster-price-note { font-size: .20rem !important; }
-  .poster-feature { font-size: .40rem !important; padding: 3px 3px !important; }
-  .poster-cell.yes::before,
-  .poster-cell.no::before,
-  .poster-cell.partial::before { width: 15px !important; height: 15px !important; font-size: .50rem !important; }
-  .poster-cell span { font-size: .23rem !important; }
-}
-
-
-/* V70 actual poster-style comparison chart */
-.comparison-poster-shell {
-  overflow: hidden;
-  border: 1px solid rgba(231,186,145,.22);
-  border-radius: 14px;
-  background: rgba(8,12,17,.78);
-  box-shadow: 0 16px 42px rgba(0,0,0,.25);
-}
-
-.comparison-poster-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 18px;
-  padding: 18px 24px;
-  background: linear-gradient(135deg, #e7ba91, #c98f6d);
-  color: #142033;
-}
-
-.comparison-poster-head .eyebrow {
-  color: #142033;
-  margin: 0 0 2px;
-  font-size: .82rem !important;
-}
-
-.comparison-poster-head h2 {
-  color: #142033;
-  margin: 0;
-  font-size: clamp(1.35rem, 2.3vw, 2.05rem) !important;
-  line-height: 1;
-}
-
-.poster-logo-word {
-  white-space: nowrap;
-  font-size: 2rem;
-  line-height: 1;
-  font-weight: 950;
-  letter-spacing: -.05em;
 }
 
 .comparison-poster-grid {
@@ -5387,7 +4654,6 @@ details,
   text-align: center;
 }
 
-/* desktop compression so the whole chart fits in one normal screen better */
 @media (min-width: 921px) {
   .compare-section.compact-section {
     padding-top: 18px !important;
@@ -5479,7 +4745,6 @@ details,
   }
 }
 
-/* mobile keeps the same poster structure: feature labels left, app columns across the top */
 @media (max-width: 920px) {
   .comparison-poster-shell {
     border-radius: 8px;
@@ -5601,7 +4866,6 @@ details,
   }
 }
 
-/* V71 chart polish: same poster style everywhere, slightly larger text, correct grid alignment */
 .comparison-poster-grid .poster-intro {
   grid-row: auto !important;
 }
@@ -5623,7 +4887,6 @@ details,
   min-height: 50px;
 }
 
-/* Tiny overall readability bump, without returning to oversized desktop cards. */
 @media (min-width: 921px) {
   body { font-size: .965rem; }
 
@@ -5733,7 +4996,6 @@ details,
 }
 
 
-/* V72 chart polish: slightly bigger text/symbols and consistent poster charts */
 @media (min-width: 921px) {
   .comparison-poster-head .eyebrow {
     font-size: .88rem !important;
@@ -5860,7 +5122,6 @@ details,
   }
 }
 
-/* Ensure cost comparison immediately under app chart feels like the same chart family */
 .cost-poster-shell {
   margin-top: 14px;
 }
@@ -5934,7 +5195,6 @@ details,
 }
 
 
-/* V73 final chart readability and placement fixes */
 @media (min-width: 921px) {
   .comparison-poster-head .eyebrow {
     font-size: .92rem !important;
@@ -6096,7 +5356,6 @@ details,
   }
 }
 
-/* Cost comparison belongs directly under app comparison and shares the poster style */
 .stack-cost-section {
   padding-top: 14px !important;
 }
@@ -6174,7 +5433,6 @@ details,
 }
 
 
-/* V74 final comparison order + stronger chart readability override */
 @media (min-width: 921px) {
   .comparison-poster-head .eyebrow {
     font-size: 1rem !important;
@@ -6251,8 +5509,7 @@ details,
     line-height: 1.28 !important;
   }
 
-  /* Keep charts fitting desktop while text gets bigger */
-  .comparison-poster-grid.app-comparison-poster {
+    .comparison-poster-grid.app-comparison-poster {
     grid-template-columns: 1.16fr repeat(6, minmax(0, 1fr)) !important;
   }
 
@@ -6378,7 +5635,6 @@ details,
   }
 }
 
-/* Correct pricing page comparison order spacing */
 .app-comparison-section {
   padding-bottom: 10px !important;
 }
@@ -6389,7 +5645,6 @@ details,
 }
 
 
-/* V75 desktop one-screen chart fit: same poster style, denser desktop geometry */
 @media (min-width: 921px) {
   .compare-section.compact-section,
   .stack-cost-section,
@@ -6531,8 +5786,7 @@ details,
     line-height: 1.12 !important;
   }
 
-  /* Tier chart usually has the most rows. Make it slightly tighter than the app comparison. */
-  .tier-comparison-poster .poster-col,
+    .tier-comparison-poster .poster-col,
   .comparison-poster-grid.tier-comparison-poster .poster-col {
     min-height: 66px !important;
   }
@@ -6568,7 +5822,6 @@ details,
 
 
 
-/* V76: increase chart text/icon readability without increasing chart box sizes */
 @media (min-width: 921px) {
   .comparison-poster-head .eyebrow {
     font-size: .75rem !important;
@@ -6640,8 +5893,7 @@ details,
     line-height: 1.10 !important;
   }
 
-  /* keep tier chart within one screen while slightly increasing readability */
-  .tier-comparison-poster .poster-col,
+    .tier-comparison-poster .poster-col,
   .comparison-poster-grid.tier-comparison-poster .poster-col {
     min-height: 66px !important;
     padding: 4px 4px !important;
@@ -6684,7 +5936,6 @@ details,
   }
 }
 
-/* V76 chart text bump without enlarging the chart boxes */
 .roi-example-list {
   margin: 10px 0 8px;
 }
@@ -6839,7 +6090,6 @@ details,
 }
 
 
-/* V77: make comparison-chart text/icons clearly bigger while keeping chart boxes the same size */
 @media (min-width: 921px) {
   .poster-intro {
     padding: 6px 7px !important;
@@ -7005,10 +6255,8 @@ details,
 }
 
 
-/* V78: bigger comparison-chart text only; restore original box/icon sizing */
 @media (min-width: 921px) {
-  /* restore chart geometry/box sizing */
-  .poster-intro {
+    .poster-intro {
     padding: 7px 8px !important;
     gap: 4px !important;
   }
@@ -7090,8 +6338,7 @@ details,
     font-size: .68rem !important;
   }
 
-  /* text only: larger than before without increasing box size */
-  .comparison-poster-head .eyebrow {
+    .comparison-poster-head .eyebrow {
     font-size: .80rem !important;
     line-height: 1 !important;
   }
@@ -7168,8 +6415,7 @@ details,
 }
 
 @media (max-width: 920px) {
-  /* keep mobile box sizing stable */
-  .poster-mark::before,
+    .poster-mark::before,
   .poster-cell.yes::before,
   .poster-cell.no::before,
   .poster-cell.partial::before {
@@ -7183,8 +6429,7 @@ details,
     font-size: 1.10rem !important;
   }
 
-  /* mobile text only bump */
-  .poster-intro p {
+    .poster-intro p {
     font-size: .90rem !important;
     line-height: 1.10 !important;
   }
@@ -7229,7 +6474,6 @@ details,
 }
 
 
-/* V79 mobile comparison fix: readable poster matrix without giant wrapped column names */
 @media (max-width: 920px) {
   .app-comparison-poster {
     grid-template-columns: 1.23fr repeat(6, minmax(0, 1fr)) !important;
@@ -7397,7 +6641,6 @@ details,
 
 
 
-/* V80: move app-comparison note out of the intro cell and enlarge price text only */
 .comparison-poster-note {
   margin: 0;
   padding: 6px 10px;
@@ -7454,7 +6697,6 @@ details,
   }
 }
 
-/* V82: huge comparison-chart prices without making the chart boxes bigger */
 .app-comparison-poster .poster-circle,
 .tier-comparison-poster .poster-circle {
   width: auto !important;
@@ -7503,7 +6745,6 @@ details,
   }
 }
 
-/* V83: comparison chart fit + label readability + clickable poster columns */
 @media (min-width: 921px) {
   .comparison-poster-shell {
     max-width: min(1320px, calc(100vw - 28px)) !important;
@@ -7743,7 +6984,6 @@ details,
   }
 }
 
-/* V87 pricing card alignment/readability pass */
 .pricing-model-section {
   position: relative;
   isolation: isolate;
@@ -7798,5 +7038,63 @@ details,
 @media (max-width: 720px) {
   .pricing-model-section::before {
     background: linear-gradient(180deg, rgba(5, 8, 12, .82), rgba(7, 12, 18, .76));
+  }
+}
+
+/* V89 professional cleanup and readability polish */
+.beta-reality-section .section-head {
+  max-width: 820px;
+}
+
+.beta-reality-grid {
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+.beta-reality-grid .note-box {
+  background: linear-gradient(180deg, rgba(16, 25, 34, .88), rgba(8, 13, 19, .78));
+  border-color: rgba(231, 186, 145, .22);
+}
+
+.pricing-model-section::before {
+  background:
+    linear-gradient(180deg, rgba(5, 8, 12, .82), rgba(7, 12, 18, .78)),
+    radial-gradient(circle at 50% 12%, rgba(231, 186, 145, .075), transparent 28rem);
+}
+
+.pricing-tier-grid .plan-card {
+  background: linear-gradient(180deg, rgba(19, 30, 40, .985), rgba(7, 12, 18, .975)) !important;
+  border-color: rgba(231, 186, 145, .34) !important;
+}
+
+.pricing-tier-grid .plan-card.featured {
+  background: linear-gradient(180deg, rgba(23, 39, 50, .99), rgba(8, 16, 22, .98)) !important;
+}
+
+.addon-price {
+  display: inline-flex;
+  width: fit-content;
+  margin: 3px 0 8px;
+  padding: 5px 8px;
+  border-radius: 999px;
+  color: #f4e6dc;
+  background: rgba(201, 143, 109, .14);
+  border: 1px solid rgba(231, 186, 145, .24);
+  font-size: .72rem;
+  font-weight: 900;
+  line-height: 1.15;
+}
+
+.owner-pro-card p {
+  color: #f3f8ff !important;
+}
+
+@media (max-width: 720px) {
+  .beta-reality-grid {
+    gap: 10px;
+  }
+
+  .pricing-model-section::before {
+    background: linear-gradient(180deg, rgba(5, 8, 12, .88), rgba(7, 12, 18, .84));
   }
 }

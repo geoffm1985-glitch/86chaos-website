@@ -96,7 +96,7 @@ module.exports = async function handler(req, res) {
     console.log('86 Chaos beta application received but email env vars are missing:', submission);
     return res.status(503).json({
       ok: false,
-      message: 'The form is installed, but email is not configured yet. Set RESEND_API_KEY and BETA_TO_EMAIL in Vercel.',
+      message: 'The application form is temporarily unavailable. Please try again later or contact 86 Chaos directly.',
     });
   }
 
