@@ -1,0 +1,102 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = "Legal, Terms & Privacy | 86 Chaos";
+const description = "Important legal, privacy, beta, AI, automation, backup, and customer responsibility notes for 86 Chaos, operated by Chilton App Works LLC.";
+const ogTitle = "Legal, Terms & Privacy | 86 Chaos";
+const ogDescription = "Important legal, privacy, beta, AI, automation, backup, and customer responsibility notes for 86 Chaos, operated by Chilton App Works LLC.";
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  page="legal"
+  canonicalPath="/legal.html"
+  ogTitle={ogTitle}
+  ogDescription={ogDescription}
+>
+<main id="main">
+
+    <section class="page-hero compact-hero legal-hero">
+      <div class="container">
+        <div class="reveal">
+          <p class="eyebrow">Legal / Terms / Privacy</p>
+          <h1>Plain-English essentials for using 86 Chaos.</h1>
+          <p class="page-lede">86 Chaos is operated by Chilton App Works LLC. These website terms summarize the most important beta, backup, AI, reliability, privacy, and customer-responsibility points.</p>
+        </div>
+        <div class="page-logo-card panel reveal delay-1"><img src="assets/logo-main.png" alt="86 Chaos logo" /></div>
+      </div>
+    </section>
+
+    <section class="section legal-section">
+      <div class="container legal-layout">
+        <aside class="legal-toc panel">
+          <strong>On this page</strong>
+          <a href="#service">Service</a>
+          <a href="#beta">Beta use</a>
+          <a href="#backups">Backups</a>
+          <a href="#ai">AI and advice limits</a>
+          <a href="#reliability">Reliability</a>
+          <a href="#privacy">Privacy</a>
+          <a href="#contact">Contact</a>
+        </aside>
+
+        <div class="legal-copy">
+          <article class="panel" id="service">
+            <h2>Service and operator</h2>
+            <p>86 Chaos is a restaurant and kitchen management web application operated by Chilton App Works LLC for restaurants, bars, kitchens, and hospitality teams.</p>
+          </article>
+
+          <article class="panel" id="beta">
+            <h2>Founder Beta and early access</h2>
+            <p>Founder Beta and early-access features are provided for testing and feedback. Features may change, fail, be delayed, become unavailable, or be removed as the product develops.</p>
+            <p>The current Founder Beta offer is 90 days free with no credit card and no purchase required. Continued paid use is optional and subject to the pricing and terms shown before purchase.</p>
+          </article>
+
+          <article class="panel" id="backups">
+            <h2>Customer backup responsibility</h2>
+            <p>Customers are responsible for keeping independent off-platform and off-site backups of business-critical records, including schedules, time records, invoices, inventory, recipes, employee records, vendor records, financial records, safety records, and compliance records.</p>
+            <p>Any backup or recovery tools provided by 86 Chaos are not a substitute for the customer’s own required records and backup practices.</p>
+          </article>
+
+          <article class="panel" id="ai">
+            <h2>AI review and professional-advice limits</h2>
+            <p>86 Chaos may use AI and automation to suggest, explain, classify, extract, summarize, scan, forecast, draft, alert, analyze, and report. Outputs may be incomplete, incorrect, stale, delayed, or unsuitable for a particular restaurant.</p>
+            <p>Authorized people must review AI output before making business decisions or changing records. 86 Chaos does not automatically send vendor orders, spend money, process payroll, publish schedules, change wages, change permissions, or change billing based only on AI output.</p>
+            <p>86 Chaos is not legal, HR, payroll, tax, accounting, food-safety, or compliance advice and does not replace qualified professional advice or manager judgment.</p>
+          </article>
+
+          <article class="panel" id="reliability">
+            <h2>Notifications, reminders, scans, and automation</h2>
+            <p>Notifications, reminders, push messages, scans, AI output, integrations, and automated workflows may fail or be delayed. Customers should not rely on them as the only operational, safety, payroll, legal, or compliance safeguard.</p>
+          </article>
+
+          <article class="panel" id="privacy">
+            <h2>Privacy basics</h2>
+            <p>86 Chaos is a business-to-business workplace tool. The customer controls what employee and operational information is entered and is responsible for using the service lawfully.</p>
+            <p>Information processed may include account details, staff records, schedules, time records, availability and request-off records, prep, tasks, 86 alerts, inventory, recipes, invoices, vendors, menu data, maintenance, messages, reminders, attachments, plan status, and service diagnostics.</p>
+            <p>86 Chaos does not sell personal information to advertisers.</p>
+          </article>
+
+          <article class="panel" id="contact">
+            <h2>Contact</h2>
+            <p>Questions, privacy requests, security concerns, beta issues, support requests, or legal notices may be sent to <a href="mailto:support@86chaos.com">support@86chaos.com</a>.</p>
+            <p>Operator: Chilton App Works LLC. Product: 86 Chaos.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+  <section class="cta-band">
+    <div class="container">
+      <div class="cta-card">
+        <div>
+          <span class="eyebrow">Founder Beta</span>
+          <h2>Try 86 Chaos free for 90 days.</h2>
+          <p>90 days free, no credit card, no purchase required, and free setup during beta. Accepted restaurants help shape the product and receive 50% off the first location for the first paid year.</p>
+        </div>
+        <a class="button" href="beta.html">Apply Free</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

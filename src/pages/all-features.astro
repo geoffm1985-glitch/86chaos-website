@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Features | 86 Chaos"
+  description="Redirect to the complete 86 Chaos Features page."
+  canonicalPath="/features.html"
+  noindex={true}
+>
+  <Fragment slot="head">
+    <meta http-equiv="refresh" content="0; url=features.html" />
+    <script is:inline>window.location.replace("features.html");</script>
+  </Fragment>
+  <main id="main" class="section">
+    <div class="container">
+      <p>Features have moved to <a href="features.html">Features</a>.</p>
+    </div>
+  </main>
+</BaseLayout>

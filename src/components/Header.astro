@@ -1,0 +1,30 @@
+---
+const { activePage = '' } = Astro.props;
+const navItems = [
+  { key: 'home', label: 'Home', href: 'index.html' },
+  { key: 'about', label: 'About', href: 'about.html' },
+  { key: 'features', label: 'Features', href: 'features.html' },
+  { key: '86voice', label: '86Voice', href: '86voice.html' },
+  { key: 'ai-tools', label: 'AI + Ordering', href: 'ai-tools.html' },
+  { key: 'how', label: 'How It Works', href: 'how-it-works.html' },
+  { key: 'tour', label: 'Product Tour', href: 'product-tour.html' },
+  { key: 'pricing', label: 'Pricing', href: 'pricing.html' },
+  { key: 'faq', label: 'FAQ', href: 'faq.html' }
+];
+---
+<header class="site-header">
+  <nav class="nav-shell" aria-label="Main navigation">
+    <a class="brand" href="index.html" aria-label="86 Chaos home">
+      <img src="assets/logo-main.png" alt="86 Chaos Kitchen Management OS" />
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="navLinks" data-nav-toggle>
+      <span></span><span></span><span></span><span class="sr-only">Open menu</span>
+    </button>
+    <div class="nav-links" id="navLinks" data-nav-links>
+      {navItems.map((item) => (
+        <a href={item.href} class={activePage === item.key ? 'is-active' : ''}>{item.label}</a>
+      ))}
+      <a href="beta.html" class={`nav-cta ${activePage === 'beta' ? 'is-active' : ''}`}>Apply Free</a>
+    </div>
+  </nav>
+</header>

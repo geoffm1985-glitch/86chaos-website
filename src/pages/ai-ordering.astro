@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="AI + Ordering | 86 Chaos"
+  description="Redirect to the combined 86 Chaos AI + Ordering page."
+  canonicalPath="/ai-tools.html"
+  noindex={true}
+>
+  <Fragment slot="head">
+    <meta http-equiv="refresh" content="0; url=ai-tools.html" />
+    <script is:inline>window.location.replace("ai-tools.html");</script>
+  </Fragment>
+  <main id="main" class="section">
+    <div class="container">
+      <p>AI Ordering has moved to <a href="ai-tools.html">AI + Ordering</a>.</p>
+    </div>
+  </main>
+</BaseLayout>

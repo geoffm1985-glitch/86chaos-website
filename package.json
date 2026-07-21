@@ -1,9 +1,14 @@
 {
-  "name": "86chaos-website",
+  "name": "86chaos-marketing-astro",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "start": "vercel dev"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
   },
-  "dependencies": {}
+  "dependencies": {
+    "astro": "^5.0.0"
+  }
 }

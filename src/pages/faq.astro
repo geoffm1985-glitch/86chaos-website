@@ -1,0 +1,69 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = "86 Chaos FAQ | Founder Beta Questions";
+const description = "Answers about the 86 Chaos Founder Beta, free setup, pricing, 86Voice, Smart Kitchen AI, POS fit, staff adoption, backups, and human-approved AI.";
+const ogTitle = "86 Chaos FAQ | Founder Beta Questions";
+const ogDescription = "Answers about the 86 Chaos Founder Beta, free setup, pricing, 86Voice, staff adoption, POS fit, and human-approved AI.";
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  page="faq"
+  canonicalPath="/faq.html"
+  ogTitle={ogTitle}
+  ogDescription={ogDescription}
+>
+<main id="main">
+
+    <section class="page-hero compact-hero">
+      <div class="container">
+        <div class="reveal">
+          <p class="eyebrow">FAQ</p>
+          <h1>Straight answers for busy restaurant operators.</h1>
+          <p class="page-lede">What it costs, how setup works, why staff may actually use it, where AI stops, and how 86 Chaos fits beside the systems you already have.</p>
+        </div>
+        <div class="page-logo-card panel reveal delay-1"><img src="assets/app-icon.webp" alt="86 Chaos app icon" /></div>
+      
+      <details>
+        <summary>Are POS integrations included?</summary>
+        <p>Not yet. 86 Chaos is built to work around the POS today, and direct POS integrations are planned and being worked on. The app is not meant to replace your sales, payment, or transaction system.</p>
+      </details>
+    </div>
+    </section>
+    <section class="section">
+      <div class="container faq-list">
+        <details open><summary>Is Founder Beta really free?</summary><p>Yes. Accepted restaurants receive 90 days free with no credit card and no purchase required. Free setup help is included during beta.</p></details>
+        <details><summary>Do I pay more for more users?</summary><p>No. 86 Chaos plans include unlimited users for normal restaurant use, so owners can add managers, cooks, bartenders, and staff who need access without per-user fees. Plan limits still apply to AI scans, storage-heavy uploads, automation, and abusive usage.</p></details>
+        <details><summary>What happens after the 90 days?</summary><p>There is no required purchase. Restaurants that choose to continue receive 50% off the first location for the first paid year. Owner Pro additional locations stay full price at $129/month.</p></details>
+        <details><summary>Why is the Founder Beta limited?</summary><p>86 Chaos is accepting a focused group of independent restaurants so each location can receive useful setup help and provide feedback that can actually shape the product before paid launch.</p></details>
+        <details><summary>Do beta restaurants help shape the app?</summary><p>Yes. Feedback from real shifts helps decide what gets simplified, improved, and built next. Founder restaurants also receive first access to new features where their selected plan allows.</p></details>
+        <details><summary>I do not want another app. What does this replace?</summary><p>86 Chaos is designed to replace scattered prep notes, group texts, paper reminders, disconnected spreadsheets, whiteboards, and the information that currently lives only in a manager’s head.</p></details>
+        <details><summary>Will my staff actually use it?</summary><p>The rollout starts with one simple workflow, not the whole system. 86Voice also lets staff use natural kitchen language for common actions instead of tapping through multiple screens.</p></details>
+        <details><summary>Does 86 Chaos replace the POS?</summary><p>No. Keep the POS. 86 Chaos handles the kitchen and manager work around it: prep, 86 alerts, schedules, availability, ordering support, inventory, reminders, maintenance, waste, and daily visibility.</p></details>
+        <details><summary>What can 86Voice do?</summary><p>86Voice can help with prep, tasks, reminders, 86 alerts, events, availability and request-off records, maintenance issues, burn/waste logs, Message Board posts where permitted, status questions, menu-impact questions, and AI ordering commands.</p></details>
+        <details><summary>What makes Smart Kitchen the recommended plan?</summary><p>Smart Kitchen is the main full-intelligence plan. It adds AI-assisted ordering, vendor-grouped drafts, forecasting, Menu Intelligence and 86 impact, invoice/menu scan intelligence, price warnings, waste/par insights, prep prediction, and advanced Manager Brief support.</p></details>
+        <details><summary>Who is Owner Pro for?</summary><p>Owner Pro is for operators who want everything in Smart Kitchen plus higher AI and scan limits, advanced reporting, deeper owner dashboards, and priority support.</p></details>
+        <details><summary>Does AI place orders or make decisions automatically?</summary><p>No. AI can suggest, explain, draft, alert, analyze, scan, forecast, summarize, and report. Managers approve actions that change business records, send vendor orders, spend money, publish schedules, or affect payroll, permissions, or billing.</p></details>
+        <details><summary>Does 86 Chaos post to QuickBooks during Founder Beta?</summary><p>No. QuickBooks tools are review-first during beta: preflight checks, mapping review, accountant packets, exports, and owner-approved drafts. 86 Chaos does not live-post to QuickBooks during Founder Beta.</p></details>
+        <details><summary>How does AI-assisted ordering work?</summary><p>It can use stock, par levels, pending orders, upcoming events, prep needs, waste, invoices, Menu Intelligence links, and vendor history to prepare a reviewable order draft and explain the signals behind it.</p></details>
+        <details><summary>Is 86 Chaos only for large restaurants?</summary><p>No. It is built for independent restaurants, bars, grills, and kitchens that need practical control without a corporate office or a giant enterprise platform.</p></details>
+        <details><summary>Do I still need my own backups?</summary><p>Yes. Restaurants should keep independent off-platform and off-site backups of business-critical records. Notifications, reminders, scans, AI, and automation can fail or be delayed and should not be the only safeguard.</p></details>
+      </div>
+    </section>
+
+  </main>
+  <section class="cta-band">
+    <div class="container">
+      <div class="cta-card">
+        <div>
+          <span class="eyebrow">Founder Beta</span>
+          <h2>Try 86 Chaos free for 90 days.</h2>
+          <p>90 days free, no credit card, no purchase required, and free setup during beta. Accepted restaurants help shape the product and receive 50% off the first location for the first paid year.</p>
+        </div>
+        <a class="button" href="beta.html">Apply Free</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
