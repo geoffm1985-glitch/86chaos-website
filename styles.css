@@ -7502,3 +7502,243 @@ details,
     letter-spacing: -.12em !important;
   }
 }
+
+/* V83: comparison chart fit + label readability + clickable poster columns */
+@media (min-width: 921px) {
+  .comparison-poster-shell {
+    max-width: min(1320px, calc(100vw - 28px)) !important;
+  }
+
+  .compare-section.compact-section,
+  .stack-cost-section,
+  .tier-compare-section,
+  section:has(.comparison-poster-shell) {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+  }
+
+  .comparison-poster-head {
+    padding: 6px 12px !important;
+  }
+
+  .comparison-poster-head .eyebrow {
+    font-size: .70rem !important;
+    line-height: 1 !important;
+  }
+
+  .comparison-poster-head h2 {
+    font-size: clamp(1rem, 1.35vw, 1.24rem) !important;
+    line-height: 1 !important;
+  }
+
+  .poster-intro {
+    padding: 5px 7px !important;
+    gap: 2px !important;
+  }
+
+  .poster-intro p {
+    font-size: .60rem !important;
+    line-height: 1.02 !important;
+    font-weight: 800 !important;
+  }
+
+  .poster-intro small {
+    font-size: .50rem !important;
+    line-height: 1 !important;
+  }
+
+  .poster-col {
+    min-height: 60px !important;
+    padding: 3px 4px !important;
+    gap: 0 !important;
+  }
+
+  .tier-comparison-poster .poster-col,
+  .comparison-poster-grid.tier-comparison-poster .poster-col {
+    min-height: 58px !important;
+    padding: 3px 4px !important;
+  }
+
+  .poster-col h3 {
+    font-size: .70rem !important;
+    line-height: .95 !important;
+  }
+
+  .poster-col p {
+    min-height: 1.08em !important;
+    padding-top: 1px !important;
+    font-size: .47rem !important;
+    line-height: .95 !important;
+  }
+
+  .poster-col small {
+    font-size: .38rem !important;
+    line-height: .95 !important;
+  }
+
+  .poster-row-label,
+  .poster-feature {
+    height: 27px !important;
+    min-height: 27px !important;
+    padding: 2px 6px !important;
+    font-size: .73rem !important;
+    line-height: .90 !important;
+    overflow: hidden !important;
+  }
+
+  .tier-comparison-poster .poster-row-label,
+  .tier-comparison-poster .poster-feature,
+  .comparison-poster-grid.tier-comparison-poster .poster-row-label,
+  .comparison-poster-grid.tier-comparison-poster .poster-feature {
+    height: 25px !important;
+    min-height: 25px !important;
+    padding: 2px 6px !important;
+    font-size: .70rem !important;
+    line-height: .88 !important;
+    overflow: hidden !important;
+  }
+
+  .poster-mark,
+  .poster-cell {
+    height: 27px !important;
+    min-height: 27px !important;
+    padding: 2px !important;
+  }
+
+  .tier-comparison-poster .poster-mark,
+  .tier-comparison-poster .poster-cell,
+  .comparison-poster-grid.tier-comparison-poster .poster-mark,
+  .comparison-poster-grid.tier-comparison-poster .poster-cell {
+    height: 25px !important;
+    min-height: 25px !important;
+  }
+
+  .poster-mark.text,
+  .poster-cell span {
+    font-size: .56rem !important;
+    line-height: .92 !important;
+  }
+
+  .comparison-poster-note {
+    padding: 4px 8px !important;
+    font-size: .56rem !important;
+    line-height: 1.06 !important;
+  }
+
+  .comparison-poster-foot,
+  .poster-legend {
+    padding: 4px 8px !important;
+    font-size: .55rem !important;
+    line-height: 1.08 !important;
+  }
+}
+
+@media (max-width: 920px) {
+  .app-comparison-poster .poster-intro p,
+  .tier-comparison-poster .poster-intro p,
+  .ai-comparison-poster .poster-intro p {
+    font-size: .46rem !important;
+    line-height: 1.03 !important;
+    font-weight: 780 !important;
+  }
+
+  .app-comparison-poster .poster-intro small,
+  .tier-comparison-poster .poster-intro small,
+  .ai-comparison-poster .poster-intro small {
+    font-size: .37rem !important;
+    line-height: 1.02 !important;
+  }
+
+  .app-comparison-poster .poster-row-label,
+  .tier-comparison-poster .poster-row-label,
+  .ai-comparison-poster .poster-row-label,
+  .app-comparison-poster .poster-feature,
+  .tier-comparison-poster .poster-feature,
+  .ai-comparison-poster .poster-feature {
+    height: 40px !important;
+    min-height: 40px !important;
+    padding: 4px 5px !important;
+    font-size: .60rem !important;
+    line-height: .98 !important;
+    overflow: hidden !important;
+  }
+
+  .app-comparison-poster .poster-mark,
+  .tier-comparison-poster .poster-mark,
+  .ai-comparison-poster .poster-mark,
+  .app-comparison-poster .poster-cell,
+  .tier-comparison-poster .poster-cell,
+  .ai-comparison-poster .poster-cell {
+    height: 40px !important;
+    min-height: 40px !important;
+  }
+
+  .app-comparison-poster .poster-mark.text,
+  .tier-comparison-poster .poster-mark.text,
+  .ai-comparison-poster .poster-mark.text,
+  .app-comparison-poster .poster-cell span,
+  .tier-comparison-poster .poster-cell span,
+  .ai-comparison-poster .poster-cell span {
+    font-size: .45rem !important;
+    line-height: 1 !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .app-comparison-poster .poster-intro p,
+  .tier-comparison-poster .poster-intro p,
+  .ai-comparison-poster .poster-intro p {
+    font-size: .42rem !important;
+  }
+
+  .app-comparison-poster .poster-row-label,
+  .tier-comparison-poster .poster-row-label,
+  .ai-comparison-poster .poster-row-label,
+  .app-comparison-poster .poster-feature,
+  .tier-comparison-poster .poster-feature,
+  .ai-comparison-poster .poster-feature {
+    font-size: .57rem !important;
+  }
+}
+
+.comparison-poster-grid[data-poster-column-selectable="true"] .poster-col,
+.comparison-poster-grid[data-poster-column-selectable="true"] .poster-mark,
+.comparison-poster-grid[data-poster-column-selectable="true"] .poster-cell {
+  cursor: pointer;
+  transition: opacity .16s ease, filter .16s ease, box-shadow .16s ease, background-color .16s ease;
+}
+
+.comparison-poster-grid[data-poster-column-selectable="true"] .poster-col:focus-visible {
+  outline: 3px solid rgba(231,186,145,.95);
+  outline-offset: -3px;
+}
+
+.comparison-poster-grid.has-poster-column-selection .is-poster-column-muted {
+  opacity: .40;
+  filter: saturate(.62);
+}
+
+.comparison-poster-grid.has-poster-column-selection .is-poster-column-selected {
+  opacity: 1;
+  filter: none;
+  box-shadow:
+    inset 2px 0 0 rgba(231,186,145,.92),
+    inset -2px 0 0 rgba(231,186,145,.70) !important;
+}
+
+.comparison-poster-grid.has-poster-column-selection .poster-col.is-poster-column-selected {
+  background: linear-gradient(180deg, #edc49c, #cf956f) !important;
+}
+
+.comparison-poster-grid.has-poster-column-selection .poster-mark.is-poster-column-selected,
+.comparison-poster-grid.has-poster-column-selection .poster-cell.is-poster-column-selected {
+  background: linear-gradient(180deg, rgba(231,186,145,.32), rgba(207,209,212,.86)) !important;
+}
+
+@media (hover: hover) {
+  .comparison-poster-grid[data-poster-column-selectable="true"] .poster-col:hover,
+  .comparison-poster-grid[data-poster-column-selectable="true"] .poster-mark:hover,
+  .comparison-poster-grid[data-poster-column-selectable="true"] .poster-cell:hover {
+    filter: brightness(1.04);
+  }
+}

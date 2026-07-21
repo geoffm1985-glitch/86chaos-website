@@ -532,3 +532,91 @@ comparisonTables.forEach((table, tableIndex) => {
   }
 })();
 
+
+// V83: clickable poster-style comparison columns.
+(function () {
+  function initPosterComparisonColumns() {
+    document.querySelectorAll(".comparison-poster-grid").forEach(function (chart) {
+      if (chart.dataset.posterColumnReady === "true") return;
+
+      var columns = Array.from(chart.querySelectorAll(":scope > .poster-col"));
+      if (columns.length < 2) return;
+
+      var cells = Array.from(chart.querySelectorAll(":scope > .poster-mark, :scope > .poster-cell"));
+      if (!cells.length) return;
+
+      chart.dataset.posterColumnSelectable = "true";
+      chart.dataset.posterColumnReady = "true";
+
+      function clearSelection() {
+        chart.classList.remove("has-poster-column-selection");
+        chart.removeAttribute("data-selected-poster-column");
+        columns.concat(cells).forEach(function (el) {
+          el.classList.remove("is-poster-column-selected", "is-poster-column-muted");
+        });
+        columns.forEach(function (col) {
+          col.setAttribute("aria-pressed", "false");
+        });
+      }
+
+      function selectColumn(index) {
+        var current = Number(chart.getAttribute("data-selected-poster-column") || 0);
+        var selected = index + 1;
+
+        if (current === selected) {
+          clearSelection();
+          return;
+        }
+
+        clearSelection();
+        chart.classList.add("has-poster-column-selection");
+        chart.setAttribute("data-selected-poster-column", String(selected));
+
+        columns.forEach(function (col, colIndex) {
+          col.classList.add(colIndex === index ? "is-poster-column-selected" : "is-poster-column-muted");
+          col.setAttribute("aria-pressed", colIndex === index ? "true" : "false");
+        });
+
+        cells.forEach(function (cell, cellIndex) {
+          var colIndex = cellIndex % columns.length;
+          cell.classList.add(colIndex === index ? "is-poster-column-selected" : "is-poster-column-muted");
+        });
+      }
+
+      columns.forEach(function (col, index) {
+        var name = (col.querySelector("h3")?.textContent || "column").replace(/\s+/g, " ").trim();
+        col.setAttribute("role", "button");
+        col.setAttribute("tabindex", "0");
+        col.setAttribute("aria-pressed", "false");
+        col.setAttribute("aria-label", "Highlight " + name + " column");
+        col.title = "Highlight " + name;
+
+        col.addEventListener("click", function () {
+          selectColumn(index);
+        });
+
+        col.addEventListener("keydown", function (event) {
+          if (event.key !== "Enter" && event.key !== " ") return;
+          event.preventDefault();
+          selectColumn(index);
+        });
+      });
+
+      cells.forEach(function (cell, cellIndex) {
+        var colIndex = cellIndex % columns.length;
+        var name = (columns[colIndex].querySelector("h3")?.textContent || "column").replace(/\s+/g, " ").trim();
+        cell.setAttribute("data-poster-column", String(colIndex + 1));
+        cell.title = "Highlight " + name;
+        cell.addEventListener("click", function () {
+          selectColumn(colIndex);
+        });
+      });
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initPosterComparisonColumns);
+  } else {
+    initPosterComparisonColumns();
+  }
+})();
