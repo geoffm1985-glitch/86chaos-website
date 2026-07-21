@@ -149,6 +149,30 @@ if (betaForm && formStatus) {
 }
 
 
+const roiMinutes = document.querySelector('[data-roi-minutes]');
+const roiRate = document.querySelector('[data-roi-rate]');
+const roiDays = document.querySelector('[data-roi-days]');
+const roiResult = document.querySelector('[data-roi-result]');
+
+function updateRoiCalculator() {
+  if (!roiMinutes || !roiRate || !roiDays || !roiResult) return;
+  const minutes = Math.max(0, Number(roiMinutes.value || 0));
+  const rate = Math.max(0, Number(roiRate.value || 0));
+  const days = Math.max(0, Number(roiDays.value || 0));
+  const savings = (minutes / 60) * rate * days;
+  roiResult.textContent = savings.toLocaleString(undefined, {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
+}
+
+[roiMinutes, roiRate, roiDays].forEach((input) => {
+  if (input) input.addEventListener('input', updateRoiCalculator);
+});
+updateRoiCalculator();
+
 // Interactive comparison tables: click any data column to bring it forward.
 const comparisonTables = document.querySelectorAll('.comparison-table');
 

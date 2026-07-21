@@ -267,16 +267,20 @@
         </div>
         <div class="roi-card calculator-card panel reveal delay-1" id="roi-calculator">
           <p class="eyebrow">Example time value</p>
-          <h3>One simple example, not an adjustable calculator.</h3>
-          <p>Here is a straightforward example of how a little saved manager time can add up before food-cost improvements are even counted.</p>
-          <div class="roi-example-list" aria-label="Example manager time value">
-            <div class="mini-row"><span>Minutes saved per day</span><strong>15</strong></div>
-            <div class="mini-row"><span>Manager hourly value</span><strong>$24</strong></div>
-            <div class="mini-row"><span>Days per month</span><strong>30</strong></div>
-          </div>
-          <div class="calc-result static-example">
+          <h3>Adjust the manager time math.</h3>
+          <p>Use the example inputs below to see how even a few saved minutes per day can add up before food-cost improvements.</p>
+          <label>Minutes saved per day
+            <input type="number" min="0" step="5" value="15" data-roi-minutes />
+          </label>
+          <label>Manager hourly value
+            <input type="number" min="0" step="1" value="24" data-roi-rate />
+          </label>
+          <label>Days per month
+            <input type="number" min="0" max="31" step="1" value="30" data-roi-days />
+          </label>
+          <div class="calc-result">
             <span>Estimated recovered manager time per month</span>
-            <strong>$180.00</strong>
+            <strong data-roi-result>$180.00</strong>
           </div>
           <small>Example only. 86 Chaos does not guarantee savings. Actual value depends on staffing, usage, menu, workflow, and manager review.</small>
           <div class="mini-row"><span>Smart Kitchen launch price</span><strong>$179/mo</strong></div>

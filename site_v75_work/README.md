@@ -249,9 +249,3 @@ Do not commit real keys. `BETA_FROM_EMAIL` must use a domain verified with the e
 - Compacted desktop-only chart geometry so comparison charts fit in one desktop viewport better.
 - Reduced desktop chart header height, row height, plan-card height, icon size, and legend spacing.
 - Left the mobile chart style readable and separate from desktop fitting rules.
-
-
-## V76 chart readability tweak
-- Increased desktop chart text slightly without increasing chart box dimensions.
-- Increased desktop comparison symbols slightly for better readability.
-- Preserved compact desktop chart geometry so the chart can still fit in one screen.
