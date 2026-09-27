@@ -3,8 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 const title = "Download 86 Chaos | Android Preview";
 const description = "Download the 86 Chaos Android preview or open the web app. iPhone and iPad distribution is coming through Apple-approved channels.";
-const apkUrl = "https://github.com/geoffm1985-glitch/86chaos/releases/download/mobile-v18.0.3-preview/86Chaos-18.0.3-android-preview.apk";
-const checksumUrl = "https://github.com/geoffm1985-glitch/86chaos/releases/download/mobile-v18.0.3-preview/86Chaos-18.0.3-android-preview.apk.sha256";
+const apkUrl = "/downloads/86Chaos-18.0.3-android-preview.apk";
+const checksumUrl = "/downloads/86Chaos-18.0.3-android-preview.apk.sha256";
 ---
 
 <BaseLayout
@@ -56,7 +56,7 @@ const checksumUrl = "https://github.com/geoffm1985-glitch/86chaos/releases/downl
             <div class="platform-icon" aria-hidden="true">🤖</div>
             <p class="eyebrow">Android</p>
             <h2>86 Chaos 18.0.3 Preview</h2>
-            <p>Download the signed preview APK directly to your Android phone.</p>
+            <p>Download the signed preview APK directly from 86chaos.com to your Android phone.</p>
             <div class="download-actions">
               <a class="button" href={apkUrl}>Download Android Preview 18.0.3</a>
               <a class="button ghost" href={checksumUrl}>SHA-256 checksum</a>

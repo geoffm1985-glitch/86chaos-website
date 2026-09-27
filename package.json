@@ -1,11 +1,11 @@
 {
   "name": "86chaos-marketing-astro",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "node scripts/fetch-android-preview.mjs && astro build",
     "preview": "astro preview"
   },
   "dependencies": {
