@@ -1,0 +1,104 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = "Download 86 Chaos | Android Preview";
+const description = "Download the 86 Chaos Android preview or open the web app. iPhone and iPad distribution is coming through Apple-approved channels.";
+const apkUrl = "https://github.com/geoffm1985-glitch/86chaos/releases/download/mobile-v18.0.3-preview/86Chaos-18.0.3-android-preview.apk";
+const checksumUrl = "https://github.com/geoffm1985-glitch/86chaos/releases/download/mobile-v18.0.3-preview/86Chaos-18.0.3-android-preview.apk.sha256";
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  page="download"
+  canonicalPath="/download"
+  ogTitle="Download 86 Chaos"
+  ogDescription="Download the 86 Chaos 18.0.3 Android preview."
+>
+  <Fragment slot="head">
+    <style is:inline>
+      .download-hero{padding:88px 0 40px;text-align:center}
+      .download-hero .hero-mark{width:min(320px,72vw);height:auto;margin:0 auto 26px;display:block}
+      .download-hero h1{max-width:900px;margin:0 auto 16px}
+      .download-hero>div>p{max-width:760px;margin-left:auto;margin-right:auto}
+      .download-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin-top:34px}
+      .download-card{padding:28px;border:1px solid rgba(255,255,255,.1);border-radius:22px;background:rgba(255,255,255,.035);text-align:left}
+      .download-card h2{margin:8px 0 10px}
+      .download-card p{margin:0 0 20px}
+      .platform-icon{font-size:2rem}
+      .download-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+      .button.disabled{opacity:.5;pointer-events:none;cursor:not-allowed}
+      .release-note,.install-box{margin-top:24px;padding:18px 20px;border-radius:16px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);text-align:left}
+      .release-note strong,.install-box strong{display:block;margin-bottom:6px}
+      .download-status{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.06);font-weight:700;margin-bottom:18px}
+      .download-status::before{content:"";width:8px;height:8px;border-radius:50%;background:#59c77a;box-shadow:0 0 14px rgba(89,199,122,.7)}
+      .web-access{margin-top:22px;text-align:center}
+      .platform-note{font-size:.92rem;opacity:.78;margin-top:14px!important}
+      .preview-warning{margin-top:14px!important;padding:12px 14px;border-left:3px solid #d69b5f;background:rgba(214,155,95,.08);border-radius:8px}
+      .install-steps{margin:12px 0 0;padding-left:20px}
+      .install-steps li{margin:8px 0;line-height:1.5}
+      .file-meta{font-size:.9rem;opacity:.76}
+      @media (max-width:760px){.download-grid{grid-template-columns:1fr}.download-hero{padding-top:58px}.download-card{padding:22px}}
+    </style>
+  </Fragment>
+
+  <main id="main">
+    <section class="download-hero">
+      <div class="container">
+        <img class="hero-mark" src="assets/logo-main.png" alt="86 Chaos" />
+        <div class="download-status">Android preview available now</div>
+        <p class="eyebrow">86 Chaos Mobile</p>
+        <h1>Install 86 Chaos on Android.</h1>
+        <p>The first downloadable native preview is ready. Version 18.0.3 uses the same Android/iPhone mobile foundation and has passed its targeted Android and iPhone browser checks.</p>
+
+        <div class="download-grid">
+          <article class="download-card">
+            <div class="platform-icon" aria-hidden="true">🤖</div>
+            <p class="eyebrow">Android</p>
+            <h2>86 Chaos 18.0.3 Preview</h2>
+            <p>Download the signed preview APK directly to your Android phone.</p>
+            <div class="download-actions">
+              <a class="button" href={apkUrl}>Download Android Preview 18.0.3</a>
+              <a class="button ghost" href={checksumUrl}>SHA-256 checksum</a>
+            </div>
+            <p class="file-meta">APK • approximately 17.7 MB</p>
+            <p class="preview-warning"><strong>Preview environment:</strong> This build connects to the 86 Chaos testing environment, not live production restaurant data.</p>
+          </article>
+
+          <article class="download-card">
+            <div class="platform-icon" aria-hidden="true">🍎</div>
+            <p class="eyebrow">iPhone & iPad</p>
+            <h2>iOS app</h2>
+            <p>The same 18.0.x mobile foundation supports iPhone and iPad, but Apple distribution still requires the TestFlight/App Store signing path.</p>
+            <div class="download-actions">
+              <span class="button disabled" aria-disabled="true">App Store coming soon</span>
+              <span class="button ghost disabled" aria-disabled="true">TestFlight coming soon</span>
+            </div>
+            <p class="platform-note">Android and iOS remain equal product targets. The iPhone download will appear here when the Apple-signed build is available.</p>
+          </article>
+        </div>
+
+        <div class="install-box">
+          <strong>Install on Android</strong>
+          <ol class="install-steps">
+            <li>Tap <b>Download Android Preview 18.0.3</b>.</li>
+            <li>Open the downloaded APK when Android finishes downloading it.</li>
+            <li>If Android asks, allow your browser or Files app to <b>install unknown apps / apps from this source</b>.</li>
+            <li>Tap <b>Install</b>, then open 86 Chaos from your normal app drawer.</li>
+          </ol>
+          <p class="platform-note">Only install the preview you downloaded from this 86 Chaos page. Android may perform its normal security scan before installation.</p>
+        </div>
+
+        <div class="release-note">
+          <strong>Targeted mobile tests passed.</strong>
+          The 18.0.3 targeted source tests, React build, Android/iOS Capacitor sync, Android Chromium checks, and iPhone WebKit checks passed before this APK was published. No full Release Gate was run for this mobile preview.
+        </div>
+
+        <div class="web-access">
+          <p>Prefer the browser version?</p>
+          <a class="button" href="https://app.86chaos.com/">Open the web app</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
