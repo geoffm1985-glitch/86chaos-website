@@ -2,8 +2,8 @@ import { createHash } from 'node:crypto';
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
-const releaseBase = 'https://github.com/geoffm1985-glitch/86chaos/releases/download/mobile-v18.0.3-preview';
-const apkName = '86Chaos-18.0.3-android-preview.apk';
+const releaseBase = 'https://github.com/geoffm1985-glitch/86chaos/releases/download/mobile-v18.0.6-preview';
+const apkName = '86Chaos-18.0.6-android-preview.apk';
 const checksumName = apkName + '.sha256';
 const outputDir = path.resolve('public', 'downloads');
 

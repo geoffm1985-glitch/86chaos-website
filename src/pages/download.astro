@@ -3,8 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 const title = "Download 86 Chaos | Android Preview";
 const description = "Download the 86 Chaos Android preview or open the web app. iPhone and iPad distribution is coming through Apple-approved channels.";
-const apkUrl = "/downloads/86Chaos-18.0.3-android-preview.apk";
-const checksumUrl = "/downloads/86Chaos-18.0.3-android-preview.apk.sha256";
+const apkUrl = "/downloads/86Chaos-18.0.6-android-preview.apk";
+const checksumUrl = "/downloads/86Chaos-18.0.6-android-preview.apk.sha256";
 ---
 
 <BaseLayout
@@ -13,7 +13,7 @@ const checksumUrl = "/downloads/86Chaos-18.0.3-android-preview.apk.sha256";
   page="download"
   canonicalPath="/download"
   ogTitle="Download 86 Chaos"
-  ogDescription="Download the 86 Chaos 18.0.3 Android preview."
+  ogDescription="Download the 86 Chaos 18.0.6 Android preview."
 >
   <Fragment slot="head">
     <style is:inline>
@@ -49,19 +49,19 @@ const checksumUrl = "/downloads/86Chaos-18.0.3-android-preview.apk.sha256";
         <div class="download-status">Android preview available now</div>
         <p class="eyebrow">86 Chaos Mobile</p>
         <h1>Install 86 Chaos on Android.</h1>
-        <p>The first downloadable native preview is ready. Version 18.0.3 uses the same Android/iPhone mobile foundation and has passed its targeted Android and iPhone browser checks.</p>
+        <p>Version 18.0.6 fixes Android status/navigation bar overlap and uses the 86 Chaos launcher icon. It has passed the targeted Android and iPhone mobile checks.</p>
 
         <div class="download-grid">
           <article class="download-card">
             <div class="platform-icon" aria-hidden="true">🤖</div>
             <p class="eyebrow">Android</p>
-            <h2>86 Chaos 18.0.3 Preview</h2>
+            <h2>86 Chaos 18.0.6 Preview</h2>
             <p>Download the signed preview APK directly from 86chaos.com to your Android phone.</p>
             <div class="download-actions">
-              <a class="button" href={apkUrl}>Download Android Preview 18.0.3</a>
+              <a class="button" href={apkUrl}>Download Android Preview 18.0.6</a>
               <a class="button ghost" href={checksumUrl}>SHA-256 checksum</a>
             </div>
-            <p class="file-meta">APK • approximately 17.7 MB</p>
+            <p class="file-meta">APK • approximately 17.9 MB</p>
             <p class="preview-warning"><strong>Preview environment:</strong> This build connects to the 86 Chaos testing environment, not live production restaurant data.</p>
           </article>
 
@@ -81,7 +81,7 @@ const checksumUrl = "/downloads/86Chaos-18.0.3-android-preview.apk.sha256";
         <div class="install-box">
           <strong>Install on Android</strong>
           <ol class="install-steps">
-            <li>Tap <b>Download Android Preview 18.0.3</b>.</li>
+            <li>Tap <b>Download Android Preview 18.0.6</b>.</li>
             <li>Open the downloaded APK when Android finishes downloading it.</li>
             <li>If Android asks, allow your browser or Files app to <b>install unknown apps / apps from this source</b>.</li>
             <li>Tap <b>Install</b>, then open 86 Chaos from your normal app drawer.</li>
@@ -91,7 +91,7 @@ const checksumUrl = "/downloads/86Chaos-18.0.3-android-preview.apk.sha256";
 
         <div class="release-note">
           <strong>Targeted mobile tests passed.</strong>
-          The 18.0.3 targeted source tests, React build, Android/iOS Capacitor sync, Android Chromium checks, and iPhone WebKit checks passed before this APK was published. No full Release Gate was run for this mobile preview.
+          The 18.0.6 targeted source tests, React build, Android/iOS Capacitor sync, Android Chromium checks, and iPhone WebKit checks passed before this APK was published. No full Release Gate was run for this mobile preview.
         </div>
 
         <div class="web-access">
