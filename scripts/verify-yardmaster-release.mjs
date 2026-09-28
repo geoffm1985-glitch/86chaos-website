@@ -9,6 +9,9 @@ const root=path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const release=JSON.parse(fs.readFileSync(path.join(root,'public/yardmaster/release.json'),'utf8'));
 const page=fs.readFileSync(path.join(root,'src/pages/yardmaster.astro'),'utf8');
 const vercel=JSON.parse(fs.readFileSync(path.join(root,'vercel.json'),'utf8'));
+const inlineScript=page.match(/<script is:inline>([\s\S]*?)<\/script>/)?.[1];
+assert.ok(inlineScript,'Yardmaster inline mobile script is missing');
+try{new Function(inlineScript)}catch(error){throw new Error('Yardmaster inline mobile JavaScript does not parse: '+error.message)}
 const archive=path.join(root,'public',release.downloadUrl.replace(/^\/yardmaster\//,'yardmaster/'));
 assert.equal(release.verified,true);
 assert.match(release.version,/^\d+\.\d+\.\d+$/);
