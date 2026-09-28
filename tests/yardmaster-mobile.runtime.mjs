@@ -41,10 +41,14 @@ for(const profile of profiles){
     });
 
     const scan=base+'/yardmaster?remote='+encodeURIComponent(remote)+'&code=482731';
+    const pageErrors=[];page.on('pageerror',error=>pageErrors.push(error.message));
     await page.goto(scan,{waitUntil:'domcontentloaded'});
     await page.waitForSelector('#overlay.show');
-
-    assert.equal(await page.locator('#url').inputValue(),remote,profile.name+' QR scan must fill Remote URL');
+    await page.waitForTimeout(350);
+    const scanDiag=await page.evaluate(()=>({href:location.href,search:location.search,hash:location.hash,url:document.querySelector('#url')?.value||'',code:document.querySelector('#code')?.value||'',bodyClass:document.body.className}));
+    console.log(profile.name+' QR diagnostics '+JSON.stringify({scanDiag,pageErrors}));
+    await page.waitForFunction(expected=>document.querySelector('#url')?.value===expected,remote,{timeout:3500}).catch(()=>{});
+    assert.equal(await page.locator('#url').inputValue(),remote,profile.name+' QR scan must fill Remote URL; '+JSON.stringify({scanDiag,pageErrors}));
     assert.equal(await page.locator('#code').inputValue(),'482731',profile.name+' QR scan must fill pairing code');
     assert.ok((await page.locator('body').getAttribute('class')||'').includes('ym-auth-pending'),profile.name+' must fail closed before auth');
     assert.equal(await page.locator('#mControlCard').evaluate(el=>getComputedStyle(el).visibility),'hidden',profile.name+' controls must be hidden before auth');
