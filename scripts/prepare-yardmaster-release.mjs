@@ -4,8 +4,8 @@ import crypto from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 
 const root=path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-const version='0.1.31';
-const sourceCommit='bfdefef99aea394cdc1418a139bfe5581ea8ef2d';
+const version='0.1.33';
+const sourceCommit='a10ed26e0f0525b2d1275081c480a34280992611';
 const sourceRoot=path.join(root,'release-src','yardmaster',version);
 const outDir=path.join(root,'public','yardmaster','releases');
 const outFile=path.join(outDir,`Yardmaster-Windows-${version}.zip`);
@@ -102,7 +102,9 @@ const release={
     manualProfileIsolation:'pass',
     mobileNewWork:'pass',
     automaticFailedTestRepair:'pass',
-    manualSelectedControls:'pass'
+    manualSelectedControls:'pass',
+    manualSlowControlWait:'pass',
+    chatSolReasoningMapping:'pass'
   },
   downloadUrl:`/yardmaster/releases/Yardmaster-Windows-${version}.zip`,
   sha256
