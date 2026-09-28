@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "node scripts/fetch-android-preview.mjs && astro build",
+    "build": "node scripts/prepare-yardmaster-release.mjs && node scripts/fetch-android-preview.mjs && astro build",
     "preview": "astro preview",
-    "test:yardmaster": "node scripts/verify-yardmaster-release.mjs"
+    "test:yardmaster": "node scripts/prepare-yardmaster-release.mjs && node scripts/verify-yardmaster-release.mjs"
   },
   "dependencies": {
     "astro": "^5.0.0",
