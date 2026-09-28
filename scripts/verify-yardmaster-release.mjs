@@ -34,3 +34,4 @@ assert.equal(redirect.destination,release.downloadUrl);
 const pkg=JSON.parse(spawnSync('unzip',['-p',archive,'package.json'],{encoding:'utf8'}).stdout);
 assert.equal(pkg.version,release.version);
 console.log('Yardmaster website release contract PASS:',release.version,sha);
+
