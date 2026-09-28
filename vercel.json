@@ -53,6 +53,23 @@
           "value": "no-store"
         }
       ]
+    },
+    {
+      "source": "/yardmaster/Install-Yardmaster.cmd",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        },
+        {
+          "key": "Content-Disposition",
+          "value": "attachment; filename=\"Install-Yardmaster.cmd\""
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
     }
   ]
 }
