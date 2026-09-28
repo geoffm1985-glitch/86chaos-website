@@ -1,0 +1,90 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {__testHooks} from '../automation/chatgpt.mjs';
+
+function selectorCdp({after={mode:'Work',model:'GPT-5.6 Sol',thinking:'High'},stuck=false,genericAfter=false,selectedOnReopen=false}={}){
+  const calls=[];const reads={mode:0,model:0,thinking:0};let pickCount=0,verifyCount=0;
+  return {
+    calls,reads,
+    async eval(expression){
+      calls.push(expression);
+      const match=expression.match(/YM_READ_CONTROL:(model|mode|thinking)/);
+      if(match){
+        const kind=match[1],read=reads[kind]++;
+        const before={mode:'Chat',model:'GPT-5.6 Terra',thinking:'Medium'}[kind];
+        let label=stuck||read===0?before:after[kind];
+        if(genericAfter&&read>0)label=kind==='model'?'Model':kind==='thinking'?'Thinking':'Mode';
+        return {label,fingerprint:{testid:'global-'+kind},score:18};
+      }
+      if(/YM_VERIFY_SELECTED_OPTION/.test(expression)){
+        verifyCount++;
+        return selectedOnReopen&&pickCount>0&&verifyCount>1;
+      }
+      if(/YM_PICK_OPTION/.test(expression)){pickCount++;return true}
+      if(/YM_OPEN_CONTROL/.test(expression)||/YM_CLOSE_CONTROL/.test(expression))return true;
+      return null;
+    }
+  };
+}
+
+test('ChatGPT mode, model, and thinking use real controls and verified read-back',async()=>{
+  const cdp=selectorCdp();const statuses=[];
+  const configured=await __testHooks.chooseModeAndModel(cdp,'Work','GPT-5.6 Sol',message=>statuses.push(message));
+  assert.equal(configured,true,statuses.join(' | ')+' | reads='+JSON.stringify(cdp.reads));
+  assert.equal(await __testHooks.chooseThinkingEffort(cdp,'High',message=>statuses.push(message)),true);
+  const markers=cdp.calls.map(value=>(value.match(/YM_(?:READ|OPEN|PICK|CLOSE)_CONTROL(?::(model|mode|thinking))?/)||[])[0]).filter(Boolean);
+  assert.ok(markers.some(value=>value.includes('READ_CONTROL:mode')));
+  assert.ok(markers.some(value=>value.includes('READ_CONTROL:model')));
+  assert.ok(markers.some(value=>value.includes('READ_CONTROL:thinking')));
+  assert.ok(statuses.includes('Verified ChatGPT mode: Work'));
+  assert.ok(statuses.includes('Verified ChatGPT model: GPT-5.6 Sol'));
+  assert.ok(statuses.includes('Verified ChatGPT thinking effort: High'));
+});
+
+test('generic ChatGPT model button can be verified from the checked menu option',async()=>{
+  const cdp=selectorCdp({genericAfter:true,selectedOnReopen:true});const statuses=[];
+  assert.equal(await __testHooks.chooseModeAndModel(cdp,'Work','GPT-5.6 Sol',message=>statuses.push(message)),true);
+  assert.ok(cdp.calls.some(x=>/YM_VERIFY_SELECTED_OPTION/.test(x)));
+  assert.ok(statuses.includes('Verified ChatGPT model: GPT-5.6 Sol'));
+});
+
+test('ChatGPT selector fails closed when neither the control nor checked menu option confirms the request',async()=>{
+  const cdp=selectorCdp({stuck:true});const statuses=[];
+  assert.equal(await __testHooks.chooseThinkingEffort(cdp,'High',message=>statuses.push(message)),false);
+  assert.match(statuses.at(-1),/could not verify/i);
+});
+
+test('ChatGPT selector rejects unrelated visible text when no conversation control is found',async()=>{
+  const cdp={eval:async expression=>/YM_READ_CONTROL/.test(expression)?null:false};
+  assert.equal(await __testHooks.chooseModeAndModel(cdp,'Work','GPT-5.6 Sol'),false);
+});
+
+test('usage-limit detection captures reset detail without buying usage',async()=>{
+  const cdp={eval:async()=>"You've reached the Work usage limit. Your access resets at 3:00 PM."};
+  const result=await __testHooks.usageLimitInfo(cdp);
+  assert.equal(result.limited,true);
+  assert.match(result.detail,/resets at 3:00 PM/i);
+});
+
+test('manual Open ChatGPT starts a clean chat without preparing or sending a Yardmaster handoff',async()=>{
+  const calls=[];let cleared=false;
+  const cdp={
+    async send(method,params){
+      calls.push({kind:'send',method,params});
+      if(method==='Input.dispatchKeyEvent'&&params.key==='Backspace'&&params.type==='keyUp')cleared=true;
+      return {};
+    },
+    async eval(expression){
+      calls.push({kind:'eval',expression});
+      if(expression.includes('YM_MANUAL_CHAT_FOCUS'))return true;
+      if(expression.includes('YM_MANUAL_CHAT_EMPTY'))return cleared;
+      if(expression.includes('document.querySelector'))return {tag:'TEXTAREA',id:'prompt-textarea',editable:null};
+      return null;
+    }
+  };
+  assert.equal(await __testHooks.prepareManualChat(cdp),true);
+  assert.ok(calls.some(c=>c.kind==='send'&&c.method==='Page.navigate'&&c.params.url==='https://chatgpt.com/'));
+  assert.ok(calls.some(c=>c.kind==='eval'&&c.expression.includes('YM_MANUAL_CHAT_EMPTY')));
+  assert.equal(calls.some(c=>c.kind==='eval'&&/YM_VERIFY_ATTACHMENT|YM_VERIFY_PROMPT_SENT|YM_TRUSTED_FILL_PROMPT/.test(c.expression)),false,'manual open must not prepare an automated handoff');
+});
+
