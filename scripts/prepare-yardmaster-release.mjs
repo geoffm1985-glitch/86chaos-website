@@ -4,12 +4,15 @@ import crypto from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 
 const root=path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-const version='0.1.37';
-const sourceCommit='c7606e125bb1cbd808f32298c1e2c60cf5301212';
+const version='0.1.38';
+const sourceCommit='f3fbf5fec19613c864b8b3836e0c0467efed40a7';
 const sourceRoot=path.join(root,'release-src','yardmaster',version);
 const outDir=path.join(root,'public','yardmaster','releases');
 const outFile=path.join(outDir,`Yardmaster-Windows-${version}.zip`);
 const releaseFile=path.join(root,'public','yardmaster','release.json');
+const sharedFiles=new Map([
+  ['public/yardmaster-icon.ico',path.join(root,'release-src','yardmaster','0.1.37','public','yardmaster-icon.ico')]
+]);
 
 function filesRecursive(dir,base=dir){
   return fs.readdirSync(dir,{withFileTypes:true}).flatMap(entry=>{
@@ -63,14 +66,15 @@ function endRecord(count,centralSize,centralOffset){
 }
 
 if(!fs.existsSync(sourceRoot)) throw new Error('Yardmaster release source is missing: '+sourceRoot);
-const names=filesRecursive(sourceRoot);
+const names=[...new Set([...filesRecursive(sourceRoot),...sharedFiles.keys()])].sort();
 if(!names.length) throw new Error('Yardmaster release source is empty.');
 
 const local=[],central=[];
 let offset=0;
 const {time,date}=dosDateTime();
 for(const name of names){
-  const data=fs.readFileSync(path.join(sourceRoot,...name.split('/')));
+  const sourceFile=sharedFiles.get(name)||path.join(sourceRoot,...name.split('/'));
+  const data=fs.readFileSync(sourceFile);
   const crc=crc32(data);
   const l=localHeader(name,data,crc,time,date);
   local.push(l);
@@ -97,6 +101,7 @@ const release={
     mobileRemoteSmoke:'pass',
     installerHangRegression:'pass',
     chatgptHandoffRegression:'pass',
+    combinedZipPromptSendHandoff:'pass',
     mobileConsole:'pass',
     manualOpenDraftRegression:'pass',
     manualProfileIsolation:'pass',
