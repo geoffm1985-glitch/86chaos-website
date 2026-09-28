@@ -1,0 +1,78 @@
+name: Publish Yardmaster 0.1.11
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  publish:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Download verified Yardmaster artifact
+        env:
+          ARTIFACT_URL: "https://sdmntpreastus2.oaiusercontent.com/files/00000000-6be4-81f6-9be5-ad8a9750bf58/raw?se=2026-09-28T09%3A25%3A14Z&sp=r&sv=2026-02-06&sr=b&scid=59446576-faf1-5c4e-bff5-b1fa5db68a9c&skoid=a1be202a-6464-476c-a496-723317c4a4db&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-09-28T06%3A34%3A33Z&ske=2026-09-29T06%3A34%3A33Z&sks=b&skv=2026-02-06&sig=SZutOiNKTu9goNFqk/cCUiBFXjYZhyS3%2Bx27C5C8yTo%3D"
+        run: |
+          curl --fail --location --retry 3 "$ARTIFACT_URL" -o /tmp/yardmaster-artifact.zip
+          python - <<'PY'
+          import zipfile, pathlib, hashlib
+          outer=zipfile.ZipFile('/tmp/yardmaster-artifact.zip')
+          name='Yardmaster-Windows-0.1.11.zip'
+          data=outer.read(name)
+          sha=hashlib.sha256(data).hexdigest()
+          expected='4e9104eed52efd58a78021ad205516a1faf32c51eeb7f90adde5b916a1c0067b'
+          if sha != expected: raise SystemExit(f'checksum mismatch: {sha}')
+          out=pathlib.Path('public/yardmaster/releases')/name
+          out.parent.mkdir(parents=True,exist_ok=True)
+          out.write_bytes(data)
+          print('verified',name,len(data),sha)
+          PY
+      - name: Update release metadata and PWA cache
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          fs.writeFileSync('public/yardmaster/release.json',JSON.stringify({
+            product:'Yardmaster',
+            version:'0.1.11',
+            releaseDate:'2026-09-28',
+            verified:true,
+            verification:{
+              pcTargeted:'pass',
+              mobileRemoteTargeted:'pass',
+              installerUpdate:'pass',
+              chatgptHandoff:'pass',
+              newWorkAutomation:'pass',
+              liveCloudflareRemote:'pass',
+              mobileAuthFailClosed:'pass',
+              qrHostHandoff:'pass'
+            },
+            downloadUrl:'/yardmaster/releases/Yardmaster-Windows-0.1.11.zip',
+            sha256:'4e9104eed52efd58a78021ad205516a1faf32c51eeb7f90adde5b916a1c0067b'
+          },null,2)+'\n');
+          let page=fs.readFileSync('src/pages/yardmaster.astro','utf8');
+          page=page.replace(/Verified Yardmaster 0\.1\.10/g,'Verified Yardmaster 0.1.11');
+          fs.writeFileSync('src/pages/yardmaster.astro',page);
+          let sw=fs.readFileSync('public/yardmaster/sw.js','utf8');
+          sw=sw.replace(/yardmaster-pwa-v0\.1\.10/g,'yardmaster-pwa-v0.1.11');
+          fs.writeFileSync('public/yardmaster/sw.js',sw);
+          let v=fs.readFileSync('vercel.json','utf8');
+          v=v.replaceAll('Yardmaster-Windows-0.1.10.zip','Yardmaster-Windows-0.1.11.zip');
+          fs.writeFileSync('vercel.json',v);
+          NODE
+      - name: Targeted website verification
+        run: |
+          npm ci --no-audit --no-fund
+          npm run test:yardmaster
+          npx astro build
+      - name: Publish verified release
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/publish-yardmaster-0.1.11.yml
+          git add public/yardmaster/releases/Yardmaster-Windows-0.1.11.zip public/yardmaster/release.json public/yardmaster/sw.js src/pages/yardmaster.astro scripts/verify-yardmaster-release.mjs vercel.json
+          git commit -m "Publish verified Yardmaster 0.1.11"
+          git push origin HEAD:main
