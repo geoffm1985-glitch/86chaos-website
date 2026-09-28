@@ -1,8 +1,8 @@
 {
   "product": "Yardmaster",
-  "version": "0.1.13",
+  "version": "0.1.18",
   "releaseDate": "2026-09-28",
-  "sourceCommit": "736956aff664132ea8fa689161ed1509f01fc534",
+  "sourceCommit": "b4eb67b8921aed0a11400f35221ed72494993210",
   "verified": true,
   "verification": {
     "fullStore": "not-run",
@@ -11,6 +11,6 @@
     "mobileRemoteSmoke": "pass",
     "installerHangRegression": "pass"
   },
-  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.13.zip",
-  "sha256": "6e5dc447a5ca3fc7d7c886fcdc47ea794344c4a35986299ee7a478e79c9b1beb"
+  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.18.zip",
+  "sha256": "6979da3bab1e033fed06a255cf88ff69ff9cfd93d96fbbc7dbf46eb8bcff2354"
 }
