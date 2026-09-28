@@ -1,6 +1,6 @@
 {
   "product": "Yardmaster",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "releaseDate": "2026-09-28",
   "verified": true,
   "verification": {
@@ -11,8 +11,8 @@
     "newWorkAutomation": "pass",
     "liveCloudflareRemote": "pass",
     "mobileAuthFailClosed": "pass",
-    "qrTunnelAndCodeHandoff": "pass"
+    "qrHostHandoff": "pass"
   },
-  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.10.zip",
-  "sha256": "434165c1e975cb67b03015d0f647b8086fec7dab786b248664aef79a25a097f9"
+  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.11.zip",
+  "sha256": "4e9104eed52efd58a78021ad205516a1faf32c51eeb7f90adde5b916a1c0067b"
 }
