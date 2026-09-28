@@ -1,0 +1,38 @@
+name: Yardmaster Mobile Testing
+on:
+  push:
+    branches: [yardmaster-testing]
+  pull_request:
+    branches: [yardmaster-testing]
+jobs:
+  mobile-runtime:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Install website dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Static Yardmaster PWA verification
+        run: npm run test:yardmaster
+      - name: Build website
+        run: npm run build
+      - name: Install browser engines for Android and iPhone emulation
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps chromium webkit
+      - name: Start preview server
+        run: |
+          nohup npm run preview -- --host 127.0.0.1 --port 4321 > /tmp/yardmaster-preview.log 2>&1 &
+          for i in {1..60}; do
+            if curl --fail --silent http://127.0.0.1:4321/yardmaster >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/yardmaster-preview.log
+          exit 1
+      - name: Android Chrome + iPhone Safari runtime gate
+        env:
+          YARDMASTER_PWA_BASE: http://127.0.0.1:4321
+        run: node tests/yardmaster-mobile.runtime.mjs
