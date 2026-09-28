@@ -5,7 +5,7 @@
   "redirects": [
     {
       "source": "/yardmaster/download",
-      "destination": "/yardmaster/releases/Yardmaster-Windows-0.1.33.zip",
+      "destination": "/yardmaster/releases/Yardmaster-Windows-0.1.36.zip",
       "permanent": false
     }
   ],
@@ -24,7 +24,7 @@
       ]
     },
     {
-      "source": "/yardmaster/releases/Yardmaster-Windows-0.1.33.zip",
+      "source": "/yardmaster/releases/Yardmaster-Windows-0.1.36.zip",
       "headers": [
         {
           "key": "Content-Type",
@@ -32,7 +32,7 @@
         },
         {
           "key": "Content-Disposition",
-          "value": "attachment; filename=\"Yardmaster-Windows-0.1.33.zip\""
+          "value": "attachment; filename=\"Yardmaster-Windows-0.1.36.zip\""
         },
         {
           "key": "Cache-Control",
