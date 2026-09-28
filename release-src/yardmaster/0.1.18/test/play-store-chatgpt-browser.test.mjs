@@ -1,0 +1,68 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import {spawn} from 'node:child_process';
+import {__testHooks} from '../automation/chatgpt.mjs';
+
+const delay=ms=>new Promise(r=>setTimeout(r,ms));
+function edgePath(){
+  const candidates=[
+    process.env['PROGRAMFILES(X86)']&&path.join(process.env['PROGRAMFILES(X86)'],'Microsoft','Edge','Application','msedge.exe'),
+    process.env.PROGRAMFILES&&path.join(process.env.PROGRAMFILES,'Microsoft','Edge','Application','msedge.exe'),
+    process.env.LOCALAPPDATA&&path.join(process.env.LOCALAPPDATA,'Microsoft','Edge','Application','msedge.exe')
+  ].filter(Boolean);
+  return candidates.find(fs.existsSync);
+}
+async function waitJson(url,timeout=20000){
+  const deadline=Date.now()+timeout;
+  while(Date.now()<deadline){try{const r=await fetch(url);if(r.ok)return await r.json()}catch{} await delay(200)}
+  throw new Error('Timed out waiting for Edge DevTools fixture.');
+}
+class FixtureCdp{
+  constructor(url){this.url=url;this.ws=null;this.id=0;this.pending=new Map()}
+  async connect(){
+    this.ws=new WebSocket(this.url);
+    await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(new Error('fixture websocket timeout')),10000);this.ws.addEventListener('open',()=>{clearTimeout(timer);resolve()},{once:true});this.ws.addEventListener('error',reject,{once:true})});
+    this.ws.addEventListener('message',event=>{const msg=JSON.parse(event.data);const p=this.pending.get(msg.id);if(!p)return;this.pending.delete(msg.id);clearTimeout(p.timer);if(msg.error)p.reject(new Error(msg.error.message));else p.resolve(msg.result)});
+  }
+  send(method,params={},timeout=10000){const id=++this.id;return new Promise((resolve,reject)=>{const timer=setTimeout(()=>{this.pending.delete(id);reject(new Error('CDP timeout '+method))},timeout);this.pending.set(id,{resolve,reject,timer});this.ws.send(JSON.stringify({id,method,params}))})}
+  async eval(expression,timeout=10000){const r=await this.send('Runtime.evaluate',{expression,returnByValue:true,awaitPromise:true,userGesture:true},timeout);if(r.exceptionDetails)throw new Error(r.exceptionDetails.text||'fixture eval failed');return r.result?.value}
+  close(){try{this.ws?.close()}catch{}}
+}
+
+test('Play Store browser reproduces filled-but-unsent and requires trusted send',{skip:process.platform!=='win32'},async()=>{
+  const edge=edgePath();
+  assert.ok(edge,'Microsoft Edge must be available on the Windows Store runner.');
+  const temp=fs.mkdtempSync(path.join(os.tmpdir(),'yardmaster-send-fixture-'));
+  const port=9333+Math.floor(Math.random()*300);
+  const html=[
+    '<!doctype html><meta charset="utf-8">',
+    '<form id="composer-form"><textarea id="prompt-textarea"></textarea><button data-testid="send-button" aria-label="Send" type="button">Send</button></form>',
+    '<div id="messages"></div>',
+    '<script>',
+    'const input=document.querySelector("#prompt-textarea");',
+    'const send=document.querySelector("[data-testid=send-button]");',
+    'const commit=event=>{if(!event.isTrusted)return;const value=input.value||input.innerText||"";if(!value.trim())return;const message=document.createElement("div");message.dataset.messageAuthorRole="user";message.textContent=value;document.querySelector("#messages").append(message);input.value="";input.dispatchEvent(new Event("input",{bubbles:true}))};',
+    'send.addEventListener("click",commit);',
+    'input.addEventListener("keydown",event=>{if(event.key==="Enter"&&!event.shiftKey){event.preventDefault();commit(event)}});',
+    '</script>'
+  ].join('');
+  const file=path.join(temp,'fixture.html');fs.writeFileSync(file,html);
+  const child=spawn(edge,['--headless=new','--disable-gpu','--no-first-run','--remote-debugging-address=127.0.0.1','--remote-debugging-port='+port,'--user-data-dir='+path.join(temp,'profile'),'file:///'+file.replace(/\\/g,'/')],{stdio:'ignore',windowsHide:true});
+  let cdp;
+  try{
+    const targets=await waitJson('http://127.0.0.1:'+port+'/json/list');
+    const page=targets.find(t=>t.type==='page'&&t.webSocketDebuggerUrl);assert.ok(page,'Edge fixture page target was not found.');
+    cdp=new FixtureCdp(page.webSocketDebuggerUrl);await cdp.connect();
+    const readyDeadline=Date.now()+5000;let fixtureReady=false;
+    while(Date.now()<readyDeadline){fixtureReady=await cdp.eval('document.readyState==="complete"&&!!document.querySelector("#prompt-textarea")&&!!document.querySelector("[data-testid=\\\"send-button\\\"]")').catch(()=>false);if(fixtureReady)break;await delay(100)}
+    assert.equal(fixtureReady,true,'Edge fixture composer did not become ready.');
+    const synthetic=await cdp.eval('(()=>{const e=document.querySelector("#prompt-textarea");e.value="SYNTHETIC MUST NOT SEND";e.dispatchEvent(new Event("input",{bubbles:true}));document.querySelector("[data-testid=\\\"send-button\\\"]").click();return document.querySelectorAll("[data-message-author-role=\\\"user\\\"]").length})()');
+    assert.equal(synthetic,0,'fixture must reject synthetic HTMLElement.click(), reproducing the live failure mode');
+    await __testHooks.sendPrompt(cdp,'YARDMASTER PLAY STORE TRUSTED SEND',null,{sendTimeoutMs:5000,confirmMs:800});
+    const messages=await cdp.eval('[...document.querySelectorAll("[data-message-author-role=\\\"user\\\"]")].map(x=>x.innerText||x.textContent)');
+    assert.deepEqual(messages,['YARDMASTER PLAY STORE TRUSTED SEND']);
+  }finally{cdp?.close();try{child.kill()}catch{}await delay(500);try{fs.rmSync(temp,{recursive:true,force:true,maxRetries:5,retryDelay:250})}catch{/* ephemeral GitHub runner will clean any still-locked Edge profile */}}
+});
