@@ -1,16 +1,18 @@
 {
   "product": "Yardmaster",
-  "version": "0.1.21",
+  "version": "0.1.23",
   "releaseDate": "2026-09-28",
-  "sourceCommit": "704c868daa54db0c80fdb332bebec5b9fc84b0cc",
+  "sourceCommit": "0595a9eaf43c218cd2038f69418fa7937346d11e",
   "verified": true,
   "verification": {
-    "fullStore": "pass",
+    "fullStore": "not-run",
     "targetedGate": "pass",
     "pcInstallLaunchUpdateUninstall": "pass",
     "mobileRemoteSmoke": "pass",
-    "chatgptHandoffSendAttachmentRegression": "pass"
+    "installerHangRegression": "pass",
+    "chatgptHandoffRegression": "pass",
+    "mobileConsole": "pass"
   },
-  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.21.zip",
-  "sha256": "05eda982c63660d0db35ae2c9b907ff7450fd0d8d7d111d559d3e142efd2bf95"
+  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.23.zip",
+  "sha256": "b805004ef12406ca5d6fab2e1f95008aa548fa7357ba81d3a358ec53156d0ee2"
 }

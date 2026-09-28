@@ -91,11 +91,13 @@ const release={
   sourceCommit,
   verified:true,
   verification:{
-    fullStore:'pass',
+    fullStore:'not-run',
     targetedGate:'pass',
     pcInstallLaunchUpdateUninstall:'pass',
     mobileRemoteSmoke:'pass',
-    installerHangRegression:'pass'
+    installerHangRegression:'pass',
+    chatgptHandoffRegression:'pass',
+    mobileConsole:'pass'
   },
   downloadUrl:`/yardmaster/releases/Yardmaster-Windows-${version}.zip`,
   sha256
