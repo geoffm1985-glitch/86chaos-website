@@ -1,12 +1,13 @@
 {
   "name": "86chaos-marketing-astro",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "astro dev",
     "build": "node scripts/fetch-android-preview.mjs && astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "test:yardmaster": "node scripts/verify-yardmaster-release.mjs"
   },
   "dependencies": {
     "astro": "^5.0.0",

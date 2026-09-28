@@ -1,0 +1,15 @@
+{
+  "product": "Yardmaster",
+  "version": "0.1.7",
+  "releaseDate": "2026-09-28",
+  "verified": true,
+  "verification": {
+    "pcTargeted": "pass",
+    "mobileRemoteTargeted": "pass",
+    "installerUpdate": "pass",
+    "chatgptHandoff": "pass",
+    "newWorkAutomation": "pass"
+  },
+  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.7.zip",
+  "sha256": "eb2215f609582e69a01ce495e1b4d3a749b83ce8a6342c13317b16b1b5a11004"
+}
