@@ -1,0 +1,101 @@
+name: Publish verified Yardmaster 0.1.12
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  publish:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Download exact verified 0.1.12 artifact
+        env:
+          ARTIFACT_URL: "https://sdmntpreastus2.oaiusercontent.com/files/00000000-c5a0-81f6-997a-644c86b17c7f/raw?se=2026-09-28T17%3A00%3A27Z&sp=r&sv=2026-02-06&sr=b&scid=0290e20a-b074-5c7c-a206-97633b441690&skoid=a1be202a-6464-476c-a496-723317c4a4db&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-09-28T12%3A04%3A24Z&ske=2026-09-29T12%3A04%3A24Z&sks=b&skv=2026-02-06&sig=dKZ29FXb37zmvQQm2cZ%2BfMALysXVJhWVljY6aGfSyQ8%3D"
+        run: |
+          curl --fail --location --retry 3 "$ARTIFACT_URL" -o /tmp/yardmaster-artifact.zip
+          python - <<'PY'
+          import zipfile, pathlib, hashlib, json
+          outer=zipfile.ZipFile('/tmp/yardmaster-artifact.zip')
+          name='Yardmaster-Windows-0.1.12.zip'
+          data=outer.read(name)
+          sha=hashlib.sha256(data).hexdigest()
+          expected='035695d6ff9f55b6b1d0acf0d67de1b37f52a4716d38318adc7d965ce98f96b4'
+          if sha != expected:
+              raise SystemExit(f'checksum mismatch: {sha}')
+          inner=zipfile.ZipFile(__import__('io').BytesIO(data))
+          pkg=json.loads(inner.read('package.json'))
+          if pkg.get('version')!='0.1.12':
+              raise SystemExit(f'wrong installer version: {pkg.get("version")}')
+          out=pathlib.Path('public/yardmaster/releases')/name
+          out.parent.mkdir(parents=True,exist_ok=True)
+          out.write_bytes(data)
+          print('verified',name,len(data),sha,pkg['version'])
+          PY
+      - name: Point Yardmaster website at 0.1.12
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const release={
+            product:'Yardmaster',
+            version:'0.1.12',
+            releaseDate:'2026-09-28',
+            verified:true,
+            verification:{
+              fullStore:'pass',
+              deltaGate:'pass',
+              pcTargeted:'pass',
+              mobileRemoteTargeted:'pass',
+              androidChrome:'pass',
+              iPhoneSafari:'pass',
+              installerUpdate:'pass',
+              chatgptTrustedSend:'pass',
+              newWorkAutomation:'pass',
+              liveCloudflareRemote:'pass',
+              mobileAuthFailClosed:'pass',
+              qrDirectRemoteUrl:'pass'
+            },
+            downloadUrl:'/yardmaster/releases/Yardmaster-Windows-0.1.12.zip',
+            sha256:'035695d6ff9f55b6b1d0acf0d67de1b37f52a4716d38318adc7d965ce98f96b4'
+          };
+          fs.writeFileSync('public/yardmaster/release.json',JSON.stringify(release,null,2)+'\n');
+
+          let page=fs.readFileSync('src/pages/yardmaster.astro','utf8');
+          page=page.replace(/Verified Yardmaster 0\.1\.11/g,'Verified Yardmaster 0.1.12');
+          fs.writeFileSync('src/pages/yardmaster.astro',page);
+
+          let sw=fs.readFileSync('public/yardmaster/sw.js','utf8');
+          sw=sw.replace(/yardmaster-pwa-v0\.1\.11/g,'yardmaster-pwa-v0.1.12');
+          fs.writeFileSync('public/yardmaster/sw.js',sw);
+
+          const vercel=JSON.parse(fs.readFileSync('vercel.json','utf8'));
+          const redirect=vercel.redirects.find(x=>x.source==='/yardmaster/download');
+          redirect.destination='/yardmaster/releases/Yardmaster-Windows-0.1.12.zip';
+          for(const h of vercel.headers||[]){
+            if(h.source==='/yardmaster/releases/Yardmaster-Windows-0.1.11.zip'){
+              h.source='/yardmaster/releases/Yardmaster-Windows-0.1.12.zip';
+              for(const item of h.headers||[]){
+                if(item.key==='Content-Disposition')item.value='attachment; filename="Yardmaster-Windows-0.1.12.zip"';
+              }
+            }
+          }
+          fs.writeFileSync('vercel.json',JSON.stringify(vercel,null,2)+'\n');
+          NODE
+      - name: Verify published installer and website contract
+        run: |
+          npm ci --no-audit --no-fund
+          npm run test:yardmaster
+          npx astro build
+      - name: Publish exact verified 0.1.12 build
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/publish-yardmaster-0.1.12.yml
+          git add public/yardmaster/releases/Yardmaster-Windows-0.1.12.zip public/yardmaster/release.json public/yardmaster/sw.js src/pages/yardmaster.astro vercel.json
+          git commit -m "Publish verified Yardmaster 0.1.12 installer"
+          git push origin HEAD:main
