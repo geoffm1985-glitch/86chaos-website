@@ -71,7 +71,7 @@ test('PC operator and authenticated mobile remote survive restart and enforce co
   let operator=startOperator(env);
   try{
     let status=await poll(async()=>{const response=await request('/api/status');return response.ok?response.json():null});
-    assert.equal(status.version,'0.1.13');
+    assert.equal(status.version,'0.1.18');
     assert.equal(status.config.repoUpdateMode,'automatic','old Ask Me default migrates to Automatic');
     assert.equal(status.config.automationDefaultsVersion,2);
     assert.equal(status.config.maxRepairAttempts,25);

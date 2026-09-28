@@ -9,7 +9,10 @@ if(-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrat
   if($NoLaunch){$args += '-NoLaunch'}
   try{
     $p=Start-Process -FilePath 'powershell.exe' -Verb RunAs -ArgumentList $args -PassThru -Wait
-    exit $p.ExitCode
+    $p.WaitForExit()
+    $p.Refresh()
+    if($null -eq $p.ExitCode){throw 'Elevated installer completed without reporting an exit code.'}
+    exit ([int]$p.ExitCode)
   }catch{
     throw 'Administrator permission was declined or the elevated installer could not start.'
   }
@@ -17,20 +20,6 @@ if(-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrat
 $Source=Split-Path -Parent $PSScriptRoot
 $InstallRoot=Join-Path $env:LOCALAPPDATA 'Yardmaster\app'
 
-function Invoke-YardmasterProcess {
-  param(
-    [Parameter(Mandatory=$true)][string]$FilePath,
-    [string[]]$ArgumentList=@(),
-    [int]$TimeoutSeconds=180,
-    [string]$Description='process'
-  )
-  $process=Start-Process -FilePath $FilePath -ArgumentList $ArgumentList -NoNewWindow -PassThru
-  if(-not $process.WaitForExit($TimeoutSeconds*1000)){
-    try { & taskkill.exe /PID $process.Id /T /F | Out-Null } catch {}
-    throw "$Description timed out after $TimeoutSeconds seconds."
-  }
-  if($process.ExitCode -ne 0){throw "$Description failed with exit code $($process.ExitCode)."}
-}
 Write-Host 'Installing Yardmaster...' -ForegroundColor Cyan
 $node=(Get-Command node.exe -ErrorAction SilentlyContinue)
 if(-not $node){throw 'Node.js 22 or newer is required.'}
@@ -58,13 +47,19 @@ if(-not $npm){throw 'npm.cmd was not found even though Node.js is installed.'}
 Write-Host 'Installing Yardmaster runtime...' -ForegroundColor Cyan
 Push-Location $InstallRoot
 try {
-  Invoke-YardmasterProcess -FilePath $npm.Source -ArgumentList @('install','--omit=dev','--no-audit','--no-fund') -TimeoutSeconds 300 -Description 'Yardmaster npm runtime install'
+  & $npm.Source install --omit=dev --no-audit --no-fund
+  $npmExitCode=$LASTEXITCODE
+  if($null -eq $npmExitCode){throw 'Yardmaster npm runtime install did not report an exit code.'}
+  if([int]$npmExitCode -ne 0){throw "Yardmaster npm runtime install failed with exit code $npmExitCode."}
   Write-Host 'Checking Electron desktop runtime...' -ForegroundColor Cyan
   if(-not(Test-Path $electron)){
     if(-not(Test-Path $electronInstallJs)){throw 'Electron package is present without its install.js repair helper.'}
     Write-Host 'Repairing Electron desktop runtime...' -ForegroundColor Cyan
     $nodeExe=(Get-Command node.exe -ErrorAction Stop).Source
-    Invoke-YardmasterProcess -FilePath $nodeExe -ArgumentList @(('"'+$electronInstallJs+'"')) -TimeoutSeconds 300 -Description 'Electron runtime repair'
+    & $nodeExe $electronInstallJs
+    $electronExitCode=$LASTEXITCODE
+    if($null -eq $electronExitCode){throw 'Electron runtime repair did not report an exit code.'}
+    if([int]$electronExitCode -ne 0){throw "Electron runtime repair failed with exit code $electronExitCode."}
   }
 } finally {
   Pop-Location
@@ -76,7 +71,12 @@ if(-not $SkipCloudflare){
   Write-Host 'Checking remote access runtime...' -ForegroundColor Cyan
   $cf=Join-Path $bin 'cloudflared.exe'
   $healthy=$false
-  if(Test-Path $cf){try{Invoke-YardmasterProcess -FilePath $cf -ArgumentList @('--version') -TimeoutSeconds 15 -Description 'Cloudflare Tunnel health check';$healthy=$true}catch{$healthy=$false}}
+  if(Test-Path $cf){
+    try{
+      & $cf --version | Out-Null
+      $healthy=($LASTEXITCODE -eq 0)
+    }catch{$healthy=$false}
+  }
   if(-not $healthy){
     Get-CimInstance Win32_Process -ErrorAction SilentlyContinue | Where-Object { $_.Name -eq 'cloudflared.exe' -and [string]$_.ExecutablePath -eq $cf } | ForEach-Object { try { Stop-Process -Id $_.ProcessId -Force } catch {} }
     Remove-Item -LiteralPath $cf -Force -ErrorAction SilentlyContinue
@@ -84,7 +84,8 @@ if(-not $SkipCloudflare){
     Write-Host 'Downloading Cloudflare Tunnel client...' -ForegroundColor Cyan
     Invoke-WebRequest 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.exe' -OutFile $download -UseBasicParsing -TimeoutSec 120
     Move-Item -LiteralPath $download -Destination $cf -Force
-    Invoke-YardmasterProcess -FilePath $cf -ArgumentList @('--version') -TimeoutSeconds 15 -Description 'Cloudflare Tunnel validation'
+    & $cf --version | Out-Null
+    if($LASTEXITCODE -ne 0){throw 'Cloudflare Tunnel client downloaded but could not run.'}
   }
   Write-Host 'Remote access runtime ready.' -ForegroundColor Green
 }

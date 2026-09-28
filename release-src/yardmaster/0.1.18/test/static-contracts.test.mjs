@@ -18,10 +18,12 @@ test('installer self-elevates and registers a functional Windows uninstall entry
   assert.match(installer,/CurrentVersion\\Uninstall\\Yardmaster/);
   assert.match(installer,/Chilton App Works LLC/);
   assert.match(installer,/cloudflared-windows-amd64\.exe/);
-  assert.match(installer,/WaitForExit/,'installer subprocesses must have finite timeouts');
   assert.match(installer,/electron\\install\.js/,'installer must repair a missing Electron dist through Electron install.js');
   assert.doesNotMatch(installer,/install-electron\.cmd/,'installer must not call the nonexistent install-electron.cmd helper');
-  assert.match(installer,/npm\.cmd/,'installer must launch npm through the Windows command shim');
+  assert.match(installer,/npm\.cmd/,'installer must locate npm through the Windows command shim');
+  assert.match(installer,/& \$npm\.Source install[\s\S]*\$LASTEXITCODE/,'installer must use the native npm exit status under Windows PowerShell 5.1');
+  assert.match(installer,/& \$nodeExe \$electronInstallJs[\s\S]*\$LASTEXITCODE/,'Electron repair must use the native node exit status under Windows PowerShell 5.1');
+  assert.doesNotMatch(installer,/Invoke-YardmasterProcess/,'installer must not route native commands through Start-Process on Windows PowerShell 5.1');
   assert.match(installer,/Yardmaster runtime ready/,'installer must report runtime-stage completion');
   assert.match(installer,/cloudflared\.exe[\s\S]*--version/);
   assert.match(updater,/release\.json/);
@@ -71,6 +73,6 @@ test('ChatGPT handoff verifies the same composer controls, attachment, and submi
 
 test('version labels stay synchronized',()=>{
   const pkg=JSON.parse(read('package.json'));
-  assert.equal(pkg.version,'0.1.13');
+  assert.equal(pkg.version,'0.1.18');
   assert.ok(read('public/index.html').includes(pkg.version));
 });
