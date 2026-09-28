@@ -1,0 +1,25 @@
+{
+  "name": "yardmaster",
+  "version": "0.1.23",
+  "private": true,
+  "description": "Local-first workflow control for tests, Git, ChatGPT, and deployments.",
+  "type": "module",
+  "scripts": {
+    "start": "electron desktop.cjs",
+    "server": "node server.mjs",
+    "check": "node --check server.mjs && node --check automation/chatgpt.mjs && node --check public/app.js && node --check desktop.cjs",
+    "test:targeted": "node --test --test-concurrency=1 test/*.test.mjs",
+    "desktop": "electron desktop.cjs",
+    "test:delta": "node --test --test-concurrency=1 test/chatgpt-selection.test.mjs test/play-store-chatgpt-send.test.mjs test/play-store-chatgpt-browser.test.mjs test/operator.integration.test.mjs test/static-contracts.test.mjs",
+    "test:play-store": "node --test --test-concurrency=1 test/*.test.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@simplewebauthn/server": "^13.2.2",
+    "electron": "latest",
+    "qrcode": "^1.5.4",
+    "web-push": "^3.6.7"
+  }
+}
