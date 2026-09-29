@@ -15,10 +15,10 @@ jobs:
           node-version: '24'
       - name: Install website dependencies
         run: npm ci --no-audit --no-fund
-      - name: Static Yardmaster PWA verification
-        run: npm run test:yardmaster
-      - name: Build website
-        run: npm run build
+      - name: Static Yardmaster PWA resilience verification
+        run: node scripts/verify-yardmaster-mobile-resilience.mjs
+      - name: Build website without rebuilding the Windows release
+        run: npx astro build
       - name: Install browser engines for Android and iPhone emulation
         run: |
           npm install --no-save playwright@1.55.0
