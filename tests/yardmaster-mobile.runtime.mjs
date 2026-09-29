@@ -16,15 +16,17 @@ for(const profile of profiles){
     const actionPayloads=[];
     let sawAuthenticatedStatus=false;
 
+    const corsHeaders={'Access-Control-Allow-Origin':'*','Access-Control-Allow-Headers':'Authorization, Content-Type','Access-Control-Allow-Methods':'GET, POST, OPTIONS'};
     await page.route(remote+'/**',async route=>{
       const request=route.request(),url=new URL(request.url());
+      if(request.method()==='OPTIONS')return route.fulfill({status:204,headers:corsHeaders,body:''});
       if(url.pathname==='/api/remote/health'){
-        return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({ok:true,version:'0.1.12',tunnelStatus:'ready',pairingAvailable:true})});
+        return route.fulfill({status:200,headers:corsHeaders,contentType:'application/json',body:JSON.stringify({ok:true,version:'0.1.12',tunnelStatus:'ready',pairingAvailable:true})});
       }
       if(url.pathname==='/api/status'){
         assert.equal(request.headers().authorization,'Bearer test-mobile-session',profile.name+' must authenticate remote status');
         sawAuthenticatedStatus=true;
-        return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({
+        return route.fulfill({status:200,headers:corsHeaders,contentType:'application/json',body:JSON.stringify({
           online:true,machineName:'YARDMASTER-PC',version:'0.1.62',
           remote:{active:true,status:'connected',phoneConnected:true,url:remote},
           run:{state:'idle',title:'Ready for work',progress:0,counts:{pass:0,fail:0,skip:0},currentTest:'Idle'},
@@ -35,9 +37,9 @@ for(const profile of profiles){
       if(url.pathname==='/api/action'&&request.method()==='POST'){
         assert.equal(request.headers().authorization,'Bearer test-mobile-session',profile.name+' New Work must be authenticated');
         const payload=request.postDataJSON();actionPayloads.push(payload);
-        if(payload.action==='update-operator-now')return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({ok:true,queued:true,version:'0.1.63',waitingOn:'the current test'})});
-        if(payload.action==='resume-handoff')return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({ok:true})});
-        return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({ok:true,state:'implementation-queued',runsOn:'windows-pc'})});
+        if(payload.action==='update-operator-now')return route.fulfill({status:200,headers:corsHeaders,contentType:'application/json',body:JSON.stringify({ok:true,queued:true,version:'0.1.63',waitingOn:'the current test'})});
+        if(payload.action==='resume-handoff')return route.fulfill({status:200,headers:corsHeaders,contentType:'application/json',body:JSON.stringify({ok:true})});
+        return route.fulfill({status:200,headers:corsHeaders,contentType:'application/json',body:JSON.stringify({ok:true,state:'implementation-queued',runsOn:'windows-pc'})});
       }
       return route.fulfill({status:404,body:'fixture route not found'});
     });
