@@ -5,8 +5,8 @@ import {fileURLToPath} from 'node:url';
 import {spawnSync} from 'node:child_process';
 
 const root=path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-const version='0.1.49';
-const sourceCommit='b08b089d33615896d3a0f005337e4dde835fe6a3';
+const version='0.1.50';
+const sourceCommit='9a8459912f6765f5b02032bd1ddaf2ce4cf361b8';
 const sourceRoot=path.join(root,'release-src','yardmaster',version);
 const outDir=path.join(root,'public','yardmaster','releases');
 const outFile=path.join(outDir,`Yardmaster-Windows-${version}.zip`);
@@ -69,11 +69,11 @@ function endRecord(count,centralSize,centralOffset){
 if(!fs.existsSync(sourceRoot)) throw new Error('Yardmaster release source is missing: '+sourceRoot);
 for(const rel of ['server.mjs','automation/chatgpt.mjs','automation/full-self-test.mjs','automation/windows-operator.mjs','public/app.js','desktop.cjs']){
   const check=spawnSync(process.execPath,['--check',path.join(sourceRoot,...rel.split('/'))],{cwd:sourceRoot,encoding:'utf8'});
-  if(check.status!==0)throw new Error('Yardmaster 0.1.49 syntax check failed for '+rel+'\n'+String(check.stdout||'')+String(check.stderr||''));
+  if(check.status!==0)throw new Error('Yardmaster 0.1.50 syntax check failed for '+rel+'\n'+String(check.stdout||'')+String(check.stderr||''));
 }
 const contracts=spawnSync(process.execPath,['--test','test/static-contracts.test.mjs'],{cwd:sourceRoot,encoding:'utf8'});
-if(contracts.status!==0)throw new Error('Yardmaster 0.1.49 static-contract regression check failed.\n'+String(contracts.stdout||'')+String(contracts.stderr||''));
-console.log('Yardmaster 0.1.49 syntax + static-contract checks passed. No Play Store/release-gate suite was run.');
+if(contracts.status!==0)throw new Error('Yardmaster 0.1.50 static-contract regression check failed.\n'+String(contracts.stdout||'')+String(contracts.stderr||''));
+console.log('Yardmaster 0.1.50 syntax + static-contract checks passed. No Play Store/release-gate suite was run.');
 const names=[...new Set([...filesRecursive(sourceRoot),...sharedFiles.keys()])].sort();
 if(!names.length) throw new Error('Yardmaster release source is empty.');
 
