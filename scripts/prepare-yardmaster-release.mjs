@@ -5,8 +5,8 @@ import {fileURLToPath} from 'node:url';
 import {spawnSync} from 'node:child_process';
 
 const root=path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-const version='0.1.64';
-const sourceCommit='96be99f362cd5f9fd16c8f893c2a44788986e879';
+const version='0.1.65';
+const sourceCommit='98351e88a7beb8af30039b70eb33709e61497aa8';
 const sourceRoot=path.join(root,'release-src','yardmaster',version);
 const outDir=path.join(root,'public','yardmaster','releases');
 const outFile=path.join(outDir,`Yardmaster-Windows-${version}.zip`);
@@ -69,10 +69,10 @@ function endRecord(count,centralSize,centralOffset){
 if(!fs.existsSync(sourceRoot)) throw new Error('Yardmaster release source is missing: '+sourceRoot);
 const npmCmd=process.platform==='win32'?'npm.cmd':'npm';
 const install=spawnSync(npmCmd,['ci','--ignore-scripts'],{cwd:sourceRoot,encoding:'utf8',maxBuffer:20*1024*1024});
-if(install.status!==0)throw new Error('Yardmaster 0.1.64 dependency install failed.\n'+String(install.stdout||'')+String(install.stderr||''));
+if(install.status!==0)throw new Error('Yardmaster 0.1.65 dependency install failed.\n'+String(install.stdout||'')+String(install.stderr||''));
 for(const rel of ['server.mjs','automation/chatgpt.mjs','automation/full-self-test.mjs','automation/windows-operator.mjs','public/app.js','desktop.cjs']){
   const check=spawnSync(process.execPath,['--check',path.join(sourceRoot,...rel.split('/'))],{cwd:sourceRoot,encoding:'utf8'});
-  if(check.status!==0)throw new Error('Yardmaster 0.1.64 syntax check failed for '+rel+'\n'+String(check.stdout||'')+String(check.stderr||''));
+  if(check.status!==0)throw new Error('Yardmaster 0.1.65 syntax check failed for '+rel+'\n'+String(check.stdout||'')+String(check.stderr||''));
 }
 const targeted=spawnSync(process.execPath,[
   '--test','--test-concurrency=1',
@@ -94,10 +94,10 @@ const targetedReport={
   stderr:String(targeted.stderr||'')
 };
 fs.mkdirSync(path.join(root,'public','yardmaster'),{recursive:true});
-fs.writeFileSync(path.join(root,'public','yardmaster','targeted-0.1.64.json'),JSON.stringify(targetedReport,null,2)+'\n');
+fs.writeFileSync(path.join(root,'public','yardmaster','targeted-0.1.65.json'),JSON.stringify(targetedReport,null,2)+'\n');
 fs.rmSync(path.join(sourceRoot,'node_modules'),{recursive:true,force:true});
-if(targeted.status!==0)throw new Error('Yardmaster 0.1.64 targeted regression gate failed.\n'+String(targeted.stdout||'')+String(targeted.stderr||''));
-console.log('Yardmaster 0.1.64 targeted regression gate passed.');
+if(targeted.status!==0)throw new Error('Yardmaster 0.1.65 targeted regression gate failed.\n'+String(targeted.stdout||'')+String(targeted.stderr||''));
+console.log('Yardmaster 0.1.65 targeted regression gate passed.');
 const names=[...new Set([...filesRecursive(sourceRoot),...sharedFiles.keys()])].sort();
 if(!names.length) throw new Error('Yardmaster release source is empty.');
 
