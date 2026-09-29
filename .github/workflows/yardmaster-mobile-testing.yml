@@ -1,4 +1,7 @@
 name: Yardmaster Mobile Testing
+concurrency:
+  group: yardmaster-mobile-testing
+  cancel-in-progress: true
 on:
   push:
     branches: [yardmaster-testing]
