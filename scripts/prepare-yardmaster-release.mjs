@@ -2,10 +2,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import {fileURLToPath} from 'node:url';
+import {spawnSync} from 'node:child_process';
 
 const root=path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-const version='0.1.46';
-const sourceCommit='4d230944a5d6b98694e55482aea52350d01c477c';
+const version='0.1.47';
+const sourceCommit='25d3087a99b6c6fb6635555ed8929b7845e1648d';
 const sourceRoot=path.join(root,'release-src','yardmaster',version);
 const outDir=path.join(root,'public','yardmaster','releases');
 const outFile=path.join(outDir,`Yardmaster-Windows-${version}.zip`);
@@ -66,6 +67,19 @@ function endRecord(count,centralSize,centralOffset){
 }
 
 if(!fs.existsSync(sourceRoot)) throw new Error('Yardmaster release source is missing: '+sourceRoot);
+const syntaxTargets=['automation/chatgpt.mjs','automation/full-self-test.mjs','server.mjs','public/app.js'];
+for(const rel of syntaxTargets){
+  const check=spawnSync(process.execPath,['--check',path.join(sourceRoot,...rel.split('/'))],{cwd:sourceRoot,encoding:'utf8'});
+  if(check.status!==0) throw new Error('Yardmaster 0.1.47 syntax gate failed for '+rel+'\n'+String(check.stdout||'')+String(check.stderr||''));
+}
+const targeted=spawnSync(process.execPath,[
+  '--test','--test-concurrency=1',
+  'test/play-store-chatgpt-send.test.mjs',
+  'test/chatgpt-selection.test.mjs',
+  'test/static-contracts.test.mjs'
+],{cwd:sourceRoot,encoding:'utf8'});
+if(targeted.status!==0) throw new Error('Yardmaster 0.1.47 targeted regression gate failed.\n'+String(targeted.stdout||'')+String(targeted.stderr||''));
+console.log('Yardmaster 0.1.47 targeted regression gate passed.');
 const names=[...new Set([...filesRecursive(sourceRoot),...sharedFiles.keys()])].sort();
 if(!names.length) throw new Error('Yardmaster release source is empty.');
 
@@ -108,7 +122,7 @@ const release={
     trustedPromptNewlineRegression:'pass',
     failureStateDiagnosticScreenshot:'pass',
     postSendGenerationTransition:'pass',
-    fullSandboxProcessTest:'pass',
+    fullSandboxProcessTest:'not-run',
     sandboxRepairOverlay:'pass',
     sandboxLocalGitPush:'pass',
     sandboxDeploymentIdentity:'pass',
@@ -116,8 +130,9 @@ const release={
     powerShellClipboardPaste:'pass',
     manualGateAdoption:'pass',
     closedLoopRepairUntilPass:'pass',
-    assistantProtocolRoundTrip:'pass',
-    chatgptOriginatedPowerShellRoundTrip:'pass',
+    assistantProtocolRoundTrip:'targeted-pass',
+    chatgptOriginatedPowerShellRoundTrip:'not-run',
+    assistantProtocolDomFallbackRegression:'pass',
     powershellActivationRetry:'pass',
     exactSelfTestFailureState:'pass',
     selfTestDiagnosticDownload:'pass',
