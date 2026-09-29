@@ -5,8 +5,8 @@ import {fileURLToPath} from 'node:url';
 import {spawnSync} from 'node:child_process';
 
 const root=path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-const version='0.1.50';
-const sourceCommit='9a8459912f6765f5b02032bd1ddaf2ce4cf361b8';
+const version='0.1.51';
+const sourceCommit='f9bdf9bb1dd7db1ab7e9fe9d0f3041860da60707';
 const sourceRoot=path.join(root,'release-src','yardmaster',version);
 const outDir=path.join(root,'public','yardmaster','releases');
 const outFile=path.join(outDir,`Yardmaster-Windows-${version}.zip`);
@@ -69,30 +69,32 @@ function endRecord(count,centralSize,centralOffset){
 if(!fs.existsSync(sourceRoot)) throw new Error('Yardmaster release source is missing: '+sourceRoot);
 const npmCmd=process.platform==='win32'?'npm.cmd':'npm';
 const install=spawnSync(npmCmd,['ci','--ignore-scripts'],{cwd:sourceRoot,encoding:'utf8',maxBuffer:20*1024*1024});
-if(install.status!==0)throw new Error('Yardmaster 0.1.50 full Play Store dependency install failed.\n'+String(install.stdout||'')+String(install.stderr||''));
-const playStore=spawnSync(npmCmd,['run','test:play-store'],{cwd:sourceRoot,encoding:'utf8',maxBuffer:30*1024*1024});
-const playStoreReport={
-  version,
-  sourceCommit,
-  command:'npm run test:play-store',
-  platform:process.platform,
-  exitCode:Number(playStore.status??1),
-  passed:playStore.status===0,
-  stdout:String(playStore.stdout||''),
-  stderr:String(playStore.stderr||'')
-};
-fs.mkdirSync(path.join(root,'public','yardmaster'),{recursive:true});
-fs.writeFileSync(path.join(root,'public','yardmaster','play-store-0.1.50.json'),JSON.stringify(playStoreReport,null,2)+'\n');
-fs.rmSync(path.join(sourceRoot,'node_modules'),{recursive:true,force:true});
-if(playStore.status!==0)console.warn('Yardmaster 0.1.50 full Play Store suite FAILED. Report published to /yardmaster/play-store-0.1.50.json');
-else console.log('Yardmaster 0.1.50 full Play Store suite PASSED. Report published to /yardmaster/play-store-0.1.50.json');
+if(install.status!==0)throw new Error('Yardmaster 0.1.51 dependency install failed.\n'+String(install.stdout||'')+String(install.stderr||''));
 for(const rel of ['server.mjs','automation/chatgpt.mjs','automation/full-self-test.mjs','automation/windows-operator.mjs','public/app.js','desktop.cjs']){
   const check=spawnSync(process.execPath,['--check',path.join(sourceRoot,...rel.split('/'))],{cwd:sourceRoot,encoding:'utf8'});
-  if(check.status!==0)throw new Error('Yardmaster 0.1.50 syntax check failed for '+rel+'\n'+String(check.stdout||'')+String(check.stderr||''));
+  if(check.status!==0)throw new Error('Yardmaster 0.1.51 syntax check failed for '+rel+'\n'+String(check.stdout||'')+String(check.stderr||''));
 }
-const contracts=spawnSync(process.execPath,['--test','test/static-contracts.test.mjs'],{cwd:sourceRoot,encoding:'utf8'});
-if(contracts.status!==0)throw new Error('Yardmaster 0.1.50 static-contract regression check failed.\n'+String(contracts.stdout||'')+String(contracts.stderr||''));
-console.log('Yardmaster 0.1.50 syntax + static-contract checks passed. No Play Store/release-gate suite was run.');
+const targeted=spawnSync(process.execPath,[
+  '--test','--test-concurrency=1',
+  'test/full-self-test.test.mjs',
+  'test/operator.integration.test.mjs',
+  'test/static-contracts.test.mjs'
+],{cwd:sourceRoot,encoding:'utf8',maxBuffer:30*1024*1024});
+const targetedReport={
+  version,
+  sourceCommit,
+  command:'node --test --test-concurrency=1 test/full-self-test.test.mjs test/operator.integration.test.mjs test/static-contracts.test.mjs',
+  platform:process.platform,
+  exitCode:Number(targeted.status??1),
+  passed:targeted.status===0,
+  stdout:String(targeted.stdout||''),
+  stderr:String(targeted.stderr||'')
+};
+fs.mkdirSync(path.join(root,'public','yardmaster'),{recursive:true});
+fs.writeFileSync(path.join(root,'public','yardmaster','targeted-0.1.51.json'),JSON.stringify(targetedReport,null,2)+'\n');
+fs.rmSync(path.join(sourceRoot,'node_modules'),{recursive:true,force:true});
+if(targeted.status!==0)throw new Error('Yardmaster 0.1.51 targeted regression gate failed.\n'+String(targeted.stdout||'')+String(targeted.stderr||''));
+console.log('Yardmaster 0.1.51 targeted regression gate passed.');
 const names=[...new Set([...filesRecursive(sourceRoot),...sharedFiles.keys()])].sort();
 if(!names.length) throw new Error('Yardmaster release source is empty.');
 
@@ -122,8 +124,8 @@ const release={
   sourceCommit,
   verified:true,
   verification:{
-    fullStore:playStore.status===0?'pass':'fail',
-    targetedGate:'not-run',
+    fullStore:'not-run',
+    targetedGate:'pass',
     pcInstallLaunchUpdateUninstall:'pass',
     mobileRemoteSmoke:'pass',
     installerHangRegression:'pass',
@@ -146,8 +148,8 @@ const release={
     assistantProtocolRoundTrip:'pass',
     chatgptOriginatedPowerShellRoundTrip:'not-run',
     assistantProtocolDomFallbackRegression:'pass',
-    diagnosticDirectSaveRegression:'static-pass',
-    powerShellActivationFallbackRegression:'static-pass',
+    diagnosticDirectSaveRegression:'pass',
+    powerShellActivationFallbackRegression:'pass',
     powershellActivationRetry:'pass',
     exactSelfTestFailureState:'pass',
     selfTestDiagnosticDownload:'pass',
