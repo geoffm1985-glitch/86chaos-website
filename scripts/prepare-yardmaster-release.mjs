@@ -4,8 +4,8 @@ import crypto from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 
 const root=path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-const version='0.1.44';
-const sourceCommit='0ceb6f9f5a08c7011050e636f0cde64904a4854f';
+const version='0.1.45';
+const sourceCommit='2767f245c281d6d69e3db9d162e040455f05143a';
 const sourceRoot=path.join(root,'release-src','yardmaster',version);
 const outDir=path.join(root,'public','yardmaster','releases');
 const outFile=path.join(outDir,`Yardmaster-Windows-${version}.zip`);
@@ -113,6 +113,11 @@ const release={
     sandboxLocalGitPush:'pass',
     sandboxDeploymentIdentity:'pass',
     sandboxPostDeployTest:'pass',
+    powerShellClipboardPaste:'pass',
+    manualGateAdoption:'pass',
+    closedLoopRepairUntilPass:'pass',
+    assistantProtocolRoundTrip:'pass',
+    adoptedEvidencePackaging:'pass',
     delayedUserMessageDomRegression:'pass',
     diagnosticPrivacy:'pass',
     diagnosticDownload:'pass',

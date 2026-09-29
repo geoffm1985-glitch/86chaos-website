@@ -1,0 +1,59 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {
+  createSandboxFixture,runFixtureTest,buildSandboxHandoff,createKnownGoodSandboxRepair,
+  applySandboxRepair,commitAndPushSandbox,verifySandboxDeploymentIdentity,sandboxChatPrompt,adoptSandboxManualGate
+} from '../automation/full-self-test.mjs';
+import {runPowerShellClipboardCommand} from '../automation/windows-operator.mjs';
+
+test('full sandbox engine exercises fail -> handoff -> repair -> retest -> local push -> deployment identity',async t=>{
+  const temp=fs.mkdtempSync(path.join(os.tmpdir(),'yardmaster-full-self-test-'));
+  try{
+    const workspace=createSandboxFixture(temp,{id:'fixture'});
+    assert.ok(workspace.repo.startsWith(temp));
+    assert.ok(!workspace.repo.toLowerCase().includes(path.join('documents','github','86chaos').toLowerCase()));
+    if(process.platform==='win32'){
+      const marker=path.join(workspace.root,'clipboard-marker.txt');
+      const previous=process.env.YARDMASTER_TEST_POWERSHELL_PASTE_STUB;process.env.YARDMASTER_TEST_POWERSHELL_PASTE_STUB='1';
+      try{
+        const ps=await runPowerShellClipboardCommand({dataDir:temp,cwd:workspace.repo,script:`$x = "clipboard-'quote'"
+Set-Content -LiteralPath '${marker.replaceAll("'","''")}' -Value $x`});
+        assert.equal(ps.code,0);assert.equal(ps.clipboardVerified,true);assert.match(fs.readFileSync(marker,'utf8'),/clipboard-'quote'/);
+      } finally {if(previous===undefined)delete process.env.YARDMASTER_TEST_POWERSHELL_PASTE_STUB;else process.env.YARDMASTER_TEST_POWERSHELL_PASTE_STUB=previous}
+    } else t.diagnostic('PowerShell clipboard transport is Windows-only.');
+
+    const adoptedFail=await adoptSandboxManualGate(workspace,{mode:'failed+new'});
+    assert.notEqual(adoptedFail.code,0,'adopted fixture gate must fail before repair');
+    assert.equal(adoptedFail.snapshot.source,'adopted-manual');
+
+    const handoff=path.join(workspace.root,'handoff.zip');
+    buildSandboxHandoff(workspace,handoff);
+    const bytes=fs.readFileSync(handoff);
+    assert.equal(bytes.subarray(0,2).toString(),'PK');
+    assert.ok(bytes.length<200000,'sandbox handoff should remain tiny and fast');
+    const prompt=sandboxChatPrompt();
+    assert.match(prompt,/disposable fixture/i);
+    assert.match(prompt,/Do not access or modify 86 Chaos/i);
+
+    if(process.platform!=='win32'){t.diagnostic('Windows-only repair overlay portion skipped.');return}
+    const repair=path.join(workspace.root,'repair.zip');
+    createKnownGoodSandboxRepair(workspace,repair);
+    applySandboxRepair({appRoot:path.dirname(path.dirname(fileURLToPath(import.meta.url))),workspace,repairPath:repair});
+    const retest=await runFixtureTest(workspace.repo);
+    assert.equal(retest.code,0,'repaired fixture must pass');
+    const commit=commitAndPushSandbox(workspace);
+    const identity=verifySandboxDeploymentIdentity(workspace,commit);
+    assert.equal(identity.gitBranch,'testing');
+    assert.equal(identity.gitCommit,commit);
+    const post=await adoptSandboxManualGate(workspace,{mode:'failed+new'});
+    assert.equal(post.code,0,'post-deployment adopted fixture gate must pass');
+    assert.equal(post.snapshot.status,'passed');
+  } finally {
+    await new Promise(r=>setTimeout(r,500));
+    fs.rmSync(temp,{recursive:true,force:true,maxRetries:10,retryDelay:250});
+  }
+});
