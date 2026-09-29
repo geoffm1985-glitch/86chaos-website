@@ -13,7 +13,7 @@ for(const profile of profiles){
   try{
     const context=await browser.newContext({...profile.device});
     const page=await context.newPage();
-    let actionPayload=null;
+    const actionPayloads=[];
     let sawAuthenticatedStatus=false;
 
     await page.route(remote+'/**',async route=>{
@@ -25,16 +25,18 @@ for(const profile of profiles){
         assert.equal(request.headers().authorization,'Bearer test-mobile-session',profile.name+' must authenticate remote status');
         sawAuthenticatedStatus=true;
         return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({
-          online:true,machineName:'YARDMASTER-PC',version:'0.1.12',
+          online:true,machineName:'YARDMASTER-PC',version:'0.1.62',
           remote:{active:true,status:'connected',phoneConnected:true,url:remote},
           run:{state:'idle',title:'Ready for work',progress:0,counts:{pass:0,fail:0,skip:0},currentTest:'Idle'},
           config:{branch:'testing',testingUrl:'https://testing.86chaos.com',testType:'delta',chatMode:'Work',model:'GPT-5.6 Sol',thinkingEffort:'High',repoUpdateMode:'automatic',maxRepairAttempts:25,autoHandoff:true,autoPush:false,waitForDeploy:true,runAfterDeploy:true,autoUpdateOperator:true},
-          workflow:{state:'idle'},activity:[],deployment:{state:'Idle'},chatgpt:{state:'Ready'},branches:['testing']
+          workflow:{state:'handoff-error',error:'ChatGPT did not confirm the Yardmaster ZIP attachment after trusted file selection.'},operatorStatus:{phase:'needs-attention',doing:'The current ChatGPT handoff stopped safely: attachment verification failed',waitingOn:'Resume Current Failed Test.',nextAction:'Resume will reuse the existing failed-test ZIP and continue without restarting the Play Store gate.',canResume:true,resumeAction:'resume-handoff'},update:{state:'Available',version:'0.1.63'},currentDevice:{id:'test-mobile-device',name:'Test phone',hasPush:false,pushStatus:null},pushHealth:{pairedDevices:1,subscribedDevices:0,workingDevices:0,needsAttention:0},activity:[],deployment:{state:'Idle'},chatgpt:{state:'Ready'},branches:['testing']
         })});
       }
       if(url.pathname==='/api/action'&&request.method()==='POST'){
         assert.equal(request.headers().authorization,'Bearer test-mobile-session',profile.name+' New Work must be authenticated');
-        actionPayload=request.postDataJSON();
+        const payload=request.postDataJSON();actionPayloads.push(payload);
+        if(payload.action==='update-operator-now')return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({ok:true,queued:true,version:'0.1.63',waitingOn:'the current test'})});
+        if(payload.action==='resume-handoff')return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({ok:true})});
         return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({ok:true,state:'implementation-queued',runsOn:'windows-pc'})});
       }
       return route.fulfill({status:404,body:'fixture route not found'});
@@ -62,13 +64,27 @@ for(const profile of profiles){
     await page.waitForFunction(()=>document.body.classList.contains('ym-authenticated'));
     assert.equal(sawAuthenticatedStatus,true,profile.name+' must prove authenticated PC status before controls unlock');
 
+    assert.match(await page.locator('#mDoing').textContent(),/handoff stopped safely/i,profile.name+' must show what Yardmaster is doing');
+    assert.match(await page.locator('#mWaiting').textContent(),/Resume Current Failed Test/i,profile.name+' must show what Yardmaster is waiting on');
+    assert.match(await page.locator('#mNext').textContent(),/existing failed-test ZIP/i,profile.name+' must show the next recovery step');
+    assert.equal(await page.locator('#mVersion').textContent(),'0.1.62',profile.name+' must show the PC Yardmaster version');
+    assert.match(await page.locator('#mPushStatus').textContent(),/Needs attention/i,profile.name+' must expose push health');
+    assert.equal(await page.locator('[data-act="resume-handoff"]').textContent(),'Resume Current Failed Test',profile.name+' must expose failed-handoff resume');
+    await page.locator('[data-act="resume-handoff"]').click();
+    await page.waitForFunction(()=>true);
+    assert.ok(actionPayloads.some(p=>p.action==='resume-handoff'),profile.name+' must send resume-handoff to the Windows PC');
+    await page.locator('#updatePcYardmaster').click();
+    assert.ok(actionPayloads.some(p=>p.action==='update-operator-now'),profile.name+' must allow the phone to update the Windows Yardmaster');
+    assert.match(await page.locator('#mUpdateMessage').textContent(),/queued|safe/i,profile.name+' must explain queued update status');
+
     await page.locator('#mobileNewWork').click();
     await page.locator('#mobileWorkTask').fill('Add a remote-created test feature and its release-gate coverage.');
     await page.locator('#mobileWorkPush').check();
     await page.locator('#submitMobileWork').click();
     await page.waitForFunction(()=>!document.querySelector('#newWorkOverlay')?.classList.contains('show'));
 
-    assert.deepEqual(actionPayload,{
+    const newWorkPayload=actionPayloads.find(p=>p.action==='new-implementation');
+    assert.deepEqual(newWorkPayload,{
       action:'new-implementation',
       taskPrompt:'Add a remote-created test feature and its release-gate coverage.',
       pushWhenPassed:true
