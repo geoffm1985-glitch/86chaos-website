@@ -67,6 +67,25 @@ function endRecord(count,centralSize,centralOffset){
 }
 
 if(!fs.existsSync(sourceRoot)) throw new Error('Yardmaster release source is missing: '+sourceRoot);
+const npmCmd=process.platform==='win32'?'npm.cmd':'npm';
+const install=spawnSync(npmCmd,['ci','--ignore-scripts'],{cwd:sourceRoot,encoding:'utf8',maxBuffer:20*1024*1024});
+if(install.status!==0)throw new Error('Yardmaster 0.1.50 full Play Store dependency install failed.\n'+String(install.stdout||'')+String(install.stderr||''));
+const playStore=spawnSync(npmCmd,['run','test:play-store'],{cwd:sourceRoot,encoding:'utf8',maxBuffer:30*1024*1024});
+const playStoreReport={
+  version,
+  sourceCommit,
+  command:'npm run test:play-store',
+  platform:process.platform,
+  exitCode:Number(playStore.status??1),
+  passed:playStore.status===0,
+  stdout:String(playStore.stdout||''),
+  stderr:String(playStore.stderr||'')
+};
+fs.mkdirSync(path.join(root,'public','yardmaster'),{recursive:true});
+fs.writeFileSync(path.join(root,'public','yardmaster','play-store-0.1.50.json'),JSON.stringify(playStoreReport,null,2)+'\n');
+fs.rmSync(path.join(sourceRoot,'node_modules'),{recursive:true,force:true});
+if(playStore.status!==0)console.warn('Yardmaster 0.1.50 full Play Store suite FAILED. Report published to /yardmaster/play-store-0.1.50.json');
+else console.log('Yardmaster 0.1.50 full Play Store suite PASSED. Report published to /yardmaster/play-store-0.1.50.json');
 for(const rel of ['server.mjs','automation/chatgpt.mjs','automation/full-self-test.mjs','automation/windows-operator.mjs','public/app.js','desktop.cjs']){
   const check=spawnSync(process.execPath,['--check',path.join(sourceRoot,...rel.split('/'))],{cwd:sourceRoot,encoding:'utf8'});
   if(check.status!==0)throw new Error('Yardmaster 0.1.50 syntax check failed for '+rel+'\n'+String(check.stdout||'')+String(check.stderr||''));
@@ -103,7 +122,7 @@ const release={
   sourceCommit,
   verified:true,
   verification:{
-    fullStore:'not-run',
+    fullStore:playStore.status===0?'pass':'fail',
     targetedGate:'not-run',
     pcInstallLaunchUpdateUninstall:'pass',
     mobileRemoteSmoke:'pass',
