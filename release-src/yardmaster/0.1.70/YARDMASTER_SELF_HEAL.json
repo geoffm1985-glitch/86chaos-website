@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "version": "0.1.70",
+  "published": false,
+  "releaseManifestUrl": "https://www.86chaos.com/yardmaster/release.json",
+  "requiredTests": [
+    "test:self-heal",
+    "test:playwright",
+    "test:play-store"
+  ],
+  "regressionCoverage": {
+    "exactFailure": "Yardmaster full Playwright failures and explicit self-heal status/coverage contract upgrade",
+    "playStoreTests": [
+      "test/self-heal.test.mjs"
+    ],
+    "playwrightTests": [
+      "test/playwright/full-app.e2e.spec.mjs"
+    ]
+  }
+}
