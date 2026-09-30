@@ -1,17 +1,17 @@
 {
   "product": "Yardmaster",
-  "version": "0.1.85",
+  "version": "0.1.86",
   "releaseDate": "2026-09-30",
-  "sourceCommit": "f8db0a451e0fd4567291c414246be5aa13567cec",
+  "sourceCommit": "1f715d61bbdad9ec0cc8ab060aceb2776ef4bc9e",
   "verified": false,
   "verification": {
     "candidate": "testing-only",
     "sourceSyntax": "pass",
-    "targetedNode": "4 passed",
-    "playwrightCoverage": "added; not executed in the model container because the 0.1.83 source archive does not include installed browser dependencies",
-    "fullStore": "not run",
-    "note": "Candidate intentionally built from 0.1.83 and skipped 0.1.84 for this build only."
+    "targetedLocal": "32 pass / 0 fail / 1 Windows-only skip across repaired static/control contracts; diagnostic export tests 6 pass / 0 fail",
+    "fullStore": "not run after repair",
+    "fullPlaywright": "not run after repair",
+    "note": "Windows full certification must be rerun. Any failed certification phase now exports a Yardmaster-Test-Diagnostic ZIP automatically."
   },
-  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.82.zip",
-  "candidateSha256": "bb492797cb9643e48c0f0d36fd6b63d73973ded150cb56d55375823091000635"
+  "downloadUrl": "https://github.com/geoffm1985-glitch/yardmaster/archive/refs/heads/yardmaster-testing.zip",
+  "candidateSha256": "3c39b03d6900fc4b078f2b794e42e1c0cc6f23c2a657408748f82fda3fa15fbf"
 }

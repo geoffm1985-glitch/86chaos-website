@@ -24,8 +24,8 @@ for(const profile of profiles){
     assert.equal(marker.productionAffected,false);
     assert.equal(release.sourceCommit,marker.sourceCommit,profile.name+' must serve the exact testing-branch source commit');
     assert.ok(sw.includes(release.version),profile.name+' service worker must track the testing release version');
-    assert.equal(release.version,'0.1.85');
-    assert.equal(marker.sourceVersion,'0.1.85');
+    assert.equal(release.version,'0.1.86');
+    assert.equal(marker.sourceVersion,'0.1.86');
     if(profile.name==='iPhone Safari'){
       const viewport=await page.locator('meta[name="viewport"]').getAttribute('content');
       assert.match(viewport,/maximum-scale=1/);assert.match(viewport,/user-scalable=no/);
