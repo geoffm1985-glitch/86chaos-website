@@ -32,7 +32,7 @@ const releaseDate=new Intl.DateTimeFormat('en-US',{month:'long',day:'numeric',ye
         <h1>Keep the work <span>moving.</span></h1>
         <p>Yardmaster runs your approved local test commands, watches progress, controls Git and deployment handoffs, and gives you a secure remote control from your phone. Operational history stays on your Windows PC.</p>
         <div class="actions">
-          <a class="button primary" href="/yardmaster/download">DOWNLOAD YARDMASTER FOR WINDOWS</a>
+          <a class="button primary" href={release.downloadUrl}>DOWNLOAD YARDMASTER FOR WINDOWS</a>
           <button class="button green" id="desktopInstallPwa">Install Mobile PWA</button>
         </div>
         <div class="note">Verified Yardmaster {release.version} • Released {releaseDate} • Windows requires Node.js 22+ • Remote access uses an optional Cloudflare Quick Tunnel.</div>
