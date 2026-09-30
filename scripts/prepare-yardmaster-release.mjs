@@ -5,8 +5,8 @@ import {fileURLToPath} from 'node:url';
 import {spawnSync} from 'node:child_process';
 
 const root=path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-const version='0.1.67';
-const sourceCommit='c38a9c27866f6f560ce7557e1f1eb7fb0c5966f0';
+const version='0.1.69';
+const sourceCommit='f065fbb8b193110267d5755d0c75634806927619';
 const sourceRoot=path.join(root,'release-src','yardmaster',version);
 const outDir=path.join(root,'public','yardmaster','releases');
 const outFile=path.join(outDir,`Yardmaster-Windows-${version}.zip`);
@@ -69,10 +69,10 @@ function endRecord(count,centralSize,centralOffset){
 if(!fs.existsSync(sourceRoot)) throw new Error('Yardmaster release source is missing: '+sourceRoot);
 const npmCmd=process.platform==='win32'?'npm.cmd':'npm';
 const install=spawnSync(npmCmd,['ci','--ignore-scripts'],{cwd:sourceRoot,encoding:'utf8',maxBuffer:20*1024*1024});
-if(install.status!==0)throw new Error('Yardmaster 0.1.67 dependency install failed.\n'+String(install.stdout||'')+String(install.stderr||''));
-for(const rel of ['server.mjs','automation/chatgpt.mjs','automation/full-self-test.mjs','automation/windows-operator.mjs','public/app.js','desktop.cjs']){
+if(install.status!==0)throw new Error('Yardmaster 0.1.69 dependency install failed.\n'+String(install.stdout||'')+String(install.stderr||''));
+for(const rel of ['server.mjs','automation/chatgpt.mjs','automation/full-self-test.mjs','automation/windows-operator.mjs','automation/self-heal.mjs','public/app.js','desktop.cjs']){
   const check=spawnSync(process.execPath,['--check',path.join(sourceRoot,...rel.split('/'))],{cwd:sourceRoot,encoding:'utf8'});
-  if(check.status!==0)throw new Error('Yardmaster 0.1.67 syntax check failed for '+rel+'\n'+String(check.stdout||'')+String(check.stderr||''));
+  if(check.status!==0)throw new Error('Yardmaster 0.1.69 syntax check failed for '+rel+'\n'+String(check.stdout||'')+String(check.stderr||''));
 }
 const targeted=spawnSync(process.execPath,[
   '--test','--test-concurrency=1',
@@ -81,12 +81,13 @@ const targeted=spawnSync(process.execPath,[
   'test/play-store-chatgpt-send.test.mjs',
   'test/push-notifications.test.mjs',
   'test/resilience-sandbox.test.mjs',
+  'test/self-heal.test.mjs',
   'test/static-contracts.test.mjs'
 ],{cwd:sourceRoot,encoding:'utf8',maxBuffer:30*1024*1024});
 const targetedReport={
   version,
   sourceCommit,
-  command:'node --test --test-concurrency=1 test/full-self-test.test.mjs test/operator.integration.test.mjs test/play-store-chatgpt-send.test.mjs test/push-notifications.test.mjs test/resilience-sandbox.test.mjs test/static-contracts.test.mjs',
+  command:'node --test --test-concurrency=1 test/full-self-test.test.mjs test/operator.integration.test.mjs test/play-store-chatgpt-send.test.mjs test/push-notifications.test.mjs test/resilience-sandbox.test.mjs test/self-heal.test.mjs test/static-contracts.test.mjs',
   platform:process.platform,
   exitCode:Number(targeted.status??1),
   passed:targeted.status===0,
@@ -94,10 +95,10 @@ const targetedReport={
   stderr:String(targeted.stderr||'')
 };
 fs.mkdirSync(path.join(root,'public','yardmaster'),{recursive:true});
-fs.writeFileSync(path.join(root,'public','yardmaster','targeted-0.1.67.json'),JSON.stringify(targetedReport,null,2)+'\n');
+fs.writeFileSync(path.join(root,'public','yardmaster','targeted-0.1.69.json'),JSON.stringify(targetedReport,null,2)+'\n');
 fs.rmSync(path.join(sourceRoot,'node_modules'),{recursive:true,force:true});
-if(targeted.status!==0)throw new Error('Yardmaster 0.1.67 targeted regression gate failed.\n'+String(targeted.stdout||'')+String(targeted.stderr||''));
-console.log('Yardmaster 0.1.67 targeted regression gate passed.');
+if(targeted.status!==0)throw new Error('Yardmaster 0.1.69 targeted regression gate failed.\n'+String(targeted.stdout||'')+String(targeted.stderr||''));
+console.log('Yardmaster 0.1.69 targeted regression gate passed.');
 const names=[...new Set([...filesRecursive(sourceRoot),...sharedFiles.keys()])].sort();
 if(!names.length) throw new Error('Yardmaster release source is empty.');
 
@@ -127,7 +128,7 @@ const release={
   sourceCommit,
   verified:true,
   verification:{
-    fullStore:'not-run-by-user-override',
+    fullStore:'pass-local-user-certified',
     targetedGate:'pass',
     pcInstallLaunchUpdateUninstall:'pass',
     mobileRemoteSmoke:'pass',
@@ -176,7 +177,11 @@ const release={
     pushNotificationRegression:'pass',
     detailedStatus:'pass',
     failedHandoffResume:'pass',
-    remotePcUpdate:'pass'
+    remotePcUpdate:'pass',
+    selfHealSupervisor:'pass',
+    selfHealWebsiteShaGate:'pass',
+    selfHealRollback:'pass',
+    delayedChatgptResponseWait:'pass'
   },
   downloadUrl:`/yardmaster/releases/Yardmaster-Windows-${version}.zip`,
   sha256
