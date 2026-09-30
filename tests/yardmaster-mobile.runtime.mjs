@@ -27,11 +27,11 @@ for(const profile of profiles){
         assert.equal(request.headers().authorization,'Bearer test-mobile-session',profile.name+' must authenticate remote status');
         sawAuthenticatedStatus=true;
         return route.fulfill({status:200,headers:corsHeaders,contentType:'application/json',body:JSON.stringify({
-          online:true,machineName:'YARDMASTER-PC',version:'0.1.62',
+          online:true,machineName:'YARDMASTER-PC',version:'0.1.68',
           remote:{active:true,status:'connected',phoneConnected:true,url:remote},
           run:{state:'idle',title:'Ready for work',progress:0,counts:{pass:0,fail:0,skip:0},currentTest:'Idle'},
-          config:{branch:'testing',testingUrl:'https://testing.86chaos.com',testType:'delta',chatMode:'Work',model:'GPT-5.6 Sol',thinkingEffort:'High',repoUpdateMode:'automatic',maxRepairAttempts:25,autoHandoff:true,autoPush:false,waitForDeploy:true,runAfterDeploy:true,autoUpdateOperator:true},
-          workflow:{state:'handoff-error',error:'ChatGPT did not confirm the Yardmaster ZIP attachment after trusted file selection.'},operatorStatus:{phase:'needs-attention',doing:'The current ChatGPT handoff stopped safely: attachment verification failed',waitingOn:'Resume Current Failed Test.',nextAction:'Resume will reuse the existing failed-test ZIP and continue without restarting the Play Store gate.',canResume:true,resumeAction:'resume-handoff'},update:{state:'Available',version:'0.1.63'},currentDevice:{id:'test-mobile-device',name:'Test phone',hasPush:false,pushStatus:null},pushHealth:{pairedDevices:1,subscribedDevices:0,workingDevices:0,needsAttention:0},activity:[],deployment:{state:'Idle'},chatgpt:{state:'Ready'},branches:['testing']
+          config:{branch:'testing',testingUrl:'https://testing.86chaos.com',testType:'delta',chatMode:'Work',model:'GPT-5.6 Sol',thinkingEffort:'High',repoUpdateMode:'automatic',maxRepairAttempts:25,autoHandoff:true,autoPush:false,waitForDeploy:true,runAfterDeploy:true,autoUpdateOperator:true,autoSelfHeal:true,maxSelfHealAttempts:5},
+          workflow:{state:'handoff-error',error:'ChatGPT did not confirm the Yardmaster ZIP attachment after trusted file selection.'},selfHeal:{state:'idle',detail:'Self-heal is ready.',attempt:0,maxAttempts:5},operatorStatus:{phase:'needs-attention',doing:'The current ChatGPT handoff stopped safely: attachment verification failed',waitingOn:'Resume Current Failed Test.',nextAction:'Resume will reuse the existing failed-test ZIP and continue without restarting the Play Store gate.',canResume:true,resumeAction:'resume-handoff'},update:{state:'Available',version:'0.1.63'},currentDevice:{id:'test-mobile-device',name:'Test phone',hasPush:false,pushStatus:null},pushHealth:{pairedDevices:1,subscribedDevices:0,workingDevices:0,needsAttention:0},activity:[],deployment:{state:'Idle'},chatgpt:{state:'Ready'},branches:['testing']
         })});
       }
       if(url.pathname==='/api/action'&&request.method()==='POST'){
@@ -69,7 +69,9 @@ for(const profile of profiles){
     assert.match(await page.locator('#mDoing').textContent(),/handoff stopped safely/i,profile.name+' must show what Yardmaster is doing');
     assert.match(await page.locator('#mWaiting').textContent(),/Resume Current Failed Test/i,profile.name+' must show what Yardmaster is waiting on');
     assert.match(await page.locator('#mNext').textContent(),/existing failed-test ZIP/i,profile.name+' must show the next recovery step');
-    assert.equal(await page.locator('#mVersion').textContent(),'0.1.62',profile.name+' must show the PC Yardmaster version');
+    assert.equal(await page.locator('#mVersion').textContent(),'0.1.68',profile.name+' must show the PC Yardmaster version');
+    assert.equal(await page.locator('#mSelfHealState').textContent(),'idle',profile.name+' must show Yardmaster self-heal state');
+    assert.match(await page.locator('#mSelfHealDetail').textContent(),/ready/i,profile.name+' must show Yardmaster self-heal detail');
     assert.match(await page.locator('#mPushStatus').textContent(),/Needs attention/i,profile.name+' must expose push health');
     assert.equal(await page.locator('[data-act="resume-handoff"]').textContent(),'Resume Current Failed Test',profile.name+' must expose failed-handoff resume');
     await page.locator('[data-act="resume-handoff"]').click();
@@ -78,6 +80,11 @@ for(const profile of profiles){
     await page.locator('#updatePcYardmaster').click();
     assert.ok(actionPayloads.some(p=>p.action==='update-operator-now'),profile.name+' must allow the phone to update the Windows Yardmaster');
     assert.match(await page.locator('#mUpdateMessage').textContent(),/queued|safe/i,profile.name+' must explain queued update status');
+
+    await page.locator('[data-act="self-heal-now"]').click();
+    assert.ok(actionPayloads.some(p=>p.action==='self-heal-now'),profile.name+' must allow a remote Yardmaster self-heal diagnostic');
+    await page.locator('[data-act="resume-self-heal"]').click();
+    assert.ok(actionPayloads.some(p=>p.action==='resume-self-heal'),profile.name+' must allow a remote Yardmaster self-heal resume');
 
     await page.locator('#mobileNewWork').click();
     await page.locator('#mobileWorkTask').fill('Add a remote-created test feature and its release-gate coverage.');
