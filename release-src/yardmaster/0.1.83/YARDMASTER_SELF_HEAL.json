@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "version": "0.1.83",
+  "published": false,
+  "releaseManifestUrl": "https://www.86chaos.com/yardmaster/release.json",
+  "requiredTests": [
+    "test:self-heal",
+    "test:playwright",
+    "test:play-store"
+  ],
+  "regressionCoverage": {
+    "exactFailure": "Desktop fixed viewport heights and hidden overflow cut off Operations and ChatGPT controls and compress Intelligence cards while the self-heal banner is visible.",
+    "playStoreTests": [
+      "test/desktop-layout.test.mjs"
+    ],
+    "playwrightTests": [
+      "test/playwright/desktop-layout.e2e.spec.mjs"
+    ]
+  }
+}
