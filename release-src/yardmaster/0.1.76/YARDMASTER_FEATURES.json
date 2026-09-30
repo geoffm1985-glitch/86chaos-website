@@ -1,0 +1,274 @@
+{
+  "schema": 1,
+  "version": "0.1.76",
+  "policy": {
+    "implementationCodePatterns": [
+      "server.mjs",
+      "automation/**",
+      "public/**",
+      "scripts/**",
+      "desktop.cjs",
+      "electron/**",
+      "preload.cjs",
+      "package.json"
+    ],
+    "requiresPlayStoreOrCertificationTest": true,
+    "requiresPlaywrightTest": true,
+    "requireSingleTestingCommandOnDelivery": true,
+    "testingCommand": "Set-Location 'C:\\\\Users\\\\geoff\\\\Documents\\\\Yardmaster-Repo'; git fetch origin testing; git switch testing; git pull --ff-only origin testing; npm ci; npm run test:play-store; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; npm run test:playwright:full"
+  },
+  "features": [
+    {
+      "id": "failure-fingerprinting-known-fix-memory",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "visual-workflow-timeline",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "built-in-evidence-viewer",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "reproduction-capsule",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "smart-test-selection",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "flaky-test-intelligence",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "preflight-doctor",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "resource-watchdog",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "adaptive-hang-detection",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "safe-mode",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "canary-update-validation",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "pre-repair-snapshots",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "worktree-manager",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "release-provenance",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "reproducible-build-manifest",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "self-heal-attempt-comparison",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "self-heal-escalation-levels",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "mobile-action-cards",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "mobile-live-screenshot",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "run-notes-bookmarks",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "cost-guard",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "automation-dry-run",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "configuration-profiles",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "factual-health-panel",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "tamper-evident-audit-log",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "changed-since-last-good",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "durable-play-store-pause-resume",
+      "playStoreTests": [
+        "test/resumable-pause-docked-chatgpt.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/resumable-pause-docked-chatgpt.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "docked-chatgpt-workspace",
+      "playStoreTests": [
+        "test/resumable-pause-docked-chatgpt.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/resumable-pause-docked-chatgpt.e2e.spec.mjs"
+      ]
+    }
+  ]
+}

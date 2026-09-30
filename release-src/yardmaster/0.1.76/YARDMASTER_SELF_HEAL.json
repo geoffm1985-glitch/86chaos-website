@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "version": "0.1.76",
+  "published": false,
+  "releaseManifestUrl": "https://www.86chaos.com/yardmaster/release.json",
+  "requiredTests": [
+    "test:self-heal",
+    "test:playwright",
+    "test:play-store"
+  ],
+  "regressionCoverage": {
+    "exactFailure": "Playwright full-app dashboard test expected panel-scoped repository, queue, and ChatGPT controls to remain visible in Settings",
+    "playStoreTests": [
+      "test/static-contracts.test.mjs",
+      "test/resumable-pause-docked-chatgpt.test.mjs",
+      "test/operator.integration.test.mjs"
+    ],
+    "playwrightTests": [
+      "test/playwright/full-app.e2e.spec.mjs",
+      "test/playwright/resumable-pause-docked-chatgpt.e2e.spec.mjs"
+    ]
+  }
+}
