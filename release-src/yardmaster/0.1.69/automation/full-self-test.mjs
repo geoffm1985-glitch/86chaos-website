@@ -213,7 +213,7 @@ function finalizeSelfTestDiagnostic(paths,trace,{powerShellDir=null,workspace=nu
 export async function runFullSandboxSelfTest({dataDir,appRoot,chatSettings,submitRepair,onStatus=()=>{},onState=()=>{},shouldCancel=()=>false}){
   const startedAt=Date.now(),id=new Date().toISOString().replace(/[-:.]/g,'').replace('Z','')+'-'+crypto.randomBytes(2).toString('hex'),diagnosticPaths=selfTestDiagnosticPaths(dataDir,id);
   const steps={sandbox:'pending',manualGateAdoption:'pending',handoff:'pending',chatgpt:'pending',chatgptPowerShellRoundTrip:'pending',download:'pending',apply:'pending',retest:'pending',gitPush:'pending',deployment:'pending',postDeployAdoption:'pending'};
-  const trace={id,version:'0.1.65',state:'running',stage:'starting',detail:'Starting full isolated process test.',startedAt:new Date(startedAt).toISOString(),steps:{...steps},events:[]};
+  const trace={id,version:'0.1.69',state:'running',stage:'starting',detail:'Starting full isolated process test.',startedAt:new Date(startedAt).toISOString(),steps:{...steps},events:[]};
   let workspace=null,powerShellDir=null;
   const record=(type,detail={})=>{trace.events.push({at:new Date().toISOString(),type,...detail});trace.events=trace.events.slice(-500);writeSelfTestTrace(diagnosticPaths,trace)};
   const update=(stage,state='running',detail='')=>{

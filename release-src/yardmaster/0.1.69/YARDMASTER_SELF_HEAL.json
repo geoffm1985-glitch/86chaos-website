@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "version": "0.1.69",
+  "published": true,
+  "releaseManifestUrl": "https://www.86chaos.com/yardmaster/release.json",
+  "requiredTests": [
+    "test:self-heal",
+    "test:playwright",
+    "test:play-store"
+  ]
+}

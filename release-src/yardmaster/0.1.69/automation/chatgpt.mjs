@@ -383,26 +383,29 @@ async function attachFile(cdp,filePath,onStatus,diagnostics=null){
 }
 async function promptSent(cdp,baseline,promptMarker,timeoutMs=5000){
   const before=Number(baseline?.userMessages??baseline)||0;
+  const beforeAssistant=Number(baseline?.assistantMessages)||0;
+  const beforeAssistantText=String(baseline?.assistantText||'').replace(/\s+/g,' ').trim();
   const baselineHref=String(baseline?.href||'');
   const baselineStop=!!baseline?.stopVisible;
   const deadline=Date.now()+timeoutMs;let lastEvidence=null;
   while(Date.now()<deadline){
-    const evidence=await cdp.eval(`/*YM_VERIFY_PROMPT_SENT*/(()=>{const marker=${safeJson(promptMarker)},before=${before},baselineHref=${safeJson(baselineHref)},baselineStop=${baselineStop?'true':'false'};const visible=e=>{if(!e)return false;const r=e.getBoundingClientRect(),s=getComputedStyle(e);return r.width>0&&r.height>0&&s.display!=='none'&&s.visibility!=='hidden'};const messages=[...document.querySelectorAll('[data-message-author-role="user"]')];const latest=(messages.at(-1)?.innerText||'').replace(/\\s+/g,' ').trim();const userMessage=messages.length>before&&(!marker||latest.includes(marker));const composer=document.querySelector('#prompt-textarea, textarea, [contenteditable="true"][data-testid*="composer"], [contenteditable="true"]');const composerText=(composer instanceof HTMLTextAreaElement||composer instanceof HTMLInputElement?composer.value:(composer?.innerText||composer?.textContent||'')).replace(/\\s+/g,' ').trim();const stopVisible=[...document.querySelectorAll('button,[role="button"]')].some(e=>visible(e)&&/stop/i.test((e.getAttribute('aria-label')||e.getAttribute('title')||e.getAttribute('data-testid')||e.innerText||'').trim()));const href=location.href,routeChanged=!!baselineHref&&href!==baselineHref,conversationRoute=/\\/c\\/[^/?#]+/.test(location.pathname),generationStarted=stopVisible&&!baselineStop,composerCleared=composerText.length===0,transitionEvidence=generationStarted&&composerCleared&&(routeChanged||conversationRoute);return {confirmed:userMessage||transitionEvidence,reason:userMessage?'user-message':transitionEvidence?'generation-transition':null,userMessage,messageCount:messages.length,composerCleared,composerLength:composerText.length,stopVisible,generationStarted,routeChanged,conversationRoute,href}})()`,5000).catch(()=>null);
+    const evidence=await cdp.eval(`/*YM_VERIFY_PROMPT_SENT*/(()=>{const marker=${safeJson(promptMarker)},before=${before},beforeAssistant=${beforeAssistant},beforeAssistantText=${safeJson(beforeAssistantText)},baselineHref=${safeJson(baselineHref)},baselineStop=${baselineStop?'true':'false'};const visible=e=>{if(!e)return false;const r=e.getBoundingClientRect(),s=getComputedStyle(e);return r.width>0&&r.height>0&&s.display!=='none'&&s.visibility!=='hidden'};const messages=[...document.querySelectorAll('[data-message-author-role="user"]')];const latest=(messages.at(-1)?.innerText||'').replace(/\\s+/g,' ').trim();const userMessage=messages.length>before&&(!marker||latest.includes(marker));const assistants=[...document.querySelectorAll('[data-message-author-role="assistant"]')];const assistantText=(assistants.at(-1)?.innerText||assistants.at(-1)?.textContent||'').replace(/\\s+/g,' ').trim();const assistantAdvanced=assistants.length>beforeAssistant||(assistantText&&assistantText!==beforeAssistantText);const composer=document.querySelector('#prompt-textarea, textarea, [contenteditable="true"][data-testid*="composer"], [contenteditable="true"]');const composerText=(composer instanceof HTMLTextAreaElement||composer instanceof HTMLInputElement?composer.value:(composer?.innerText||composer?.textContent||'')).replace(/\\s+/g,' ').trim();const stopVisible=[...document.querySelectorAll('button,[role="button"]')].some(e=>visible(e)&&/(stop|cancel|interrupt)/i.test((e.getAttribute('aria-label')||e.getAttribute('title')||e.getAttribute('data-testid')||e.innerText||'').trim()));const href=location.href,routeChanged=!!baselineHref&&href!==baselineHref,conversationRoute=/\\/c\\/[^/?#]+/.test(location.pathname),generationStarted=stopVisible&&!baselineStop,composerCleared=composerText.length===0,transitionEvidence=generationStarted&&composerCleared&&(routeChanged||conversationRoute),assistantEvidence=assistantAdvanced&&composerCleared;const confirmed=userMessage||transitionEvidence||assistantEvidence;return {confirmed,reason:userMessage?'user-message':transitionEvidence?'generation-transition':assistantEvidence?'assistant-activity':null,userMessage,messageCount:messages.length,assistantMessages:assistants.length,assistantAdvanced,assistantLength:assistantText.length,composerCleared,composerLength:composerText.length,stopVisible,generationStarted,routeChanged,conversationRoute,href}})()`,5000).catch(()=>null);
     lastEvidence=evidence;
     if(evidence?.confirmed)return {sent:true,evidence};
-    await delay(150);
+    await delay(200);
   }
   return {sent:false,evidence:lastEvidence};
 }
 async function sendPrompt(cdp,prompt,onStatus,options={}){
-  const sendTimeoutMs=Number(options.sendTimeoutMs||120000);
+  const sendTimeoutMs=Number(options.sendTimeoutMs||180000);
+  const finalConfirmationMs=Number(options.finalConfirmationMs||180000);
   const confirmMs=Number(options.confirmMs||7000);
   const diagnostics=options.diagnostics||null;
   const promptForTyping=String(prompt||'').replace(/\r\n?/g,'\n').replace(/\n+/g,' ').trim();
   onStatus?.('Sending repair instructions to ChatGPT.');
 
-  const baseline=await cdp.eval(`/*YM_SEND_BASELINE*/(()=>{const visible=e=>{if(!e)return false;const r=e.getBoundingClientRect(),s=getComputedStyle(e);return r.width>0&&r.height>0&&s.display!=='none'&&s.visibility!=='hidden'};const stopVisible=[...document.querySelectorAll('button,[role="button"]')].some(e=>visible(e)&&/stop/i.test((e.getAttribute('aria-label')||e.getAttribute('title')||e.getAttribute('data-testid')||e.innerText||'').trim()));return {userMessages:document.querySelectorAll('[data-message-author-role="user"]').length,href:location.href,stopVisible}})()`,5000).catch(()=>({userMessages:0,href:'',stopVisible:false}));
-  diagnostics?.record('send-baseline',{userMessages:Number(baseline?.userMessages)||0,href:baseline?.href||null,stopVisible:!!baseline?.stopVisible,promptLength:String(prompt||'').length,typedPromptLength:promptForTyping.length});
+  const baseline=await cdp.eval(`/*YM_SEND_BASELINE*/(()=>{const visible=e=>{if(!e)return false;const r=e.getBoundingClientRect(),s=getComputedStyle(e);return r.width>0&&r.height>0&&s.display!=='none'&&s.visibility!=='hidden'};const stopVisible=[...document.querySelectorAll('button,[role="button"]')].some(e=>visible(e)&&/(stop|cancel|interrupt)/i.test((e.getAttribute('aria-label')||e.getAttribute('title')||e.getAttribute('data-testid')||e.innerText||'').trim()));const assistants=[...document.querySelectorAll('[data-message-author-role="assistant"]')];const assistantText=(assistants.at(-1)?.innerText||assistants.at(-1)?.textContent||'').replace(/\\s+/g,' ').trim();return {userMessages:document.querySelectorAll('[data-message-author-role="user"]').length,assistantMessages:assistants.length,assistantText,href:location.href,stopVisible}})()`,5000).catch(()=>({userMessages:0,assistantMessages:0,assistantText:'',href:'',stopVisible:false}));
+  diagnostics?.record('send-baseline',{userMessages:Number(baseline?.userMessages)||0,assistantMessages:Number(baseline?.assistantMessages)||0,assistantLength:String(baseline?.assistantText||'').length,href:baseline?.href||null,stopVisible:!!baseline?.stopVisible,promptLength:String(prompt||'').length,typedPromptLength:promptForTyping.length});
   const focused=await cdp.eval(`/*YM_TRUSTED_FILL_PROMPT*/(()=>{const e=document.querySelector('#prompt-textarea, textarea, [contenteditable="true"][data-testid*="composer"], [contenteditable="true"]');if(!e)return false;e.focus();return true})()`,5000).catch(()=>false);
   diagnostics?.record('composer-focus',{focused:!!focused});
   if(!focused)throw new Error('ChatGPT composer was not found for trusted prompt entry.');
@@ -430,6 +433,16 @@ async function sendPrompt(cdp,prompt,onStatus,options={}){
   const promptMarker=promptForTyping.replace(/\s+/g,' ').slice(0,96);
   const alreadySent=await promptSent(cdp,baseline,promptMarker,350);if(alreadySent.sent){diagnostics?.record('send-confirmed',alreadySent.evidence);onStatus?.('Repair prompt sent to ChatGPT.');return}
 
+  const waitAfterComposerClear=async(probe,source)=>{
+    if(probe?.sent)return true;
+    if(!probe?.evidence?.composerCleared)return false;
+    onStatus?.('ChatGPT cleared the composer after the trusted '+source+' action. Waiting for response activity instead of sending again.');
+    diagnostics?.record('send-composer-cleared-grace-start',{source,milliseconds:finalConfirmationMs,evidence:probe.evidence});
+    const grace=await promptSent(cdp,baseline,promptMarker,finalConfirmationMs);
+    diagnostics?.record('send-composer-cleared-grace-result',{source,submitted:grace.sent,evidence:grace.evidence});
+    if(grace.sent){onStatus?.('ChatGPT accepted the handoff and response activity is visible.');return true}
+    throw new Error('ChatGPT cleared the composer after the trusted '+source+' send action, but no submitted user message or response activity appeared during the response grace period.');
+  };
   const deadline=Date.now()+sendTimeoutMs;
   let pointerAttempts=0,enterAttempts=0,syntheticAttempts=0,lastTargetSignature='';
   while(Date.now()<deadline){
@@ -444,6 +457,7 @@ async function sendPrompt(cdp,prompt,onStatus,options={}){
       }catch{}
       const pointerSent=await promptSent(cdp,baseline,promptMarker,confirmMs);diagnostics?.record('pointer-send-result',{attempt:pointerAttempts,submitted:pointerSent.sent,evidence:pointerSent.evidence,target});
       if(pointerSent.sent){onStatus?.('Repair prompt sent to ChatGPT.');return}
+      if(await waitAfterComposerClear(pointerSent,'pointer'))return;
     }
 
     enterAttempts++;
@@ -454,14 +468,21 @@ async function sendPrompt(cdp,prompt,onStatus,options={}){
     }catch{}
     const enterSent=await promptSent(cdp,baseline,promptMarker,confirmMs);diagnostics?.record('enter-send-result',{attempt:enterAttempts,submitted:enterSent.sent,evidence:enterSent.evidence});
     if(enterSent.sent){onStatus?.('Repair prompt sent to ChatGPT.');return}
+    if(await waitAfterComposerClear(enterSent,'Enter'))return;
 
     syntheticAttempts++;
-    await cdp.eval(`/*YM_SYNTHETIC_SEND_FALLBACK*/(()=>{const e=document.querySelector('#prompt-textarea, textarea, [contenteditable="true"][data-testid*="composer"], [contenteditable="true"]');if(!e)return false;const scope=e.closest('form')||e.parentElement?.parentElement?.parentElement||document;const b=[...scope.querySelectorAll('button')].find(x=>x.dataset?.testid==='send-button'||/send/i.test(x.getAttribute('aria-label')||''));if(b&&!b.disabled){b.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,pointerType:'mouse',isPrimary:true}));b.dispatchEvent(new MouseEvent('mousedown',{bubbles:true}));b.dispatchEvent(new MouseEvent('mouseup',{bubbles:true}));b.dispatchEvent(new MouseEvent('click',{bubbles:true}));b.dispatchEvent(new PointerEvent('pointerup',{bubbles:true,pointerType:'mouse',isPrimary:true}));return true}const form=e.closest('form');if(form&&typeof form.requestSubmit==='function'){form.requestSubmit();return true}return false})()`,5000).catch(()=>false);
+    await cdp.eval(`/*YM_SYNTHETIC_SEND_FALLBACK*/(()=>{const e=document.querySelector('#prompt-textarea, textarea, [contenteditable="true"][data-testid*="composer"], [contenteditable="true"]');if(!e)return false;const scope=e.closest('form')||e.parentElement?.parentElement?.parentElement||document;const composerText=(e instanceof HTMLTextAreaElement||e instanceof HTMLInputElement?e.value:(e.innerText||e.textContent||'')).trim();if(!composerText)return false;const b=[...scope.querySelectorAll('button')].find(x=>x.dataset?.testid==='send-button'||/send/i.test(x.getAttribute('aria-label')||''));if(b&&!b.disabled){b.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,pointerType:'mouse',isPrimary:true}));b.dispatchEvent(new MouseEvent('mousedown',{bubbles:true}));b.dispatchEvent(new MouseEvent('mouseup',{bubbles:true}));b.dispatchEvent(new MouseEvent('click',{bubbles:true}));b.dispatchEvent(new PointerEvent('pointerup',{bubbles:true,pointerType:'mouse',isPrimary:true}));return true}const form=e.closest('form');if(form&&typeof form.requestSubmit==='function'){form.requestSubmit();return true}return false})()`,5000).catch(()=>false);
     const syntheticSent=await promptSent(cdp,baseline,promptMarker,confirmMs);diagnostics?.record('synthetic-send-result',{attempt:syntheticAttempts,submitted:syntheticSent.sent,evidence:syntheticSent.evidence});
     if(syntheticSent.sent){onStatus?.('Repair prompt sent to ChatGPT.');return}
+    if(await waitAfterComposerClear(syntheticSent,'fallback'))return;
     await delay(250);
   }
-  throw new Error(`ChatGPT prompt is filled in, but no submitted user message appeared after ${pointerAttempts} trusted pointer attempts, ${enterAttempts} native Enter attempts, and ${syntheticAttempts} fallback attempts.`);
+  onStatus?.('ChatGPT submission is not visible yet. Waiting for response activity before declaring the handoff failed.');
+  diagnostics?.record('send-final-grace-start',{milliseconds:finalConfirmationMs,pointerAttempts,enterAttempts,syntheticAttempts});
+  const finalCheck=await promptSent(cdp,baseline,promptMarker,finalConfirmationMs);
+  diagnostics?.record('send-final-grace-result',{submitted:finalCheck.sent,evidence:finalCheck.evidence});
+  if(finalCheck.sent){onStatus?.('ChatGPT accepted the handoff and response activity is visible.');return}
+  throw new Error(`ChatGPT prompt is filled in, but no submitted user message or response activity appeared after ${pointerAttempts} trusted pointer attempts, ${enterAttempts} native Enter attempts, ${syntheticAttempts} fallback attempts, and the final response grace period.`);
 }
 
 async function pageText(cdp){
@@ -608,35 +629,48 @@ async function assistantProtocol(cdp){
 async function clickLatestDownload(cdp){
   return cdp.eval(`(()=>{const visible=e=>{const r=e.getBoundingClientRect(),s=getComputedStyle(e);return r.width>0&&r.height>0&&s.display!=='none'&&s.visibility!=='hidden'};const els=[...document.querySelectorAll('a,button,[role="button"]')].filter(visible);const zip=[...els].reverse().find(e=>/\.zip\b|download/i.test((e.innerText||e.getAttribute('aria-label')||e.getAttribute('download')||e.getAttribute('href')||'')));if(zip){zip.click();return true}return false})()`);
 }
-async function waitRepair(cdp,downloads,before,onStatus,shouldCancel=()=>false,assistantBefore=0,context={},timeoutMs=2*60*60*1000){
-  let deadline=Date.now()+timeoutMs;const started=Date.now();let lastClick=0,downloadClickCount=0,lastStatus=0,lastProgress=Date.now(),lastAssistant=assistantBefore,recoveries=0,sawResponse=false,finishFirstPending=false,lastProtocolText='',protocolState=null;
+async function chatResponseActivity(cdp){
+  return cdp.eval(`/*YM_CHAT_RESPONSE_ACTIVITY*/(()=>{const visible=e=>{if(!e)return false;const r=e.getBoundingClientRect(),s=getComputedStyle(e);return r.width>0&&r.height>0&&s.display!=='none'&&s.visibility!=='hidden'};const buttons=[...document.querySelectorAll('button,[role="button"]')];const generating=buttons.some(e=>visible(e)&&/(stop|cancel|interrupt)/i.test((e.getAttribute('aria-label')||e.getAttribute('title')||e.getAttribute('data-testid')||e.innerText||'').trim()));const assistants=[...document.querySelectorAll('[data-message-author-role="assistant"]')];const latest=(assistants.at(-1)?.innerText||assistants.at(-1)?.textContent||'').replace(/\\s+/g,' ').trim();return {generating,assistantMessages:assistants.length,assistantText:latest,assistantLength:latest.length,href:location.href}})()`,7000).catch(()=>({generating:false,assistantMessages:0,assistantText:'',assistantLength:0,href:''}));
+}
+function responseActivityChanged(previous,next){
+  if(!next)return false;
+  if(next.generating)return true;
+  if(!previous)return Number(next.assistantMessages||0)>0||Number(next.assistantLength||0)>0;
+  return Number(next.assistantMessages||0)>Number(previous.assistantMessages||0)||String(next.assistantText||'')!==String(previous.assistantText||'');
+}
+async function waitRepair(cdp,downloads,before,onStatus,shouldCancel=()=>false,assistantBefore=0,context={},timeoutMs=4*60*60*1000){
+  const stallMs=Number(context.stallMs||20*60*1000);
+  let deadline=Date.now()+timeoutMs;let lastClick=0,downloadClickCount=0,lastStatus=0,lastProgress=Date.now(),lastAssistant=assistantBefore,recoveries=0,sawResponse=false,finishFirstPending=false,lastProtocolText='',protocolState=null,lastActivity={generating:false,assistantMessages:assistantBefore,assistantText:'',assistantLength:0,href:''};
   while(Date.now()<deadline){
     if(shouldCancel())throw new Error('Yardmaster work was stopped by the user.');
     const fresh=findFreshDownloadedZip(downloads,before);
     if(fresh)return fresh;
     const downloadActive=hasFreshDownloadActivity(downloads,before);
 
-    const generating=await visibleText(cdp,'Stop generating').catch(()=>false);
-    const assistantNow=await cdp.eval(`document.querySelectorAll('[data-message-author-role="assistant"]').length`).catch(()=>lastAssistant);
+    const activityState=await chatResponseActivity(cdp);
+    const generating=!!activityState.generating;
+    if(responseActivityChanged(lastActivity,activityState)){lastProgress=Date.now();sawResponse=true;finishFirstPending=false}
+    lastActivity=activityState;
+    const assistantNow=Number(activityState.assistantMessages||lastAssistant);
     if(assistantNow>lastAssistant){lastAssistant=assistantNow;lastProgress=Date.now();sawResponse=true}
     protocolState=typeof context.onAssistantProtocol==='function'?await assistantProtocol(cdp).catch(()=>({protocol:'',source:null})):null;
     if(protocolState?.protocol&&protocolState.protocol!==lastProtocolText){lastProgress=Date.now();sawResponse=true}
-    if(!sawResponse&&Date.now()-started>20000)sawResponse=true;
 
     const usage=await usageLimitInfo(cdp).catch(()=>({limited:false}));
     if(usage.limited){
       await waitForUsageAvailability(cdp,context,onStatus,shouldCancel,true);
-      deadline=Date.now()+timeoutMs;lastProgress=Date.now();lastAssistant=0;sawResponse=false;finishFirstPending=false;
+      deadline=Date.now()+timeoutMs;lastProgress=Date.now();lastAssistant=0;sawResponse=false;finishFirstPending=false;lastActivity={generating:false,assistantMessages:0,assistantText:'',assistantLength:0,href:''};
       continue;
     }
 
     const condition=await chatCondition(cdp).catch(()=>null);
-    if(condition==='too_long'&&recoveries<4){
+    if(condition==='too_long'&&!generating&&recoveries<4){
       recoveries++;lastProgress=Date.now();lastAssistant=0;sawResponse=false;
       await startFreshChat(cdp,context.mode,context.model,context.thinkingEffort,context.artifactPath,context.prompt,onStatus,context.dataDir);
+      lastActivity={generating:false,assistantMessages:0,assistantText:'',assistantLength:0,href:''};
       continue;
     }
-    if(condition==='error'&&recoveries<8){
+    if(condition==='error'&&!generating&&recoveries<8){
       recoveries++;lastProgress=Date.now();
       if(!finishFirstPending){
         finishFirstPending=true;
@@ -651,16 +685,16 @@ async function waitRepair(cdp,downloads,before,onStatus,shouldCancel=()=>false,a
       }
       continue;
     }
-    if(Date.now()-lastProgress>5*60*1000&&recoveries<8){
+    if(!generating&&Date.now()-lastProgress>stallMs&&recoveries<8){
       recoveries++;lastProgress=Date.now();
       if(!finishFirstPending){
         finishFirstPending=true;
-        onStatus?.('ChatGPT appears stalled. Sending exactly "finish please" before refreshing.');
-        saveRecoveryState(context.dataDir,{reason:'stall',step:'finish_please',url:await cdp.eval('location.href').catch(()=>null)});
+        onStatus?.('ChatGPT has shown no response activity for 20 minutes. Sending exactly "finish please" before refreshing.');
+        saveRecoveryState(context.dataDir,{reason:'stall',step:'finish_please',inactivityMs:stallMs,url:await cdp.eval('location.href').catch(()=>null)});
         await sendPrompt(cdp,'finish please',onStatus);
       }else{
         finishFirstPending=false;
-        saveRecoveryState(context.dataDir,{reason:'stall',step:'refresh',url:await cdp.eval('location.href').catch(()=>null)});
+        saveRecoveryState(context.dataDir,{reason:'stall',step:'refresh',inactivityMs:stallMs,url:await cdp.eval('location.href').catch(()=>null)});
         await refreshChat(cdp,onStatus);
         await sendPrompt(cdp,'finish please',onStatus);
       }
@@ -674,7 +708,7 @@ async function waitRepair(cdp,downloads,before,onStatus,shouldCancel=()=>false,a
         const result=await context.onAssistantProtocol(protocol);
         const summary=String(result||'Yardmaster instructions completed.').slice(0,6000);
         await sendPrompt(cdp,'Yardmaster command result:\n'+summary+'\n\nContinue the repair. Return another YARDMASTER command block if more PC work is needed, or return ONE COMPLETE APPLICATION ZIP when finished.',onStatus);
-        lastProgress=Date.now();sawResponse=false;protocolState=null;continue;
+        lastProgress=Date.now();sawResponse=false;protocolState=null;lastActivity={generating:false,assistantMessages:lastAssistant,assistantText:'',assistantLength:0,href:''};continue;
       }
     }
     if(sawResponse&&!generating&&!downloadActive){
@@ -684,10 +718,14 @@ async function waitRepair(cdp,downloads,before,onStatus,shouldCancel=()=>false,a
         if(clicked){downloadClickCount++;lastClick=Date.now();lastProgress=Date.now();onStatus?.(downloadClickCount===1?'Repair ZIP download started. Waiting for it to finish.':'Repair ZIP download retry started. Waiting for it to finish.')}
       }
     }
-    if(Date.now()-lastStatus>15000){onStatus?.(generating?'ChatGPT is working on the repair.':downloadActive?'Repair ZIP is downloading. Waiting for completion.':'Waiting for ChatGPT repair download.');lastStatus=Date.now()}
+    if(Date.now()-lastStatus>15000){
+      const inactiveFor=Math.max(0,Date.now()-lastProgress),minutes=Math.floor(inactiveFor/60000);
+      onStatus?.(generating?'ChatGPT is actively working on the repair. Yardmaster will keep waiting.':downloadActive?'Repair ZIP is downloading. Waiting for completion.':sawResponse?'Waiting for ChatGPT repair download. Last response activity '+minutes+' minute'+(minutes===1?'':'s')+' ago.':'Waiting for ChatGPT to begin its response. Yardmaster will not treat the handoff as stalled until 20 minutes of inactivity.');
+      lastStatus=Date.now()
+    }
     await delay(1200);
   }
-  throw new Error('Timed out waiting for a repaired ZIP from ChatGPT.');
+  throw new Error('Timed out after four hours waiting for a repaired ZIP from ChatGPT.');
 }
 
 async function manualComposerText(cdp){
@@ -877,7 +915,7 @@ export async function submitRepairToChatGPT({mode='Work',model='GPT-5.6 Sol',thi
   const handoffPath=path.resolve(artifactPath);
   if(!fs.existsSync(handoffPath))throw new Error('Yardmaster handoff ZIP does not exist: '+handoffPath);
   if(!/\.zip$/i.test(path.basename(handoffPath)))throw new Error('Yardmaster handoff archive must be a ZIP file: '+handoffPath);
-  const diagnostics=createHandoffDiagnostics(dataDir,{version:'0.1.65',mode,model,thinkingEffort,artifactPath:handoffPath,prompt});
+  const diagnostics=createHandoffDiagnostics(dataDir,{version:'0.1.69',mode,model,thinkingEffort,artifactPath:handoffPath,prompt});
   const status=message=>{diagnostics.record('status',{message});onStatus?.(message)};
   let cdp=null,downloads=null;
   try{
@@ -986,5 +1024,8 @@ export const __testHooks={
   assistantProtocol,
   snapshotDownloads:snapshot,
   findFreshDownloadedZip,
-  hasFreshDownloadActivity
+  hasFreshDownloadActivity,
+  chatResponseActivity,
+  responseActivityChanged,
+  waitRepair
 };

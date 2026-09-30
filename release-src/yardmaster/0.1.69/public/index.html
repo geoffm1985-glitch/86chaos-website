@@ -106,6 +106,8 @@
           <div class="field"><label>Maximum Repair Attempts</label><input id="maxRepairAttempts" type="number" min="0" max="1000" step="1" value="25"><div class="tiny">0 = Unlimited repair attempts.</div></div>
           <div class="field"><label>Local Repo Update</label><select id="repoUpdate"><option value="automatic">Automatic</option><option value="ask">Ask Me</option><option value="never">Never</option></select></div>
           <div class="toggle-row"><span>Send failures to ChatGPT automatically</span><button class="toggle" id="autoHandoff"></button></div>
+          <div class="toggle-row"><span>Self-heal Yardmaster automatically</span><button class="toggle on" id="autoSelfHeal"></button></div>
+          <div class="field"><label>Maximum Self-Heal Attempts</label><input id="maxSelfHealAttempts" type="number" min="1" max="10" step="1" value="5"><div class="tiny">Each attempt must pass Yardmaster self-heal, Playwright, and full Play Store tests before installation.</div></div>
           <div class="status-block"><span>Current workflow</span><b id="queueWorkflow">idle</b></div>
         </div>
         <div class="panel page-card"><div class="eyebrow">Pending Approval</div><div id="queueApproval"></div><div class="command-panel"><div class="eyebrow">Direct Command Protocol</div><textarea id="commandBlock" spellcheck="false" placeholder="YARDMASTER&#10;BRANCH testing&#10;RUN delta"></textarea><button class="btn primary" id="runCommandBlock">Run Command Block</button></div></div>
@@ -152,8 +154,11 @@
           <div class="eyebrow">Operator Preferences</div>
           <div class="toggle-row"><span>Push after pass</span><button class="toggle" id="autoPush"></button></div>
           <div class="toggle-row"><span>Auto-update Yardmaster</span><button class="toggle on" id="autoUpdateOperator"></button></div>
-          <div class="status-block"><span>Version</span><b id="versionLabel">0.1.67</b></div>
+          <div class="status-block"><span>Version</span><b id="versionLabel">0.1.69</b></div>
           <div class="status-block"><span>Update</span><b id="updateStatus">Current</b></div>
+          <div class="status-block"><span>Self-heal</span><b id="selfHealState">Idle</b></div>
+          <div class="tiny" id="selfHealDetail">Supervisor and self-heal engine are ready.</div>
+          <div class="button-row"><button class="btn" data-action="self-heal-now">Run Self-Heal Diagnostic</button><button class="btn" data-action="resume-self-heal">Resume Self-Heal</button></div>
           <button class="btn primary" data-action="update-operator-now" style="width:100%;margin-top:8px">Update PC Yardmaster Now</button>
           <div class="tiny" id="updateDetail">Checks the verified Yardmaster release and safely queues the update if protected work is active.</div>
           <div class="status-block"><span>Push health</span><b id="pushHealthSummary">No paired subscriptions</b></div>
