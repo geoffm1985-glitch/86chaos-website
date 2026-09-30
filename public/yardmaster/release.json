@@ -1,19 +1,17 @@
 {
   "product": "Yardmaster",
-  "version": "0.1.82",
+  "version": "0.1.85",
   "releaseDate": "2026-09-30",
-  "sourceCommit": "501511d76b3a1b5cc84247973e08b525c609e8b8",
-  "verified": true,
+  "sourceCommit": "f8db0a451e0fd4567291c414246be5aa13567cec",
+  "verified": false,
   "verification": {
-    "fullStore": "pass",
-    "fullPlaywright": "pass",
-    "certificationSource": "user-reported Windows full local test run",
-    "userConfirmedAt": "2026-09-30T21:11:23Z",
-    "syntaxCheck": "pass",
-    "targetedNode": "36 passed",
-    "targetedPlaywright": "3 passed",
-    "windowsReporterPathRegression": "pass"
+    "candidate": "testing-only",
+    "sourceSyntax": "pass",
+    "targetedNode": "4 passed",
+    "playwrightCoverage": "added; not executed in the model container because the 0.1.83 source archive does not include installed browser dependencies",
+    "fullStore": "not run",
+    "note": "Candidate intentionally built from 0.1.83 and skipped 0.1.84 for this build only."
   },
   "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.82.zip",
-  "sha256": "e450307999ff9ad4a9a112abfb4cb5dfea377f3d02d8243f783102a56705d6b2"
+  "candidateSha256": "bb492797cb9643e48c0f0d36fd6b63d73973ded150cb56d55375823091000635"
 }
