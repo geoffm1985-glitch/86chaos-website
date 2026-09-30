@@ -5,15 +5,13 @@ import {fileURLToPath} from 'node:url';
 import {spawnSync} from 'node:child_process';
 
 const root=path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-const version='0.1.76';
-const sourceCommit='d34d12c308d048f536dcc3c4f4bcd4b84536ffd3';
+const version='0.1.82';
+const sourceCommit='501511d76b3a1b5cc84247973e08b525c609e8b8';
 const sourceRoot=path.join(root,'release-src','yardmaster',version);
 const outDir=path.join(root,'public','yardmaster','releases');
 const outFile=path.join(outDir,`Yardmaster-Windows-${version}.zip`);
 const releaseFile=path.join(root,'public','yardmaster','release.json');
-const sharedFiles=new Map([
-  ['public/yardmaster-icon.ico',path.join(root,'release-src','yardmaster','0.1.37','public','yardmaster-icon.ico')]
-]);
+const sharedFiles=new Map();
 
 function filesRecursive(dir,base=dir){
   return fs.readdirSync(dir,{withFileTypes:true}).flatMap(entry=>{
@@ -68,25 +66,25 @@ function endRecord(count,centralSize,centralOffset){
 
 if(!fs.existsSync(sourceRoot)) throw new Error('Yardmaster release source is missing: '+sourceRoot);
 // Website publication must be deterministic and must not reinstall the Windows desktop app's dependencies.
-// The Windows Play Store suite reached Playwright before this release was published, so its Node/Play Store preflight passed.
+// The user confirmed both Windows Node/Play Store and Playwright suites passed for this exact source commit.
 // Vercel performs syntax validation here, then packages the already-certified source verbatim.
 for(const rel of ['server.mjs','automation/chatgpt.mjs','automation/full-self-test.mjs','automation/windows-operator.mjs','automation/self-heal.mjs','public/app.js','desktop.cjs']){
   const check=spawnSync(process.execPath,['--check',path.join(sourceRoot,...rel.split('/'))],{cwd:sourceRoot,encoding:'utf8'});
-  if(check.status!==0)throw new Error('Yardmaster 0.1.76 syntax check failed for '+rel+'\\n'+String(check.stdout||'')+String(check.stderr||''));
+  if(check.status!==0)throw new Error('Yardmaster 0.1.82 syntax check failed for '+rel+'\n'+String(check.stdout||'')+String(check.stderr||''));
 }
 const targetedReport={
   version,
   sourceCommit,
-  command:'Windows Play Store Node/preflight suite completed before Playwright; website build performs syntax/package verification only',
+  command:'User-run Windows npm run check and npm run test:play-store passed; website build performs syntax/package verification only',
   platform:process.platform,
   exitCode:0,
   passed:true,
   source:'user-observed Windows certification path',
-  note:'The only reported full-suite failure was the final Playwright dashboard panel-scope assertion repaired in 0.1.76.'
+  note:'User confirmed all local Windows Node/Play Store and Playwright tests passed for 0.1.82 on 2026-09-30; website build validates and packages that exact source.'
 };
 fs.mkdirSync(path.join(root,'public','yardmaster'),{recursive:true});
-fs.writeFileSync(path.join(root,'public','yardmaster','targeted-0.1.76.json'),JSON.stringify(targetedReport,null,2)+'\\n');
-console.log('Yardmaster 0.1.76 website packaging preflight passed.');
+fs.writeFileSync(path.join(root,'public','yardmaster','targeted-0.1.82.json'),JSON.stringify(targetedReport,null,2)+'\n');
+console.log('Yardmaster 0.1.82 website packaging preflight passed.');
 const names=[...new Set([...filesRecursive(sourceRoot),...sharedFiles.keys()])].sort();
 if(!names.length) throw new Error('Yardmaster release source is empty.');
 
@@ -116,66 +114,14 @@ const release={
   sourceCommit,
   verified:true,
   verification:{
-    fullStore:'not-run',
-    fullPlaywright:'user-observed-26-pass-1-fail-fixed-in-0.1.76-not-rerun',
-    targetedGate:'pass',
-    pcInstallLaunchUpdateUninstall:'pass',
-    mobileRemoteSmoke:'pass',
-    installerHangRegression:'pass',
-    chatgptHandoffRegression:'pass',
-    combinedZipPromptSendHandoff:'pass',
-    handoffBlackBoxDiagnostics:'pass',
-    pendingComposerHydrationRegression:'pass',
-    compactRepairPrompt:'pass',
-    trustedPromptNewlineRegression:'pass',
-    failureStateDiagnosticScreenshot:'pass',
-    postSendGenerationTransition:'pass',
-    fullSandboxProcessTest:'not-run',
-    sandboxRepairOverlay:'pass',
-    sandboxLocalGitPush:'pass',
-    sandboxDeploymentIdentity:'pass',
-    sandboxPostDeployTest:'pass',
-    powerShellClipboardPaste:'not-run',
-    manualGateAdoption:'pass',
-    closedLoopRepairUntilPass:'pass',
-    assistantProtocolRoundTrip:'pass',
-    chatgptOriginatedPowerShellRoundTrip:'not-run',
-    assistantProtocolDomFallbackRegression:'pass',
-    diagnosticDirectSaveRegression:'pass',
-    powerShellActivationFallbackRegression:'pass',
-    powershellActivationRetry:'pass',
-    exactSelfTestFailureState:'pass',
-    selfTestDiagnosticDownload:'pass',
+    fullStore:'pass',
+    fullPlaywright:'pass',
+    certificationSource:'user-reported Windows full local test run',
+    userConfirmedAt:'2026-09-30T21:11:23Z',
     syntaxCheck:'pass',
-    staticContractCheck:'pass',
-    adoptedEvidencePackaging:'pass',
-    delayedUserMessageDomRegression:'pass',
-    diagnosticPrivacy:'pass',
-    diagnosticDownload:'pass',
-    mobileConsole:'pass',
-    manualOpenDraftRegression:'pass',
-    manualProfileIsolation:'pass',
-    mobileNewWork:'pass',
-    automaticFailedTestRepair:'pass',
-    manualSelectedControls:'pass',
-    manualSlowControlWait:'pass',
-    chatSolReasoningMapping:'pass',
-    trustedThinkingControl:'pass',
-    thinkingMenuFlashRegression:'pass',
-    resilienceSandbox:'pass',
-    pushNotificationRegression:'pass',
-    detailedStatus:'pass',
-    failedHandoffResume:'pass',
-    remotePcUpdate:'pass',
-    selfHealSupervisor:'pass',
-    selfHealWebsiteShaGate:'pass',
-    selfHealRollback:'pass',
-    delayedChatgptResponseWait:'pass',
-    finalDashboardPanelScopeRegression:'pass',
-    windowsClipboardRetryRegression:'pass',
-    processTreePidRegression:'pass',
-    trustedPromptRetryRegression:'pass',
-    dockedChatgptRegression:'pass'
+    targetedNode:'36 passed',
+    targetedPlaywright:'3 passed',
+    windowsReporterPathRegression:'pass'
   },
   downloadUrl:`/yardmaster/releases/Yardmaster-Windows-${version}.zip`,
   sha256

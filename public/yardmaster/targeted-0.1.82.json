@@ -1,0 +1,10 @@
+{
+  "version": "0.1.82",
+  "sourceCommit": "501511d76b3a1b5cc84247973e08b525c609e8b8",
+  "command": "User-run Windows npm run check and npm run test:play-store passed; website build performs syntax/package verification only",
+  "platform": "linux",
+  "exitCode": 0,
+  "passed": true,
+  "source": "user-observed Windows certification path",
+  "note": "User confirmed all local Windows Node/Play Store and Playwright tests passed for 0.1.82 on 2026-09-30; website build validates and packages that exact source."
+}

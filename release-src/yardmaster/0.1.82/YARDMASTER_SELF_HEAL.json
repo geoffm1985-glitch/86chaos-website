@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "version": "0.1.82",
+  "published": false,
+  "releaseManifestUrl": "https://www.86chaos.com/yardmaster/release.json",
+  "requiredTests": [
+    "test:self-heal",
+    "test:playwright",
+    "test:play-store"
+  ],
+  "regressionCoverage": {
+    "exactFailure": "Yardmaster 0.1.81 Windows run: 125 Node tests, 122 passed, 3 failed. The certification inventory assertion expected POSIX separators instead of native Windows paths; Node reporter probes passed an absolute C: path as an ESM reporter specifier, causing ERR_UNSUPPORTED_ESM_URL_SCHEME. Playwright did not start.",
+    "playStoreTests": [
+      "test/test-reporting.test.mjs",
+      "test/static-contracts.test.mjs"
+    ],
+    "playwrightTests": [
+      "test/playwright/test-reporting.e2e.spec.mjs"
+    ]
+  }
+}
