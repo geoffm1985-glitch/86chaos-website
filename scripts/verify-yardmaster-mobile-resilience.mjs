@@ -15,6 +15,7 @@ for(const marker of [
   'Upload Failed ZIP & Continue','update-operator-now','updatePcYardmaster',
   'mPushStatus','pushKeyMatches','ensurePush','needsResubscribe',
   'existing failed-test ZIP','data-act="resume-handoff"','mobileNewWork',
+  'mSelfHealState','mSelfHealDetail','self-heal-now','resume-self-heal','autoSelfHeal','maxSelfHealAttempts',
   'navigator.credentials','trycloudflare.com','ym-auth-pending','ym-authenticated'
 ]) assert.ok(page.includes(marker),marker);
 assert.match(sw,/yardmaster-pwa-v0\.1\.62/);
