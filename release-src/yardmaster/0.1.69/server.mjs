@@ -1,8 +1,8 @@
-import http from 'node:http';import fs from 'node:fs';import path from 'node:path';import os from 'node:os';import crypto from 'node:crypto';import {spawn,execFileSync} from 'node:child_process';import {fileURLToPath} from 'node:url';import {openChatGPT,submitRepairToChatGPT,startCommandBridge} from './automation/chatgpt.mjs';import {runFullSandboxSelfTest} from './automation/full-self-test.mjs';import {runPowerShellClipboardCommand,adoptRunningReleaseGate,discoverAdoptableReleaseGate} from './automation/windows-operator.mjs';import webpush from 'web-push';import QRCode from 'qrcode';import {generateRegistrationOptions,verifyRegistrationResponse,generateAuthenticationOptions,verifyAuthenticationResponse} from '@simplewebauthn/server';
+import http from 'node:http';import fs from 'node:fs';import path from 'node:path';import os from 'node:os';import crypto from 'node:crypto';import {spawn,execFileSync} from 'node:child_process';import {fileURLToPath} from 'node:url';import {openChatGPT,submitRepairToChatGPT,startCommandBridge} from './automation/chatgpt.mjs';import {runFullSandboxSelfTest} from './automation/full-self-test.mjs';import {runPowerShellClipboardCommand,adoptRunningReleaseGate,discoverAdoptableReleaseGate} from './automation/windows-operator.mjs';import {SELF_HEAL_MAX_ATTEMPTS,captureWorkflowCheckpoint,selfHealPrompt,inspectSelfHealArchive,fetchAndCertifyPublishedSelfHeal,createSelfHealFailureBundle,readSelfHealRequest,clearSelfHealRequest,writeSelfHealRequest} from './automation/self-heal.mjs';import webpush from 'web-push';import QRCode from 'qrcode';import {generateRegistrationOptions,verifyRegistrationResponse,generateAuthenticationOptions,verifyAuthenticationResponse} from '@simplewebauthn/server';
 const __dirname=path.dirname(fileURLToPath(import.meta.url));const publicDir=path.join(__dirname,'public');const dataDir=process.env.YARDMASTER_DATA_DIR||(process.env.LOCALAPPDATA?path.join(process.env.LOCALAPPDATA,'Yardmaster'):path.join(os.homedir(),'.yardmaster'));fs.mkdirSync(dataDir,{recursive:true});
 const packageInfo=readJson(path.join(__dirname,'package.json'),{version:'0.0.0'});
 const configuredPort=Number(process.env.YARDMASTER_PORT||8787);const operatorPort=Number.isInteger(configuredPort)&&configuredPort>0&&configuredPort<65536?configuredPort:8787;
-const cfgPath=path.join(dataDir,'config.json'),statePath=path.join(dataDir,'state.json'),devicesPath=path.join(dataDir,'devices.json'),vapidPath=path.join(dataDir,'vapid.json'),sessionsPath=path.join(dataDir,'sessions.json'),remotePath=path.join(dataDir,'remote.json'),updateResumePath=path.join(dataDir,'update-resume.json');
+const cfgPath=path.join(dataDir,'config.json'),statePath=path.join(dataDir,'state.json'),devicesPath=path.join(dataDir,'devices.json'),vapidPath=path.join(dataDir,'vapid.json'),sessionsPath=path.join(dataDir,'sessions.json'),remotePath=path.join(dataDir,'remote.json'),updateResumePath=path.join(dataDir,'update-resume.json'),supervisorStopPath=path.join(dataDir,'supervisor-stop.json');
 function repositoryCandidates(){
   const home=os.homedir(),oneDrive=process.env.OneDrive||'';
   return [...new Set([
@@ -22,7 +22,7 @@ function detectRepositoryPath(preferred){
   return repositoryCandidates().find(validRepositoryPath)||null;
 }
 const defaultRepositoryPath=detectRepositoryPath(null)||path.join(os.homedir(),'Documents','GitHub','86chaos');
-const defaults={repositoryPath:defaultRepositoryPath,branch:'testing',testType:'delta',chatMode:'Work',model:'GPT-5.6 Sol',thinkingEffort:'High',repoUpdateMode:'automatic',autoPush:false,waitForDeploy:true,testingUrl:'https://testing.86chaos.com',vercelProject:'86chaos',autoUpdateOperator:true,autoHandoff:true,maxRepairAttempts:25,runAfterDeploy:true,automationDefaultsVersion:4};
+const defaults={repositoryPath:defaultRepositoryPath,branch:'testing',testType:'delta',chatMode:'Work',model:'GPT-5.6 Sol',thinkingEffort:'High',repoUpdateMode:'automatic',autoPush:false,waitForDeploy:true,testingUrl:'https://testing.86chaos.com',vercelProject:'86chaos',autoUpdateOperator:true,autoHandoff:true,autoSelfHeal:true,maxRepairAttempts:25,maxSelfHealAttempts:SELF_HEAL_MAX_ATTEMPTS,runAfterDeploy:true,automationDefaultsVersion:5};
 function readJson(p,f){try{return JSON.parse(fs.readFileSync(p,'utf8'))}catch{return f}}function writeJson(p,v){fs.writeFileSync(p,JSON.stringify(v,null,2))}
 const storedConfig=readJson(cfgPath,{});
 let config={...defaults,...storedConfig};
@@ -39,13 +39,18 @@ if(Number(storedConfig.automationDefaultsVersion||0)<4){
   config.autoHandoff=true;
   config.automationDefaultsVersion=4;
 }
+if(Number(storedConfig.automationDefaultsVersion||0)<5){
+  if(storedConfig.autoSelfHeal===undefined)config.autoSelfHeal=true;
+  if(storedConfig.maxSelfHealAttempts===undefined)config.maxSelfHealAttempts=SELF_HEAL_MAX_ATTEMPTS;
+  config.automationDefaultsVersion=5;
+}
 const recoveredRepositoryPath=detectRepositoryPath(config.repositoryPath);
 if(recoveredRepositoryPath)config.repositoryPath=recoveredRepositoryPath;
 writeJson(cfgPath,config);let devices=readJson(devicesPath,{});let vapid=readJson(vapidPath,null);if(!vapid){vapid=webpush.generateVAPIDKeys();writeJson(vapidPath,vapid)}webpush.setVapidDetails('mailto:support@86chaos.com',vapid.publicKey,vapid.privateKey);
 function pidAlive(pid){try{if(!Number(pid))return false;process.kill(Number(pid),0);return true}catch{return false}}
 const savedRemote=readJson(remotePath,null);
 const restoredRemote=savedRemote?.active&&savedRemote?.url&&pidAlive(savedRemote.pid)?{active:true,status:'tunnel-ready',url:savedRemote.url,pid:Number(savedRemote.pid),pairCode:null,pairExpiresAt:null,error:null,lastClientAt:null}:{active:false,status:'local',url:null,pid:null,pairCode:null,pairExpiresAt:null,error:null,lastClientAt:null};
-let state={online:true,version:packageInfo.version,machineName:os.hostname(),config,run:{state:'idle',title:'Ready for work',subtitle:'Choose a branch and test type, then start.',progress:0,counts:{pass:0,fail:0,skip:0,timeout:0},currentTest:'Idle',elapsedMs:0,log:[]},activity:[],deployment:{state:'Idle'},chatgpt:{state:'Ready'},selfTest:{state:'idle',stage:'idle',detail:'Ready for a full isolated process test.',steps:{}},adoptableRun:null,remote:restoredRemote,update:{state:'Current',version:packageInfo.version},workflow:{state:'idle',repairAttempts:0,pendingRepair:null,repairApplied:false,approval:null,closedLoop:false}};
+let state={online:true,version:packageInfo.version,machineName:os.hostname(),config,run:{state:'idle',title:'Ready for work',subtitle:'Choose a branch and test type, then start.',progress:0,counts:{pass:0,fail:0,skip:0,timeout:0},currentTest:'Idle',elapsedMs:0,log:[]},activity:[],deployment:{state:'Idle'},chatgpt:{state:'Ready'},selfTest:{state:'idle',stage:'idle',detail:'Ready for a full isolated process test.',steps:{}},selfHeal:{state:'idle',detail:'Self-heal is ready.',attempt:0,maxAttempts:SELF_HEAL_MAX_ATTEMPTS,currentTest:null,diagnostic:null,error:null,log:[]},adoptableRun:null,remote:restoredRemote,update:{state:'Current',version:packageInfo.version},workflow:{state:'idle',repairAttempts:0,pendingRepair:null,repairApplied:false,approval:null,closedLoop:false}};
 const old=readJson(statePath,null),pendingUpdateResume=readJson(updateResumePath,null);if(old?.activity)state.activity=old.activity.slice(-80);
 const resumableWorkflowStates=new Set(['handoff-error','failed-manual','waiting-login','waiting-approval','repair-limit','download-only','update-queued']);
 if(old&&(pendingUpdateResume||resumableWorkflowStates.has(String(old.workflow?.state||'')))){
@@ -53,6 +58,7 @@ if(old&&(pendingUpdateResume||resumableWorkflowStates.has(String(old.workflow?.s
   if(old.run)state.run={...old.run,log:Array.isArray(old.run.log)?old.run.log.slice(-350):[]};
   if(old.chatgpt)state.chatgpt=old.chatgpt;
   if(old.deployment)state.deployment=old.deployment;
+  if(old.selfHeal)state.selfHeal={...state.selfHeal,...old.selfHeal};
 }
 let activeProcess=null,adoptedRunController=null,remoteProcess=null,remoteStartPromise=null,remoteStartNonce=0,runStartedAt=0,pairCode=null,pairExpiresAt=0,workflowBusy=false,currentRunOptions={},cancelRequested=false,pauseRequested=false,pausedCompletion=null,commandBridge=null;const RP_ID='86chaos.com',RP_NAME='Yardmaster',EXPECTED_ORIGINS=['https://www.86chaos.com','https://86chaos.com'];const pendingRegistrations=new Map(),pendingAuthentications=new Map(),pairFailures=new Map();
 const savedSessions=readJson(sessionsPath,{});const sessions=new Map(Object.entries(savedSessions).filter(([,s])=>s&&Number(s.expiresAt)>Date.now()));
@@ -105,8 +111,11 @@ function pushHealthSnapshot(){
   return {pairedDevices:all.length,subscribedDevices:subscribed.length,workingDevices:working.length,needsAttention:needsAttention.length,lastSuccessfulAt:lastSuccessfulAt||null,lastError:lastErrorDevice?.pushLastError||null};
 }
 function operatorStatusSnapshot(){
-  const wf=state.workflow||{},run=state.run||{},dep=state.deployment||{},self=state.selfTest||{},update=state.update||{};
+  const wf=state.workflow||{},run=state.run||{},dep=state.deployment||{},self=state.selfTest||{},heal=state.selfHeal||{},update=state.update||{};
   const out={phase:'idle',doing:'Yardmaster is ready.',waitingOn:'A command from Windows or your phone.',nextAction:'Start a test, new work, or another approved action.',canResume:false,resumeAction:null,updatedAt:Date.now()};
+  if(['queued','chatgpt','certifying','testing','preparing-update','soaking'].includes(String(heal.state||'')))return {...out,phase:'self-heal',doing:heal.detail||'Yardmaster is repairing itself.',waitingOn:heal.currentTest||'the self-heal cycle to finish',nextAction:'No action is required. The repaired Yardmaster will install only after its sandbox, Playwright, and full Play Store tests pass.'};
+  if(heal.state==='waiting-login')return {...out,phase:'self-heal-needs-attention',doing:'Yardmaster self-heal is paused because ChatGPT needs a sign-in.',waitingOn:'You to sign in once in the Yardmaster ChatGPT window.',nextAction:'Choose Resume Self-Heal after signing in.',canResume:true,resumeAction:'resume-self-heal'};
+  if(heal.state==='failed')return {...out,phase:'self-heal-failed',doing:'Yardmaster self-heal stopped safely: '+(heal.error||'unknown failure'),waitingOn:'A retry or manual repair.',nextAction:'Use Resume Self-Heal to retry from the saved diagnostic.',canResume:true,resumeAction:'resume-self-heal'};
   if(update.state==='Updating'||String(update.state||'').startsWith('Updating ('))return {...out,phase:'updating',doing:'Updating Yardmaster from '+(update.from||packageInfo.version)+' to '+(update.to||update.version||'the verified release')+'.',waitingOn:'The Windows updater to finish and restart Yardmaster.',nextAction:'Keep the PC powered on. Remote Access will reconnect after restart.'};
   if(update.state==='Queued')return {...out,phase:'update-queued',doing:'A Yardmaster update is queued.',waitingOn:update.waitingOn||'The current protected work to reach a safe stopping point.',nextAction:'Yardmaster will update automatically as soon as it is safe.'};
   if(self.state==='running'||self.state==='queued')return {...out,phase:'sandbox-test',doing:self.detail||('Running sandbox stage '+(self.stage||'starting')+'.'),waitingOn:self.stage||'sandbox test',nextAction:'No action needed unless Yardmaster reports a failure.'};
@@ -173,13 +182,62 @@ async function checkForOperatorUpdate(){
   try{await requestOperatorUpdate({automatic:true,requestedBy:'automatic updater'})}
   catch(e){state.update={state:'Update check failed',version:packageInfo.version,error:e.message};activity('Operator update check failed: '+e.message,'warn')}
 }
+function restoreSelfHealCheckpoint(checkpoint){
+  if(!checkpoint)return {kind:'none'};
+  const allowedConfig=['branch','testType','chatMode','model','thinkingEffort','repoUpdateMode','autoPush','waitForDeploy','runAfterDeploy'];
+  for(const key of allowedConfig)if(checkpoint.config&&key in checkpoint.config)config[key]=checkpoint.config[key];
+  writeJson(cfgPath,config);
+  if(checkpoint.workflow)state.workflow=checkpoint.workflow;
+  if(checkpoint.run)state.run={...checkpoint.run,log:Array.isArray(checkpoint.run.log)?checkpoint.run.log.slice(-350):[]};
+  if(checkpoint.deployment)state.deployment=checkpoint.deployment;
+  if(checkpoint.chatgpt)state.chatgpt=checkpoint.chatgpt;
+  const resume=checkpoint.resume||{kind:'none'};
+  state.selfHeal={...state.selfHeal,state:'soaking',detail:'Self-heal update '+packageInfo.version+' started. Holding the saved workflow until the post-update health soak passes.',attempt:state.selfHeal?.attempt||0,maxAttempts:Number(config.maxSelfHealAttempts)||SELF_HEAL_MAX_ATTEMPTS,currentTest:'Post-update health soak',error:null,pendingResume:resume,log:state.selfHeal?.log||[]};
+  activity('Self-heal restored the saved checkpoint. Workflow resume '+resume.kind+' is held until the post-update health soak passes.');
+  persist();
+  return resume;
+}
+function resumeSelfHealCheckpoint(checkpoint){
+  const resume=checkpoint?.resume||state.selfHeal?.pendingResume||{kind:'none'};
+  state.selfHeal={...state.selfHeal,pendingResume:null};
+  if(resume.kind==='resume-handoff'){
+    setTimeout(()=>{const wf=state.workflow||{};(wf.handsFree&&wf.taskPrompt?resumeImplementationTask():submitCurrentHandoff({resume:true})).catch(error=>{state.selfHeal={...state.selfHeal,state:'failed',error:error.message};activity('Checkpoint handoff resume failed: '+error.message,'error');persist()})},400);
+  }else if(resume.kind==='resume-test'){
+    setTimeout(async()=>{try{const info=discoverAdoptableReleaseGate(config.repositoryPath);if(info?.active)await adoptManualPlayStoreRun();else runTest({retry:true,closedLoop:!!resume.closedLoop,selfHealResume:true})}catch(error){state.selfHeal={...state.selfHeal,state:'failed',error:error.message};activity('Checkpoint test resume failed: '+error.message,'error');persist()}},400);
+  }else if(resume.kind==='watch-deployment'&&resume.expectedCommit){
+    setTimeout(()=>watchDeployment(String(resume.expectedCommit)).catch(error=>{state.selfHeal={...state.selfHeal,state:'failed',error:error.message};activity('Checkpoint deployment resume failed: '+error.message,'error');persist()}),400);
+  }else if(resume.kind==='restore-only'){
+    activity('Self-heal restored the saved approval state. No automatic action was taken.');
+  }else{
+    activity('Self-heal completed with no saved workflow action to resume.');
+  }
+}
+function confirmSelfHealUpdateAfterSoak(marker,checkpoint){
+  const soakMs=Math.max(5000,Number(process.env.YARDMASTER_SELF_HEAL_SOAK_MS||60000));
+  state.selfHeal={...state.selfHeal,state:'soaking',detail:'Updated Yardmaster '+packageInfo.version+' is running. Verifying stability for '+Math.round(soakMs/1000)+' seconds before resuming saved work.',currentTest:'Post-update health soak'};persist();
+  setTimeout(()=>{
+    const current=readJson(updateResumePath,null);
+    if(!current||current.requestedBy!=='self-heal'||String(current.to)!==String(packageInfo.version))return;
+    try{fs.rmSync(updateResumePath,{force:true})}catch{}
+    clearSelfHealRequest(dataDir);
+    state.selfHeal={...state.selfHeal,state:'complete',detail:'Self-heal update '+packageInfo.version+' passed its post-update health soak. Resuming saved work.',currentTest:null,error:null,completedAt:Date.now()};
+    state.update={state:'Updated',from:marker.from||null,to:packageInfo.version,requestedBy:'self-heal',finishedAt:Date.now()};
+    activity('Self-heal update '+packageInfo.version+' passed its post-update health soak. Resuming the saved workflow now.');
+    persist();
+    resumeSelfHealCheckpoint(checkpoint||current.resumeAfterUpdate?.checkpoint||null);
+    notify('Yardmaster self-heal complete','Yardmaster '+packageInfo.version+' is healthy. The saved workflow is resuming.');
+  },soakMs);
+}
 function resumeAfterOperatorUpdate(){
   const marker=readJson(updateResumePath,null);if(!marker)return;
-  try{fs.rmSync(updateResumePath,{force:true})}catch{}
+  const resume=marker.resumeAfterUpdate||state.workflow?.resumeAfterUpdate||null;
+  if(resume?.kind!=='self-heal'){try{fs.rmSync(updateResumePath,{force:true})}catch{}}
   state.update={state:'Updated',from:marker.from||null,to:packageInfo.version,requestedBy:marker.requestedBy||null,finishedAt:Date.now()};
   activity('Yardmaster restarted on version '+packageInfo.version+' after the PC update.');
-  const resume=marker.resumeAfterUpdate||state.workflow?.resumeAfterUpdate||null;
-  if(resume?.kind==='continue-after-run'){
+  if(resume?.kind==='self-heal'){
+    restoreSelfHealCheckpoint(resume.checkpoint||null);
+    confirmSelfHealUpdateAfterSoak(marker,resume.checkpoint||null);
+  }else if(resume?.kind==='continue-after-run'){
     state.workflow={...(state.workflow||{}),state:'update-resumed',resumeAfterUpdate:null};currentRunOptions=resume.options||{};
     activity('Resuming the workflow from the completed '+(Number(resume.code)===0?'passing':'failed')+' test after the Yardmaster update.');
     setTimeout(()=>continueAfterRun(Number(resume.code)||0,currentRunOptions),450);
@@ -288,6 +346,76 @@ function buildHandoff(){
   execFileSync('powershell.exe',['-NoProfile','-ExecutionPolicy','Bypass','-File',script,'-RepoPath',repositoryPathOrThrow(),'-OutputPath',out,'-FailureSummary',failureSummary(),'-EvidenceDir',String(state.lastRunEvidenceDir||'')],{cwd:__dirname,encoding:'utf8',windowsHide:true,maxBuffer:20*1024*1024});
   return out;
 }
+function selfHealCheckpoint(){
+  return captureWorkflowCheckpoint({state,config,version:packageInfo.version});
+}
+function latestSelfHealDiagnostic(){
+  const wf=state.workflow?.diagnostic;if(wf?.path&&fs.existsSync(wf.path))return wf.path;
+  const request=readSelfHealRequest(dataDir);if(request?.diagnosticPath&&fs.existsSync(request.diagnosticPath))return request.diagnosticPath;
+  return null;
+}
+function queueSelfHeal(reason,diagnosticPath=null,checkpoint=selfHealCheckpoint()){
+  if(!config.autoSelfHeal)return null;
+  const source=diagnosticPath&&fs.existsSync(diagnosticPath)?diagnosticPath:createSelfHealFailureBundle(dataDir,{reason,attempt:0,checkpoint,testResult:{stage:'yardmaster-runtime',stdout:String(reason||''),stderr:''}});
+  const request={schema:1,reason:String(reason||'Yardmaster internal failure'),diagnosticPath:source,checkpoint,createdAt:new Date().toISOString(),attempt:0};
+  writeSelfHealRequest(dataDir,request);
+  state.selfHeal={state:'queued',detail:'Yardmaster captured its own failure and queued a self-heal.',attempt:0,maxAttempts:Number(config.maxSelfHealAttempts)||SELF_HEAL_MAX_ATTEMPTS,currentTest:null,diagnostic:path.basename(source),error:null,log:[]};
+  activity('Self-heal queued: '+String(reason||'internal failure').slice(0,300),'warn');persist();
+  if(process.env.YARDMASTER_TEST_SELF_HEAL_QUEUE_ONLY!=='1')setTimeout(()=>runPendingSelfHeal().catch(error=>{state.selfHeal={...state.selfHeal,state:'failed',error:error.message,detail:'Self-heal stopped safely.'};activity('Self-heal failed: '+error.message,'error');persist()}),750);
+  return request;
+}
+async function runPendingSelfHeal(){
+  if(workflowBusy)return false;
+  let request=readSelfHealRequest(dataDir);if(!request)return false;
+  const maxAttempts=Math.max(1,Math.min(10,Number(config.maxSelfHealAttempts)||SELF_HEAL_MAX_ATTEMPTS));
+  let diagnostic=String(request.diagnosticPath||'');if(!diagnostic||!fs.existsSync(diagnostic))throw new Error('Self-heal diagnostic ZIP is unavailable.');
+  workflowBusy=true;cancelRequested=false;
+  try{
+    for(let attempt=Math.max(1,Number(request.attempt||0)+1);attempt<=maxAttempts;attempt++){
+      request={...request,attempt};writeSelfHealRequest(dataDir,request);
+      state.selfHeal={...state.selfHeal,state:'chatgpt',detail:'Sending Yardmaster diagnostic to ChatGPT for self-repair.',attempt,maxAttempts,currentTest:'ChatGPT repair',diagnostic:path.basename(diagnostic),error:null,startedAt:state.selfHeal?.startedAt||Date.now(),log:state.selfHeal?.log||[]};persist();
+      const result=await submitRepairToChatGPT({mode:config.chatMode,model:config.model,thinkingEffort:config.thinkingEffort,prompt:selfHealPrompt({currentVersion:packageInfo.version,reason:request.reason,checkpoint:request.checkpoint}),artifactPath:diagnostic,dataDir,onStatus:m=>{state.selfHeal={...state.selfHeal,state:'chatgpt',detail:m,currentTest:'ChatGPT repair'};activity('Self-heal: '+m);persist()},shouldCancel:()=>cancelRequested});
+      if(result.state==='login_required'){state.selfHeal={...state.selfHeal,state:'waiting-login',detail:'ChatGPT sign-in is required before self-heal can continue.',currentTest:null};persist();notify('Yardmaster self-heal needs you','Sign in to ChatGPT on the Windows PC, then resume self-heal.');return false}
+      if(result.state!=='downloaded'||!result.repairPath)throw new Error('Self-heal did not receive a complete Yardmaster application ZIP.');
+      let plan;
+      try{plan=inspectSelfHealArchive(result.repairPath,{currentVersion:packageInfo.version})}
+      catch(error){
+        if(attempt>=maxAttempts)throw error;
+        diagnostic=createSelfHealFailureBundle(dataDir,{reason:error.message,attempt,checkpoint:request.checkpoint,testResult:{stage:'self-heal-plan-validation',stdout:'',stderr:error.message},sourceDiagnostic:diagnostic});
+        request={...request,reason:'Previous self-heal package validation failed: '+error.message,diagnosticPath:diagnostic};writeSelfHealRequest(dataDir,request);continue;
+      }
+      state.selfHeal={...state.selfHeal,state:'certifying',detail:'Downloading and certifying the published Yardmaster '+plan.version+' release.',currentTest:'npm ci → check → self-heal → Playwright → full Play Store',candidateVersion:plan.version};persist();
+      const workRoot=path.join(dataDir,'self-heal','staging','attempt-'+attempt+'-'+Date.now());
+      try{
+        const certified=await fetchAndCertifyPublishedSelfHeal(plan,{currentVersion:packageInfo.version,workRoot,onStatus:m=>{state.selfHeal={...state.selfHeal,state:'testing',detail:m,currentTest:m};activity('Self-heal: '+m);persist()},onLine:(line,stream)=>{const clean=redactConsoleLine(line);if(clean.trim()){state.selfHeal.log=[...(state.selfHeal.log||[]),clean].slice(-250);persist()}}});
+        state.selfHeal={...state.selfHeal,state:'preparing-update',detail:'All self-heal tests passed. Installing Yardmaster '+certified.version+'.',currentTest:'Installing verified release',candidateVersion:certified.version,certifiedTests:certified.tests};persist();
+        const marker={from:packageInfo.version,to:certified.version,requestedBy:'self-heal',requestedAt:Date.now(),resumeAfterUpdate:{kind:'self-heal',checkpoint:request.checkpoint}};
+        writeJson(updateResumePath,marker);
+        writeJson(supervisorStopPath,{reason:'self-heal-update',until:Date.now()+5*60*1000});
+        notify('Yardmaster self-heal passed','All Yardmaster self-heal, Playwright, and full Play Store tests passed. Updating to '+certified.version+'.');
+        if(process.env.YARDMASTER_TEST_SELF_HEAL_STUB==='1'){state.selfHeal={...state.selfHeal,state:'update-stubbed',archive:certified.archive};persist();return true}
+        if(process.platform!=='win32')throw new Error('Automatic self-heal installation requires Windows.');
+        const updater=path.join(__dirname,'scripts','Update-Yardmaster.ps1');
+        spawn('powershell.exe',['-NoProfile','-ExecutionPolicy','Bypass','-File',updater,'-PackagePath',certified.archive,'-ExpectedSha256',certified.sha256],{detached:true,stdio:'ignore',windowsHide:true}).unref();
+        setTimeout(()=>process.exit(0),900);return true;
+      }catch(error){
+        const testResult=error.testResult||{stage:'published-release-certification',stdout:'',stderr:error.message};
+        state.selfHeal={...state.selfHeal,state:'testing',detail:'Self-heal candidate failed certification. Preparing another repair attempt.',currentTest:testResult.stage,error:error.message};activity('Self-heal candidate failed: '+error.message,'error');persist();
+        if(attempt>=maxAttempts)throw error;
+        diagnostic=createSelfHealFailureBundle(dataDir,{reason:error.message,attempt,checkpoint:request.checkpoint,testResult,sourceDiagnostic:diagnostic});
+        request={...request,reason:'Previous self-heal candidate failed '+testResult.stage+': '+error.message,diagnosticPath:diagnostic};writeSelfHealRequest(dataDir,request);
+      }
+    }
+  }finally{workflowBusy=false;persist()}
+  return false;
+}
+function resumePendingSelfHeal(){
+  const request=readSelfHealRequest(dataDir);if(!request)return;
+  const updateMarker=readJson(updateResumePath,null);
+  if(updateMarker?.requestedBy==='self-heal'&&updateMarker?.resumeAfterUpdate?.kind==='self-heal')return;
+  state.selfHeal={...state.selfHeal,state:'queued',detail:'Recovered a pending Yardmaster self-heal request after restart.',attempt:Number(request.attempt||0),maxAttempts:Number(config.maxSelfHealAttempts)||SELF_HEAL_MAX_ATTEMPTS,diagnostic:path.basename(String(request.diagnosticPath||''))};persist();
+  setTimeout(()=>runPendingSelfHeal().catch(error=>{state.selfHeal={...state.selfHeal,state:'failed',detail:'Self-heal stopped safely.',error:error.message,currentTest:null};activity('Self-heal failed: '+error.message,'error');notify('Yardmaster self-heal failed',error.message);persist()}),2500);
+}
 function buildImplementationHandoff(taskPrompt){
   const outDir=path.join(dataDir,'handoffs');fs.mkdirSync(outDir,{recursive:true});
   const out=path.join(outDir,`Yardmaster-Implementation-${Date.now()}.zip`);
@@ -338,8 +466,8 @@ async function submitCurrentHandoff({resume=false}={}){
     else if(config.repoUpdateMode==='ask'){wf.approval={type:'repair',message:'Apply the downloaded repair to the local repository?',createdAt:Date.now()};wf.state='waiting-approval';activity('Repair is waiting for your approval.','warn');notify('Yardmaster approval needed','A repaired app ZIP is ready. Approve the local repository update to continue.')}
     else {wf.state='download-only';activity('Repair downloaded. Local Repo Update is set to Never, so no files were changed.');notify('Yardmaster repair downloaded','Repo Update is set to Never. Open Yardmaster when you are ready.')}
   }catch(e){
-    if(cancelRequested){wf.state='stopped';state.chatgpt={state:'Stopped'};activity('ChatGPT handoff stopped by user.','warn')}else{wf.state='handoff-error';wf.error=e.message;wf.diagnostic=e.diagnostic||null;state.chatgpt={state:'Error',detail:e.message,diagnostic:e.diagnostic?.name||null};activity('ChatGPT handoff failed: '+e.message+(e.diagnostic?.name?' Diagnostic: '+e.diagnostic.name:''),'error');notify('Yardmaster handoff failed',e.message)}
-  }finally{workflowBusy=false;persist();setTimeout(()=>maybeStartQueuedOperatorUpdate().catch(error=>activity('Queued Yardmaster update failed: '+error.message,'error')),75)}
+    if(cancelRequested){wf.state='stopped';state.chatgpt={state:'Stopped'};activity('ChatGPT handoff stopped by user.','warn')}else{wf.state='handoff-error';wf.error=e.message;wf.diagnostic=e.diagnostic||null;state.chatgpt={state:'Error',detail:e.message,diagnostic:e.diagnostic?.name||null};activity('ChatGPT handoff failed: '+e.message+(e.diagnostic?.name?' Diagnostic: '+e.diagnostic.name:''),'error');notify('Yardmaster handoff failed',e.message);if(config.autoSelfHeal)queueSelfHeal('ChatGPT handoff automation failed: '+e.message,e.diagnostic?.path||null,selfHealCheckpoint())}
+  }finally{workflowBusy=false;persist();if(readSelfHealRequest(dataDir))setTimeout(()=>runPendingSelfHeal().catch(error=>{state.selfHeal={...state.selfHeal,state:'failed',error:error.message,detail:'Self-heal stopped safely.'};activity('Self-heal failed: '+error.message,'error');persist()}),250);setTimeout(()=>maybeStartQueuedOperatorUpdate().catch(error=>activity('Queued Yardmaster update failed: '+error.message,'error')),75)}
 }
 async function submitImplementationTask(taskPrompt,{pushWhenPassed=false}={}){
   if(workflowBusy)throw new Error('Yardmaster is already handling another ChatGPT job.');
@@ -389,8 +517,8 @@ async function submitImplementationTask(taskPrompt,{pushWhenPassed=false}={}){
     await applyPendingRepair();
   }catch(e){
     if(cancelRequested){wf.state='stopped';state.chatgpt={state:'Stopped'};activity('Implementation handoff stopped by user.','warn')}
-    else{wf.state='handoff-error';wf.error=e.message;wf.diagnostic=e.diagnostic||null;state.chatgpt={state:'Error',detail:e.message,diagnostic:e.diagnostic?.name||null};activity('Implementation handoff failed: '+e.message+(e.diagnostic?.name?' Diagnostic: '+e.diagnostic.name:''),'error');notify('Yardmaster implementation failed',e.message)}
-  }finally{workflowBusy=false;persist();setTimeout(()=>maybeStartQueuedOperatorUpdate().catch(error=>activity('Queued Yardmaster update failed: '+error.message,'error')),75)}
+    else{wf.state='handoff-error';wf.error=e.message;wf.diagnostic=e.diagnostic||null;state.chatgpt={state:'Error',detail:e.message,diagnostic:e.diagnostic?.name||null};activity('Implementation handoff failed: '+e.message+(e.diagnostic?.name?' Diagnostic: '+e.diagnostic.name:''),'error');notify('Yardmaster implementation failed',e.message);if(config.autoSelfHeal)queueSelfHeal('ChatGPT implementation automation failed: '+e.message,e.diagnostic?.path||null,selfHealCheckpoint())}
+  }finally{workflowBusy=false;persist();if(readSelfHealRequest(dataDir))setTimeout(()=>runPendingSelfHeal().catch(error=>{state.selfHeal={...state.selfHeal,state:'failed',error:error.message,detail:'Self-heal stopped safely.'};activity('Self-heal failed: '+error.message,'error');persist()}),250);setTimeout(()=>maybeStartQueuedOperatorUpdate().catch(error=>activity('Queued Yardmaster update failed: '+error.message,'error')),75)}
 }
 async function resumeImplementationTask(){
   const wf=state.workflow;
@@ -962,7 +1090,7 @@ const server=http.createServer(async(req,res)=>{
     }
     if(url.pathname==='/api/status'){refreshRemoteHealth();if(state.remote?.active&&!remotePhoneConnected()&&state.remote.status==='connected')state.remote.status='tunnel-ready';let adoptableRun=null;try{const a=discoverAdoptableReleaseGate(config.repositoryPath);if(a?.active&&String(a.runnerState?.status||'running')==='running')adoptableRun={runId:a.runId,mode:a.mode,pid:a.pid,currentPhase:a.runnerState?.currentPhase||'unknown',activityFresh:!!a.activityFresh}}catch{}state.adoptableRun=adoptableRun;const currentSession=sessionFor(req),currentDevice=currentSession&&devices[currentSession.deviceId];return json(res,{...state,operatorStatus:operatorStatusSnapshot(),pushHealth:pushHealthSnapshot(),remote:{...state.remote,phoneConnected:remotePhoneConnected()},runHistory:readRunHistory(20),branches:localBranches(),currentDevice:currentDevice?{id:currentDevice.id,name:currentDevice.name,hasPush:!!currentDevice.subscription,pushStatus:currentDevice.pushStatus||null,pushLastSentAt:currentDevice.pushLastSentAt||null,pushLastError:currentDevice.pushLastError||null,pushLastErrorAt:currentDevice.pushLastErrorAt||null}:null,trustedDevices:Object.values(devices).map(d=>({id:d.id,name:d.name,createdAt:d.createdAt,lastSeenAt:d.lastSeenAt,hasPasskey:!!d.credential,hasPush:!!d.subscription,pushStatus:d.pushStatus||null,pushLastSentAt:d.pushLastSentAt||null,pushLastError:d.pushLastError||null,pushLastErrorAt:d.pushLastErrorAt||null})),run:{...state.run,elapsedMs:(activeProcess||adoptedRunController)?Date.now()-runStartedAt:state.run.elapsedMs}})};
     if(url.pathname==='/api/config'&&req.method==='POST'){
-      const b=await body(req);const allowed=['branch','testType','chatMode','model','thinkingEffort','repoUpdateMode','autoPush','waitForDeploy','repositoryPath','testingUrl','vercelProject','autoUpdateOperator','autoHandoff','maxRepairAttempts','runAfterDeploy'];for(const k of allowed)if(k in b)config[k]=k==='maxRepairAttempts'?Math.max(0,Math.min(1000,Number(b[k])||0)):b[k];
+      const b=await body(req);const allowed=['branch','testType','chatMode','model','thinkingEffort','repoUpdateMode','autoPush','waitForDeploy','repositoryPath','testingUrl','vercelProject','autoUpdateOperator','autoHandoff','autoSelfHeal','maxRepairAttempts','maxSelfHealAttempts','runAfterDeploy'];for(const k of allowed)if(k in b)config[k]=(k==='maxRepairAttempts'||k==='maxSelfHealAttempts')?Math.max(0,Math.min(1000,Number(b[k])||0)):b[k];
       if(!/^[A-Za-z0-9._\/-]+$/.test(config.branch))throw new Error('Invalid branch name.');
       if(!['delta','targeted','full'].includes(config.testType))config.testType='delta';
       if(!['Work','Chat'].includes(config.chatMode))config.chatMode='Work';
@@ -1001,7 +1129,7 @@ const server=http.createServer(async(req,res)=>{
         json(res,{ok:true,state:'implementation-queued',runsOn:'windows-pc'});
         if(process.env.YARDMASTER_TEST_QUEUE_ONLY!=='1')setTimeout(()=>submitImplementationTask(task,{pushWhenPassed:!!actionBody.pushWhenPassed}).catch(error=>{state.workflow={...state.workflow,state:'handoff-error',error:error.message,diagnostic:error.diagnostic||null};state.chatgpt={state:'Error',detail:error.message,diagnostic:error.diagnostic?.name||null};activity('Implementation start failed: '+error.message+(error.diagnostic?.name?' Diagnostic: '+error.diagnostic.name:''),'error');persist()}),25);
         return;
-      }else if(action==='update-operator-now'){const result=await requestOperatorUpdate({automatic:false,requestedBy:isLocal(req)?'Windows dashboard':'paired phone'});return json(res,{ok:true,...result,update:state.update});}else if(action==='full-self-test'){if(!isLocal(req))throw new Error('The full sandbox self-test can only be started from the Windows PC.');if(workflowBusy)throw new Error('Yardmaster is already handling another ChatGPT job.');state.selfTest={state:'queued',stage:'queued',detail:'Full isolated process test queued.',steps:{},startedAt:Date.now(),diagnostic:null};persist();setTimeout(()=>runIsolatedFullSelfTest().catch(()=>{}),25);return json(res,{ok:true,state:'queued',isolated:true});}else if(action==='adopt-running-test'){if(!isLocal(req))throw new Error('A manually started Play Store test can only be adopted from the Windows PC.');const adopted=await adoptManualPlayStoreRun();return json(res,{ok:true,...adopted});}else if(action==='start')runTest({closedLoop:config.testType==='full'||config.testType==='delta'});else if(action==='stop')stopRun();else if(action==='pause')pauseRun();else if(action==='resume')resumeRun();else if(action==='push')await gitPush();else if(action==='verify-deployment'){const commit=state.deployment?.expectedCommit||gitRun(['rev-parse','HEAD']);await watchDeployment(commit)}else if(action==='consume-chatgpt-command'){startProtocolBridge();activity('Yardmaster command bridge is watching the current ChatGPT conversation.')}else if(action==='remote-start')beginRemoteStart();else if(action==='revoke-device'){if(!isLocal(req))throw new Error('Trusted-device revocation is available only from the Windows dashboard.');if(!devices[deviceId])throw new Error('Trusted device was not found.');const name=devices[deviceId].name;delete devices[deviceId];for(const [token,session] of sessions)if(session.deviceId===deviceId)sessions.delete(token);persistSessions();writeJson(devicesPath,devices);activity('Revoked trusted device: '+name+'.','warn')}else if(action==='approve-repair')await applyPendingRepair();else if(action==='reject-repair')rejectPendingRepair();else if(action==='resume-handoff'){if(state.workflow?.handsFree&&state.workflow?.taskPrompt)await resumeImplementationTask();else await submitCurrentHandoff({resume:true});}else if(action==='open-chatgpt'){state.chatgpt={state:'Opening'};const result=await openChatGPT({mode:config.chatMode,model:config.model,thinkingEffort:config.thinkingEffort,dataDir});state.chatgpt={state:result.state==='login_required'?'Sign in required':'Opened for manual use'};activity(result.state==='login_required'?'Opened ChatGPT. Sign in once, then choose Open ChatGPT again for a clean manual chat.':'Opened ChatGPT for manual use with a clean composer. No automated handoff or command bridge was started.')}else throw new Error('Unknown action.');return json(res,{ok:true,remoteStatus:state.remote?.status||'local'});
+      }else if(action==='self-heal-now'){const checkpoint=selfHealCheckpoint(),diagnostic=latestSelfHealDiagnostic();queueSelfHeal(String(actionBody.reason||'Manual Yardmaster self-heal requested'),diagnostic,checkpoint);return json(res,{ok:true,state:state.selfHeal});}else if(action==='resume-self-heal'){if(!readSelfHealRequest(dataDir))throw new Error('No pending Yardmaster self-heal request exists.');setTimeout(()=>runPendingSelfHeal().catch(error=>{state.selfHeal={...state.selfHeal,state:'failed',error:error.message};activity('Self-heal retry failed: '+error.message,'error');persist()}),25);return json(res,{ok:true,state:'queued'});}else if(action==='update-operator-now'){const result=await requestOperatorUpdate({automatic:false,requestedBy:isLocal(req)?'Windows dashboard':'paired phone'});return json(res,{ok:true,...result,update:state.update});}else if(action==='full-self-test'){if(!isLocal(req))throw new Error('The full sandbox self-test can only be started from the Windows PC.');if(workflowBusy)throw new Error('Yardmaster is already handling another ChatGPT job.');state.selfTest={state:'queued',stage:'queued',detail:'Full isolated process test queued.',steps:{},startedAt:Date.now(),diagnostic:null};persist();setTimeout(()=>runIsolatedFullSelfTest().catch(()=>{}),25);return json(res,{ok:true,state:'queued',isolated:true});}else if(action==='adopt-running-test'){if(!isLocal(req))throw new Error('A manually started Play Store test can only be adopted from the Windows PC.');const adopted=await adoptManualPlayStoreRun();return json(res,{ok:true,...adopted});}else if(action==='start')runTest({closedLoop:config.testType==='full'||config.testType==='delta'});else if(action==='stop')stopRun();else if(action==='pause')pauseRun();else if(action==='resume')resumeRun();else if(action==='push')await gitPush();else if(action==='verify-deployment'){const commit=state.deployment?.expectedCommit||gitRun(['rev-parse','HEAD']);await watchDeployment(commit)}else if(action==='consume-chatgpt-command'){startProtocolBridge();activity('Yardmaster command bridge is watching the current ChatGPT conversation.')}else if(action==='remote-start')beginRemoteStart();else if(action==='revoke-device'){if(!isLocal(req))throw new Error('Trusted-device revocation is available only from the Windows dashboard.');if(!devices[deviceId])throw new Error('Trusted device was not found.');const name=devices[deviceId].name;delete devices[deviceId];for(const [token,session] of sessions)if(session.deviceId===deviceId)sessions.delete(token);persistSessions();writeJson(devicesPath,devices);activity('Revoked trusted device: '+name+'.','warn')}else if(action==='approve-repair')await applyPendingRepair();else if(action==='reject-repair')rejectPendingRepair();else if(action==='resume-handoff'){if(state.workflow?.handsFree&&state.workflow?.taskPrompt)await resumeImplementationTask();else await submitCurrentHandoff({resume:true});}else if(action==='open-chatgpt'){state.chatgpt={state:'Opening'};const result=await openChatGPT({mode:config.chatMode,model:config.model,thinkingEffort:config.thinkingEffort,dataDir});state.chatgpt={state:result.state==='login_required'?'Sign in required':'Opened for manual use'};activity(result.state==='login_required'?'Opened ChatGPT. Sign in once, then choose Open ChatGPT again for a clean manual chat.':'Opened ChatGPT for manual use with a clean composer. No automated handoff or command bridge was started.')}else throw new Error('Unknown action.');return json(res,{ok:true,remoteStatus:state.remote?.status||'local'});
     }
     if(url.pathname==='/api/push/key')return json(res,{publicKey:vapid.publicKey});
     if(url.pathname==='/api/push/subscribe'&&req.method==='POST'){
@@ -1023,5 +1151,5 @@ const server=http.createServer(async(req,res)=>{
     if(staticFile(req,res))return;text(res,'Not found',404);
   }catch(e){activity(e.message||String(e),'error');text(res,e.message||String(e),500)}
 });
-server.listen(operatorPort,'127.0.0.1',()=>{activity('Yardmaster local operator started on port '+operatorPort+'.');console.log('Yardmaster: http://127.0.0.1:'+operatorPort);if(state.remote?.active&&state.remote?.url&&pidAlive(state.remote.pid)){startPairing();setRemoteUrl(state.remote.url).catch(()=>{});activity('Restored persistent Remote Access tunnel after Yardmaster restart. Waiting for an authenticated phone connection.')}resumeAfterOperatorUpdate();if(process.env.YARDMASTER_DISABLE_UPDATE_CHECKS!=='1'){setTimeout(checkForOperatorUpdate,30000);setInterval(checkForOperatorUpdate,4*60*60*1000)}setInterval(refreshRemoteHealth,30000)});
+server.listen(operatorPort,'127.0.0.1',()=>{activity('Yardmaster local operator started on port '+operatorPort+'.');console.log('Yardmaster: http://127.0.0.1:'+operatorPort);if(state.remote?.active&&state.remote?.url&&pidAlive(state.remote.pid)){startPairing();setRemoteUrl(state.remote.url).catch(()=>{});activity('Restored persistent Remote Access tunnel after Yardmaster restart. Waiting for an authenticated phone connection.')}resumeAfterOperatorUpdate();resumePendingSelfHeal();if(process.env.YARDMASTER_DISABLE_UPDATE_CHECKS!=='1'){setTimeout(checkForOperatorUpdate,30000);setInterval(checkForOperatorUpdate,4*60*60*1000)}setInterval(refreshRemoteHealth,30000)});
 for(const sig of ['SIGINT','SIGTERM'])process.on(sig,()=>{try{stopChatGPTAutomation()}catch{}persist();process.exit(0)});

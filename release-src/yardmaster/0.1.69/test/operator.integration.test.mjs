@@ -77,14 +77,16 @@ test('PC operator and authenticated mobile remote survive restart and enforce co
   const fakeCloudflared=path.join(temp,'fake-cloudflared.mjs');
   if(!liveCloudflared)fs.writeFileSync(fakeCloudflared,`if(process.argv.includes('--version')){console.log('cloudflared fixture 1.0');process.exit(0)}console.error('INF https://fixture-yardmaster.trycloudflare.com');setInterval(()=>{},1000)`);
 
-  const env={YARDMASTER_PORT:String(operatorPort),YARDMASTER_DATA_DIR:dataDir,YARDMASTER_REPOSITORY_PATH:repo,YARDMASTER_DISABLE_UPDATE_CHECKS:'1',YARDMASTER_TEST_QUEUE_ONLY:'1',YARDMASTER_TEST_HANDOFF_STUB:'1',YARDMASTER_TEST_FULL_SELF_TEST_STUB:'1',YARDMASTER_TEST_POWERSHELL_PASTE_STUB:'1',YARDMASTER_CLOUDFLARED_PATH:liveCloudflared||process.execPath};
+  const env={YARDMASTER_PORT:String(operatorPort),YARDMASTER_DATA_DIR:dataDir,YARDMASTER_REPOSITORY_PATH:repo,YARDMASTER_DISABLE_UPDATE_CHECKS:'1',YARDMASTER_TEST_QUEUE_ONLY:'1',YARDMASTER_TEST_HANDOFF_STUB:'1',YARDMASTER_TEST_FULL_SELF_TEST_STUB:'1',YARDMASTER_TEST_POWERSHELL_PASTE_STUB:'1',YARDMASTER_TEST_SELF_HEAL_QUEUE_ONLY:'1',YARDMASTER_CLOUDFLARED_PATH:liveCloudflared||process.execPath};
   if(!liveCloudflared)env.YARDMASTER_CLOUDFLARED_SCRIPT=fakeCloudflared;
   let operator=startOperator(env);
   try{
     let status=await poll(async()=>{const response=await request('/api/status');return response.ok?response.json():null});
-    assert.equal(status.version,'0.1.67');
+    assert.equal(status.version,'0.1.69');
     assert.equal(status.config.repoUpdateMode,'automatic','old Ask Me default migrates to Automatic');
-    assert.equal(status.config.automationDefaultsVersion,4);
+    assert.equal(status.config.automationDefaultsVersion,5);
+    assert.equal(status.config.autoSelfHeal,true,'old installs migrate to automatic Yardmaster self-heal');
+    assert.equal(status.config.maxSelfHealAttempts,5);
     assert.equal(status.config.autoHandoff,true,'failed runs must automatically start a repair handoff by default');
     assert.equal(status.config.maxRepairAttempts,25);
     assert.equal(status.remote.status,'local');
@@ -94,6 +96,17 @@ test('PC operator and authenticated mobile remote survive restart and enforce co
     assert.match(dashboard,/Start Remote Access/i);
     assert.match(dashboard,/Test Full Yardmaster Process/i);
     assert.match(dashboard,/Adopt Running Play Store Test/i);
+    assert.match(dashboard,/Self-heal Yardmaster automatically/i);
+    assert.match(dashboard,/Run Self-Heal Diagnostic/i);
+
+    const selfHealStart=await request('/api/action',{method:'POST',body:{action:'self-heal-now',reason:'operator integration fixture'}});
+    assert.equal(selfHealStart.status,200,await selfHealStart.text());
+    status=await (await request('/api/status')).json();
+    assert.equal(status.selfHeal.state,'queued');
+    assert.match(status.selfHeal.detail,/queued a self-heal/i);
+    assert.equal(fs.existsSync(path.join(dataDir,'self-heal-request.json')),true);
+    fs.rmSync(path.join(dataDir,'self-heal-request.json'),{force:true});
+    status.selfHeal={...status.selfHeal,state:'idle'};
 
     const selfTestStart=await request('/api/action',{method:'POST',body:{action:'full-self-test'}});
     assert.equal(selfTestStart.status,200,await selfTestStart.text());

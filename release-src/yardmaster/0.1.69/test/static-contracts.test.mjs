@@ -81,7 +81,11 @@ test('ChatGPT handoff verifies the same composer controls, attachment, and submi
   assert.match(bridge,/YM_MARK_COMPOSER_FILE_INPUTS/);
   assert.match(bridge,/type:'char'/);
   assert.match(bridge,/getBoundingClientRect/);
-  assert.match(bridge,/sendTimeoutMs\|\|120000/);
+  assert.match(bridge,/sendTimeoutMs\|\|180000/);
+  assert.match(bridge,/finalConfirmationMs\|\|180000/);
+  assert.match(bridge,/assistant-activity/);
+  assert.match(bridge,/stallMs\|\|20\*60\*1000/);
+  assert.match(bridge,/timeoutMs=4\*60\*60\*1000/);
   assert.match(bridge,/Could not attach to the Yardmaster/);
   assert.match(bridge,/finish please/);
   assert.match(bridge,/work_usage_limit/);
@@ -245,7 +249,8 @@ test('Open ChatGPT is manual-only and cannot start the automated command bridge'
 test('failed-run ChatGPT repair starts automatically by default while manual Open ChatGPT stays separate',()=>{
   const server=read('server.mjs'),html=read('public/index.html'),app=read('public/app.js');
   assert.match(server,/autoHandoff:true/);
-  assert.match(server,/automationDefaultsVersion:4/);
+  assert.match(server,/automationDefaultsVersion:5/);
+  assert.match(server,/autoSelfHeal:true/);
   assert.match(server,/config\.autoHandoff=true/);
   assert.match(server,/await submitCurrentHandoff\(\)/);
   assert.match(server,/YARDMASTER_TEST_HANDOFF_STUB/);
@@ -288,12 +293,28 @@ test('Playwright black-box coverage is wired into the full Play Store command',(
   assert.equal(pkg.devDependencies?.['@playwright/test'],'1.63.0');
   assert.match(pkg.scripts?.['test:play-store']||'',/playwright test/);
   assert.match(config,/channel:process\.platform==='win32'\?'msedge'/);
-  for(const marker of ['clean composer uploads one ZIP','visible stale attachment is removed','stale selected file input','complete ZIP plus prompt plus trusted send','failed handoff exposes detailed status','start, pause, resume, and stop controls'])assert.ok(spec.includes(marker),marker);
+  for(const marker of ['clean composer uploads one ZIP','visible stale attachment is removed','stale selected file input','complete ZIP plus prompt plus trusted send','delayed assistant activity prevents a false handoff failure','self-heal controls queue diagnostics without touching 86 Chaos','failed handoff exposes detailed status','start, pause, resume, and stop controls'])assert.ok(spec.includes(marker),marker);
+});
+
+
+test('Yardmaster self-heal is supervised, website-verified, test-gated, rollback-safe, and checkpoint-resumable',()=>{
+  const server=read('server.mjs'),engine=read('automation/self-heal.mjs'),supervisor=read('scripts/Yardmaster-Supervisor.ps1'),html=read('public/index.html'),app=read('public/app.js'),pkg=JSON.parse(read('package.json'));
+  assert.equal(pkg.scripts?.['test:self-heal'],'node --test --test-concurrency=1 test/self-heal.test.mjs test/play-store-chatgpt-send.test.mjs');
+  for(const marker of ['Self-heal Yardmaster automatically','Maximum Self-Heal Attempts','Run Self-Heal Diagnostic','Resume Self-Heal'])assert.ok(html.includes(marker),marker);
+  assert.match(app,/autoSelfHeal/);assert.match(app,/maxSelfHealAttempts/);assert.match(app,/selfHealState/);
+  assert.match(server,/queueSelfHeal/);assert.match(server,/runPendingSelfHeal/);assert.match(server,/fetchAndCertifyPublishedSelfHeal/);assert.match(server,/-ExpectedSha256',certified\.sha256/);assert.match(read('scripts/Update-Yardmaster.ps1'),/ExpectedSha256/);assert.match(server,/restoreSelfHealCheckpoint/);assert.match(server,/confirmSelfHealUpdateAfterSoak/);assert.match(server,/YARDMASTER_SELF_HEAL_SOAK_MS\|\|60000/);
+  assert.match(server,/resumeAfterUpdate:\{kind:'self-heal',checkpoint:request\.checkpoint\}/);
+  assert.match(server,/YARDMASTER_TEST_SELF_HEAL_QUEUE_ONLY/);
+  assert.match(engine,/SELF_HEAL_REQUIRED_TESTS=\['test:self-heal','test:playwright','test:play-store'\]/);
+  assert.match(engine,/release\.json/);assert.match(engine,/sha256File/);assert.match(engine,/manifest\.sha256/);
+  assert.match(engine,/published!==true/);assert.match(engine,/ALLOWED_RELEASE_HOSTS/);assert.match(engine,/YARDMASTER_SELF_HEAL\.json/);
+  assert.match(engine,/shell:process\.platform==='win32'&&\/\\\.cmd\$\/i\.test\(command\)/);
+  assert.match(read('desktop.cjs'),/capturePage\(\)/);assert.match(read('desktop.cjs'),/renderer-unresponsive/);assert.match(supervisor,/yardmaster-window\.png/);assert.match(supervisor,/Desktop heartbeat is stale/);assert.doesNotMatch(supervisor,/CopyFromScreen|VirtualScreen/);assert.match(supervisor,/operator-unhealthy-timeout/);assert.match(supervisor,/unexpected-yardmaster-exit/);assert.match(supervisor,/self-heal-request\.json/);assert.match(supervisor,/Restore-YardmasterRollback/);assert.match(supervisor,/latestDiagnosticPath/);
 });
 
 test('version labels stay synchronized',()=>{
   const pkg=JSON.parse(read('package.json'));
-  assert.equal(pkg.version,'0.1.67');
+  assert.equal(pkg.version,'0.1.69');
   assert.ok(read('public/index.html').includes(pkg.version));
 });
 

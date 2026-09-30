@@ -18,7 +18,8 @@ if(-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrat
   }
 }
 $Source=Split-Path -Parent $PSScriptRoot
-$InstallRoot=Join-Path $env:LOCALAPPDATA 'Yardmaster\app'
+$Root=Join-Path $env:LOCALAPPDATA 'Yardmaster'
+$InstallRoot=Join-Path $Root 'app'
 
 Write-Host 'Installing Yardmaster...' -ForegroundColor Cyan
 $node=(Get-Command node.exe -ErrorAction SilentlyContinue)
@@ -120,5 +121,7 @@ New-ItemProperty -Path $uninstallKey -Name QuietUninstallString -Value $quietUni
 New-ItemProperty -Path $uninstallKey -Name NoModify -Value 1 -PropertyType DWord -Force | Out-Null
 New-ItemProperty -Path $uninstallKey -Name NoRepair -Value 1 -PropertyType DWord -Force | Out-Null
 
+$supervisorSource=Join-Path $InstallRoot 'scripts\Yardmaster-Supervisor.ps1'
+if(Test-Path $supervisorSource){Copy-Item -LiteralPath $supervisorSource -Destination (Join-Path $Root 'Yardmaster-Supervisor.ps1') -Force}
 Write-Host 'Yardmaster installed and registered with Windows Installed Apps.' -ForegroundColor Green
 if(-not $NoLaunch){& (Join-Path $InstallRoot 'scripts\Start-Yardmaster.ps1')}

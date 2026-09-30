@@ -5,20 +5,22 @@ import os from 'node:os';
 import path from 'node:path';
 import {__testHooks} from '../automation/chatgpt.mjs';
 
-function fakeCdp({pointerSends=false,enterSends=false,transitionSends=false,attachmentReady=true}={}){
-  const calls=[];let sent=false,generating=false,trustedFilled=false;
+function fakeCdp({pointerSends=false,enterSends=false,transitionSends=false,assistantActivitySends=false,composerClearsOnPointer=false,assistantDelayMs=0,attachmentReady=true}={}){
+  const calls=[];let sent=false,generating=false,assistantActive=false,trustedFilled=false,composerCleared=false,assistantAt=0;
   return {
     calls,
     async eval(expression){
       calls.push({kind:'eval',expression});
-      if(expression.includes('YM_SEND_BASELINE'))return {userMessages:0,href:'https://chatgpt.com/',stopVisible:false};
+      if(expression.includes('YM_SEND_BASELINE'))return {userMessages:0,assistantMessages:0,assistantText:'',href:'https://chatgpt.com/',stopVisible:false};
       if(expression.includes('YM_TRUSTED_FILL_PROMPT'))return true;
       if(expression.includes('YM_VERIFY_TRUSTED_PROMPT'))return {ok:trustedFilled,length:42};
       if(expression.includes('YM_VERIFY_ATTACHMENT'))return {ok:attachmentReady,busy:false};
       if(expression.includes('YM_VERIFY_PROMPT_SENT')){
+        if(assistantAt&&Date.now()>=assistantAt)assistantActive=true;
         if(sent)return {confirmed:true,reason:'user-message',userMessage:true,messageCount:1,composerCleared:true,composerLength:0,stopVisible:false,generationStarted:false,routeChanged:true,conversationRoute:true,href:'https://chatgpt.com/c/fixture'};
-        if(generating)return {confirmed:true,reason:'generation-transition',userMessage:false,messageCount:0,composerCleared:true,composerLength:0,stopVisible:true,generationStarted:true,routeChanged:true,conversationRoute:true,href:'https://chatgpt.com/c/fixture'};
-        return {confirmed:false,reason:null,userMessage:false,messageCount:0,composerCleared:false,composerLength:42,stopVisible:false,generationStarted:false,routeChanged:false,conversationRoute:false,href:'https://chatgpt.com/'};
+        if(generating)return {confirmed:true,reason:'generation-transition',userMessage:false,messageCount:0,assistantMessages:0,assistantAdvanced:false,assistantLength:0,composerCleared:true,composerLength:0,stopVisible:true,generationStarted:true,routeChanged:true,conversationRoute:true,href:'https://chatgpt.com/c/fixture'};
+        if(assistantActive)return {confirmed:true,reason:'assistant-activity',userMessage:false,messageCount:0,assistantMessages:1,assistantAdvanced:true,assistantLength:42,composerCleared:true,composerLength:0,stopVisible:false,generationStarted:false,routeChanged:true,conversationRoute:true,href:'https://chatgpt.com/c/fixture'};
+        return {confirmed:false,reason:null,userMessage:false,messageCount:0,assistantMessages:0,assistantAdvanced:false,assistantLength:0,composerCleared,composerLength:composerCleared?0:42,stopVisible:false,generationStarted:false,routeChanged:false,conversationRoute:false,href:'https://chatgpt.com/'};
       }
       if(expression.includes('YM_SEND_TARGET'))return trustedFilled?{found:true,enabled:true,topIsButton:true,x:120,y:240,label:'Send'}:{found:false};
       if(expression.includes('YM_FOCUS_COMPOSER'))return true;
@@ -29,6 +31,8 @@ function fakeCdp({pointerSends=false,enterSends=false,transitionSends=false,atta
       if(method==='Input.dispatchKeyEvent'&&params.type==='char'&&String(params.text||'').length)trustedFilled=true;
       if(method==='Input.dispatchMouseEvent'&&params.type==='mouseReleased'&&pointerSends&&trustedFilled)sent=true;
       if(method==='Input.dispatchMouseEvent'&&params.type==='mouseReleased'&&transitionSends&&trustedFilled)generating=true;
+      if(method==='Input.dispatchMouseEvent'&&params.type==='mouseReleased'&&assistantActivitySends&&trustedFilled)assistantActive=true;
+      if(method==='Input.dispatchMouseEvent'&&params.type==='mouseReleased'&&composerClearsOnPointer&&trustedFilled){composerCleared=true;assistantAt=Date.now()+Math.max(0,Number(assistantDelayMs)||0)}
       if(method==='Input.dispatchKeyEvent'&&params.type==='keyUp'&&params.key==='Enter'&&enterSends&&trustedFilled)sent=true;
       return {};
     }
@@ -55,8 +59,8 @@ test('Play Store: native Enter is a verified fallback when pointer click does no
 test('Play Store regression: merely populating the textbox is a failure when no user message appears',async()=>{
   const cdp=fakeCdp();
   await assert.rejects(
-    __testHooks.sendPrompt(cdp,'YARDMASTER FILLED BUT UNSENT PROBE',null,{sendTimeoutMs:350,confirmMs:20}),
-    /no submitted user message appeared/i
+    __testHooks.sendPrompt(cdp,'YARDMASTER FILLED BUT UNSENT PROBE',null,{sendTimeoutMs:350,confirmMs:20,finalConfirmationMs:100}),
+    /no submitted user message or response activity appeared/i
   );
 });
 
@@ -68,6 +72,37 @@ test('Play Store regression: live generation transition confirms send even befor
   assert.ok(checks.length>0);
   assert.ok(checks.some(c=>c.expression.includes('generationStarted')&&c.expression.includes('composerCleared')&&c.expression.includes('conversationRoute')));
   assert.ok(status.includes('Repair prompt sent to ChatGPT.'));
+});
+
+test('Play Store regression: trusted send that clears the composer waits for delayed assistant activity instead of pressing Enter or submitting the form again',async()=>{
+  const cdp=fakeCdp({composerClearsOnPointer:true,assistantDelayMs:250});
+  const status=[];
+  await __testHooks.sendPrompt(cdp,'YARDMASTER DELAYED COMPOSER-CLEAR EVIDENCE',m=>status.push(m),{sendTimeoutMs:220,confirmMs:30,finalConfirmationMs:1200});
+  assert.ok(status.some(x=>/cleared the composer/i.test(x)),'composer-clear grace should be visible in status');
+  assert.ok(status.some(x=>/accepted the handoff and response activity is visible/i.test(x)));
+  const enterAfterPointer=cdp.calls.some(c=>c.kind==='send'&&c.method==='Input.dispatchKeyEvent'&&c.params?.key==='Enter');
+  const syntheticFallback=cdp.calls.some(c=>c.kind==='eval'&&c.expression.includes('YM_SYNTHETIC_SEND_FALLBACK'));
+  assert.equal(enterAfterPointer,false,'Yardmaster must not press Enter after a trusted send already cleared the composer');
+  assert.equal(syntheticFallback,false,'Yardmaster must not requestSubmit after a trusted send already cleared the composer');
+});
+
+test('Play Store regression: assistant response activity confirms a handoff even when ChatGPT never exposes the submitted user-message node',async()=>{
+  const cdp=fakeCdp({assistantActivitySends:true});
+  const status=[];
+  await __testHooks.sendPrompt(cdp,'YARDMASTER ASSISTANT ACTIVITY EVIDENCE',m=>status.push(m),{sendTimeoutMs:1000,confirmMs:80,finalConfirmationMs:300});
+  const checks=cdp.calls.filter(c=>c.kind==='eval'&&c.expression.includes('YM_VERIFY_PROMPT_SENT'));
+  assert.ok(checks.some(c=>c.expression.includes('assistantAdvanced')&&c.expression.includes('assistant-activity')));
+  assert.ok(status.includes('Repair prompt sent to ChatGPT.'));
+});
+
+test('Play Store contract: ChatGPT activity watchdog waits twenty minutes before stall recovery and treats active generation as progress',()=>{
+  const source=fs.readFileSync(new URL('../automation/chatgpt.mjs',import.meta.url),'utf8');
+  assert.match(source,/stallMs\|\|20\*60\*1000/);
+  assert.match(source,/if\(responseActivityChanged\(lastActivity,activityState\)\)/);
+  assert.match(source,/if\(!generating&&Date\.now\(\)-lastProgress>stallMs/);
+  assert.match(source,/ChatGPT is actively working on the repair\. Yardmaster will keep waiting/);
+  assert.match(source,/timeoutMs=4\*60\*60\*1000/);
+  assert.match(source,/finalConfirmationMs\|\|180000/);
 });
 
 test('Play Store contract: submission verification is based on new user-message evidence, not composer clearing alone',async()=>{

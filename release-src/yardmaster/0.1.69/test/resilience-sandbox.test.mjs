@@ -81,7 +81,7 @@ test('resilience sandbox covers status, push verification, queued remote update,
   let operator=startOperator(env);
   try{
     let status=await poll(async()=>{const response=await request('/api/status');return response.ok?response.json():null});
-    assert.equal(status.version,'0.1.67');
+    assert.equal(status.version,'0.1.69');
     assert.equal(status.operatorStatus.phase,'idle');
     assert.match(status.operatorStatus.doing,/ready/i);
 

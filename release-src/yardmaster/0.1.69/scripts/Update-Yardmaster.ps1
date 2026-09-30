@@ -1,11 +1,14 @@
 param(
   [string]$ManifestUrl='https://www.86chaos.com/yardmaster/release.json',
   [string]$PackagePath='',
+  [string]$ExpectedSha256='',
   [switch]$NoLaunch
 )
 $ErrorActionPreference='Stop'
 $Root=Join-Path $env:LOCALAPPDATA 'Yardmaster'
 $AppRoot=Join-Path $Root 'app'
+$RollbackRoot=Join-Path $Root 'rollback\app'
+$RollbackMeta=Join-Path $Root 'rollback\rollback.json'
 $TempRoot=Join-Path $env:TEMP ('Yardmaster-Update-'+[guid]::NewGuid().ToString('N'))
 $Archive=if($PackagePath){$PackagePath}else{Join-Path $TempRoot 'Yardmaster-Windows.zip'}
 
@@ -57,6 +60,10 @@ try {
     if($actual -ne ([string]$manifest.sha256).ToLowerInvariant()){throw 'Yardmaster update checksum verification failed. No files were changed.'}
   }
   if(-not(Test-Path -LiteralPath $Archive)){throw 'Yardmaster update package was not found.'}
+  if($PackagePath -and $ExpectedSha256){
+    $actualPackageHash=(Get-FileHash -LiteralPath $Archive -Algorithm SHA256).Hash.ToLowerInvariant()
+    if($actualPackageHash -ne ([string]$ExpectedSha256).ToLowerInvariant()){throw 'Yardmaster self-heal package checksum changed after certification. No files were changed.'}
+  }
   $Extracted=Join-Path $TempRoot 'package';New-Item -ItemType Directory -Force -Path $Extracted | Out-Null
   Expand-Archive -LiteralPath $Archive -DestinationPath $Extracted -Force
   $pkgFile=Get-ChildItem -LiteralPath $Extracted -Recurse -File -Filter package.json | Where-Object { Test-Path (Join-Path $_.Directory.FullName 'scripts\Install-Yardmaster.ps1') } | Select-Object -First 1
@@ -67,6 +74,15 @@ try {
 
   Stop-YardmasterAppProcesses
   Start-Sleep -Milliseconds 800
+  if(Test-Path (Join-Path $AppRoot 'package.json')){
+    $oldVersion='unknown'
+    try{$oldVersion=[string](Get-Content (Join-Path $AppRoot 'package.json') -Raw|ConvertFrom-Json).version}catch{}
+    Remove-Item -LiteralPath (Split-Path -Parent $RollbackRoot) -Recurse -Force -ErrorAction SilentlyContinue
+    New-Item -ItemType Directory -Force -Path $RollbackRoot | Out-Null
+    robocopy $AppRoot $RollbackRoot /MIR /XF *.log | Out-Null
+    if($LASTEXITCODE -ge 8){throw "Yardmaster rollback snapshot failed with code $LASTEXITCODE"}
+    @{version=$oldVersion;createdAt=(Get-Date).ToString('o');incomingVersion=[string]$incoming.version}|ConvertTo-Json|Set-Content $RollbackMeta -Encoding UTF8
+  }
   New-Item -ItemType Directory -Force -Path $AppRoot | Out-Null
   robocopy $source $AppRoot /MIR /XD .git node_modules bin /XF *.log | Out-Null
   if($LASTEXITCODE -ge 8){throw "Yardmaster update copy failed with code $LASTEXITCODE"}
@@ -78,6 +94,8 @@ try {
   $electron=Join-Path $AppRoot 'node_modules\electron\dist\electron.exe'
   if(-not(Test-Path $electron)){throw 'Electron runtime is missing after the update.'}
   Set-YardmasterRegistration -Version ([string]$incoming.version)
+  $supervisorSource=Join-Path $AppRoot 'scripts\Yardmaster-Supervisor.ps1'
+  if(Test-Path $supervisorSource){Copy-Item -LiteralPath $supervisorSource -Destination (Join-Path $Root 'Yardmaster-Supervisor.ps1') -Force}
   if(-not $NoLaunch){& (Join-Path $AppRoot 'scripts\Start-Yardmaster.ps1')}
 } finally {
   Remove-Item -LiteralPath $TempRoot -Recurse -Force -ErrorAction SilentlyContinue

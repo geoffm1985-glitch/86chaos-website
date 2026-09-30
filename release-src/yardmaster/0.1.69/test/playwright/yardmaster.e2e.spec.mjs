@@ -75,7 +75,7 @@ function createOperatorFixture({handoffError=false}={}){
   execFileSync('git',['init','-b','testing'],{cwd:repo,stdio:'ignore'});execFileSync('git',['config','user.email','yardmaster-test@example.invalid'],{cwd:repo,stdio:'ignore'});execFileSync('git',['config','user.name','Yardmaster Test'],{cwd:repo,stdio:'ignore'});execFileSync('git',['add','package.json'],{cwd:repo,stdio:'ignore'});execFileSync('git',['commit','-m','fixture baseline'],{cwd:repo,stdio:'ignore'});
   fs.writeFileSync(path.join(dataDir,'config.json'),JSON.stringify({repositoryPath:repo,branch:'testing',testType:'targeted',repoUpdateMode:'automatic',automationDefaultsVersion:4,autoUpdateOperator:false,autoHandoff:false,autoPush:false,maxRepairAttempts:25}));
   if(handoffError)fs.writeFileSync(path.join(dataDir,'state.json'),JSON.stringify({activity:[],workflow:{state:'handoff-error',error:'fixture handoff failure',repairAttempts:1,closedLoop:true,diagnostic:{name:'fixture-diagnostic.zip',stage:'attachment'}},run:{state:'failed',title:'Tests Failed',subtitle:'fixture',progress:100,counts:{pass:0,fail:1,skip:0,timeout:0},currentTest:'fixture failure',elapsedMs:10,log:['fixture failure'],stdout:[],stderr:[],exitCode:1},chatgpt:{state:'Error'},deployment:{state:'Idle'}}));
-  const env={...process.env,YARDMASTER_DATA_DIR:dataDir,YARDMASTER_REPOSITORY_PATH:repo,YARDMASTER_PORT:String(port),YARDMASTER_DISABLE_UPDATE_CHECKS:'1',YARDMASTER_TEST_QUEUE_ONLY:'1',YARDMASTER_TEST_HANDOFF_STUB:'1',YARDMASTER_TEST_FULL_SELF_TEST_STUB:'1',YARDMASTER_TEST_PUSH_STUB:'1'};
+  const env={...process.env,YARDMASTER_DATA_DIR:dataDir,YARDMASTER_REPOSITORY_PATH:repo,YARDMASTER_PORT:String(port),YARDMASTER_DISABLE_UPDATE_CHECKS:'1',YARDMASTER_TEST_QUEUE_ONLY:'1',YARDMASTER_TEST_HANDOFF_STUB:'1',YARDMASTER_TEST_FULL_SELF_TEST_STUB:'1',YARDMASTER_TEST_PUSH_STUB:'1',YARDMASTER_TEST_SELF_HEAL_QUEUE_ONLY:'1'};
   const child=spawn(process.execPath,['server.mjs'],{cwd:projectRoot,env,stdio:['ignore','pipe','pipe']});
   let output='';child.stdout.on('data',chunk=>output+=String(chunk));child.stderr.on('data',chunk=>output+=String(chunk));
   const baseUrl='http://127.0.0.1:'+port;
@@ -141,6 +141,23 @@ test.describe('ChatGPT handoff fixtures',()=>{
     }finally{fs.rmSync(temp,{recursive:true,force:true})}
   });
 
+  test('delayed assistant activity prevents a false handoff failure',async({page})=>{
+    await page.setContent([
+      '<!doctype html><meta charset="utf-8">',
+      '<form><textarea id="prompt-textarea"></textarea><button data-testid="send-button" aria-label="Send" id="send" type="button" disabled>Send</button></form><div id="messages"></div>',
+      '<script>',
+      'const input=document.querySelector("#prompt-textarea"),send=document.querySelector("#send"),messages=document.querySelector("#messages");let trusted=false;',
+      'input.addEventListener("input",e=>{if(e.isTrusted)trusted=true;send.disabled=!(trusted&&input.value.trim())});',
+      'send.addEventListener("click",e=>{if(!e.isTrusted||send.disabled)return;input.value="";send.disabled=true;setTimeout(()=>{const a=document.createElement("div");a.dataset.messageAuthorRole="assistant";a.textContent="Working on the Yardmaster repair";messages.append(a)},500)});',
+      '</script>'
+    ].join(''));
+    await withHookCdp(page,async cdp=>{
+      await __testHooks.sendPrompt(cdp,'YARDMASTER DELAYED RESPONSE PROBE',null,{sendTimeoutMs:220,confirmMs:30,finalConfirmationMs:1800});
+    });
+    await expect(page.locator('[data-message-author-role="assistant"]')).toHaveText('Working on the Yardmaster repair');
+    await expect(page.locator('[data-message-author-role="user"]')).toHaveCount(0);
+  });
+
   test('complete ZIP plus prompt plus trusted send handoff succeeds',async({page})=>{
     const temp=fs.mkdtempSync(path.join(os.tmpdir(),'ym-pw-send-')),upload=writeZip(temp,'Yardmaster-Combined-Handoff-Fixture.zip');
     try{
@@ -155,6 +172,25 @@ test.describe('ChatGPT handoff fixtures',()=>{
 });
 
 test.describe('Windows operator dashboard',()=>{
+  test('self-heal controls queue diagnostics without touching 86 Chaos',async({page})=>{
+    const fixture=createOperatorFixture();
+    try{
+      await readyOperator(fixture);await page.goto(fixture.baseUrl);
+      const before=execFileSync('git',['status','--porcelain'],{cwd:fixture.repo,encoding:'utf8'});
+      await page.getByRole('button',{name:'Settings'}).click();
+      await expect(page.getByRole('button',{name:'Run Self-Heal Diagnostic'})).toBeVisible();
+      await expect(page.getByRole('button',{name:'Resume Self-Heal'})).toBeVisible();
+      await page.getByRole('button',{name:'Run Self-Heal Diagnostic'}).click();
+      const status=await poll(async()=>{const x=await (await fetch(fixture.baseUrl+'/api/status')).json();return x.selfHeal?.state==='queued'?x:null},{timeout:8000});
+      expect(status.selfHeal.attempt).toBe(0);
+      expect(status.selfHeal.maxAttempts).toBe(5);
+      expect(fs.existsSync(path.join(fixture.dataDir,'self-heal-request.json'))).toBe(true);
+      await expect(page.locator('#selfHealState')).toHaveText(/queued/i,{timeout:5000});
+      const after=execFileSync('git',['status','--porcelain'],{cwd:fixture.repo,encoding:'utf8'});
+      expect(after).toBe(before);
+    }finally{await stopOperator(fixture)}
+  });
+
   test('failed handoff exposes detailed status, resume recovery, push health, and PC update control',async({page})=>{
     const fixture=createOperatorFixture({handoffError:true});
     try{
