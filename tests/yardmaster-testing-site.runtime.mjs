@@ -17,11 +17,13 @@ for(const profile of profiles){
     assert.match(await banner.textContent(),/yardmaster-testing/i,profile.name+' must show the linked testing branch');
     const marker=await page.evaluate(async()=>{const r=await fetch('/yardmaster/testing-site.json',{cache:'no-store'});if(!r.ok)throw new Error('testing-site.json HTTP '+r.status);return r.json()});
     const release=await page.evaluate(async()=>{const r=await fetch('/yardmaster/release.json',{cache:'no-store'});if(!r.ok)throw new Error('release.json HTTP '+r.status);return r.json()});
+    const sw=await page.evaluate(async()=>{const r=await fetch('/yardmaster/sw.js',{cache:'no-store'});if(!r.ok)throw new Error('sw.js HTTP '+r.status);return r.text()});
     assert.equal(marker.sourceRepo,'geoffm1985-glitch/yardmaster');
     assert.equal(marker.sourceBranch,'yardmaster-testing');
     assert.equal(marker.websiteBranch,'yardmaster-testing');
     assert.equal(marker.productionAffected,false);
     assert.equal(release.sourceCommit,marker.sourceCommit,profile.name+' must serve the exact testing-branch source commit');
+    assert.ok(sw.includes(release.version),profile.name+' service worker must track the testing release version');
   } finally {
     await browser.close();
   }
