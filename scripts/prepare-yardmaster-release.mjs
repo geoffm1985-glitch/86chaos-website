@@ -5,8 +5,8 @@ import {fileURLToPath} from 'node:url';
 import {spawnSync} from 'node:child_process';
 
 const root=path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-const version='0.1.66';
-const sourceCommit='7d9c26f26b6ded8a6bbdba58d1a579e7064488a3';
+const version='0.1.67';
+const sourceCommit='c38a9c27866f6f560ce7557e1f1eb7fb0c5966f0';
 const sourceRoot=path.join(root,'release-src','yardmaster',version);
 const outDir=path.join(root,'public','yardmaster','releases');
 const outFile=path.join(outDir,`Yardmaster-Windows-${version}.zip`);
@@ -69,10 +69,10 @@ function endRecord(count,centralSize,centralOffset){
 if(!fs.existsSync(sourceRoot)) throw new Error('Yardmaster release source is missing: '+sourceRoot);
 const npmCmd=process.platform==='win32'?'npm.cmd':'npm';
 const install=spawnSync(npmCmd,['ci','--ignore-scripts'],{cwd:sourceRoot,encoding:'utf8',maxBuffer:20*1024*1024});
-if(install.status!==0)throw new Error('Yardmaster 0.1.66 dependency install failed.\n'+String(install.stdout||'')+String(install.stderr||''));
+if(install.status!==0)throw new Error('Yardmaster 0.1.67 dependency install failed.\n'+String(install.stdout||'')+String(install.stderr||''));
 for(const rel of ['server.mjs','automation/chatgpt.mjs','automation/full-self-test.mjs','automation/windows-operator.mjs','public/app.js','desktop.cjs']){
   const check=spawnSync(process.execPath,['--check',path.join(sourceRoot,...rel.split('/'))],{cwd:sourceRoot,encoding:'utf8'});
-  if(check.status!==0)throw new Error('Yardmaster 0.1.66 syntax check failed for '+rel+'\n'+String(check.stdout||'')+String(check.stderr||''));
+  if(check.status!==0)throw new Error('Yardmaster 0.1.67 syntax check failed for '+rel+'\n'+String(check.stdout||'')+String(check.stderr||''));
 }
 const targeted=spawnSync(process.execPath,[
   '--test','--test-concurrency=1',
@@ -94,10 +94,10 @@ const targetedReport={
   stderr:String(targeted.stderr||'')
 };
 fs.mkdirSync(path.join(root,'public','yardmaster'),{recursive:true});
-fs.writeFileSync(path.join(root,'public','yardmaster','targeted-0.1.66.json'),JSON.stringify(targetedReport,null,2)+'\n');
+fs.writeFileSync(path.join(root,'public','yardmaster','targeted-0.1.67.json'),JSON.stringify(targetedReport,null,2)+'\n');
 fs.rmSync(path.join(sourceRoot,'node_modules'),{recursive:true,force:true});
-if(targeted.status!==0)console.error('Yardmaster 0.1.66 targeted regression gate failed; diagnostic preview will expose the report.');
-console.log('Yardmaster 0.1.66 targeted regression gate passed.');
+if(targeted.status!==0)throw new Error('Yardmaster 0.1.67 targeted regression gate failed.\n'+String(targeted.stdout||'')+String(targeted.stderr||''));
+console.log('Yardmaster 0.1.67 targeted regression gate passed.');
 const names=[...new Set([...filesRecursive(sourceRoot),...sharedFiles.keys()])].sort();
 if(!names.length) throw new Error('Yardmaster release source is empty.');
 
@@ -125,10 +125,10 @@ const release={
   version,
   releaseDate:'2026-09-29',
   sourceCommit,
-  verified:targeted.status===0,
+  verified:true,
   verification:{
     fullStore:'not-run-by-user-override',
-    targetedGate:targeted.status===0?'pass':'fail',
+    targetedGate:'pass',
     pcInstallLaunchUpdateUninstall:'pass',
     mobileRemoteSmoke:'pass',
     installerHangRegression:'pass',
