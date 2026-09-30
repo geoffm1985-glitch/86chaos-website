@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+const marker=JSON.parse(fs.readFileSync('public/yardmaster/testing-site.json','utf8'));
+const release=JSON.parse(fs.readFileSync('public/yardmaster/release.json','utf8'));
+const page=fs.readFileSync('src/pages/yardmaster.astro','utf8');
+assert.equal(marker.site,'yardmaster-testing');
+assert.equal(marker.sourceRepo,'geoffm1985-glitch/yardmaster');
+assert.equal(marker.sourceBranch,'yardmaster-testing');
+assert.equal(marker.websiteBranch,'yardmaster-testing');
+assert.equal(marker.productionAffected,false);
+assert.match(marker.sourceCommit,/^[0-9a-f]{40}$/);
+assert.equal(release.sourceCommit,marker.sourceCommit,'testing site must package the exact Yardmaster testing source commit');
+assert.match(page,/id="yardmasterTestingBanner"/);
+assert.match(page,/YARDMASTER TESTING/);
+assert.match(page,/SOURCE BRANCH: yardmaster-testing/);
+console.log('Yardmaster testing-site release-gate contract PASS');
