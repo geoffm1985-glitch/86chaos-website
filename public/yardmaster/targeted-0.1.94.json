@@ -1,9 +1,7 @@
 {
-  "product": "Yardmaster",
   "version": "0.1.94",
-  "releaseDate": "2026-10-01",
   "sourceCommit": "d7c4eab2c34a2c54f1c0ea824e2a35094d9d8968",
-  "verified": false,
+  "source": "testing candidate validation",
   "verification": {
     "candidate": "testing-only",
     "sourceSyntax": "pass",
@@ -13,7 +11,5 @@
     "iphoneWebKit": "not selected; desktop test assertion repair",
     "fullStore": "not run",
     "note": "Trims whitespace for empty contenteditable assertion; no product automation behavior change."
-  },
-  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.94.zip",
-  "sha256": "ed68187260233f626c6135f8cf25168cf9d7b4b594aa2e7d4ebece74f6c12eab"
+  }
 }
