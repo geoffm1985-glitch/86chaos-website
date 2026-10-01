@@ -1,0 +1,13 @@
+# Yardmaster 0.1.93 ChatGPT sign-in repair
+
+Evidence: the Operations view reported waiting-login while the docked ChatGPT view visibly showed a signed-in Plus account and normal composer. The old handoff code classified every composer timeout as login_required without checking authentication. Composer probes also used a first-match query that could stop at a hidden/pending textarea instead of the actual visible prompt.
+
+Repair: all composer readiness, selection, attachment and input operations now prefer the usable visible prompt, excluding hidden, disabled, readonly, inert and pending inputs. Missing composer reports login_required only when the actual attached session shows a visible login control or authentication route. Loading and lost DevTools connections report a composer readiness error with the exact session and Reload / Resume Handoff instructions. Genuine sign-in notices identify the dock, manual Edge window or automation Edge profile. Composer readiness failures retain diagnostics and the existing handoff ZIP, remain retryable, and do not recursively start self-heal through the same unavailable composer. The failed application's gate is not restarted by Resume Handoff.
+
+Validation: eight new focused Node regressions passed, including the actual automated handoff error path and the server Resume Handoff path. Related ChatGPT selection/manual/attachment Node checks: 44 passed, one Windows-only check skipped. npm run check passed the syntax and dual-coverage inventory. Five new desktop Playwright tests were added for hidden/pending composers, signed-in loading, hidden/conversation login controls, genuine sign-out and disabled composers. They could not run here because no Chromium executable is installed and the browser download endpoint returns Site Unavailable; actual Windows/Edge verification remains local. No live-PC session diagnosis is claimed, and the screenshots alone do not establish a profile mismatch.
+
+Targeted command: scripts/Test-Local-Yardmaster.ps1 -ExpectedCommit <delivered SHA> -ExpectedVersion 0.1.93 -ChatGPTLoginOnly. Runs only the eight new Node regressions and five new desktop Playwright tests, with live output, elapsed time, PASS/FAIL, and a current failure ZIP on failure. No full release gate or iPhone test is selected.
+
+Recovery after installing this testing candidate: open Yardmaster ChatGPT, use Reload if its composer is unavailable, then select Resume Handoff on the current failed run. Preserve the current run and existing handoff ZIP; do not start a new gate just to retry the handoff.
+
+Testing-only candidate. Production remains at the previously approved release until this candidate passes your local tests.

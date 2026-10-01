@@ -1,0 +1,29 @@
+
+[RUNNING] PLAYWRIGHT TESTS: 1 tests
+(node:20) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[RUNNING] PLAYWRIGHT: desktop-layout.e2e.spec.mjs > desktop 1366x768, self-heal true: complete cards and selectable controls
+[FAIL] PLAYWRIGHT: desktop 1366x768, self-heal true: complete cards and selectable controls (1/1, 0.4 seconds)
+  /workspace/scratch/e6f386865275/yardmaster/test/playwright/desktop-layout.e2e.spec.mjs:48
+Error: expect(received).toEqual(expected) // deep equality
+
+- Expected  - 1
++ Received  + 6
+
+- Array []
++ Array [
++   Object {
++     "card": "panel mini-card",
++     "child": "approvals",
++   },
++ ]
+    at noClippedCards (/workspace/scratch/e6f386865275/yardmaster/test/playwright/desktop-layout.e2e.spec.mjs:44:19)
+    at /workspace/scratch/e6f386865275/yardmaster/test/playwright/desktop-layout.e2e.spec.mjs:50:5
+  Evidence: /tmp/yardmaster-layout-results/desktop-layout.e2e-desktop-4d8a3-rds-and-selectable-controls/test-failed-1.png
+  Evidence: /tmp/yardmaster-layout-results/desktop-layout.e2e-desktop-4d8a3-rds-and-selectable-controls/error-context.md
+  Evidence: /tmp/yardmaster-layout-results/desktop-layout.e2e-desktop-4d8a3-rds-and-selectable-controls/error-context.md
+  Evidence: /tmp/yardmaster-layout-results/desktop-layout.e2e-desktop-4d8a3-rds-and-selectable-controls/trace.zip
+
+[SUMMARY] PLAYWRIGHT: tests 1 | pass 0 | fail 1 | skipped 0 | flaky 0
+[FAIL] PLAYWRIGHT TESTS - FAILED (1.1 seconds)
+

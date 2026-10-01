@@ -1,0 +1,40 @@
+
+[RUNNING] PLAYWRIGHT TESTS: 1 tests
+(node:18) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[RUNNING] PLAYWRIGHT: desktop-layout.e2e.spec.mjs > iPhone layout regression > self-heal cards and controls stay accessible on mobile
+[FAIL] PLAYWRIGHT: self-heal cards and controls stay accessible on mobile (1/1, 0.0 seconds)
+  /workspace/scratch/e6f386865275/yardmaster/test/playwright/desktop-layout.e2e.spec.mjs:76
+Error: browserType.launch: 
+╔══════════════════════════════════════════════════════╗
+║ Host system is missing dependencies to run browsers. ║
+║ Missing libraries:                                   ║
+║     libgstreamer-1.0.so.0                            ║
+║     libgtk-4.so.1                                    ║
+║     libgraphene-1.0.so.0                             ║
+║     libevent-2.1.so.7                                ║
+║     libgstallocators-1.0.so.0                        ║
+║     libgstapp-1.0.so.0                               ║
+║     libgstbase-1.0.so.0                              ║
+║     libgstpbutils-1.0.so.0                           ║
+║     libgstaudio-1.0.so.0                             ║
+║     libgsttag-1.0.so.0                               ║
+║     libgstvideo-1.0.so.0                             ║
+║     libgstgl-1.0.so.0                                ║
+║     libgstcodecparsers-1.0.so.0                      ║
+║     libgstfft-1.0.so.0                               ║
+║     libavif.so.16                                    ║
+║     libharfbuzz-icu.so.0                             ║
+║     libwayland-server.so.0                           ║
+║     libmanette-0.2.so.0                              ║
+║     libhyphen.so.0                                   ║
+║     libsecret-1.so.0                                 ║
+║     libGLESv2.so.2                                   ║
+╚══════════════════════════════════════════════════════╝
+  Evidence: /tmp/yardmaster-layout-webkit-results/desktop-layout.e2e-iPhone--7ebff-s-stay-accessible-on-mobile/error-context.md
+  Evidence: /tmp/yardmaster-layout-webkit-results/desktop-layout.e2e-iPhone--7ebff-s-stay-accessible-on-mobile/error-context.md
+  Evidence: /tmp/yardmaster-layout-webkit-results/desktop-layout.e2e-iPhone--7ebff-s-stay-accessible-on-mobile/trace.zip
+
+[SUMMARY] PLAYWRIGHT: tests 1 | pass 0 | fail 1 | skipped 0 | flaky 0
+[FAIL] PLAYWRIGHT TESTS - FAILED (0.6 seconds)
+

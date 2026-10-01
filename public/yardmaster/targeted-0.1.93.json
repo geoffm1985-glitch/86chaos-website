@@ -1,9 +1,7 @@
 {
-  "product": "Yardmaster",
   "version": "0.1.93",
-  "releaseDate": "2026-10-01",
   "sourceCommit": "f74eae4c95d780081274439b3487ac18b2650b43",
-  "verified": false,
+  "source": "testing candidate validation",
   "verification": {
     "candidate": "testing-only",
     "sourceSyntax": "pass",
@@ -13,7 +11,5 @@
     "iphoneWebKit": "not selected; desktop ChatGPT repair",
     "fullStore": "not run",
     "note": "Fixes false sign-in classification and hidden/pending composer selection; preserves handoff archive and diagnostics."
-  },
-  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.93.zip",
-  "sha256": "dbe26c5490749e3c6b903ec3386a4d58a38a75a8b4d8fe091c1d364ad6af23d1"
+  }
 }

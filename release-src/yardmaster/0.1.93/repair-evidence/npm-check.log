@@ -1,0 +1,7 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> yardmaster@0.1.83 check
+> node --check server.mjs && node --check automation/chatgpt.mjs && node --check automation/full-self-test.mjs && node --check automation/windows-operator.mjs && node --check automation/self-heal.mjs && node --check automation/ops-intelligence.mjs && node --check automation/play-store-resume.mjs && node --check public/app.js && node --check desktop.cjs && node --check preload.cjs && node scripts/verify-feature-coverage.mjs && node --check scripts/run-play-store.mjs && node --check scripts/reporters/node-status.mjs && node --check scripts/reporters/playwright-status.mjs
+
+error: Could not access 'HEAD^'
+Yardmaster feature coverage contract PASS: no implementation delta
