@@ -1,0 +1,15 @@
+# Yardmaster 0.1.99 two-exchange loop rollover and in-app update repair
+
+Based on the exact 0.1.98 source at yardmaster-testing commit 63fad8f1d358c450bf1f6e6dd735808b838c83fc. The supplied complete application ZIP matches every file in that commit.
+
+Closed-loop, hands-free implementation and loop self-heal handoffs count completed assistant replies. Streaming updates and duplicate polls do not consume exchanges. At two completed exchanges, the next continuation opens a fresh chat, verifies the selected mode/model/thinking setting, attaches the handoff and carries the original task, recent exchanges and completed PowerShell result. An available or downloading ZIP is collected first. The counter persists across handoffs and restart and resets for a fresh conversation. The manual Open ChatGPT action remains independent.
+
+The previous updater always read the production manifest and refused testing candidates. Testing builds now read the public yardmaster-testing release feed and checksum-pinned update ZIP, avoiding Vercel preview authentication. A manual update may install an explicitly labeled testing candidate only from a testing installation; automatic installation still requires a verified release. Production manifest policy remains verified-only. Queued updates retain actual verification/channel metadata.
+
+PowerShell launch errors now reach the dashboard. The running application stays alive until checksum and isolated canary checks succeed. PowerShell records download, checksum, canary and installation errors in durable status, including Windows UTF-8 BOM handling, and the dashboard permits a retry. Existing paused-run, canary, checksum and supervisor rollback protections remain.
+
+Validation: nine new Node regressions passed. Thirty-two targeted Node checks passed across the new regressions, update sandbox, static contracts and mobile control parity. Twenty existing trusted-send/protocol regressions passed. One real HTTP Playwright regression passed against the running server, including manual testing update, persistent Windows error evidence and retry. Source syntax and dual feature coverage passed (70 features, 17 Playwright specs).
+
+The new Playwright file lists nine executions: three cases each on desktop Chromium, Android Chromium and iPhone WebKit. Its six browser-dependent executions remain pending on the user's PC because the workspace browser download returned an invalid ZIP. The HTTP case was executed on the desktop project. Native Windows PowerShell installation and a live ChatGPT account rollover remain pending on Windows. No full Play Store gate, GitHub Actions or production push was run.
+
+Run scripts/Test-Local-Yardmaster.ps1 -ExpectedCommit <delivered SHA> -ExpectedVersion 0.1.99 -LoopUpdateOnly for the new targeted Node and browser regressions. This command tests the repository; it does not install the running application. To activate this build, extract the complete ZIP and run Yardmaster-Installer.cmd once. Later manual testing updates work inside the application.

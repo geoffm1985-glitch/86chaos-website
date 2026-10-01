@@ -1,19 +1,20 @@
 {
   "product": "Yardmaster",
-  "version": "0.1.98",
+  "version": "0.1.99",
+  "channel": "testing",
   "releaseDate": "2026-10-01",
-  "sourceCommit": "63fad8f1d358c450bf1f6e6dd735808b838c83fc",
+  "sourceCommit": "e02e8f2444d0a2f428822686be5ba3115ac018cd",
   "verified": false,
   "verification": {
     "candidate": "testing-only",
     "sourceSyntax": "pass",
-    "targetedNode": "9 Electron runtime/startup regressions passed",
-    "targetedPlaywright": "exactly one previously failed Electron dock test listed; Windows execution pending locally",
-    "priorWindowsEvidence": "0.1.97 npm ci, source checks, 4 Node regressions and explicit Electron preparation passed; electron.launch timed out at 20000ms before assertions",
-    "iphoneWebKit": "not selected; desktop Electron test startup repair",
-    "fullStore": "not run",
-    "note": "Windows startup preserves stderr pipes and isolates inherited Electron/Node overrides. Bounded 60-second attachment and 100-second fixture budgets; original handoff assertions retained."
+    "targetedNode": "9 new Node regressions passed; 32 related targeted checks passed; 20 trusted-send/protocol checks passed",
+    "targetedPlaywright": "1 HTTP process regression passed; 6 desktop/Android/iPhone browser regressions pending locally",
+    "nativeWindows": "PowerShell installation and live ChatGPT rollover pending",
+    "fullStore": "not run"
   },
-  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.98.zip",
-  "sha256": "bd708bb15d09a8a596f9666d18d9dd9573e8e260aa3b0682db6704929c16e5f7"
+  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.99.zip",
+  "sha256": "ead8f8eba29ebd65826b96e90761e87e00a7b82d3a16565cec9dad3c0f9b9fd3",
+  "updateDownloadUrl": "https://raw.githubusercontent.com/geoffm1985-glitch/86chaos-website/yardmaster-testing/public/yardmaster/releases/Yardmaster-Windows-0.1.99.zip",
+  "updateSha256": "ead8f8eba29ebd65826b96e90761e87e00a7b82d3a16565cec9dad3c0f9b9fd3"
 }
