@@ -1,9 +1,7 @@
 {
-  "product": "Yardmaster",
   "version": "0.1.97",
-  "releaseDate": "2026-10-01",
   "sourceCommit": "f3b148585eeaae78745ad1c85c72c5b51d3e5c2a",
-  "verified": false,
+  "source": "testing candidate validation",
   "verification": {
     "candidate": "testing-only",
     "sourceSyntax": "pass",
@@ -13,7 +11,5 @@
     "iphoneWebKit": "not selected; desktop Electron test setup repair",
     "fullStore": "not run",
     "note": "Prepare the Electron executable before timed launch; application handoff transport is unchanged."
-  },
-  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.97.zip",
-  "sha256": "eded4a59a274f685314c0443574011a4d46cc4dde6389dc52ba416e14a678542"
+  }
 }
