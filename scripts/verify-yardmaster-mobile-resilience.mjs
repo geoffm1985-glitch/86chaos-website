@@ -27,7 +27,7 @@ assert.ok(sw.includes(release.version),'Yardmaster service-worker cache must tra
 assert.match(sw,/showNotification/);
 assert.match(sw,/notificationclick/);
 assert.equal(manifest.start_url,'/yardmaster');
-assert.equal(release.version,'0.1.91');
+assert.equal(release.version,'0.1.92');
 assert.equal(release.verified,false);
 for(const section of ['operations','runs','branches','queue','chatgpt','deployments','settings','intelligence'])assert.ok(page.includes('data-mobile-section="'+section+'"'),section);
 assert.match(page,/maximum-scale=1,user-scalable=no/);
