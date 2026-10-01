@@ -1,0 +1,13 @@
+# Yardmaster 0.1.101 targeted test repair
+
+The supplied 0.1.100 Windows handoff passed all 15 Node regressions and 13 of 15 Playwright executions. The two remaining failures are fixture setup defects, so this repair changes those fixtures and release version metadata.
+
+The hosted mobile model test ran at desktop width. The website intentionally displays its download page above 760 pixels, so its phone navigation was hidden and the click timed out. The test now chooses a phone viewport for the desktop project while preserving the existing Android and iPhone device viewports. It explicitly verifies that phone navigation is visible before exercising both modes, every model, authenticated API persistence, reload and custom saved models.
+
+The rollover test created current-handoff.zip inside the directory watched for repaired downloads. On the slower iPhone/WebKit run, that newer input ZIP was old enough to satisfy the download settling check and was collected ahead of the backdated fixed.zip. The fixture now creates its handoff input in a separate folder before the browser run and watches only its downloads folder, matching the operator's layout. It still requires exactly one command execution, one fresh chat, the command result and previous exchange context, the selected mode/model/effort, and the exact expected attachment. The repaired file assertion now checks its full download path. The browser waiter gets a 20-second fixture budget to accommodate WebKit file upload; the application's wait behavior is unchanged.
+
+New Play Store/Node regressions cover the 760-pixel breakpoint, preservation of Android/iPhone viewport settings, and isolation of a newer input archive from completed repair collection. Both repaired Playwright cases remain in the desktop, Android and iPhone projects.
+
+Validation for 0.1.101: syntax/feature coverage passed; 39 targeted Node checks passed, including 17 loop/update/model checks; three request-only Playwright updater checks passed. All 15 scoped Playwright executions are discoverable. Twelve browser executions remain pending because this workspace receives invalid/truncated browser download archives. The supplied 0.1.100 handoff confirms the other 13 browser executions passed, including model changes in both modes on native PC/Android/iPhone and hosted Android/iPhone. The full release/Play Store suite was not run. Production was not changed.
+
+Run scripts/Test-Local-Yardmaster.ps1 -ExpectedCommit <delivered SHA> -ExpectedVersion 0.1.101 -LoopUpdateOnly. This pulls/tests the repository when used with the delivered PowerShell command; installation is separate. To install, use the existing app's Update Yardmaster Now, or extract the complete application ZIP and run Yardmaster-Installer.cmd.

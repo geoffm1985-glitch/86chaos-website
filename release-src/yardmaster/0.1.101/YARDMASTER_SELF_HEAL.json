@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "version": "0.1.101",
+  "published": false,
+  "releaseManifestUrl": "https://www.86chaos.com/yardmaster/release.json",
+  "requiredTests": [
+    "test:self-heal",
+    "test:playwright",
+    "test:play-store"
+  ],
+  "regressionCoverage": {
+    "exactFailure": "The hosted PWA model test clicks phone navigation at desktop width; iPhone rollover test collects its input ZIP from the watched repair-download folder.",
+    "playStoreTests": [
+      "test/loop-update.test.mjs",
+      "test/model-controls.test.mjs"
+    ],
+    "playwrightTests": [
+      "test/playwright/loop-update.e2e.spec.mjs",
+      "test/playwright/model-controls.e2e.spec.mjs"
+    ]
+  }
+}

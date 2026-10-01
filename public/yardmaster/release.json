@@ -1,20 +1,21 @@
 {
   "product": "Yardmaster",
-  "version": "0.1.100",
+  "version": "0.1.101",
   "releaseDate": "2026-10-01",
-  "sourceCommit": "218748d7f4b9606435d55a10643637c9b0ca8111",
+  "sourceCommit": "572ac84f0db78455a1d35d63931661ffecc17a13",
   "verified": false,
   "verification": {
     "candidate": "testing-only",
     "sourceSyntax": "pass",
-    "targetedNode": "71 targeted Node checks passed (15 exact regressions, 22 static/control parity, 14 selection, 20 trusted-send/protocol)",
-    "targetedPlaywright": "3 HTTP process regressions passed; 12 desktop/Android/iPhone browser executions pending: invalid browser downloads",
-    "nativeWindows": "PowerShell installation and live signed-in ChatGPT loop pending",
+    "targetedNode": "39 targeted Node checks passed, including 17 loop/update/model checks",
+    "targetedPlaywright": "3 HTTP process tests passed; 12 browser executions pending because browser downloads are invalid/truncated",
+    "priorWindowsHandoff": "0.1.100: 15 Node passed; 13/15 Playwright passed. This candidate repairs the two evidenced test-fixture failures.",
+    "nativeWindows": "Native installation and live signed-in ChatGPT loop pending",
     "fullStore": "not run"
   },
-  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.100.zip",
-  "sha256": "5fa313142b21139c167836b5f56f9ef14794aa8401b586bc668a96ec612dada6",
+  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.101.zip",
+  "sha256": "f4ce81700261dd1877d237bd45d3fa1b4b85ef03352a9a7e58ffed7a270c8c77",
   "channel": "testing",
-  "updateDownloadUrl": "https://raw.githubusercontent.com/geoffm1985-glitch/86chaos-website/yardmaster-testing/public/yardmaster/releases/Yardmaster-Windows-0.1.100.zip",
-  "updateSha256": "5fa313142b21139c167836b5f56f9ef14794aa8401b586bc668a96ec612dada6"
+  "updateDownloadUrl": "https://raw.githubusercontent.com/geoffm1985-glitch/86chaos-website/yardmaster-testing/public/yardmaster/releases/Yardmaster-Windows-0.1.101.zip",
+  "updateSha256": "f4ce81700261dd1877d237bd45d3fa1b4b85ef03352a9a7e58ffed7a270c8c77"
 }
