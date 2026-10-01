@@ -5,8 +5,11 @@ import {fileURLToPath} from 'node:url';
 import {spawnSync} from 'node:child_process';
 
 const root=path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-const version='0.1.83';
-const sourceCommit='a00f3c5ba2e7405f03c8ef48bf94687d0a5b84c2';
+const markerFile=path.join(root,'public/yardmaster/testing-site.json');
+const marker=fs.existsSync(markerFile)?JSON.parse(fs.readFileSync(markerFile,'utf8')):null;
+const testing=marker?.site==='yardmaster-testing';
+const version=testing?marker.sourceVersion:'0.1.83';
+const sourceCommit=testing?marker.sourceCommit:'a00f3c5ba2e7405f03c8ef48bf94687d0a5b84c2';
 const sourceRoot=path.join(root,'release-src','yardmaster',version);
 const outDir=path.join(root,'public','yardmaster','releases');
 const outFile=path.join(outDir,`Yardmaster-Windows-${version}.zip`);
@@ -65,6 +68,8 @@ function endRecord(count,centralSize,centralOffset){
 }
 
 if(!fs.existsSync(sourceRoot)) throw new Error('Yardmaster release source is missing: '+sourceRoot);
+const sourcePackage=JSON.parse(fs.readFileSync(path.join(sourceRoot,'package.json'),'utf8'));
+if(sourcePackage.version!==version)throw new Error('Yardmaster testing source version does not match release marker');
 // Website publication must be deterministic and must not reinstall the Windows desktop app's dependencies.
 // The user confirmed both Windows Node/Play Store and Playwright suites passed for this exact source commit.
 // Vercel performs syntax validation here, then packages the already-certified source verbatim.
@@ -84,7 +89,7 @@ const targetedReport={
 };
 fs.mkdirSync(path.join(root,'public','yardmaster'),{recursive:true});
 fs.writeFileSync(path.join(root,'public','yardmaster','targeted-0.1.83.json'),JSON.stringify(targetedReport,null,2)+'\n');
-console.log('Yardmaster 0.1.83 website packaging preflight passed.');
+console.log('Yardmaster '+version+' website packaging preflight passed.');
 const names=[...new Set([...filesRecursive(sourceRoot),...sharedFiles.keys()])].sort();
 if(!names.length) throw new Error('Yardmaster release source is empty.');
 
@@ -126,5 +131,12 @@ const release={
   downloadUrl:`/yardmaster/releases/Yardmaster-Windows-${version}.zip`,
   sha256
 };
+if(testing){
+  const candidate=JSON.parse(fs.readFileSync(releaseFile,'utf8'));
+  if(candidate.sourceCommit!==sourceCommit||candidate.version!==version)throw new Error('Testing release marker mismatch');
+  Object.assign(release,candidate,{version,sourceCommit,verified:false,downloadUrl:`/yardmaster/releases/Yardmaster-Windows-${version}.zip`,sha256});
+  delete release.candidateSha256;
+}
 fs.writeFileSync(releaseFile,JSON.stringify(release,null,2)+'\n');
 console.log('Prepared Yardmaster website release',version,sha256,names.length+' files');
+

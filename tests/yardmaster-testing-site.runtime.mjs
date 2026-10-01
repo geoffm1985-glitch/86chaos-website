@@ -24,8 +24,17 @@ for(const profile of profiles){
     assert.equal(marker.productionAffected,false);
     assert.equal(release.sourceCommit,marker.sourceCommit,profile.name+' must serve the exact testing-branch source commit');
     assert.ok(sw.includes(release.version),profile.name+' service worker must track the testing release version');
-    assert.equal(release.version,'0.1.86');
-    assert.equal(marker.sourceVersion,'0.1.86');
+    const workerScope=await page.evaluate(async()=>{
+      const response=await fetch('/yardmaster/sw.js',{cache:'no-store'});
+      const registered=await navigator.serviceWorker.register('/yardmaster/sw.js',{scope:'/yardmaster'});
+      const ready=await navigator.serviceWorker.ready;
+      return {allowed:response.headers.get('Service-Worker-Allowed'),scope:registered.scope,active:ready.active?.state};
+    });
+    assert.equal(workerScope.allowed,'/yardmaster','worker must permit the canonical slashless page');
+    assert.equal(workerScope.scope,new URL('/yardmaster',base).href);
+    assert.equal(workerScope.active,'activated');
+    assert.equal(release.version,'0.1.87');
+    assert.equal(marker.sourceVersion,'0.1.87');
     if(profile.name==='iPhone Safari'){
       const viewport=await page.locator('meta[name="viewport"]').getAttribute('content');
       assert.match(viewport,/maximum-scale=1/);assert.match(viewport,/user-scalable=no/);
@@ -45,3 +54,4 @@ for(const profile of profiles){
   }
 }
 console.log('Yardmaster testing-site Playwright regression PASS');
+

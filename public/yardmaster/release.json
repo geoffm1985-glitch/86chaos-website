@@ -1,17 +1,18 @@
 {
   "product": "Yardmaster",
-  "version": "0.1.86",
+  "version": "0.1.87",
   "releaseDate": "2026-09-30",
-  "sourceCommit": "1f715d61bbdad9ec0cc8ab060aceb2776ef4bc9e",
+  "sourceCommit": "704519976d722e970af213c9cde75040e860c033",
   "verified": false,
   "verification": {
     "candidate": "testing-only",
     "sourceSyntax": "pass",
-    "targetedLocal": "32 pass / 0 fail / 1 Windows-only skip across repaired static/control contracts; diagnostic export tests 6 pass / 0 fail",
-    "fullStore": "not run after repair",
-    "fullPlaywright": "not run after repair",
-    "note": "Windows full certification must be rerun. Any failed certification phase now exports a Yardmaster-Test-Diagnostic ZIP automatically."
+    "targetedNode": "37 passed / 0 failed / 0 skipped",
+    "playwrightDiscovery": "58 tests discovered; 9 specs parse",
+    "browserRuntime": "not certified: container browser launch restriction",
+    "fullStore": "not run automatically; run locally",
+    "note": "Notification worker scope and complete API/UI/config coverage inventory repaired."
   },
-  "downloadUrl": "https://github.com/geoffm1985-glitch/yardmaster/archive/refs/heads/yardmaster-testing.zip",
-  "candidateSha256": "3c39b03d6900fc4b078f2b794e42e1c0cc6f23c2a657408748f82fda3fa15fbf"
+  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.87.zip",
+  "sha256": "ff0f4d079fcf0c6a21425b635554d44c6e871dc3574c0ad527392e97976f7fbf"
 }

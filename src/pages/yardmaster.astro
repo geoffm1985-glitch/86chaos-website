@@ -138,6 +138,7 @@ async function ensurePush({requestPermission=false,test=true,force=false,silent=
     let perm=Notification.permission;
     if(perm==='default'&&requestPermission)perm=await Notification.requestPermission();
     if(perm!=='granted'){pushUi(perm==='denied'?'Browser notification permission is blocked. Allow notifications for 86chaos.com, then tap Repair Alerts.':'Tap Alerts and allow notifications.');return false}
+    // The Service-Worker-Allowed response header permits the canonical slashless page.
     const reg=await navigator.serviceWorker.register('/yardmaster/sw.js',{scope:'/yardmaster'});
     await navigator.serviceWorker.ready;
     const key=await api('/api/push/key'),expected=b64url(key.publicKey);
@@ -250,3 +251,4 @@ if(mobile){for(const type of ['gesturestart','gesturechange','gestureend'])docum
 refresh();setInterval(refresh,2500);
 </script>
 </body></html>
+

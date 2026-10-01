@@ -1,0 +1,24 @@
+
+[RUNNING] PLAYWRIGHT TESTS: 8 tests
+(node:17) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[RUNNING] PLAYWRIGHT: operations-intelligence.e2e.spec.mjs > operations intelligence upgrade > Intelligence view renders workflow timeline, factual health, preflight, resources, evidence and required controls
+[PASS] PLAYWRIGHT: Intelligence view renders workflow timeline, factual health, preflight, resources, evidence and required controls (1/8, 1.3 seconds)
+[RUNNING] PLAYWRIGHT: operations-intelligence.e2e.spec.mjs > operations intelligence upgrade > reproduction capsule, snapshot and manifest actions stay inside isolated Yardmaster fixture data
+[PASS] PLAYWRIGHT: reproduction capsule, snapshot and manifest actions stay inside isolated Yardmaster fixture data (2/8, 1.3 seconds)
+[RUNNING] PLAYWRIGHT: operations-intelligence.e2e.spec.mjs > operations intelligence upgrade > profiles, worktrees, notes, bookmarks, safe mode and dry-run are operator controlled
+[PASS] PLAYWRIGHT: profiles, worktrees, notes, bookmarks, safe mode and dry-run are operator controlled (3/8, 0.7 seconds)
+[RUNNING] PLAYWRIGHT: operations-intelligence.e2e.spec.mjs > operations intelligence upgrade > Yardmaster-only live screenshot route is opt-in and never substitutes a full desktop capture
+[PASS] PLAYWRIGHT: Yardmaster-only live screenshot route is opt-in and never substitutes a full desktop capture (4/8, 0.5 seconds)
+[RUNNING] PLAYWRIGHT: operations-intelligence.e2e.spec.mjs > operations intelligence upgrade > audit log, provenance, changed-since-good and self-heal/canary contracts remain visible and isolated
+[PASS] PLAYWRIGHT: audit log, provenance, changed-since-good and self-heal/canary contracts remain visible and isolated (5/8, 0.8 seconds)
+[RUNNING] PLAYWRIGHT: resumable-pause-docked-chatgpt.e2e.spec.mjs > true pause/resume and docked ChatGPT > paused Play Store checkpoint survives restart and Resume refuses to silently restart a full gate when evidence is unavailable
+[PASS] PLAYWRIGHT: paused Play Store checkpoint survives restart and Resume refuses to silently restart a full gate when evidence is unavailable (6/8, 0.8 seconds)
+[RUNNING] PLAYWRIGHT: resumable-pause-docked-chatgpt.e2e.spec.mjs > true pause/resume and docked ChatGPT > ChatGPT view provides the embedded workspace surface without requiring a popup browser in dashboard UI
+[PASS] PLAYWRIGHT: ChatGPT view provides the embedded workspace surface without requiring a popup browser in dashboard UI (7/8, 0.8 seconds)
+[RUNNING] PLAYWRIGHT: resumable-pause-docked-chatgpt.e2e.spec.mjs > true pause/resume and docked ChatGPT > testing build exposes the dual regression contract for both new features
+[PASS] PLAYWRIGHT: testing build exposes the dual regression contract for both new features (8/8, 0.0 seconds)
+
+[SUMMARY] PLAYWRIGHT: tests 8 | pass 8 | fail 0 | skipped 0 | flaky 0
+[PASS] PLAYWRIGHT TESTS - PASSED (6.9 seconds)
+

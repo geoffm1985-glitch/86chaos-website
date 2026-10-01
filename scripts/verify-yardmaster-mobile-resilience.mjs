@@ -27,10 +27,16 @@ assert.ok(sw.includes(release.version),'Yardmaster service-worker cache must tra
 assert.match(sw,/showNotification/);
 assert.match(sw,/notificationclick/);
 assert.equal(manifest.start_url,'/yardmaster');
-assert.equal(release.version,'0.1.86');
+assert.equal(release.version,'0.1.87');
 assert.equal(release.verified,false);
 for(const section of ['operations','runs','branches','queue','chatgpt','deployments','settings','intelligence'])assert.ok(page.includes('data-mobile-section="'+section+'"'),section);
 assert.match(page,/maximum-scale=1,user-scalable=no/);
 assert.match(page,/data-mobile-section-target="intelligence"/);
 assert.match(page,/renderMobileIntelligence/);
 console.log('Yardmaster mobile resilience static PASS');
+
+
+const config=JSON.parse(fs.readFileSync(path.join(root,'vercel.json'),'utf8'));
+const allowed=config.headers.find(rule=>rule.source==='/yardmaster/sw.js')?.headers.find(h=>h.key==='Service-Worker-Allowed')?.value;
+assert.equal(allowed,'/yardmaster','canonical notification scope requires an explicit response header');
+assert.ok(inlineScript.includes("scope:'/yardmaster'"));
