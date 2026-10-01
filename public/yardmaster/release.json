@@ -1,20 +1,20 @@
 {
   "product": "Yardmaster",
-  "version": "0.1.89",
-  "releaseDate": "2026-09-30",
-  "sourceCommit": "0a4cce44d14dd03da4b748c4bf6ebfe18869cc78",
+  "version": "0.1.90",
+  "releaseDate": "2026-10-01",
+  "sourceCommit": "9aafa7c42d71b0a622a5526e15f21dde6ad29027",
   "verified": false,
   "verification": {
     "candidate": "testing-only",
     "sourceSyntax": "pass",
-    "targetedNode": "32 passed / 0 failed",
-    "androidMobile": "16 passed / 0 failed",
-    "targetedPlaywright": "10 passed / 0 failed / 3 Windows-only skipped",
-    "iphoneWebKit": "included in local command; Linux dependencies unavailable here",
-    "playwrightDiscovery": "94 total; targeted command selects 45",
+    "targetedNode": "6 exact repair regressions passed; 26 Node checks passed including preflight validations",
+    "targetedPlaywright": "5 selected tests passed using Linux headless Chromium",
+    "windowsEdge": "actual Windows run remains local",
+    "iphoneWebKit": "excluded at user request; no iPhone repair",
+    "playwrightDiscovery": "targeted command selects 5 tests: 3 repaired failures and 2 helper regressions",
     "fullStore": "not run automatically",
-    "note": "Repairs supplied 0.1.88 Playwright failures and adds Android Chromium/iPhone WebKit hosted PWA coverage."
+    "note": "Repairs only the three supplied non-iPhone 0.1.89 failures."
   },
-  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.89.zip",
-  "sha256": "f4df14ff57144434faee6ce70275eb7599637491cc153cfef2a2610468b006df"
+  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.90.zip",
+  "sha256": "fe658941a44ef4e781da9b7653e8dbdc2691709db491e99971c705d00372eb47"
 }
