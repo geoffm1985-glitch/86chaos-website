@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 150" role="img" aria-label="Yardmaster">
+  <defs>
+    <linearGradient id="copper" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#9f5f38"/><stop offset=".45" stop-color="#e5a16d"/><stop offset="1" stop-color="#b56e43"/></linearGradient>
+    <linearGradient id="steel" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#75818b"/><stop offset=".5" stop-color="#d0d7dc"/><stop offset="1" stop-color="#88949f"/></linearGradient>
+    <linearGradient id="green" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#1c8f5a"/><stop offset=".6" stop-color="#47d67f"/><stop offset="1" stop-color="#2bbf6e"/></linearGradient>
+  </defs>
+  <g transform="translate(10 18)" fill="none" stroke-linecap="round" stroke-width="10">
+    <path d="M0 12 H170 C220 12 225 48 270 48 H305" stroke="url(#copper)"/>
+    <path d="M0 39 H170 C220 39 225 61 270 61 H305" stroke="url(#steel)"/>
+    <path d="M0 66 H170 C220 66 225 73 270 73 H305" stroke="url(#green)"/>
+    <path d="M0 93 H170 C220 93 225 85 270 85 H305" stroke="url(#steel)"/>
+    <path d="M0 120 H170 C220 120 225 98 270 98 H305" stroke="url(#copper)"/>
+    <circle cx="318" cy="73" r="24" stroke="url(#copper)"/>
+    <circle cx="318" cy="73" r="10" fill="#c77b49" stroke="none"/>
+  </g>
+  <text x="370" y="84" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="72" font-weight="800" fill="#f7f4ef">Yard<tspan fill="url(#steel)">master</tspan></text>
+  <text x="375" y="119" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="15" letter-spacing="7" fill="#a8b0b8">BIG MOVEMENT, ORDERED WELL.</text>
+</svg>

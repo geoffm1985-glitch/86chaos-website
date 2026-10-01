@@ -1,0 +1,62 @@
+✔ scrolling ChatGPT native dock stays within the dashboard viewport and cannot overlay hidden views (7.772135ms)
+✔ desktop layout repair is registered in complete Play Store and Playwright inventories (1.60508ms)
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+fatal library error, lookup self
+✔ failure fingerprinting remembers repeated failures and known fixes without using real repositories (3.726894ms)
+✔ timeline, mobile action cards, health panel and hang watchdog expose factual state (1.120951ms)
+✔ evidence viewer resolves only Yardmaster data paths (1.743565ms)
+✔ reproduction capsules, snapshots, worktrees and changed-file intelligence use isolated temporary Git repositories (120.478983ms)
+✔ test history identifies intermittent tests instead of hiding them (1.664447ms)
+✔ preflight doctor and resource watchdog report machine facts without external services (155.114723ms)
+✔ manifest and release provenance produce reproducible file hashes (40.42904ms)
+✔ self-heal escalation grows deliberately and attempt comparison stays bounded (0.35894ms)
+✔ cost guard, dry-run plans and configuration profiles are persistent local controls (1.99314ms)
+✔ tamper-evident audit chain, notes/bookmarks and Safe Mode persist locally (1.848255ms)
+✔ what-changed-since-last-good compares commits and preserves mandatory dual test selection (55.851532ms)
+✔ feature registry makes dual regression coverage and the single testing command mandatory (1.156394ms)
+✔ snapshot restore and updater canary are protective, version-agnostic recovery paths (2.056244ms)
+✔ true Play Store pause checkpoint survives Yardmaster restart and prefers the exact same process (3.038095ms)
+✔ Yardmaster-owned pause suspends the outer test process tree while retaining the inner release-gate identity (0.907835ms)
+﹣ WINDOWS: true pause freezes and resumes a disposable process tree (0.12252ms) # SKIP
+✔ lost Play Store process falls back only to verified 86 Chaos partial checkpoint and never silently restarts full gate (2.594286ms)
+✔ Stop clears a pause checkpoint while ordinary Yardmaster shutdown preserves a suspended release gate (1.48878ms)
+✔ paused Play Store update records a durable resume marker instead of waiting for the run to finish (0.874108ms)
+✔ docked ChatGPT uses a persistent sandboxed Electron WebContentsView and localhost-only DevTools bridge (1.037631ms)
+✔ Windows recovery regressions keep PowerShell PID names safe and retry transient clipboard contention (0.803086ms)
+✔ version-6 migration regression is locked after the Operations Intelligence defaults upgrade (4.376248ms)
+✔ new feature registry requires Play Store and Playwright coverage for pause/resume and docked ChatGPT (0.621923ms)
+✔ installer self-elevates and registers a functional Windows uninstall entry (1.802718ms)
+✔ New Work packaging protects source state, credentials, platforms, tests, and production (0.456325ms)
+✔ desktop dashboard exposes one-screen operations, actionable remote states, and New Work (0.491712ms)
+✔ ChatGPT handoff verifies the same composer controls, attachment, and submitted user message (1.147997ms)
+✔ full Yardmaster self-test is isolated from 86 Chaos and covers the complete local repair cycle (4.373545ms)
+✔ automated repair prompt keeps raw console evidence in the ZIP and sends only a compact summary (1.146585ms)
+✔ ChatGPT handoff failures expose a sanitized black-box diagnostic bundle (1.413542ms)
+✔ console output is redacted before it can be exposed to the authenticated phone (0.959687ms)
+✔ Open ChatGPT is manual-only and cannot start the automated command bridge (1.912243ms)
+✔ failed-run ChatGPT repair starts automatically by default while manual Open ChatGPT stays separate (1.657572ms)
+✔ phone push notifications register, display, self-test, and expose delivery health (3.013558ms)
+✔ Playwright black-box coverage is wired into the full Play Store command (0.338096ms)
+✔ Yardmaster self-heal is supervised, website-verified, test-gated, rollback-safe, and checkpoint-resumable (1.517228ms)
+✔ desktop menu bootstrap binds the full navigation collection without a startup exception (0.32652ms)
+✔ full-app self-heal Playwright fixture always uses a candidate newer than the current Yardmaster build (1.434078ms)
+✔ version labels stay synchronized (0.280224ms)
+✔ resilience controls expose detailed status, resumable failures, push health, and remote PC updates (1.125777ms)
+✔ full dashboard Playwright coverage respects panel-scoped controls (0.227802ms)
+✔ certification still runs every Node test and the complete Playwright inventory (1.778559ms)
+✔ Node reporter arguments use importable file URLs for Windows drive paths and spaces (0.481633ms)
+✔ actual certification inventory retains every test under Windows path semantics (4.816834ms)
+✔ certification prints overall PASS only after every phase passes (138.582685ms)
+✔ certification preserves a failure exit code and never runs later phases (59.588416ms)
+✔ node console reporter distinguishes success from skipped tests (179.38658ms)
+✔ node console reporter distinguishes failure from skipped tests (147.740732ms)
+✔ playwright console reporter distinguishes success from skipped tests (992.268716ms)
+✔ playwright console reporter distinguishes failure from skipped tests (963.986552ms)
+ℹ tests 52
+ℹ suites 0
+ℹ pass 51
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 1
+ℹ todo 0
+ℹ duration_ms 2598.05035

@@ -33,8 +33,8 @@ for(const profile of profiles){
     assert.equal(workerScope.allowed,'/yardmaster','worker must permit the canonical slashless page');
     assert.equal(workerScope.scope,new URL('/yardmaster',base).href);
     assert.equal(workerScope.active,'activated');
-    assert.equal(release.version,'0.1.87');
-    assert.equal(marker.sourceVersion,'0.1.87');
+    assert.equal(release.version,'0.1.88');
+    assert.equal(marker.sourceVersion,'0.1.88');
     if(profile.name==='iPhone Safari'){
       const viewport=await page.locator('meta[name="viewport"]').getAttribute('content');
       assert.match(viewport,/maximum-scale=1/);assert.match(viewport,/user-scalable=no/);
