@@ -5,8 +5,8 @@ import {fileURLToPath} from 'node:url';
 import {spawnSync} from 'node:child_process';
 
 const root=path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-const version='0.1.83';
-const sourceCommit='a00f3c5ba2e7405f03c8ef48bf94687d0a5b84c2';
+const version='0.1.90';
+const sourceCommit='9aafa7c42d71b0a622a5526e15f21dde6ad29027';
 const sourceRoot=path.join(root,'release-src','yardmaster',version);
 const outDir=path.join(root,'public','yardmaster','releases');
 const outFile=path.join(outDir,`Yardmaster-Windows-${version}.zip`);
@@ -31,7 +31,7 @@ function crc32(buffer){
 }
 
 function dosDateTime(){
-  const year=2026,month=9,day=30,hour=12,minute=0,second=0;
+  const year=2026,month=10,day=1,hour=12,minute=0,second=0;
   return {time:(hour<<11)|(minute<<5)|(second>>1),date:((year-1980)<<9)|(month<<5)|day};
 }
 
@@ -66,25 +66,25 @@ function endRecord(count,centralSize,centralOffset){
 
 if(!fs.existsSync(sourceRoot)) throw new Error('Yardmaster release source is missing: '+sourceRoot);
 // Website publication must be deterministic and must not reinstall the Windows desktop app's dependencies.
-// The user confirmed both Windows Node/Play Store and Playwright suites passed for this exact source commit.
-// Vercel performs syntax validation here, then packages the already-certified source verbatim.
+// The user confirmed the exact Windows targeted Node and Playwright rerun passed for this source commit.
+// Vercel performs syntax validation here, then packages that tested source verbatim.
 for(const rel of ['server.mjs','automation/chatgpt.mjs','automation/full-self-test.mjs','automation/windows-operator.mjs','automation/self-heal.mjs','public/app.js','desktop.cjs']){
   const check=spawnSync(process.execPath,['--check',path.join(sourceRoot,...rel.split('/'))],{cwd:sourceRoot,encoding:'utf8'});
-  if(check.status!==0)throw new Error('Yardmaster 0.1.83 syntax check failed for '+rel+'\n'+String(check.stdout||'')+String(check.stderr||''));
+  if(check.status!==0)throw new Error('Yardmaster 0.1.90 syntax check failed for '+rel+'\n'+String(check.stdout||'')+String(check.stderr||''));
 }
 const targetedReport={
   version,
   sourceCommit,
-  command:'Attached 0.1.83 targeted Node and Playwright evidence passed; website build performs syntax/package verification only',
+  command:'User-reported Windows 0.1.90 exact targeted rerun passed; website build performs syntax/package verification only',
   platform:process.platform,
   exitCode:0,
   passed:true,
-  source:'attached 0.1.83 repair evidence',
-  note:'0.1.83 evidence records 51 Node passes with one Windows-only skip, 16 targeted Playwright passes, and no full Play Store/release-gate run; website build validates and packages that exact source.'
+  source:'user-reported Windows targeted run',
+  note:'The user confirmed the 6 Node repair regressions and 5 selected Playwright tests passed. iPhone was excluded at user request. Full certification was not rerun; website build validates and packages the exact source.'
 };
 fs.mkdirSync(path.join(root,'public','yardmaster'),{recursive:true});
-fs.writeFileSync(path.join(root,'public','yardmaster','targeted-0.1.83.json'),JSON.stringify(targetedReport,null,2)+'\n');
-console.log('Yardmaster 0.1.83 website packaging preflight passed.');
+fs.writeFileSync(path.join(root,'public','yardmaster','targeted-0.1.90.json'),JSON.stringify(targetedReport,null,2)+'\n');
+console.log('Yardmaster 0.1.90 website packaging preflight passed.');
 const names=[...new Set([...filesRecursive(sourceRoot),...sharedFiles.keys()])].sort();
 if(!names.length) throw new Error('Yardmaster release source is empty.');
 
@@ -110,18 +110,19 @@ const sha256=crypto.createHash('sha256').update(zip).digest('hex');
 const release={
   product:'Yardmaster',
   version,
-  releaseDate:'2026-09-30',
+  releaseDate:'2026-10-01',
   sourceCommit,
   verified:true,
   verification:{
-    fullStore:'not-run',
-    fullPlaywright:'targeted-pass',
-    certificationSource:'attached 0.1.83 repair evidence',
-    evidenceDate:'2026-09-30',
+    fullStore:'not-rerun',
+    fullPlaywright:'not-rerun',
+    certificationSource:'user-reported Windows targeted run',
+    userConfirmedAt:'2026-10-01T02:09:12Z',
     syntaxCheck:'pass',
-    targetedNode:'51 passed; 1 Windows-only skipped',
-    targetedPlaywright:'16 passed',
-    windowsReporterPathRegression:'not-retested-in-0.1.83-targeted-evidence'
+    targetedNode:'6 passed',
+    targetedPlaywright:'5 passed',
+    iphoneWebKit:'excluded at user request',
+    promotion:'exact tested 0.1.90 source; user authorized production'
   },
   downloadUrl:`/yardmaster/releases/Yardmaster-Windows-${version}.zip`,
   sha256

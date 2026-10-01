@@ -13,7 +13,8 @@ const inlineScript=page.match(/<script is:inline>([\s\S]*?)<\/script>/)?.[1];
 assert.ok(inlineScript,'Yardmaster inline mobile script is missing');
 try{new Function(inlineScript)}catch(error){throw new Error('Yardmaster inline mobile JavaScript does not parse: '+error.message)}
 const archive=path.join(root,'public',release.downloadUrl.replace(/^\/yardmaster\//,'yardmaster/'));
-assert.equal(release.verified,true);
+const testing=fs.existsSync(path.join(root,'public/yardmaster/testing-site.json'));
+assert.equal(release.verified,!testing);
 assert.match(release.version,/^\d+\.\d+\.\d+$/);
 assert.ok(fs.existsSync(archive),'verified Windows ZIP is missing');
 const sha=crypto.createHash('sha256').update(fs.readFileSync(archive)).digest('hex');
@@ -23,15 +24,16 @@ assert.equal(listing.status,0,listing.stderr);
 const entries=listing.stdout.split(/\r?\n/).filter(Boolean);
 for(const required of ['Yardmaster-Installer.cmd','Install-Yardmaster.cmd','package.json','package-lock.json','scripts/Install-Yardmaster.ps1','scripts/Update-Yardmaster.ps1','scripts/Uninstall-Yardmaster.ps1','public/yardmaster-icon.ico'])assert.ok(entries.includes(required),required);
 assert.match(page,/DOWNLOAD YARDMASTER FOR WINDOWS/);
-assert.ok(page.includes('Verified Yardmaster {release.version}'),'Website version label must use the release manifest version');
-for(const marker of ['viewport-fit=cover','safe-area-inset-bottom','Tunnel Ready','Phone Connected','Pair This Phone Again','/api/remote/health','New 86 Chaos Work','mobileNewWorkControl','Start a new feature or update from your phone','Live Command Output','mConsoleCard','mConsoleCommand','consoleAutoScroll','copyConsole','r.log','thinkingEffort','navigator.credentials','trycloudflare.com','data-act="start"','data-act="pause"','data-act="resume"','data-act="stop"','ym-auth-pending','ym-authenticated','Secure phone sign-in is required before Yardmaster controls unlock.','pairingHints','applyPairingHints',"query.get('remote')","hash.get('remote')","query.get('code')","hash.get('code')","urlField.value=base","codeField.value=hints.code","action:'new-implementation'","accepted?.runsOn!=='windows-pc'",'mDoing','mWaiting','mNext','Resume Current Failed Test','update-operator-now','updatePcYardmaster','mPushStatus','pushKeyMatches','needsResubscribe','existing failed-test ZIP'])assert.ok(page.includes(marker),marker);
+assert.ok(page.includes("{release.verified?'Verified':'Testing candidate'} Yardmaster {release.version}"),'Website version label must use the release manifest version');
+for(const marker of ['viewport-fit=cover','safe-area-inset-bottom','Tunnel Ready','Phone Connected','Pair This Phone Again','/api/remote/health','New 86 Chaos Work','mobileNewWorkControl','Live Command Output','mConsoleCard','mConsoleCommand','consoleAutoScroll','copyConsole','r.log','thinkingEffort','navigator.credentials','trycloudflare.com','data-act="start"','data-act="pause"','data-act="resume"','data-act="stop"','ym-auth-pending','ym-authenticated','Secure phone sign-in is required before Yardmaster controls unlock.','pairingHints','applyPairingHints',"query.get('remote')","hash.get('remote')","query.get('code')","hash.get('code')","urlField.value=base","codeField.value=hints.code","action:'new-implementation'","accepted?.runsOn!=='windows-pc'",'mDoing','mWaiting','mNext','Resume Current Failed Test','update-operator-now','updatePcYardmaster','mPushStatus','pushKeyMatches','needsResubscribe','existing failed-test ZIP'])assert.ok(page.includes(marker),marker);
 assert.ok(page.includes('body.ym-auth-pending .m-content')&&page.includes('visibility:hidden')&&page.includes('pointer-events:none'),'Unauthenticated mobile controls must be hidden and non-interactive.');
 assert.ok(page.includes('<body class="ym-auth-pending">'),'Mobile PWA must fail closed before authentication.');
-assert.ok(page.includes('const authenticated=await api(\'/api/status\');render(authenticated);hidePair()'),'Dashboard must unlock only after authenticated status succeeds.');
+assert.ok(page.includes('const authenticated=await api(\'/api/status\');render(authenticated);await renderMobileIntelligence();hidePair()'),'Dashboard must unlock only after authenticated status succeeds.');
 const redirect=vercel.redirects?.find(item=>item.source==='/yardmaster/download');
 assert.ok(redirect,'stable Yardmaster download route is missing');
 assert.equal(redirect.destination,release.downloadUrl);
 const pkg=JSON.parse(spawnSync('unzip',['-p',archive,'package.json'],{encoding:'utf8'}).stdout);
 assert.equal(pkg.version,release.version);
 console.log('Yardmaster website release contract PASS:',release.version,sha);
+
 
