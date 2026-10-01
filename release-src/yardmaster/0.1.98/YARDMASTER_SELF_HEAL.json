@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "version": "0.1.98",
+  "published": false,
+  "releaseManifestUrl": "https://www.86chaos.com/yardmaster/release.json",
+  "requiredTests": [
+    "test:self-heal",
+    "test:playwright",
+    "test:play-store"
+  ],
+  "regressionCoverage": {
+    "exactFailure": "0.1.97 Windows Electron launch timed out after 20000ms even though the explicit runtime preparation stage and four Node tests passed. No dock assertions were reached.",
+    "playStoreTests": [
+      "test/electron-test-runtime.test.mjs",
+      "test/electron-test-launch.test.mjs"
+    ],
+    "playwrightTests": [
+      "test/playwright/chatgpt-dock-bridge.e2e.spec.mjs"
+    ]
+  }
+}
