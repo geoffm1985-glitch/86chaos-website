@@ -5,8 +5,8 @@ import {fileURLToPath} from 'node:url';
 import {spawnSync} from 'node:child_process';
 
 const root=path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-const version='0.1.90';
-const sourceCommit='9aafa7c42d71b0a622a5526e15f21dde6ad29027';
+const version='0.1.92';
+const sourceCommit='6660c8384e95ff6eb678373107718072c506ea14';
 const sourceRoot=path.join(root,'release-src','yardmaster',version);
 const outDir=path.join(root,'public','yardmaster','releases');
 const outFile=path.join(outDir,`Yardmaster-Windows-${version}.zip`);
@@ -70,21 +70,12 @@ if(!fs.existsSync(sourceRoot)) throw new Error('Yardmaster release source is mis
 // Vercel performs syntax validation here, then packages that tested source verbatim.
 for(const rel of ['server.mjs','automation/chatgpt.mjs','automation/full-self-test.mjs','automation/windows-operator.mjs','automation/self-heal.mjs','public/app.js','desktop.cjs']){
   const check=spawnSync(process.execPath,['--check',path.join(sourceRoot,...rel.split('/'))],{cwd:sourceRoot,encoding:'utf8'});
-  if(check.status!==0)throw new Error('Yardmaster 0.1.90 syntax check failed for '+rel+'\n'+String(check.stdout||'')+String(check.stderr||''));
+  if(check.status!==0)throw new Error('Yardmaster 0.1.92 syntax check failed for '+rel+'\n'+String(check.stdout||'')+String(check.stderr||''));
 }
-const targetedReport={
-  version,
-  sourceCommit,
-  command:'User-reported Windows 0.1.90 exact targeted rerun passed; website build performs syntax/package verification only',
-  platform:process.platform,
-  exitCode:0,
-  passed:true,
-  source:'user-reported Windows targeted run',
-  note:'The user confirmed the 6 Node repair regressions and 5 selected Playwright tests passed. iPhone was excluded at user request. Full certification was not rerun; website build validates and packages the exact source.'
-};
+const targetedReport={version,sourceCommit,passed:true,source:'user-confirmed Windows targeted tests',note:'0.1.92 readiness repair: 7 Node checks and 1 desktop Playwright test passed. Prior 0.1.91 run passed all 13 Node and other 8 Playwright tests. No full certification rerun.'};
 fs.mkdirSync(path.join(root,'public','yardmaster'),{recursive:true});
-fs.writeFileSync(path.join(root,'public','yardmaster','targeted-0.1.90.json'),JSON.stringify(targetedReport,null,2)+'\n');
-console.log('Yardmaster 0.1.90 website packaging preflight passed.');
+fs.writeFileSync(path.join(root,'public','yardmaster','targeted-0.1.92.json'),JSON.stringify(targetedReport,null,2)+'\n');
+console.log('Yardmaster 0.1.92 website packaging preflight passed.');
 const names=[...new Set([...filesRecursive(sourceRoot),...sharedFiles.keys()])].sort();
 if(!names.length) throw new Error('Yardmaster release source is empty.');
 
@@ -117,12 +108,12 @@ const release={
     fullStore:'not-rerun',
     fullPlaywright:'not-rerun',
     certificationSource:'user-reported Windows targeted run',
-    userConfirmedAt:'2026-10-01T02:09:12Z',
+    userConfirmedAt:'2026-10-01T03:31:43Z',
     syntaxCheck:'pass',
-    targetedNode:'6 passed',
-    targetedPlaywright:'5 passed',
+    targetedNode:'7 passed on user Windows rerun; 13 preceding 0.1.91 Node checks passed',
+    targetedPlaywright:'1 repaired desktop test passed on user Windows rerun; 8 preceding 0.1.91 tests passed',
     iphoneWebKit:'excluded at user request',
-    promotion:'exact tested 0.1.90 source; user authorized production'
+    promotion:'exact tested 0.1.92 source; user authorized production'
   },
   downloadUrl:`/yardmaster/releases/Yardmaster-Windows-${version}.zip`,
   sha256

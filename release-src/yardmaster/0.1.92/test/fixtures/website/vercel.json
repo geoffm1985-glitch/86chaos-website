@@ -24,7 +24,7 @@
       ]
     },
     {
-      "source": "/yardmaster/releases/Yardmaster-Windows-0.1.92.zip",
+      "source": "/yardmaster/releases/Yardmaster-Windows-0.1.83.zip",
       "headers": [
         {
           "key": "Content-Type",
@@ -32,7 +32,7 @@
         },
         {
           "key": "Content-Disposition",
-          "value": "attachment; filename=\"Yardmaster-Windows-0.1.92.zip\""
+          "value": "attachment; filename=\"Yardmaster-Windows-0.1.83.zip\""
         },
         {
           "key": "Cache-Control",

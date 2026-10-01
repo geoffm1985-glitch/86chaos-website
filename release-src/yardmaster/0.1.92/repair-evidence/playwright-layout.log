@@ -1,0 +1,24 @@
+
+[RUNNING] PLAYWRIGHT TESTS: 8 tests
+(node:18) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[RUNNING] PLAYWRIGHT: desktop-layout.e2e.spec.mjs > desktop 1366x768, self-heal true: complete cards and selectable controls
+[PASS] PLAYWRIGHT: desktop 1366x768, self-heal true: complete cards and selectable controls (1/8, 2.0 seconds)
+[RUNNING] PLAYWRIGHT: desktop-layout.e2e.spec.mjs > desktop 1366x768, self-heal false: complete cards and selectable controls
+[PASS] PLAYWRIGHT: desktop 1366x768, self-heal false: complete cards and selectable controls (2/8, 1.8 seconds)
+[RUNNING] PLAYWRIGHT: desktop-layout.e2e.spec.mjs > desktop 1100x700, self-heal true: complete cards and selectable controls
+[PASS] PLAYWRIGHT: desktop 1100x700, self-heal true: complete cards and selectable controls (3/8, 1.7 seconds)
+[RUNNING] PLAYWRIGHT: desktop-layout.e2e.spec.mjs > desktop 1100x700, self-heal false: complete cards and selectable controls
+[PASS] PLAYWRIGHT: desktop 1100x700, self-heal false: complete cards and selectable controls (4/8, 1.8 seconds)
+[RUNNING] PLAYWRIGHT: desktop-layout.e2e.spec.mjs > desktop 1920x1080, self-heal true: complete cards and selectable controls
+[PASS] PLAYWRIGHT: desktop 1920x1080, self-heal true: complete cards and selectable controls (5/8, 2.0 seconds)
+[RUNNING] PLAYWRIGHT: desktop-layout.e2e.spec.mjs > desktop 1920x1080, self-heal false: complete cards and selectable controls
+[PASS] PLAYWRIGHT: desktop 1920x1080, self-heal false: complete cards and selectable controls (6/8, 1.8 seconds)
+[RUNNING] PLAYWRIGHT: desktop-layout.e2e.spec.mjs > desktop scroll clips and hides native ChatGPT bounds without covering other controls
+[PASS] PLAYWRIGHT: desktop scroll clips and hides native ChatGPT bounds without covering other controls (7/8, 0.5 seconds)
+[RUNNING] PLAYWRIGHT: desktop-layout.e2e.spec.mjs > iPhone layout regression > self-heal cards and controls stay accessible on mobile
+[PASS] PLAYWRIGHT: self-heal cards and controls stay accessible on mobile (8/8, 0.6 seconds)
+
+[SUMMARY] PLAYWRIGHT: tests 8 | pass 8 | fail 0 | skipped 0 | flaky 0
+[PASS] PLAYWRIGHT TESTS - PASSED (12.9 seconds)
+
