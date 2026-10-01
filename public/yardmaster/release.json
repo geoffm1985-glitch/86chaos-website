@@ -1,20 +1,20 @@
 {
   "product": "Yardmaster",
-  "version": "0.1.99",
-  "channel": "testing",
+  "version": "0.1.100",
   "releaseDate": "2026-10-01",
-  "sourceCommit": "e02e8f2444d0a2f428822686be5ba3115ac018cd",
+  "sourceCommit": "218748d7f4b9606435d55a10643637c9b0ca8111",
   "verified": false,
   "verification": {
     "candidate": "testing-only",
     "sourceSyntax": "pass",
-    "targetedNode": "9 new Node regressions passed; 32 related targeted checks passed; 20 trusted-send/protocol checks passed",
-    "targetedPlaywright": "1 HTTP process regression passed; 6 desktop/Android/iPhone browser regressions pending locally",
-    "nativeWindows": "PowerShell installation and live ChatGPT rollover pending",
+    "targetedNode": "71 targeted Node checks passed (15 exact regressions, 22 static/control parity, 14 selection, 20 trusted-send/protocol)",
+    "targetedPlaywright": "3 HTTP process regressions passed; 12 desktop/Android/iPhone browser executions pending: invalid browser downloads",
+    "nativeWindows": "PowerShell installation and live signed-in ChatGPT loop pending",
     "fullStore": "not run"
   },
-  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.99.zip",
-  "sha256": "ead8f8eba29ebd65826b96e90761e87e00a7b82d3a16565cec9dad3c0f9b9fd3",
-  "updateDownloadUrl": "https://raw.githubusercontent.com/geoffm1985-glitch/86chaos-website/yardmaster-testing/public/yardmaster/releases/Yardmaster-Windows-0.1.99.zip",
-  "updateSha256": "ead8f8eba29ebd65826b96e90761e87e00a7b82d3a16565cec9dad3c0f9b9fd3"
+  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.100.zip",
+  "sha256": "5fa313142b21139c167836b5f56f9ef14794aa8401b586bc668a96ec612dada6",
+  "channel": "testing",
+  "updateDownloadUrl": "https://raw.githubusercontent.com/geoffm1985-glitch/86chaos-website/yardmaster-testing/public/yardmaster/releases/Yardmaster-Windows-0.1.100.zip",
+  "updateSha256": "5fa313142b21139c167836b5f56f9ef14794aa8401b586bc668a96ec612dada6"
 }
