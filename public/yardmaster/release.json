@@ -1,18 +1,20 @@
 {
   "product": "Yardmaster",
-  "version": "0.1.88",
+  "version": "0.1.89",
   "releaseDate": "2026-09-30",
-  "sourceCommit": "8323a4c075697bdf57b612593c273beb0bf411e1",
+  "sourceCommit": "0a4cce44d14dd03da4b748c4bf6ebfe18869cc78",
   "verified": false,
   "verification": {
     "candidate": "testing-only",
     "sourceSyntax": "pass",
-    "targetedNode": "48 passed / 0 failed / 1 native Windows-only skip",
-    "targetedPlaywright": "3 passed / 0 failed",
-    "playwrightDiscovery": "60 tests discovered; 9 specs parse",
-    "fullStore": "not run automatically; rerun locally",
-    "note": "Repairs the exact registry wording and pre-pause heartbeat readiness failures from the supplied 0.1.87 Windows diagnostic."
+    "targetedNode": "32 passed / 0 failed",
+    "androidMobile": "16 passed / 0 failed",
+    "targetedPlaywright": "10 passed / 0 failed / 3 Windows-only skipped",
+    "iphoneWebKit": "included in local command; Linux dependencies unavailable here",
+    "playwrightDiscovery": "94 total; targeted command selects 45",
+    "fullStore": "not run automatically",
+    "note": "Repairs supplied 0.1.88 Playwright failures and adds Android Chromium/iPhone WebKit hosted PWA coverage."
   },
-  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.88.zip",
-  "sha256": "ae5b70f5c2f28d2fb4f8667f322096fb1ee5466206c633110e119db8545187f7"
+  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.89.zip",
+  "sha256": "f4df14ff57144434faee6ce70275eb7599637491cc153cfef2a2610468b006df"
 }

@@ -28,13 +28,14 @@ for(const profile of profiles){
       const response=await fetch('/yardmaster/sw.js',{cache:'no-store'});
       const registered=await navigator.serviceWorker.register('/yardmaster/sw.js',{scope:'/yardmaster'});
       const ready=await navigator.serviceWorker.ready;
+      if(ready.active?.state!=='activated')await new Promise((resolve,reject)=>{const worker=ready.active,timer=setTimeout(()=>reject(new Error('Worker activation timeout')),15000);worker.addEventListener('statechange',()=>{if(worker.state==='activated'){clearTimeout(timer);resolve()}},{once:true})});
       return {allowed:response.headers.get('Service-Worker-Allowed'),scope:registered.scope,active:ready.active?.state};
     });
     assert.equal(workerScope.allowed,'/yardmaster','worker must permit the canonical slashless page');
     assert.equal(workerScope.scope,new URL('/yardmaster',base).href);
     assert.equal(workerScope.active,'activated');
-    assert.equal(release.version,'0.1.88');
-    assert.equal(marker.sourceVersion,'0.1.88');
+    assert.equal(release.version,'0.1.89');
+    assert.equal(marker.sourceVersion,'0.1.89');
     if(profile.name==='iPhone Safari'){
       const viewport=await page.locator('meta[name="viewport"]').getAttribute('content');
       assert.match(viewport,/maximum-scale=1/);assert.match(viewport,/user-scalable=no/);

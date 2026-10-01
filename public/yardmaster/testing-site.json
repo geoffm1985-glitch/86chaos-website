@@ -2,8 +2,8 @@
   "site": "yardmaster-testing",
   "sourceRepo": "geoffm1985-glitch/yardmaster",
   "sourceBranch": "yardmaster-testing",
-  "sourceCommit": "8323a4c075697bdf57b612593c273beb0bf411e1",
-  "sourceVersion": "0.1.88",
+  "sourceCommit": "0a4cce44d14dd03da4b748c4bf6ebfe18869cc78",
+  "sourceVersion": "0.1.89",
   "websiteRepo": "geoffm1985-glitch/86chaos-website",
   "websiteBranch": "yardmaster-testing",
   "productionAffected": false
