@@ -1,9 +1,7 @@
 {
-  "product": "Yardmaster",
   "version": "0.1.96",
-  "releaseDate": "2026-10-01",
   "sourceCommit": "c3e109f720b92380ef42951739e34a3102e9f2cb",
-  "verified": false,
+  "source": "testing candidate validation",
   "verification": {
     "candidate": "testing-only",
     "sourceSyntax": "pass",
@@ -13,7 +11,5 @@
     "iphoneWebKit": "not selected; desktop IPC transport repair",
     "fullStore": "not run",
     "note": "Desktop handoffs use private IPC to the exact persistent Electron dock; fixed-port target discovery and WebSocket attachment are bypassed."
-  },
-  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.96.zip",
-  "sha256": "8fdf6224cd4eb7cdd8ea60a81714dc530da9b3898ba5603f145463bb1eb2e31f"
+  }
 }

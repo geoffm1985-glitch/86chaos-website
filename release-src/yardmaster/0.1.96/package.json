@@ -1,0 +1,38 @@
+{
+  "name": "yardmaster",
+  "version": "0.1.96",
+  "private": true,
+  "description": "Local-first workflow control for tests, Git, ChatGPT, and deployments.",
+  "type": "module",
+  "scripts": {
+    "start": "electron desktop.cjs",
+    "server": "node server.mjs",
+    "check": "node --check server.mjs && node --check automation/chatgpt.mjs && node --check automation/full-self-test.mjs && node --check automation/windows-operator.mjs && node --check automation/self-heal.mjs && node --check automation/ops-intelligence.mjs && node --check automation/play-store-resume.mjs && node --check public/app.js && node --check desktop.cjs && node --check preload.cjs && node scripts/verify-feature-coverage.mjs && node --check scripts/run-play-store.mjs && node --check scripts/reporters/node-status.mjs && node --check scripts/reporters/playwright-status.mjs && node --check automation/run-project.mjs && node --check scripts/run-phone-repair.mjs && node --check scripts/run-run-readiness-repair.mjs && node --check scripts/run-chatgpt-login-repair.mjs && node --check scripts/run-chatgpt-dock-repair.mjs && node --check automation/chatgpt-dock-bridge.cjs",
+    "test:targeted": "node --test --test-concurrency=1 test/*.test.mjs",
+    "desktop": "electron desktop.cjs",
+    "test:delta": "node scripts/verify-feature-coverage.mjs && node --test --test-concurrency=1 test/chatgpt-selection.test.mjs test/play-store-chatgpt-send.test.mjs test/play-store-chatgpt-browser.test.mjs test/operator.integration.test.mjs test/self-heal.test.mjs test/operations-intelligence.test.mjs test/resumable-pause-docked-chatgpt.test.mjs test/static-contracts.test.mjs test/desktop-layout.test.mjs",
+    "test:play-store": "node scripts/run-play-store.mjs",
+    "test:playwright": "node scripts/verify-feature-coverage.mjs && playwright test",
+    "test:self-heal": "node --test --test-concurrency=1 test/self-heal.test.mjs test/play-store-chatgpt-send.test.mjs",
+    "test:playwright:full": "node scripts/verify-feature-coverage.mjs && playwright test",
+    "test:mobile:failed": "node scripts/run-mobile-failed.mjs",
+    "test:mobile": "playwright test --grep @mobile",
+    "test:repair:targeted": "node scripts/run-repair-targeted.mjs",
+    "test:phone:repair": "node scripts/run-phone-repair.mjs",
+    "test:run:repair": "node scripts/run-run-readiness-repair.mjs",
+    "test:chatgpt:repair": "node scripts/run-chatgpt-login-repair.mjs",
+    "test:chatgpt:dock:repair": "node scripts/run-chatgpt-dock-repair.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@simplewebauthn/server": "^13.2.2",
+    "electron": "latest",
+    "qrcode": "^1.5.4",
+    "web-push": "^3.6.7"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0"
+  }
+}
