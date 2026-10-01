@@ -1,21 +1,21 @@
 {
   "product": "Yardmaster",
-  "version": "0.1.101",
+  "version": "0.1.102",
   "releaseDate": "2026-10-01",
-  "sourceCommit": "572ac84f0db78455a1d35d63931661ffecc17a13",
+  "sourceCommit": "d173a06d7cd3ab1940d6915242c4815921c707d8",
   "verified": false,
   "verification": {
     "candidate": "testing-only",
     "sourceSyntax": "pass",
-    "targetedNode": "39 targeted Node checks passed, including 17 loop/update/model checks",
-    "targetedPlaywright": "3 HTTP process tests passed; 12 browser executions pending because browser downloads are invalid/truncated",
-    "priorWindowsHandoff": "0.1.100: 15 Node passed; 13/15 Playwright passed. This candidate repairs the two evidenced test-fixture failures.",
-    "nativeWindows": "Native installation and live signed-in ChatGPT loop pending",
+    "targetedNode": "40 targeted Node checks passed, including a connected two-repair-cycle simulation",
+    "targetedPlaywright": "3 HTTP checks passed; 18 browser checks pending because browser downloads are invalid/truncated",
+    "continuousLoop": "Real local processes, handoff/repair ZIPs, source overlays, Git pushes and deployment polling; ChatGPT reply and deployment identity boundaries simulated",
+    "nativeWindows": "Native installation and live signed-in ChatGPT pending",
     "fullStore": "not run"
   },
-  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.101.zip",
-  "sha256": "f4ce81700261dd1877d237bd45d3fa1b4b85ef03352a9a7e58ffed7a270c8c77",
+  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.102.zip",
+  "sha256": "06e8326737c60aefd647c746dfb25344e63efa2243ff413d8b79d55b9f3d57dd",
   "channel": "testing",
-  "updateDownloadUrl": "https://raw.githubusercontent.com/geoffm1985-glitch/86chaos-website/yardmaster-testing/public/yardmaster/releases/Yardmaster-Windows-0.1.101.zip",
-  "updateSha256": "f4ce81700261dd1877d237bd45d3fa1b4b85ef03352a9a7e58ffed7a270c8c77"
+  "updateDownloadUrl": "https://raw.githubusercontent.com/geoffm1985-glitch/86chaos-website/yardmaster-testing/public/yardmaster/releases/Yardmaster-Windows-0.1.102.zip",
+  "updateSha256": "fb5c74f5c106eda4dc05acc96a84f47f0d21f71e79e0b10f288d25d873fcce22"
 }

@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "version": "0.1.102",
+  "published": false,
+  "releaseManifestUrl": "https://www.86chaos.com/yardmaster/release.json",
+  "requiredTests": [
+    "test:self-heal",
+    "test:playwright",
+    "test:play-store"
+  ],
+  "regressionCoverage": {
+    "exactFailure": "No connected multi-cycle loop regression; no initial full Play Store run followed by failed/delta repair and post-deployment checks.",
+    "playStoreTests": [
+      "test/continuous-loop.test.mjs",
+      "test/loop-update.test.mjs",
+      "test/model-controls.test.mjs"
+    ],
+    "playwrightTests": [
+      "test/playwright/continuous-loop.e2e.spec.mjs",
+      "test/playwright/loop-update.e2e.spec.mjs",
+      "test/playwright/model-controls.e2e.spec.mjs"
+    ]
+  }
+}
