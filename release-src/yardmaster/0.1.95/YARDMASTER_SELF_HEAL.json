@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "version": "0.1.95",
+  "published": false,
+  "releaseManifestUrl": "https://www.86chaos.com/yardmaster/release.json",
+  "requiredTests": [
+    "test:self-heal",
+    "test:playwright",
+    "test:play-store"
+  ],
+  "regressionCoverage": {
+    "exactFailure": "Yardmaster 0.1.85 full certification failed on stale migration/version fixtures and a Windows-only trusted-device revoke guard; certification also failed to export a diagnostic ZIP automatically at the failed phase.",
+    "playStoreTests": [
+      "test/operator.integration.test.mjs",
+      "test/resumable-pause-docked-chatgpt.test.mjs",
+      "test/static-contracts.test.mjs",
+      "test/test-reporting.test.mjs",
+      "test/yardmaster-1.85-control-parity.test.mjs"
+    ],
+    "playwrightTests": [
+      "test/playwright/full-app.e2e.spec.mjs",
+      "test/playwright/test-reporting.e2e.spec.mjs",
+      "test/playwright/yardmaster-1.85-control-parity.e2e.spec.mjs"
+    ]
+  }
+}

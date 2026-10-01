@@ -1,9 +1,7 @@
 {
-  "product": "Yardmaster",
   "version": "0.1.95",
-  "releaseDate": "2026-10-01",
   "sourceCommit": "3d9b5222562db4297f7a284194d394f5bdc176c3",
-  "verified": false,
+  "source": "testing candidate validation",
   "verification": {
     "candidate": "testing-only",
     "sourceSyntax": "pass",
@@ -13,7 +11,5 @@
     "iphoneWebKit": "not selected; PC dock connection repair",
     "fullStore": "not run",
     "note": "Desktop handoffs require and retry the existing dock; transient failure cannot switch to a separate hidden Edge profile."
-  },
-  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.95.zip",
-  "sha256": "2b6a6511df3e9f58de02d19cf25e73ea8f8efcb78b87cbefe8cf7dd1fe0d3d35"
+  }
 }
