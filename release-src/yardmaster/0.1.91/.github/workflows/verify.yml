@@ -1,0 +1,199 @@
+name: Verify Yardmaster
+on:
+  push:
+    branches-ignore:
+      - yardmaster-full-playwright-preview
+  pull_request:
+jobs:
+  verify:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm ci --no-audit --no-fund
+      - run: npm run check
+      - run: npm run test:play-store
+
+      - name: Validate ChatGPT bridge recovery
+        shell: pwsh
+        run: |
+          $bridge = Get-Content 'automation/chatgpt.mjs' -Raw
+          if ($bridge -match "send\('Runtime\.enable'") { throw 'ChatGPT bridge must not block startup on Runtime.enable.' }
+          if ($bridge -notmatch 'attachResponsiveChatGPT') { throw 'ChatGPT target responsiveness probe is missing.' }
+          if ($bridge -notmatch 'command bridge reconnecting after browser timeout') { throw 'ChatGPT command bridge reconnect loop is missing.' }
+          if ($bridge -match "Input\.insertText") { throw 'ChatGPT prompt sending must not depend on CDP Input.insertText.' }
+          if ($bridge -notmatch 'manual-edge-profile' -or $bridge -notmatch 'edge-profile' -or $bridge -notmatch '9223' -or $bridge -notmatch '9222') { throw 'Manual and automated ChatGPT browser profiles must remain isolated.' }
+          if ($bridge -notmatch 'yardmaster-controlled') { throw 'ChatGPT bridge must reuse its marked browser tab.' }
+          if ($bridge -notmatch 'no submitted user message appeared' -or $bridge -notmatch 'Input\.dispatchMouseEvent' -or $bridge -notmatch 'Input\.dispatchKeyEvent') { throw 'ChatGPT prompt sending must use trusted input and verify an actual submitted user message.' }
+          if ($bridge -notmatch 'ChatGPT did not confirm the Yardmaster ZIP attachment') { throw 'ChatGPT handoff must verify file attachment.' }
+          if ($bridge -match "files and more\|add/i" -or $bridge -match "add photos\|files and more\|add/i") { throw 'ChatGPT attachment selector is too broad and can click Projects.' }
+          if ($bridge -notmatch 'create project') { throw 'ChatGPT handoff must recover from an accidental Create Project dialog.' }
+          if ($bridge -notmatch 'could not verify the requested ChatGPT model') { throw 'ChatGPT handoff must enforce model verification.' }
+          if ($bridge -notmatch 'chooseThinkingEffort') { throw 'ChatGPT thinking-effort selection is missing.' }
+          if ($bridge -notmatch 'YM_READ_CONTROL' -or $bridge -notmatch 'YM_OPEN_CONTROL' -or $bridge -notmatch 'could not verify the requested ChatGPT') { throw 'Composer control read-back verification is missing.' }
+          if ($bridge -notmatch 'remote-debugging-address=127\.0\.0\.1') { throw 'Edge DevTools must stay bound to localhost.' }
+          if ($bridge -notmatch 'waitForUsageAvailability' -or $bridge -notmatch 'Work usage is exhausted' -or $bridge -notmatch '2\*60\*1000') { throw 'Automatic Work usage-limit waiting is missing.' }
+          if ($bridge -notmatch 'resumeHandoff=true' -or $bridge -notmatch 'shouldCancel,false') { throw 'Work-limit recovery must avoid duplicate first-send handoffs.' }
+
+      - name: Smoke-test local operator
+        shell: pwsh
+        run: |
+          $p = Start-Process node -ArgumentList 'server.mjs' -PassThru -WindowStyle Hidden
+          try {
+            $deadline = (Get-Date).AddSeconds(15)
+            do {
+              Start-Sleep -Milliseconds 300
+              try {
+                $status = Invoke-RestMethod 'http://127.0.0.1:8787/api/status' -TimeoutSec 2
+                if ($status.online -eq $true) { break }
+              } catch {}
+            } while ((Get-Date) -lt $deadline)
+            if (-not $status -or $status.online -ne $true) { throw 'Yardmaster local operator did not become healthy.' }
+            if ($status.config.repositoryPath -notmatch '\\Documents\\GitHub\\86chaos$') { throw 'Fallback repository path changed unexpectedly.' }
+            $remote = Invoke-WebRequest 'http://127.0.0.1:8787/api/status' -Headers @{ 'X-Forwarded-For'='203.0.113.55'; 'Host'='sample.trycloudflare.com' } -SkipHttpErrorCheck
+            if ($remote.StatusCode -ne 401) { throw "Forwarded remote request bypassed Yardmaster authentication: HTTP $($remote.StatusCode)" }
+            $ui = Invoke-WebRequest 'http://127.0.0.1:8787/' -UseBasicParsing
+            if ($ui.Content -notmatch 'data-nav="runs"' -or $ui.Content -notmatch 'data-view-panel="settings"') { throw 'Desktop navigation views are missing.' }
+            if ($ui.Content -notmatch 'Maximum Repair Attempts') { throw 'Repair-attempt control is missing.' }
+            $cmd = Invoke-RestMethod 'http://127.0.0.1:8787/api/command' -Method Post -ContentType 'application/json' -Body (@{ text = "YARDMASTER`nBRANCH testing`nPRESERVE .git" } | ConvertTo-Json)
+            if (-not $cmd.ok) { throw 'Yardmaster command protocol smoke test failed.' }
+            if ([int]$status.config.maxRepairAttempts -lt 25) { throw 'Default repair-attempt limit must be at least 25.' }
+            if ($status.config.repoUpdateMode -ne 'automatic') { throw 'Automated repair mode must default to Automatic.' }
+            if ($status.config.thinkingEffort -ne 'High') { throw 'Default thinking effort must be High.' }
+            $serverSource = Get-Content 'server.mjs' -Raw
+            if ($serverSource -notmatch 'IMPLEMENT' -or $serverSource -notmatch 'END_IMPLEMENT' -or $serverSource -notmatch 'submitImplementationTask') { throw 'Hands-free implementation protocol is missing.' }
+            if ($serverSource -notmatch 'PUSH_ON_PASS') { throw 'Hands-free push-on-pass control is missing.' }
+            if ($serverSource -notmatch 'repositoryPathOrThrow' -or $serverSource -notmatch 'repositoryCandidates' -or $serverSource -notmatch 'package.json' -or $serverSource -notmatch '\.git') { throw 'Repository auto-recovery validation is missing.' }
+            if ($serverSource -notmatch 'protectedWork' -or $serverSource -notmatch 'update-operator-now' -or $serverSource -notmatch 'maybeStartQueuedOperatorUpdate') { throw 'Safe queued operator update controls are missing.' }
+            if ($serverSource -notmatch 'new-implementation' -or $serverSource -notmatch 'submitImplementationTask') { throw 'New Work dashboard API is missing.' }
+          if ($serverSource -notmatch 'sessionsPath' -or $serverSource -notmatch 'tokenHash' -or $serverSource -notmatch 'remotePath') { throw 'Persistent remote authentication state is missing.' }
+            if ($serverSource -notmatch 'detached:true' -or $serverSource -notmatch 'will survive Yardmaster restarts') { throw 'Remote tunnel is not configured to survive Yardmaster restarts.' }
+            $shutdownBlock = [regex]::Match($serverSource,'function shutdownOperator\(\)\{[\s\S]*?\n\}').Value
+            if ($shutdownBlock -match 'stopRemote\(') { throw 'Normal Yardmaster shutdown must preserve Remote Access tunnel.' }
+            $shutdown = Invoke-RestMethod 'http://127.0.0.1:8787/api/action' -Method Post -ContentType 'application/json' -Body (@{ action='shutdown-operator' } | ConvertTo-Json)
+            if (-not $shutdown.ok) { throw 'Yardmaster shutdown endpoint failed.' }
+            $exitDeadline = (Get-Date).AddSeconds(5)
+            while (-not $p.HasExited -and (Get-Date) -lt $exitDeadline) { Start-Sleep -Milliseconds 150; $p.Refresh() }
+            if (-not $p.HasExited) { throw 'Yardmaster operator did not exit after shutdown.' }
+          } finally {
+            Stop-Process -Id $p.Id -Force -ErrorAction SilentlyContinue
+          }
+
+      - name: Validate desktop UI wiring
+        shell: pwsh
+        run: |
+          $html = Get-Content 'public/index.html' -Raw
+          $js = Get-Content 'public/app.js' -Raw
+          $css = Get-Content 'public/styles.css' -Raw
+          if ($html -notmatch 'data-nav="runs"' -or $html -notmatch 'data-nav="settings"' -or $html -notmatch 'data-view-panel="runs"' -or $html -notmatch 'data-view-panel="settings"') { throw 'Desktop navigation wiring is missing.' }
+          if ($js -notmatch 'function setView' -or $js -notmatch '\[data-nav\]' -or $js -notmatch '/api/command' -or $js -notmatch 'bindActions') { throw 'Desktop navigation/controller wiring is incomplete.' }
+          if ($html -notmatch 'Thinking Effort' -or $html -notmatch 'id="thinkingEffort"') { throw 'ChatGPT thinking-effort control is missing.' }
+          if ($html -notmatch 'New 86 Chaos Work' -or $html -notmatch 'Hand Off & Walk Away' -or $js -notmatch 'new-implementation') { throw 'Hands-free New 86 Chaos Work dashboard flow is missing.' }
+          if ($css -notmatch 'overflow:hidden' -or $css -notmatch '\.view\.active' -or $css -notmatch '100vh') { throw 'Single-screen desktop viewport rules are missing.' }
+          if (-not (Test-Path 'public/yardmaster-icon.ico')) { throw 'Yardmaster native icon is missing.' }
+
+      - name: Parse installer scripts
+        shell: pwsh
+        run: |
+          $errors = @()
+          [System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path 'scripts/Install-Yardmaster.ps1'), [ref]$null, [ref]$errors) | Out-Null
+          [System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path 'scripts/Start-Yardmaster.ps1'), [ref]$null, [ref]$errors) | Out-Null
+          [System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path 'scripts/Update-Yardmaster.ps1'), [ref]$null, [ref]$errors) | Out-Null
+          [System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path 'scripts/New-Handoff.ps1'), [ref]$null, [ref]$errors) | Out-Null
+          [System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path 'scripts/Apply-Repair.ps1'), [ref]$null, [ref]$errors) | Out-Null
+          [System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path 'scripts/Set-ProcessTreeState.ps1'), [ref]$null, [ref]$errors) | Out-Null
+          [System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path 'scripts/Uninstall-Yardmaster.ps1'), [ref]$null, [ref]$errors) | Out-Null
+          $handoff = Get-Content 'scripts/New-Handoff.ps1' -Raw
+          if ($handoff -notmatch 'implementation' -or $handoff -notmatch 'TaskPrompt') { throw 'Implementation handoff packaging is missing.' }
+          if ($errors.Count) { $errors | Format-List | Out-String | Write-Error; exit 1 }
+          $installer = Get-Content 'scripts/Install-Yardmaster.ps1' -Raw
+          if ($installer -notmatch '-Verb RunAs') { throw 'PowerShell installer must request administrator elevation.' }
+          $bootstrap = Get-Content 'Install-Yardmaster.cmd' -Raw
+          if ($bootstrap -notmatch '-Verb RunAs' -or $bootstrap -notmatch 'Requesting administrator permission' -or $bootstrap -notmatch 'fltmc') { throw 'Double-click installer must self-elevate before installation.' }
+          if (-not (Test-Path 'Yardmaster-Installer.cmd')) { throw 'Obvious Yardmaster-Installer.cmd entry point is missing.' }
+          if ($installer -notmatch 'CurrentVersion\\Uninstall\\Yardmaster' -or $installer -notmatch 'UninstallString') { throw 'Installer must register Yardmaster with Windows Installed Apps.' }
+          $uninstaller = Get-Content 'scripts/Uninstall-Yardmaster.ps1' -Raw
+          if ($uninstaller -notmatch 'CurrentVersion\\Uninstall\\Yardmaster' -or $uninstaller -notmatch 'Remove-Item') { throw 'Windows uninstaller is incomplete.' }
+          $starter = Get-Content 'scripts/Start-Yardmaster.ps1' -Raw
+          if ($starter -match 'server\.mjs') { throw 'Start-Yardmaster must not launch an orphan server outside Electron.' }
+          $pkg = Get-Content 'package.json' -Raw | ConvertFrom-Json
+          $html = Get-Content 'public/index.html' -Raw
+          if ($html -notmatch [regex]::Escape([string]$pkg.version)) { throw 'Desktop version label must match package.json.' }
+
+      - name: Build preview ZIP
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force dist | Out-Null
+          if (-not (Test-Path 'public/yardmaster-icon.ico')) { throw 'Yardmaster Windows icon is missing.' }
+          $icon = [System.IO.File]::ReadAllBytes((Resolve-Path 'public/yardmaster-icon.ico'))
+          if ($icon.Length -lt 100 -or $icon[0] -ne 0 -or $icon[1] -ne 0 -or $icon[2] -ne 1) { throw 'Yardmaster Windows icon is not a valid ICO file.' }
+          $pkg = Get-Content package.json -Raw | ConvertFrom-Json
+          $items = @('desktop.cjs','server.mjs','package.json','package-lock.json','README.md','Install-Yardmaster.cmd','Yardmaster-Installer.cmd','public','scripts','automation','test')
+          Compress-Archive -Path $items -DestinationPath ("dist/Yardmaster-Windows-$($pkg.version).zip") -Force
+
+      - name: Exercise Windows install, launch, update, and uninstall
+        shell: pwsh
+        run: |
+          $installRoot = Join-Path $env:LOCALAPPDATA 'Yardmaster\app'
+          $dataRoot = Join-Path $env:LOCALAPPDATA 'Yardmaster'
+          $uninstallKey = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\Yardmaster'
+          $version = [string](Get-Content package.json -Raw | ConvertFrom-Json).version
+          # Use Windows PowerShell 5.1 here because that is what the downloaded
+          # .cmd installer launches on the user's Windows machine.
+          & powershell.exe -NoProfile -ExecutionPolicy Bypass -File '.\scripts\Install-Yardmaster.ps1' -SkipCloudflare -NoLaunch
+          if ($LASTEXITCODE -ne 0) { throw "Windows PowerShell 5.1 installer failed with exit code $LASTEXITCODE." }
+          if (-not (Test-Path $installRoot)) { throw 'Installer did not create the program directory.' }
+          $registration = Get-ItemProperty $uninstallKey
+          if ($registration.DisplayVersion -ne $version -or $registration.Publisher -ne 'Chilton App Works LLC') { throw 'Installed Apps registration is incorrect.' }
+          if (-not (Test-Path $registration.DisplayIcon)) { throw 'Installed Apps icon is missing.' }
+          $desktopShortcut = Join-Path ([Environment]::GetFolderPath('Desktop')) 'Yardmaster.lnk'
+          $startShortcut = Join-Path $env:APPDATA 'Microsoft\Windows\Start Menu\Programs\Yardmaster.lnk'
+          if (-not (Test-Path $desktopShortcut) -or -not (Test-Path $startShortcut)) { throw 'Installer shortcuts are missing.' }
+
+          $configPath = Join-Path $dataRoot 'config.json'
+          @{ repositoryPath = 'C:\state-preservation-fixture'; branch = 'testing'; autoPush = $true; autoUpdateOperator = $false } | ConvertTo-Json | Set-Content $configPath
+          & (Join-Path $installRoot 'scripts\Start-Yardmaster.ps1')
+          $deadline = (Get-Date).AddSeconds(30)
+          do {
+            Start-Sleep -Milliseconds 500
+            try { $status = Invoke-RestMethod 'http://127.0.0.1:8787/api/status' -TimeoutSec 2 } catch {}
+          } while ((-not $status.online) -and (Get-Date) -lt $deadline)
+          if (-not $status.online) { throw 'Installed Yardmaster desktop/operator did not launch.' }
+          $page = Invoke-WebRequest 'http://127.0.0.1:8787/' -UseBasicParsing
+          if ($page.Content -notmatch 'NEW 86 CHAOS WORK') { throw 'Installed desktop dashboard did not load.' }
+
+          $archive = (Resolve-Path ("dist/Yardmaster-Windows-$version.zip")).Path
+          & '.\scripts\Update-Yardmaster.ps1' -PackagePath $archive -NoLaunch
+          $preserved = Get-Content $configPath -Raw | ConvertFrom-Json
+          if ($preserved.repositoryPath -ne 'C:\state-preservation-fixture' -or $preserved.autoPush -ne $true) { throw 'Update did not preserve Yardmaster configuration.' }
+          & (Join-Path $installRoot 'scripts\Start-Yardmaster.ps1')
+          $status = $null; $deadline = (Get-Date).AddSeconds(30)
+          do {
+            Start-Sleep -Milliseconds 500
+            try { $status = Invoke-RestMethod 'http://127.0.0.1:8787/api/status' -TimeoutSec 2 } catch {}
+          } while ((-not $status.online) -and (Get-Date) -lt $deadline)
+          if (-not $status.online -or $status.version -ne $version) { throw 'Updated Yardmaster did not restart at the expected version.' }
+
+          & (Join-Path $installRoot 'scripts\Uninstall-Yardmaster.ps1') -Quiet
+          $deadline = (Get-Date).AddSeconds(15)
+          while ((Test-Path $dataRoot) -and (Get-Date) -lt $deadline) { Start-Sleep -Milliseconds 500 }
+          if (Test-Path $dataRoot) { throw 'Uninstaller did not remove Yardmaster program/state files.' }
+          if (Test-Path $uninstallKey) { throw 'Uninstaller did not remove Installed Apps registration.' }
+          if ((Test-Path $desktopShortcut) -or (Test-Path $startShortcut)) { throw 'Uninstaller did not remove shortcuts.' }
+
+      - name: Live Cloudflare mobile remote smoke
+        shell: pwsh
+        run: |
+          $cloudflared = Join-Path $env:RUNNER_TEMP 'cloudflared.exe'
+          Invoke-WebRequest 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.exe' -OutFile $cloudflared -UseBasicParsing -TimeoutSec 120
+          & $cloudflared --version
+          if ($LASTEXITCODE -ne 0) { throw 'Downloaded cloudflared could not run.' }
+          $env:YARDMASTER_LIVE_CLOUDFLARED = $cloudflared
+          node --test --test-concurrency=1 test/operator.integration.test.mjs
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Yardmaster-Windows
+          path: dist/Yardmaster-Windows-*.zip

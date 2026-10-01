@@ -1,0 +1,15 @@
+{
+  "version": "0.1.91",
+  "sourceCommit": "0ffb072a1a934cb96e12b09a14bf3ee4161d2a13",
+  "source": "testing candidate validation",
+  "verification": {
+    "candidate": "testing-only",
+    "sourceSyntax": "pass",
+    "targetedNode": "13 exact repair regressions passed",
+    "targetedPlaywright": "9 selected Android/desktop tests passed using Linux headless Chromium",
+    "windowsEdge": "actual Windows run remains local",
+    "iphoneWebKit": "excluded at user request",
+    "fullStore": "not run automatically",
+    "note": "Phone reconnect, run version and Stop confirmation repairs."
+  }
+}

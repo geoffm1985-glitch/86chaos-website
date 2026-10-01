@@ -71,13 +71,13 @@ if(!fs.existsSync(sourceRoot)) throw new Error('Yardmaster release source is mis
 const sourcePackage=JSON.parse(fs.readFileSync(path.join(sourceRoot,'package.json'),'utf8'));
 if(sourcePackage.version!==version)throw new Error('Yardmaster testing source version does not match release marker');
 // Website publication must be deterministic and must not reinstall the Windows desktop app's dependencies.
-// The user confirmed both Windows Node/Play Store and Playwright suites passed for this exact source commit.
-// Vercel performs syntax validation here, then packages the already-certified source verbatim.
+// Vercel validates syntax and packages the recorded source verbatim.
+// Testing candidates retain their manifest validation limits and remain unverified.
 for(const rel of ['server.mjs','automation/chatgpt.mjs','automation/full-self-test.mjs','automation/windows-operator.mjs','automation/self-heal.mjs','public/app.js','desktop.cjs']){
   const check=spawnSync(process.execPath,['--check',path.join(sourceRoot,...rel.split('/'))],{cwd:sourceRoot,encoding:'utf8'});
   if(check.status!==0)throw new Error('Yardmaster 0.1.83 syntax check failed for '+rel+'\n'+String(check.stdout||'')+String(check.stderr||''));
 }
-const targetedReport={
+const targetedReport=testing?{version,sourceCommit,source:'testing candidate validation',verification:JSON.parse(fs.readFileSync(releaseFile,'utf8')).verification}: {
   version,
   sourceCommit,
   command:'Attached 0.1.83 targeted Node and Playwright evidence passed; website build performs syntax/package verification only',
@@ -88,7 +88,7 @@ const targetedReport={
   note:'0.1.83 evidence records 51 Node passes with one Windows-only skip, 16 targeted Playwright passes, and no full Play Store/release-gate run; website build validates and packages that exact source.'
 };
 fs.mkdirSync(path.join(root,'public','yardmaster'),{recursive:true});
-fs.writeFileSync(path.join(root,'public','yardmaster','targeted-0.1.83.json'),JSON.stringify(targetedReport,null,2)+'\n');
+fs.writeFileSync(path.join(root,'public','yardmaster',testing?`targeted-${version}.json`:'targeted-0.1.83.json'),JSON.stringify(targetedReport,null,2)+'\n');
 console.log('Yardmaster '+version+' website packaging preflight passed.');
 const names=[...new Set([...filesRecursive(sourceRoot),...sharedFiles.keys()])].sort();
 if(!names.length) throw new Error('Yardmaster release source is empty.');
