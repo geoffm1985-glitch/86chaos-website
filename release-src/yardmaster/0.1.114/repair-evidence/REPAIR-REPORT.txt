@@ -1,0 +1,22 @@
+Yardmaster 0.1.83 complete application — desktop visibility repair
+Source: user-supplied Yardmaster 0.1.82 complete ZIP.
+
+Repair:
+- Main desktop column scrolls; content retains its natural height.
+- Removed viewport-height formulas that compressed Intelligence and clipped Operations/ChatGPT controls when self-heal was shown.
+- Console panels scroll; top status badges wrap.
+- Embedded native ChatGPT bounds remain within the visible main viewport and hide offscreen. Changing views resets main scrolling.
+- Added dedicated Play Store/Node and Playwright regressions and registered them in full/delta coverage.
+- Version advanced once to 0.1.83; future update fixtures remain newer at 0.1.84.
+
+Validation:
+- Original 0.1.82 CSS fails the new clipping regression: approvals content extends past its card at 1366x768 with self-heal visible.
+- Targeted Node: 51 PASS, 0 FAIL, 1 Windows-only SKIP (52 total).
+- New Playwright: 8 PASS, 0 FAIL; actual selection, full card content, self-heal on/off at 1366x768, 1100x700 and 1920x1080, scroll bounds, and iPhone-sized Chromium layout.
+- Existing Intelligence and pause/resume/dock Playwright: 8 PASS, 0 FAIL.
+- Source syntax/coverage check and delivered PowerShell syntax: PASS.
+- WebKit did not start: missing system libraries. Dependency install blocked by environment user-switch restrictions. Native iOS, Windows Electron and Edge not certified here.
+- Full Play Store/release gate not run. No GitHub push, deployment, or website update.
+
+Total application text lines: 10,883 (75 text files; generated evidence and binary assets excluded).
+Use APPLY-AND-TEST-0.1.83.ps1 to apply the downloaded archive to the local repository and run targeted tests. Run Install-Yardmaster.cmd afterward to update the installed PC dashboard.

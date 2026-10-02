@@ -1,0 +1,22 @@
+name: Yardmaster Full Playwright Preview
+on:
+  workflow_dispatch:
+jobs:
+  full-playwright:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm ci --no-audit --no-fund
+      - run: npm run check
+      - name: Run complete Yardmaster Playwright matrix
+        run: npm run test:playwright:full
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: yardmaster-full-playwright-results
+          path: |
+            playwright-report
+            test-results

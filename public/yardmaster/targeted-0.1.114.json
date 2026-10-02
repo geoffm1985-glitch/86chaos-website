@@ -1,10 +1,7 @@
 {
-  "product": "Yardmaster",
   "version": "0.1.114",
-  "releaseDate": "2026-10-02",
   "sourceCommit": "7dfe3bc2236c5490feab4ff589cb90537df6eaff",
-  "verified": true,
-  "channel": "production",
+  "passed": true,
   "verification": {
     "fullStore": "not-rerun",
     "fullPlaywright": "not-rerun",
@@ -13,9 +10,5 @@
     "targetedPlaywright": "3 passed: desktop/Android emulator launch and real Electron hidden dock reload/upload",
     "certificationSource": "local Windows focused repair checks",
     "phoneHardware": "Android browser emulation; real handset not exercised"
-  },
-  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.114.zip",
-  "updateDownloadUrl": "https://raw.githubusercontent.com/geoffm1985-glitch/86chaos-website/main/public/yardmaster/releases/Yardmaster-Windows-0.1.114.zip",
-  "sha256": "187a86fac538373ba0490e42ffdda5d86f8879af21bf81eb852dc54de4caf021",
-  "updateSha256": "187a86fac538373ba0490e42ffdda5d86f8879af21bf81eb852dc54de4caf021"
+  }
 }
