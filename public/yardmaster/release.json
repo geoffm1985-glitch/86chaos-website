@@ -1,21 +1,21 @@
 {
   "product": "Yardmaster",
-  "version": "0.1.115",
+  "version": "0.1.116",
   "releaseDate": "2026-10-02",
-  "sourceCommit": "930855de2dd7f4235e770a7c3b6132e39fcd0f65",
+  "sourceCommit": "ea015bce3af0f0a5070266c0fe83eaabbdd79596",
   "verified": true,
   "channel": "production",
   "verification": {
     "fullStore": "not-rerun",
     "fullPlaywright": "not-rerun",
     "syntaxCheck": "pass",
-    "targetedNode": "5 passed: 4 new regressions, 1 affected inventory assertion",
-    "targetedPlaywright": "3 passed: desktop/Android emulator launch and real Electron hidden dock reload/upload",
+    "targetedNode": "9 passed: dock readiness, emulator storage isolation, mode selection and release feed",
+    "targetedPlaywright": "7 passed: real Electron draft/reload and single ZIP+prompt send, affected hidden dock, desktop/Android emulator storage isolation and production update guards",
     "certificationSource": "local Windows focused repair checks",
     "phoneHardware": "Android browser emulation; real handset not exercised"
   },
-  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.115.zip",
-  "updateDownloadUrl": "https://raw.githubusercontent.com/geoffm1985-glitch/86chaos-website/main/public/yardmaster/releases/Yardmaster-Windows-0.1.115.zip",
-  "sha256": "b79ea9de05de55f9c51ded101d5c42f6ba752ecb2171c4d9a7d3aec09abad7cc",
-  "updateSha256": "b79ea9de05de55f9c51ded101d5c42f6ba752ecb2171c4d9a7d3aec09abad7cc"
+  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.116.zip",
+  "updateDownloadUrl": "https://raw.githubusercontent.com/geoffm1985-glitch/86chaos-website/main/public/yardmaster/releases/Yardmaster-Windows-0.1.116.zip",
+  "sha256": "6dd04732971a6cd70253c06c0f176cde2dda10c4227d2c2e9de1efa5bd7fb3c1",
+  "updateSha256": "6dd04732971a6cd70253c06c0f176cde2dda10c4227d2c2e9de1efa5bd7fb3c1"
 }
