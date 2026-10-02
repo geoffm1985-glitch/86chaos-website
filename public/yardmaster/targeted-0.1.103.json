@@ -1,0 +1,15 @@
+{
+  "version": "0.1.103",
+  "sourceCommit": "5abf6e07e4b9fec420dcbe858d27b22821b24972",
+  "source": "testing candidate validation",
+  "verification": {
+    "candidate": "testing-only",
+    "sourceSyntax": "pass",
+    "targetedNode": "97 passed; 1 Windows-only process suspension check skipped",
+    "targetedPlaywright": "53 desktop/Android Chromium checks passed",
+    "firebase": "Full Emulator, Live, Both Verification Only and Both Full Live Suite routing tested using controlled process fixtures; no paid live Firebase requests",
+    "continuousLoop": "Connected native and hosted ChatGPT handoff, delayed reply, repair ZIP application and local delta workflows",
+    "nativeWindows": "Native Windows Edge/Electron installation and signed-in ChatGPT not run in Linux",
+    "fullStore": "not run"
+  }
+}

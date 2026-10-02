@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "version": "0.1.103",
+  "published": false,
+  "releaseManifestUrl": "https://www.86chaos.com/yardmaster/release.json",
+  "requiredTests": [
+    "test:self-heal",
+    "test:playwright",
+    "test:play-store"
+  ],
+  "regressionCoverage": {
+    "exactFailure": "Failed native/hosted continuous-loop browser tests; Firebase target, full emulator/Both routing, no-live-fallback, lifecycle, pinned assistant/self-heal/resume and desktop/Android parity.",
+    "playStoreTests": [
+      "test/firebase-target.test.mjs",
+      "test/continuous-loop.test.mjs",
+      "test/loop-update.test.mjs",
+      "test/model-controls.test.mjs"
+    ],
+    "playwrightTests": [
+      "test/playwright/firebase-target.e2e.spec.mjs",
+      "test/playwright/continuous-loop.e2e.spec.mjs",
+      "test/playwright/loop-update.e2e.spec.mjs",
+      "test/playwright/model-controls.e2e.spec.mjs"
+    ]
+  }
+}

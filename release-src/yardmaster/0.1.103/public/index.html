@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>Yardmaster</title>
+<meta name="theme-color" content="#071525">
+<link rel="icon" href="/yardmaster-icon.ico">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="app" id="desktopApp" data-view="operations">
+  <aside class="sidebar">
+    <div class="brand"><img src="/yardmaster-logo.svg" alt="Yardmaster"></div>
+    <nav class="nav">
+      <button class="active" data-nav="operations">⌂ <span>Operations</span></button>
+      <button data-nav="runs">⟳ <span>Runs</span></button>
+      <button data-nav="branches">⑂ <span>Branches</span></button>
+      <button data-nav="queue">☷ <span>Queue</span></button>
+      <button data-nav="chatgpt">◉ <span>ChatGPT</span></button>
+      <button data-nav="deployments">△ <span>Deployments</span></button>
+      <button data-nav="settings">⚙ <span>Settings</span></button>
+        <button data-nav="intelligence"><span>🧠</span> Intelligence</button>
+    </nav>
+    <div class="machine-card">
+      <div><span class="online">●</span> <b id="pcStatus">PC Online</b></div>
+      <div id="pcName">Local operator</div>
+      <div class="tiny">Local-first operation</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div><div class="eyebrow" id="viewEyebrow">Operations Center</div><h1 id="viewTitle">Big movement, ordered well.</h1></div>
+      <div class="top-status">
+        <span class="pill">● <b id="localState">Local Mode</b></span>
+        <span class="pill">ChatGPT <b id="chatState">Ready</b></span>
+        <span class="pill">Vercel <b id="deployState">Idle</b></span>
+      </div>
+    </header>
+
+    <section class="self-heal-banner" id="selfHealBanner" hidden aria-live="assertive" aria-atomic="true">
+      <div class="self-heal-heading"><div><div class="eyebrow">Automatic recovery</div><h2>SELF-HEAL MODE</h2></div><b id="selfHealPhase">fault detected</b></div>
+      <div class="self-heal-grid">
+        <div><span>Detected problem</span><b id="selfHealReason">Internal Yardmaster failure</b></div>
+        <div><span>Doing now</span><b id="selfHealDoing">Capturing diagnostics</b></div>
+        <div><span>Waiting on</span><b id="selfHealWaiting">Nothing</b></div>
+        <div><span>Repair attempt</span><b id="selfHealAttempt">0 / 5</b></div>
+        <div><span>Candidate version</span><b id="selfHealCandidate">Not published yet</b></div>
+        <div><span>Testing</span><b id="selfHealTesting">Not started</b></div>
+        <div><span>Last successful step</span><b id="selfHealLastStep">Fault detected</b></div>
+        <div><span>Next</span><b id="selfHealNext">Collect diagnostics</b></div>
+        <div class="wide"><span>Resume checkpoint</span><b id="selfHealResume">No saved workflow</b></div>
+      </div>
+    </section>
+
+    <section class="view active" data-view-panel="operations">
+      <div class="ops-top">
+        <div class="panel run-panel">
+          <div class="progress-head">
+            <div><div class="eyebrow">Current Run</div><div class="run-title" id="runTitle">Ready for work</div><div class="run-sub" id="runSub">Choose a branch and test type, then start.</div><div class="run-sub" id="runProject">Version unavailable</div></div>
+            <div class="runtime"><div class="eyebrow">Run Time</div><b id="elapsed">00:00:00</b></div>
+          </div>
+          <div class="railflow"><svg viewBox="0 0 800 100" preserveAspectRatio="none"><path d="M0 15 H280 C350 15 360 50 420 50 H800" stroke="#c97f46" stroke-width="8" fill="none"/><path d="M0 35 H285 C345 35 360 50 420 50 H800" stroke="#c7d0d7" stroke-width="8" fill="none"/><path d="M0 55 H300 C345 55 365 50 420 50 H800" stroke="#36c777" stroke-width="8" fill="none"/><path d="M0 75 H285 C345 75 360 50 420 50 H800" stroke="#93a0aa" stroke-width="8" fill="none"/><circle cx="435" cy="50" r="15" fill="#071525" stroke="#d08a56" stroke-width="7"/></svg></div>
+          <div class="progress-head"><span id="currentTest">Idle</span><b id="pct">0%</b></div>
+          <div class="progress"><div id="progressBar"></div></div>
+          <div class="stats">
+            <div class="stat pass"><span>Passed</span><b id="passCount">0</b></div>
+            <div class="stat fail"><span>Failed</span><b id="failCount">0</b></div>
+            <div class="stat skip"><span>Skipped</span><b id="skipCount">0</b></div>
+            <div class="stat time"><span>Timeout</span><b id="timeoutCount">0</b></div>
+          </div>
+          <div class="controls"><button class="btn primary" data-action="start">▶ Start Closed Loop</button><button class="btn" id="adoptRunButton" data-action="adopt-running-test">↪ Adopt Running Play Store Test</button><button class="btn pause" data-action="pause">Ⅱ Pause</button><button class="btn" data-action="resume">▶ Resume</button><button class="btn stop" data-action="stop">■ Stop Everything</button></div><div class="tiny" id="adoptRunHint">Start a full or delta Play Store gate manually, then Yardmaster can adopt it and own the repair → push → deploy → retest loop until PASS.</div>
+        </div>
+        <div class="panel quick-card">
+          <button class="btn new-work-btn" id="newWorkButton">＋ New 86 Chaos Work</button>
+          <div class="tiny new-work-hint">Describe a feature or change, hand it off, and let Yardmaster implement + delta-test it automatically.</div>
+          <div class="eyebrow">Run Setup</div>
+          <div class="field"><label>Branch</label><select id="branch"><option>testing</option></select></div>
+          <div class="field"><label>Test Type</label><select id="testType"><option value="delta">Delta / Targeted</option><option value="full">Full Release Gate</option><option value="full-then-delta">Full first → Failed / Delta</option><option value="targeted">Current Release Targeted</option><option value="playwright">Playwright Only</option></select><div class="tiny">Full first runs the full Play Store test once, then failed/delta after repairs and deployments until PASS.</div></div>
+          <div class="field"><label for="firebaseMode">Firebase Test Target</label><select id="firebaseMode"><option value="emulator">Emulator</option><option value="live">Live Cloud</option><option value="both">Both</option></select></div><div class="field" id="firebaseLivePhaseField" hidden><label for="firebaseLivePhase">Live Phase</label><select id="firebaseLivePhase"><option value="verification">Verification Only</option><option value="full">Full Live Suite</option></select></div><div class="tiny" id="firebaseStatus" role="status">FIREBASE MODE: EMULATOR</div><div class="status-block"><span>Workflow</span><b id="workflowStatus">idle</b></div>
+          <div class="status-block"><span>Repair attempt</span><b id="repairAttemptStatus">0 / 25</b></div>
+          <div class="live-status">
+            <div class="live-status-head"><div class="eyebrow">Live Status</div><span class="status-time" id="liveStatusTimestamp">--</span></div>
+            <b id="doingStatus">Yardmaster is ready.</b>
+            <div class="tiny"><strong>Waiting on:</strong> <span id="waitingStatus">A command.</span></div>
+            <div class="tiny"><strong>Next:</strong> <span id="nextStatus">Start approved work.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="ops-bottom">
+        <div class="panel mini-card"><h3>Recent Activity</h3><div class="activity" id="activity"></div></div>
+        <div class="panel mini-card"><h3>Console Output</h3><pre class="console" id="console">Yardmaster ready.</pre></div>
+        <div class="panel mini-card"><h3>Approvals & State</h3><div id="approvals"></div></div>
+      </div>
+    </section>
+
+    <section class="view" data-view-panel="runs">
+      <div class="view-grid two">
+        <div class="panel page-card"><div class="eyebrow">Current / Last Run</div><h2 id="runsSummary">No run yet</h2><div class="metric-grid" id="runsMetrics"></div></div>
+        <div class="panel page-card"><div class="eyebrow">Current command output</div><pre class="console tall" id="runsConsole">Yardmaster ready.</pre></div>
+      </div>
+    </section>
+
+    <section class="view" data-view-panel="branches">
+      <div class="view-grid two">
+        <div class="panel page-card form-grid">
+          <div class="eyebrow">Repository</div>
+          <div class="field wide"><label>Repository Path</label><input id="repositoryPath" value="C:\Users\geoff\Documents\GitHub\86chaos"></div>
+          <div class="field"><label>Current Branch</label><div class="readout" id="branchReadout">testing</div></div>
+          <div class="field"><label>Deployment URL</label><input id="testingUrl" value="https://testing.86chaos.com"></div>
+          <button class="btn primary wide" data-action="push">Push Selected Branch</button>
+        </div>
+        <div class="panel page-card"><div class="eyebrow">Safety</div><h2>Branch control</h2><p class="muted">Yardmaster will not switch branches over uncommitted local work. Production/main pushes stay blocked from automatic remote execution.</p><div class="status-block"><span>Selected</span><b id="branchSelected">testing</b></div></div>
+      </div>
+    </section>
+
+    <section class="view" data-view-panel="queue">
+      <div class="view-grid two">
+        <div class="panel page-card">
+          <div class="eyebrow">Repair Loop</div>
+          <div class="field"><label>Maximum Repair Attempts</label><input id="maxRepairAttempts" type="number" min="0" max="1000" step="1" value="25"><div class="tiny">0 = Unlimited repair attempts.</div></div>
+          <div class="field"><label>Local Repo Update</label><select id="repoUpdate"><option value="automatic">Automatic</option><option value="ask">Ask Me</option><option value="never">Never</option></select></div>
+          <div class="toggle-row"><span>Send failures to ChatGPT automatically</span><button class="toggle" id="autoHandoff"></button></div>
+          <div class="toggle-row"><span>Self-heal Yardmaster automatically</span><button class="toggle on" id="autoSelfHeal"></button></div>
+          <div class="field"><label>Maximum Self-Heal Attempts</label><input id="maxSelfHealAttempts" type="number" min="1" max="10" step="1" value="5"><div class="tiny">Each attempt must pass Yardmaster self-heal, Playwright, and full Play Store tests before installation.</div></div>
+          <div class="status-block"><span>Current workflow</span><b id="queueWorkflow">idle</b></div>
+        </div>
+        <div class="panel page-card"><div class="eyebrow">Pending Approval</div><div id="queueApproval"></div><div class="command-panel"><div class="eyebrow">Direct Command Protocol</div><textarea id="commandBlock" spellcheck="false" placeholder="YARDMASTER&#10;BRANCH testing&#10;RUN delta"></textarea><button class="btn primary" id="runCommandBlock">Run Command Block</button></div></div>
+      </div>
+    </section>
+
+    <section class="view" data-view-panel="chatgpt">
+      <div class="view-grid two">
+        <div class="panel page-card">
+          <div class="eyebrow">ChatGPT Control</div>
+          <div class="field"><label>Mode</label><select id="chatMode"><option value="Work">Work</option><option value="Chat">Chat</option></select></div>
+          <div class="field"><label>Model</label><select id="model"><option>GPT-6.1 Sol</option><option>GPT-6 Sol</option><option>GPT-6 Astra</option><option>GPT-6 Luna</option><option>GPT-5.6 Sol</option><option>GPT-5.6 Terra</option><option>GPT-5.6 Luna</option></select></div>
+          <div class="field"><label>Thinking Effort</label><select id="thinkingEffort"><option value="Instant">Instant / Auto</option><option value="Medium">Medium</option><option value="High">High</option></select></div>
+          <div class="toggle-row"><span>Rotate modes/models during continuous loop</span><button class="toggle" id="chatLoopEnabled"></button></div>
+          <div class="field"><label>Continuous Loop Route</label><textarea id="chatLoopPlan" class="route-plan" spellcheck="false" placeholder="Work | GPT-5.6 Sol | High&#10;Chat | GPT-5.6 Sol | High"></textarea><div class="tiny">One step per line: Mode | Model | Thinking. Yardmaster advances one step for each ChatGPT handoff and wraps back to the first step.</div></div>
+          <div class="status-block"><span>Current loop step</span><b id="chatLoopStatus">Single selection</b></div>
+          <div class="tiny">Choose the model you want for Work or Chat. Yardmaster verifies availability in your signed-in ChatGPT account before a handoff.</div>
+          <div class="button-row"><button class="btn primary" data-action="open-chatgpt">Open ChatGPT</button><button class="btn" data-action="resume-handoff">Resume Handoff</button></div>
+          <div class="self-test-launch">
+            <button class="btn self-test-btn" data-action="full-self-test">Test Full Yardmaster Process</button>
+            <div class="tiny">Runs a disposable local app through manually-started gate adoption, then requires ChatGPT itself to return a PowerShell block that Yardmaster copies to the Windows clipboard, Ctrl+V pastes into PowerShell, executes, reports back to ChatGPT, and continues through ZIP repair → local push → deployment identity → adopted post-deploy PASS. Failures produce a downloadable diagnostic ZIP. It does not use 86 Chaos.</div>
+          </div>
+        </div>
+        <div class="panel page-card">
+          <div class="eyebrow">Browser State</div><h2 id="chatViewState">Ready</h2><p class="muted" id="chatViewDetail">Yardmaster prefers the docked ChatGPT workspace and falls back safely only when the desktop dock is unavailable.</p>
+          <div class="self-test-status"><div class="eyebrow">Full Sandbox Test</div><h3 id="selfTestState">Idle</h3><div class="muted" id="selfTestDetail">Ready for a full isolated process test.</div><div id="selfTestSteps" class="self-test-steps"></div></div>
+        </div>
+        <div class="panel page-card chatgpt-dock-card">
+          <div class="chatgpt-dock-head"><div><div class="eyebrow">Docked ChatGPT</div><h2>Work without browser popups</h2></div><div class="button-row"><button class="btn" id="chatgptDockHome">Home</button><button class="btn" id="chatgptDockReload">Reload</button></div></div>
+          <div class="tiny">This is a real persistent ChatGPT browser view hosted inside Yardmaster. Sign in here once. Automated handoffs and manual Open ChatGPT will reuse this dock before opening any fallback browser.</div>
+          <div id="chatgptDockHost" class="chatgpt-dock-host"><div class="chatgpt-dock-placeholder">ChatGPT loads here in the Windows Yardmaster app.</div><img id="mobileChatGPTPreview" class="mobile-dock-preview" alt="Live Yardmaster ChatGPT dock preview" hidden></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" data-view-panel="deployments">
+      <div class="view-grid two">
+        <div class="panel page-card">
+          <div class="eyebrow">Deployment Watch</div><h2 id="deploymentViewState">Idle</h2><div id="deploymentViewDetail" class="muted">No deployment is being watched.</div>
+          <div class="button-row"><button class="btn primary" data-action="push">Push Selected Branch</button><button class="btn" data-nav-jump="operations">Back to Operations</button></div>
+        </div>
+        <div class="panel page-card">
+          <div class="toggle-row"><span>Wait for exact deployment</span><button class="toggle on" id="waitDeploy"></button></div>
+          <div class="toggle-row"><span>Test again after deploy</span><button class="toggle on" id="runAfterDeploy"></button></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" data-view-panel="settings">
+      <div class="view-grid two settings-grid">
+        <div class="panel page-card">
+          <div class="eyebrow">Operator Preferences</div>
+          <div class="toggle-row"><span>Push after pass</span><button class="toggle" id="autoPush"></button></div>
+          <div class="toggle-row"><span>Auto-update Yardmaster</span><button class="toggle on" id="autoUpdateOperator"></button></div>
+          <div class="status-block"><span>Version</span><b id="versionLabel">0.1.103</b></div>
+          <div class="status-block"><span>Update</span><b id="updateStatus">Current</b></div>
+          <div class="status-block"><span>Self-heal</span><b id="selfHealState">Idle</b></div>
+          <div class="tiny" id="selfHealDetail">Supervisor and self-heal engine are ready.</div>
+          <div class="button-row"><button class="btn" data-action="self-heal-now">Run Self-Heal Diagnostic</button><button class="btn" data-action="resume-self-heal">Resume Self-Heal</button></div>
+          <button class="btn primary" data-action="update-operator-now" style="width:100%;margin-top:8px">Update PC Yardmaster Now</button>
+          <div class="tiny" id="updateDetail">Checks the verified Yardmaster release and safely queues the update if protected work is active.</div>
+          <div class="status-block"><span>Push health</span><b id="pushHealthSummary">No paired subscriptions</b></div>
+          <div class="status-block"><span>Storage</span><b>Local PC</b></div>
+        </div>
+        <div class="panel page-card remote-card">
+          <div class="eyebrow">Remote Control</div><h3>Phone pairing</h3>
+          <div id="remoteInfo"><button class="btn primary" data-action="remote-start">Start Remote Access</button></div>
+          <div id="pushNotificationBox" hidden>
+            <div class="trusted-head">Phone notifications</div>
+            <div class="tiny" id="pushNotificationStatus">Not enabled</div>
+            <div class="button-row"><button class="btn primary" id="enablePushNotifications">Enable Phone Notifications</button><button class="btn" id="testPushNotification">Send Test</button></div>
+          </div>
+          <div class="trusted-head">Trusted devices</div><div id="trustedDevices" class="trusted-devices"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" data-view-panel="intelligence">
+      <div class="view-grid intelligence-grid">
+        <div class="panel page-card intelligence-hero">
+          <div class="intelligence-title-row"><div><div class="eyebrow">Operations Intelligence</div><h2>Failure memory, evidence, health & recovery</h2></div><span class="status-time" id="intelUpdatedAt">--</span></div>
+          <div class="button-row intelligence-actions">
+            <button class="btn primary" data-action="run-preflight">Run Preflight Doctor</button>
+            <button class="btn" data-action="create-repro-capsule">Create Repro Capsule</button>
+            <button class="btn" data-action="create-snapshot">Snapshot Now</button>
+            <button class="btn" data-action="restore-last-snapshot">Undo Last Repair</button>
+            <button class="btn" data-action="export-build-manifest">Export Build Manifest</button>
+            <button class="btn" id="refreshIntelligence">Refresh Intelligence</button>
+          </div>
+          <div class="status-strip">
+            <div><span>Safe Mode</span><b id="intelSafeMode">Off</b></div>
+            <div><span>Dry Run</span><b id="intelDryRun">Off</b></div>
+            <div><span>Hang Watch</span><b id="intelHang">Idle</b></div>
+            <div><span>Known Failure</span><b id="intelKnownFailure">No match</b></div>
+          </div>
+          <div class="button-row">
+            <button class="btn" id="toggleSafeMode">Toggle Safe Mode</button>
+            <button class="btn" id="toggleDryRun">Toggle Dry-Run</button>
+            <button class="btn" data-action="toggle-live-screenshot">Toggle Mobile Screenshot</button>
+          </div>
+        </div>
+
+        <div class="panel page-card"><div class="eyebrow">Workflow Timeline</div><div id="intelTimeline" class="timeline-list"></div></div>
+        <div class="panel page-card"><div class="eyebrow">Factual Health</div><div id="intelHealth" class="health-grid"></div></div>
+        <div class="panel page-card"><div class="eyebrow">Preflight Doctor</div><div id="intelPreflight" class="intel-list">Run the doctor to inspect this machine.</div></div>
+        <div class="panel page-card"><div class="eyebrow">Resource Watchdog</div><div id="intelResources" class="intel-list"></div></div>
+
+        <div class="panel page-card wide-card"><div class="eyebrow">Evidence Viewer</div><div id="intelEvidence" class="evidence-grid"></div></div>
+        <div class="panel page-card"><div class="eyebrow">Failure Fingerprint</div><div id="intelFailureMemory" class="intel-list">No current failure match.</div></div>
+        <div class="panel page-card"><div class="eyebrow">Smart Test Selection</div><div id="intelSmartTests" class="intel-list"></div></div>
+        <div class="panel page-card"><div class="eyebrow">Flaky-Test Intelligence</div><div id="intelFlakes" class="intel-list"></div></div>
+
+        <div class="panel page-card"><div class="eyebrow">Release Provenance</div><pre id="intelProvenance" class="mini-code"></pre></div>
+        <div class="panel page-card"><div class="eyebrow">What Changed Since Last Good?</div><div id="intelChanges" class="intel-list"></div></div>
+        <div class="panel page-card"><div class="eyebrow">Cost Guard</div><div id="intelCost" class="intel-list"></div></div>
+        <div class="panel page-card"><div class="eyebrow">Self-Heal Attempts</div><div id="intelSelfHealAttempts" class="intel-list"></div></div>
+
+        <div class="panel page-card"><div class="eyebrow">Run Notes & Bookmarks</div><div class="field"><label>Note</label><input id="runNote" placeholder="What happened here?"></div><div class="button-row"><button class="btn" id="addRunNote">Add Note</button><button class="btn" id="bookmarkRun">Bookmark</button></div><div id="intelAnnotations" class="intel-list"></div></div>
+        <div class="panel page-card"><div class="eyebrow">Configuration Profiles</div><div class="field"><label>Profile name</label><input id="profileName" placeholder="Emergency Repair"></div><div class="button-row"><button class="btn" id="saveProfile">Save Current</button></div><div id="intelProfiles" class="intel-list"></div></div>
+        <div class="panel page-card"><div class="eyebrow">Isolated Worktrees</div><div class="field"><label>New branch</label><input id="worktreeBranch" placeholder="experiment/feature"></div><div class="button-row"><button class="btn" id="createWorktree">Create Worktree</button></div><div id="intelWorktrees" class="intel-list"></div></div>
+        <div class="panel page-card"><div class="eyebrow">Tamper-Evident Audit</div><div id="intelAudit" class="intel-list audit-list"></div></div>
+
+        <div class="panel page-card wide-card"><div class="eyebrow">Yardmaster-only Live Screenshot</div><div class="tiny">Optional low-rate view of Yardmaster itself. It never captures the whole desktop.</div><img id="intelScreenshot" class="operator-shot" alt="Yardmaster live screenshot" hidden></div>
+      </div>
+    </section>
+  </main>
+  <nav class="mobile-tabbar" aria-label="Yardmaster sections">
+    <button class="active" data-nav="operations">⌂<span>Operations</span></button>
+    <button data-nav="runs">⟳<span>Runs</span></button>
+    <button data-nav="branches">⑂<span>Branches</span></button>
+    <button data-nav="queue">☷<span>Queue</span></button>
+    <button data-nav="chatgpt">◉<span>ChatGPT</span></button>
+    <button data-nav="deployments">△<span>Deploy</span></button>
+    <button data-nav="settings">⚙<span>Settings</span></button>
+    <button data-nav="intelligence">🧠<span>Intel</span></button>
+  </nav>
+</div>
+
+<div class="modal-backdrop" id="newWorkModal" hidden>
+  <div class="work-modal" role="dialog" aria-modal="true" aria-labelledby="newWorkTitle">
+    <div class="eyebrow">Hands-Free Implementation</div>
+    <h2 id="newWorkTitle">New 86 Chaos Work</h2>
+    <p class="muted">Tell Yardmaster what you want changed. It will package the current app, hand the job to ChatGPT, apply the returned build, run delta/targeted tests, and automatically repair failures until green.</p>
+    <div class="field work-task-field"><label>What do you want implemented?</label><textarea id="newWorkTask" placeholder="Example: Add a vendor price comparison screen to Inventory. Preserve existing vendor workflows and add release-gate coverage."></textarea></div>
+    <label class="check-row"><input type="checkbox" id="newWorkPush"> <span>Push to <b>testing</b> automatically after the local delta gate passes</span></label>
+    <div class="tiny" id="newWorkExecutionSummary">Uses your current ChatGPT Work/model/thinking settings. Production/main stays blocked.</div>
+    <div class="button-row work-modal-actions"><button class="btn" id="cancelNewWork">Cancel</button><button class="btn primary" id="submitNewWork">Hand Off & Walk Away</button></div>
+  </div>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>

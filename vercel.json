@@ -5,7 +5,7 @@
   "redirects": [
     {
       "source": "/yardmaster/download",
-      "destination": "/yardmaster/releases/Yardmaster-Windows-0.1.102.zip",
+      "destination": "/yardmaster/releases/Yardmaster-Windows-0.1.103.zip",
       "permanent": false
     }
   ],

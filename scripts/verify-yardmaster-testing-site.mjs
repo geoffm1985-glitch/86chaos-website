@@ -14,3 +14,8 @@ assert.match(page,/id="yardmasterTestingBanner"/);
 assert.match(page,/YARDMASTER TESTING/);
 assert.match(page,/SOURCE BRANCH: yardmaster-testing/);
 console.log('Yardmaster testing-site release-gate contract PASS');
+
+for(const id of ['firebaseMode','firebaseLivePhase','firebaseStatus','mFirebaseStatus'])assert.ok(page.includes('id="'+id+'"'),id);
+for(const target of ['emulator','live','both'])assert.ok(page.includes('value="'+target+'"'));
+assert.ok(page.includes('firebaseLivePhaseField[hidden]'));
+console.log('Yardmaster Firebase desktop/Android control contract PASS');

@@ -1,21 +1,23 @@
 {
   "product": "Yardmaster",
-  "version": "0.1.102",
+  "version": "0.1.103",
   "releaseDate": "2026-10-01",
-  "sourceCommit": "d173a06d7cd3ab1940d6915242c4815921c707d8",
+  "sourceCommit": "5abf6e07e4b9fec420dcbe858d27b22821b24972",
   "verified": false,
   "verification": {
     "candidate": "testing-only",
     "sourceSyntax": "pass",
-    "targetedNode": "40 targeted Node checks passed, including a connected two-repair-cycle simulation",
-    "targetedPlaywright": "3 HTTP checks passed; 18 browser checks pending because browser downloads are invalid/truncated",
-    "continuousLoop": "Real local processes, handoff/repair ZIPs, source overlays, Git pushes and deployment polling; ChatGPT reply and deployment identity boundaries simulated",
-    "nativeWindows": "Native installation and live signed-in ChatGPT pending",
+    "targetedNode": "97 passed; 1 Windows-only process suspension check skipped",
+    "targetedPlaywright": "53 desktop/Android Chromium checks passed",
+    "firebase": "Full Emulator, Live, Both Verification Only and Both Full Live Suite routing tested using controlled process fixtures; no paid live Firebase requests",
+    "continuousLoop": "Connected native and hosted ChatGPT handoff, delayed reply, repair ZIP application and local delta workflows",
+    "nativeWindows": "Native Windows Edge/Electron installation and signed-in ChatGPT not run in Linux",
     "fullStore": "not run"
   },
-  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.102.zip",
-  "sha256": "06e8326737c60aefd647c746dfb25344e63efa2243ff413d8b79d55b9f3d57dd",
+  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.103.zip",
+  "sha256": "197c6ed4f46110ae696874f4cb72cc9e13d8c61b304645efde0a00acbd16fd8c",
   "channel": "testing",
-  "updateDownloadUrl": "https://raw.githubusercontent.com/geoffm1985-glitch/86chaos-website/yardmaster-testing/public/yardmaster/releases/Yardmaster-Windows-0.1.102.zip",
-  "updateSha256": "fb5c74f5c106eda4dc05acc96a84f47f0d21f71e79e0b10f288d25d873fcce22"
+  "updateDownloadUrl": "https://raw.githubusercontent.com/geoffm1985-glitch/86chaos-website/yardmaster-testing/public/yardmaster/releases/Yardmaster-Windows-0.1.103.zip",
+  "applicationTextLines": 15574,
+  "updateSha256": "197c6ed4f46110ae696874f4cb72cc9e13d8c61b304645efde0a00acbd16fd8c"
 }
