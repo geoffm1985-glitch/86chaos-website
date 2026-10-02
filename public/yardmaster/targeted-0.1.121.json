@@ -1,10 +1,7 @@
 {
-  "product": "Yardmaster",
   "version": "0.1.121",
-  "releaseDate": "2026-10-02",
   "sourceCommit": "2335f6735175fd8918eef86ecf07b1bd54c29a4c",
-  "verified": true,
-  "channel": "production",
+  "passed": true,
   "verification": {
     "fullStore": "not-rerun",
     "fullPlaywright": "not-rerun",
@@ -13,9 +10,5 @@
     "targetedPlaywright": "2 passed: actual hidden Electron ChatGPT capture and Android ChatGPT-only tab; prior repairs retained",
     "certificationSource": "local Windows focused repair checks",
     "phoneHardware": "Android browser emulation; real handset not exercised"
-  },
-  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.121.zip",
-  "updateDownloadUrl": "https://raw.githubusercontent.com/geoffm1985-glitch/86chaos-website/main/public/yardmaster/releases/Yardmaster-Windows-0.1.121.zip",
-  "sha256": "47331975d38b4f3ba083c222805f6eb3683846c54ddd766971946faadcc8751b",
-  "updateSha256": "47331975d38b4f3ba083c222805f6eb3683846c54ddd766971946faadcc8751b"
+  }
 }
