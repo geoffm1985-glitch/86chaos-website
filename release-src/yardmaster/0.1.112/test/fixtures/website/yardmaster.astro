@@ -2,8 +2,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const title='Yardmaster | Local-first workflow control';
-const description='Secure remote control for your Yardmaster Windows operator.';
+const title='Yardmaster Testing | Local-first workflow control';
+const description='Yardmaster testing site linked to the Yardmaster yardmaster-testing branch.';
 const release=JSON.parse(fs.readFileSync(path.resolve('public','yardmaster','release.json'),'utf8'));
 const releaseDate=new Intl.DateTimeFormat('en-US',{month:'long',day:'numeric',year:'numeric',timeZone:'UTC'}).format(new Date(`${release.releaseDate}T00:00:00Z`));
 ---
@@ -25,7 +25,7 @@ const releaseDate=new Intl.DateTimeFormat('en-US',{month:'long',day:'numeric',ye
 #firebaseLivePhaseField[hidden]{display:none!important}
 </style>
 </head>
-<body class="ym-auth-pending">\n
+<body class="ym-auth-pending">\n<div id="yardmasterTestingBanner" role="status" style="position:sticky;top:0;z-index:100;background:#5b341d;color:#fff3e8;border-bottom:1px solid #e5a16d;padding:8px 12px;text-align:center;font:800 12px/1.3 Inter,Segoe UI,Arial,sans-serif;letter-spacing:.12em">YARDMASTER TESTING • SOURCE BRANCH: yardmaster-testing</div>
 <section class="desktop">
   <div class="desktop-inner">
     <img class="brand" src="/yardmaster/yardmaster-logo.svg" alt="Yardmaster" />
