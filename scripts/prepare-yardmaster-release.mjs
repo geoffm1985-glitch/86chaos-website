@@ -96,6 +96,9 @@ fs.mkdirSync(outDir,{recursive:true});
 fs.writeFileSync(outFile,zip);
 
 const sha256=crypto.createHash('sha256').update(zip).digest('hex');
-const release={...recorded,version,sourceCommit,downloadUrl:`/yardmaster/releases/Yardmaster-Windows-${version}.zip`,sha256,updateSha256:sha256};
+// The external updater archive keeps its recorded hash even when this build repacks the website archive.
+const updateSha256=recorded.updateDownloadUrl ? recorded.updateSha256 : sha256;
+if(!/^[a-fA-F0-9]{64}$/.test(updateSha256||''))throw new Error('The external Yardmaster update checksum is missing.');
+const release={...recorded,version,sourceCommit,downloadUrl:`/yardmaster/releases/Yardmaster-Windows-${version}.zip`,sha256,updateSha256};
 fs.writeFileSync(releaseFile,JSON.stringify(release,null,2)+'\n');
 console.log('Prepared Yardmaster website release',version,sha256,names.length+' files');
