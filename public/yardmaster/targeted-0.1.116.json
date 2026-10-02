@@ -1,0 +1,14 @@
+{
+  "version": "0.1.116",
+  "sourceCommit": "ea015bce3af0f0a5070266c0fe83eaabbdd79596",
+  "passed": true,
+  "verification": {
+    "fullStore": "not-rerun",
+    "fullPlaywright": "not-rerun",
+    "syntaxCheck": "pass",
+    "targetedNode": "9 passed: dock readiness, emulator storage isolation, mode selection and release feed",
+    "targetedPlaywright": "7 passed: real Electron draft/reload and single ZIP+prompt send, affected hidden dock, desktop/Android emulator storage isolation and production update guards",
+    "certificationSource": "local Windows focused repair checks",
+    "phoneHardware": "Android browser emulation; real handset not exercised"
+  }
+}
