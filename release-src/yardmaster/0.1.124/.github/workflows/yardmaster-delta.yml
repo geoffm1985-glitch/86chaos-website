@@ -1,0 +1,27 @@
+name: Yardmaster Delta Gate
+on:
+  push:
+    branches: [yardmaster-testing]
+jobs:
+  delta:
+    runs-on: windows-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Install
+        run: npm ci --no-audit --no-fund
+      - name: Syntax
+        run: npm run check
+      - name: Delta Store regression
+        run: npm run test:delta
+      - name: Parse every PowerShell helper
+        shell: pwsh
+        run: |
+          $errors=@()
+          Get-ChildItem scripts -Filter *.ps1 | ForEach-Object {
+            [System.Management.Automation.Language.Parser]::ParseFile($_.FullName,[ref]$null,[ref]$errors) | Out-Null
+          }
+          if($errors.Count){$errors|Format-List|Out-String|Write-Error;exit 1}

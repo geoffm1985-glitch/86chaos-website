@@ -1,10 +1,7 @@
 {
-  "product": "Yardmaster",
   "version": "0.1.124",
-  "releaseDate": "2026-10-02",
   "sourceCommit": "af83dbc966743f4f057d23ede5afe5b1acff706d",
-  "verified": true,
-  "channel": "production",
+  "passed": true,
   "verification": {
     "fullStore": "not-rerun",
     "fullPlaywright": "not-rerun",
@@ -13,9 +10,5 @@
     "targetedPlaywright": "6 passed: expired connector detection, quoted and prior-turn isolation, action banner and resume control on desktop and Android",
     "certificationSource": "local Windows focused repair checks",
     "phoneHardware": "Android browser emulation; real handset not exercised"
-  },
-  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.124.zip",
-  "updateDownloadUrl": "https://raw.githubusercontent.com/geoffm1985-glitch/86chaos-website/main/public/yardmaster/releases/Yardmaster-Windows-0.1.124.zip",
-  "sha256": "d9192079df283a24a4ac4982beec0eea2ecefcde6aea41ecc277850a7b30f989",
-  "updateSha256": "d9192079df283a24a4ac4982beec0eea2ecefcde6aea41ecc277850a7b30f989"
+  }
 }
