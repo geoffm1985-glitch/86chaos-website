@@ -1,0 +1,26 @@
+name: Yardmaster ChatGPT Handoff Fix
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'automation/chatgpt.mjs'
+      - 'test/play-store-chatgpt-send.test.mjs'
+      - 'test/play-store-chatgpt-browser.test.mjs'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/yardmaster-chatgpt-handoff-fix.yml'
+
+jobs:
+  windows-edge-handoff:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - run: node --test --test-concurrency=1 test/play-store-chatgpt-send.test.mjs test/play-store-chatgpt-browser.test.mjs
