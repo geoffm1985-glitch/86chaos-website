@@ -1,10 +1,7 @@
 {
-  "product": "Yardmaster",
   "version": "0.1.128",
-  "releaseDate": "2026-10-02",
   "sourceCommit": "2260905472c8e0ee4422216dffd6f55c2c2099aa",
-  "verified": true,
-  "channel": "production",
+  "passed": true,
   "verification": {
     "fullStore": "not-rerun",
     "fullPlaywright": "not-rerun",
@@ -13,9 +10,5 @@
     "targetedPlaywright": "2 passed: automatic failed emulator startup recovery runs delta and completes on desktop and Android emulation",
     "certificationSource": "local Windows focused repair checks",
     "phoneHardware": "Android browser emulation; real handset not exercised"
-  },
-  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.128.zip",
-  "sha256": "ceed865043df8e1c7767cee2438db3c084f2537c6b2d3823860655ca3ecaf159",
-  "updateSha256": "ceed865043df8e1c7767cee2438db3c084f2537c6b2d3823860655ca3ecaf159",
-  "updateDownloadUrl": "https://raw.githubusercontent.com/geoffm1985-glitch/86chaos-website/main/public/yardmaster/releases/Yardmaster-Windows-0.1.128.zip"
+  }
 }

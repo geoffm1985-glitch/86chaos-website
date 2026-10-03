@@ -1,0 +1,199 @@
+
+const $=s=>document.querySelector(s);const KEY='yardmaster:';let installPrompt=null,consoleAutoScroll=true;const validHost=value=>/^[a-z0-9-]+\.trycloudflare\.com$/i.test(String(value||''));const validRemote=value=>/^https:\/\/[a-z0-9-]+\.trycloudflare\.com$/i.test(String(value||'').replace(/\/$/,''));const ownerLink=new YardmasterConnection();let base=ownerLink.base,deviceId=localStorage.getItem(KEY+'deviceId')||'',token=ownerLink.credential,state={};const mobile=matchMedia('(max-width:760px)').matches;
+function pairingHints(){
+  const here=new URL(location.href),query=here.searchParams,hash=new URLSearchParams(here.hash.replace(/^#/,''));
+  const host=query.get('host')||hash.get('host')||'',remote=query.get('remote')||hash.get('remote')||'',code=query.get('code')||hash.get('code')||'';
+  const scanned=validHost(host)?'https://'+host:(validRemote(remote)?remote.replace(/\/$/,''):'');
+  return {remote:scanned,code:/^\d{6}$/.test(code)?code:''};
+}
+function applyPairingHints(){
+  const hints=pairingHints();
+  if(hints.remote){base=hints.remote;localStorage.setItem(KEY+'url',base)}
+  const urlField=$('#url'),codeField=$('#code');
+  if(urlField&&validRemote(base))urlField.value=base;
+  if(codeField&&hints.code)codeField.value=hints.code;
+  return hints;
+}
+applyPairingHints();addEventListener('DOMContentLoaded',applyPairingHints);addEventListener('pageshow',applyPairingHints);
+addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e});
+async function doInstall(){if(installPrompt){installPrompt.prompt();await installPrompt.userChoice;installPrompt=null}else alert('Use your browser menu and choose Add to Home Screen / Install app.')}
+function b64url(v){const p='='.repeat((4-v.length%4)%4),b=(v+p).replace(/-/g,'+').replace(/_/g,'/'),raw=atob(b);return Uint8Array.from([...raw].map(c=>c.charCodeAt(0)))}
+function pushKeyMatches(existing,expected){if(!existing)return false;const a=new Uint8Array(existing),b=expected instanceof Uint8Array?expected:new Uint8Array(expected);if(a.length!==b.length)return false;for(let i=0;i<a.length;i++)if(a[i]!==b[i])return false;return true}
+async function waitForPushWorker(registration){
+  const worker=registration.active||registration.installing||registration.waiting;
+  if(!worker)throw new Error('The notification worker is unavailable.');
+  if(worker.state==='activated')return;
+  await new Promise((resolve,reject)=>{
+    const timer=setTimeout(()=>finish(new Error('The notification worker did not activate in time.')),15000);
+    function finish(error){clearTimeout(timer);worker.removeEventListener('statechange',check);error?reject(error):resolve()}
+    function check(){if(worker.state==='activated')finish();else if(worker.state==='redundant')finish(new Error('The notification worker could not activate.'))}
+    worker.addEventListener('statechange',check);check();
+  });
+}
+let pushRepairBusy=false,lastSilentPushRepair=0;
+function pushUi(message,ok=false){if($('#mPushStatus')){$('#mPushStatus').textContent=ok?'Verified working':'Needs attention';$('#mPushStatus').className=ok?'health-ok':'health-warn'}if($('#mPushDetail'))$('#mPushDetail').textContent=message}
+async function ensurePush({requestPermission=false,test=true,force=false,silent=false}={}){
+  if(pushRepairBusy)return false;
+  if(!base||!token){if(!silent)showPair();return false}
+  if(!('Notification'in window)||!('serviceWorker'in navigator)||!('PushManager'in window)){pushUi('Web Push is not supported by this browser.');return false}
+  pushRepairBusy=true;
+  try{
+    let perm=Notification.permission;
+    if(perm==='default'&&requestPermission)perm=await Notification.requestPermission();
+    if(perm!=='granted'){pushUi(perm==='denied'?'Browser notification permission is blocked. Allow notifications for 86chaos.com, then tap Repair Alerts.':'Tap Alerts and allow notifications.');return false}
+    // The Service-Worker-Allowed response header permits the canonical slashless page.
+    const reg=await navigator.serviceWorker.register('/yardmaster/sw.js',{scope:'/yardmaster'});
+    await navigator.serviceWorker.ready;
+    await waitForPushWorker(reg);
+    const key=await api('/api/push/key'),expected=b64url(key.publicKey);
+    let sub=await reg.pushManager.getSubscription();
+    if(sub&&(force||!pushKeyMatches(sub.options?.applicationServerKey,expected))){await sub.unsubscribe().catch(()=>{});sub=null}
+    if(!sub)sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:expected});
+    let result=await api('/api/push/subscribe',{method:'POST',body:JSON.stringify({subscription:sub.toJSON(),test})});
+    if((result.needsResubscribe||(test&&result.testDelivered===false))&&!force){
+      await sub.unsubscribe().catch(()=>{});sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:expected});
+      result=await api('/api/push/subscribe',{method:'POST',body:JSON.stringify({subscription:sub.toJSON(),test})});
+    }
+    localStorage.setItem(KEY+'push-enabled','1');
+    const ok=test?result.testDelivered!==false:true;
+    pushUi(ok?(test?'Push subscription verified and a test notification was sent.':'Push subscription is registered.'):(result.error||'Push service did not confirm the test delivery.'),ok);
+    if(!silent&&!ok)alert(result.error||'Yardmaster saved the subscription but could not verify delivery.');
+    return ok;
+  }catch(e){pushUi(e.message||String(e));if(!silent)alert('Could not enable alerts: '+e.message);return false}
+  finally{pushRepairBusy=false}
+}
+async function enableAlerts(){return ensurePush({requestPermission:true,test:true,force:false,silent:false})}
+async function sendMobilePushTest(){try{const result=await api('/api/push/test',{method:'POST',body:'{}'});pushUi(result.ok?'Test notification sent by your PC.':(result.error||'Push test failed.'),!!result.ok);if(!result.ok)await ensurePush({requestPermission:false,test:true,force:true,silent:false})}catch(e){pushUi(e.message||String(e));await ensurePush({requestPermission:false,test:true,force:true,silent:false})}}
+$('#alertsBtn')?.addEventListener('click',enableAlerts);$('#repairMobilePush')?.addEventListener('click',()=>ensurePush({requestPermission:true,test:true,force:true,silent:false}));$('#testMobilePush')?.addEventListener('click',sendMobilePushTest);$('#installPwa')?.addEventListener('click',doInstall);$('#desktopInstallPwa')?.addEventListener('click',()=>alert('Open https://86chaos.com/yardmaster on your phone, then choose Add to Home Screen / Install app.'));
+if('serviceWorker'in navigator)navigator.serviceWorker.register('/yardmaster/sw.js',{scope:'/yardmaster'}).catch(()=>{});
+function b64ToBytes(v){const p='='.repeat((4-v.length%4)%4),raw=atob((v+p).replace(/-/g,'+').replace(/_/g,'/'));return Uint8Array.from([...raw].map(c=>c.charCodeAt(0)))}function bytesToB64(buf){let s='';for(const b of new Uint8Array(buf))s+=String.fromCharCode(b);return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
+function auth(){return token?{Authorization:'Bearer '+token}:{}}
+async function tunnelHealth(){try{const r=await fetch(base+'/api/remote/health',{cache:'no-store',signal:AbortSignal.timeout(12000)});if(!r.ok)return {ok:false,error:'The PC service is temporarily unavailable.'};return r.json()}catch{return {ok:false,error:'The remote tunnel is temporarily unavailable. Your phone remains trusted.'}}}
+async function api(path,opt={}){try{return await ownerLink.request(path,opt)}finally{base=ownerLink.base;token=ownerLink.credential}}
+function showPair(message=''){if(!mobile)return;$('#phonePairForm').hidden=false;$('#phoneReconnect').hidden=true;$('#phoneConnectTitle').textContent='Connect to your Yardmaster PC';applyPairingHints();document.body.classList.remove('ym-authenticated');document.body.classList.add('ym-auth-pending');$('#overlay').classList.add('show');if(validRemote(base)&&$('#url'))$('#url').value=base;const known=!!(base&&deviceId);$('#unlock').style.display=known?'inline-flex':'none';$('#pair').style.display='inline-flex';$('#pair').textContent=known?'Pair This Phone Again':'Pair & Create Passkey';$('#pairMsg').textContent=message||(known?'Use Unlock with Passkey, or pair this phone again with the fresh six-digit code from the PC.':'Pair this phone with the code shown on your Windows Yardmaster dashboard.')}function showReconnect(message='Reconnecting with your saved sign-in. No new passkey is needed.'){if(!mobile)return;$('#phonePairForm').hidden=true;$('#phoneReconnect').hidden=false;$('#phoneConnectTitle').textContent='Reconnecting to your Yardmaster PC';$('#phoneReconnectMsg').textContent=message;document.body.classList.remove('ym-authenticated');document.body.classList.add('ym-auth-pending');$('#overlay').classList.add('show')}
+function hidePair(){document.body.classList.remove('ym-auth-pending');document.body.classList.add('ym-authenticated');$('#overlay').classList.remove('show')}function clearStaleDevice(){deviceId='';token='';localStorage.removeItem(KEY+'deviceId');ownerLink.rejectCredential()}
+function regOptions(o){return {...o,challenge:b64ToBytes(o.challenge),user:{...o.user,id:b64ToBytes(o.user.id)},excludeCredentials:(o.excludeCredentials||[]).map(c=>({...c,id:b64ToBytes(c.id)}))}}function authOptions(o){return {...o,challenge:b64ToBytes(o.challenge),allowCredentials:(o.allowCredentials||[]).map(c=>({...c,id:b64ToBytes(c.id)}))}}
+function serializeRegistration(c){return {id:c.id,rawId:bytesToB64(c.rawId),type:c.type,response:{clientDataJSON:bytesToB64(c.response.clientDataJSON),attestationObject:bytesToB64(c.response.attestationObject),transports:c.response.getTransports?.()||[]},clientExtensionResults:c.getClientExtensionResults(),authenticatorAttachment:c.authenticatorAttachment}}
+function serializeAuthentication(c){return {id:c.id,rawId:bytesToB64(c.rawId),type:c.type,response:{clientDataJSON:bytesToB64(c.response.clientDataJSON),authenticatorData:bytesToB64(c.response.authenticatorData),signature:bytesToB64(c.response.signature),userHandle:c.response.userHandle?bytesToB64(c.response.userHandle):null},clientExtensionResults:c.getClientExtensionResults(),authenticatorAttachment:c.authenticatorAttachment}}
+async function unlockWithPasskey(){const entered=$('#url')?.value.trim().replace(/\/$/,'');if(entered){if(!validRemote(entered)){return void($('#pairMsg').textContent='Use the HTTPS trycloudflare.com URL shown by Yardmaster.')}if(entered!==base){base=entered;localStorage.setItem(KEY+'url',base)}}if(!base||!deviceId){showPair();return}if(!navigator.credentials){showPair('Passkeys are not supported on this device. Pair this phone again from a supported browser.');return}$('#pairMsg').textContent='Checking secure tunnel…';const health=await tunnelHealth();if(!health.ok){showPair(health.error);return}$('#pairMsg').textContent='Waiting for passkey…';try{const r=await fetch(base+'/api/passkey/auth/options',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({deviceId})});if(r.status===404){clearStaleDevice();showPair('This phone is no longer registered on the PC. Use the fresh six-digit code and Pair This Phone Again.');return}if(!r.ok)throw new Error(await r.text());const j=await r.json(),cred=await navigator.credentials.get({publicKey:authOptions(j.options)});const vr=await fetch(base+'/api/passkey/auth/verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({authId:j.authId,credential:serializeAuthentication(cred)})});if(!vr.ok)throw new Error(await vr.text());const v=await vr.json();token=v.sessionToken;deviceId=v.deviceId||deviceId;localStorage.setItem(KEY+'deviceId',deviceId);ownerLink.saveCredential(token);ownerLink.remember(v.connection);await refresh()}catch(e){showPair('Unlock failed: '+e.message+' You can also Pair This Phone Again with the fresh PC code.')}}
+function esc(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+let mobileIntel={};
+function render(s){
+  state=s;
+  const r=s.run||{},c=s.config||{},n=r.counts||{},p=Math.max(0,Math.min(100,r.progress||0));
+  const remoteState=s.remote?.phoneConnected?'connected':(s.remote?.status||(s.remote?.active?'tunnel-ready':'local'));
+  const be=$('#branch');
+  if(be&&document.activeElement!==be){const list=[...new Set([...(s.branches||[]),c.branch].filter(Boolean))];be.innerHTML=list.map(b=>'<option value="'+esc(b)+'">'+esc(b)+'</option>').join('');be.value=c.branch||'testing'}
+  $('#mPc').textContent='PC Online • '+({local:'Local',connecting:'Connecting','tunnel-ready':'Tunnel Ready',connected:'Phone Connected',error:'Remote Error'}[remoteState]||remoteState);
+  $('#mConn').textContent=s.machineName+(s.remote?.url?' • '+s.remote.url:'')+(s.remote?.error?' • '+s.remote.error:'');
+  $('#mConn').classList.toggle('remote-error',remoteState==='error');
+  const live=s.operatorStatus||{};$('#mDoing').textContent=live.doing||'Yardmaster is ready.';$('#mWaiting').textContent=live.waitingOn||'A command from your phone or PC.';$('#mNext').textContent=live.nextAction||'Start approved work.';$('#mLiveUpdated').textContent=live.updatedAt?new Date(live.updatedAt).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'}):'--';
+  const heal=s.selfHeal||{},healCard=$('#mSelfHealCard');if(healCard){healCard.hidden=!heal.active;$('#mSelfHealReason').textContent=heal.reason||'Yardmaster internal failure';$('#mSelfHealPhase').textContent=heal.phase||heal.state||'fault detected';$('#mSelfHealDoing').textContent=heal.currentAction||heal.detail||'Self-heal is active.';$('#mSelfHealWaiting').textContent=heal.waitingOn||'Nothing.';$('#mSelfHealAttempt').textContent=(Number(heal.attempt)||0)+' / '+(Number(heal.maxAttempts)||Number(c.maxSelfHealAttempts)||5);$('#mSelfHealCandidate').textContent=heal.candidateVersion||'Not published yet';$('#mSelfHealTesting').textContent=heal.testingStage||'Not started';$('#mSelfHealLastStep').textContent=heal.lastSuccessfulStep||'Fault detected';$('#mSelfHealNext').textContent=heal.nextAction||'Continue self-heal.';$('#mSelfHealResume').textContent=heal.resumeCheckpoint||'No saved workflow';}
+  $('#mRunProject').textContent='Working on: '+(s.workingProject?.label||r.project?.label||'Version unavailable');$('#mVersion').textContent=s.version||'Unknown';$('#mUpdateState').textContent='Update status: '+(s.update?.state||'Unknown');$('#mLoopStatus').textContent=s.chatgpt?.routeLabel||(c.chatLoopEnabled?'Loop ready':'Single selection');const dep=s.deployment||{};$('#mDeploymentState').textContent=dep.state||'Idle';$('#mDeploymentDetail').textContent=dep.expectedCommit?('Expected '+String(dep.expectedCommit).slice(0,12)+(dep.deployedCommit?' • deployed '+String(dep.deployedCommit).slice(0,12):'')):(dep.url||c.testingUrl||'');$('#mRunHistory').innerHTML=(s.runHistory||[]).slice(0,12).map(x=>'<div class="m-row"><b>'+esc(x.title||x.state||'Run')+'</b><div class="tiny">'+esc(x.state||'')+' • '+(x.startedAt?new Date(x.startedAt).toLocaleString():'')+'</div></div>').join('')||'<div class="tiny">No run history yet.</div>';$('#mRunHistoryTime').textContent=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});$('#mTrustedDevices').innerHTML=(s.trustedDevices||[]).map(d=>'<div class="m-row"><b>'+esc(d.name||'Device')+'</b><div class="tiny">'+(d.hasPasskey?'Passkey':'Legacy')+(d.hasPush?' • Push':'')+(d.pushStatus?' • '+esc(d.pushStatus):'')+'</div><div class="m-row-actions"><button class="m-btn m-danger" data-mobile-action="revoke-device" data-device-id="'+esc(d.id)+'">Revoke</button></div></div>').join('')||'<div class="tiny">No trusted devices.</div>';$('#mUpdateMessage').textContent=s.update?.waitingOn?('Queued. Waiting on '+s.update.waitingOn+'. The workflow will resume after the PC restarts.'):(s.update?.error||'If work is active, the update waits for a safe stopping point and then resumes after restart.');
+  const currentPush=s.currentDevice||{},pushHealth=s.pushHealth||{};if(currentPush.hasPush&&currentPush.pushStatus==='working')pushUi('Verified by the Windows operator'+(currentPush.pushLastSentAt?' • last sent '+new Date(currentPush.pushLastSentAt).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):''),true);else if(currentPush.pushLastError)pushUi(currentPush.pushLastError,false);else if(currentPush.hasPush)pushUi('Subscription exists but has not been verified working yet.',false);else pushUi('This phone has no verified push subscription on the Windows operator.',false);
+  const repairTitle=({'chatgpt':'Waiting for ChatGPT repair','repair-downloaded':'Repair downloaded','applying-repair':'Applying repair','waiting-approval':'Waiting for repair approval','download-only':'Repair ready to download','handoff-error':'Repair needs attention','waiting-action':'Your action is needed','waiting-login':'Waiting for ChatGPT sign-in'})[s.workflow?.state];const resumeActive=!!repairTitle;$('#mTitle').textContent=resumeActive?repairTitle:(r.title||'Ready for work');$('#mResumeState').textContent=resumeActive?'The test checks failed. Their report is saved for repair.':'';$('#mTest').textContent=resumeActive?(s.chatgpt?.detail||s.chatgpt?.state||r.currentTest||'Resuming saved failure'):(r.currentTest||'Idle');$('#mPct').textContent=p+'%';$('#mBar').style.width=p+'%';$('#mPass').textContent=n.pass||0;$('#mFail').textContent=n.fail||0;$('#mSkip').textContent=n.skip||0;
+  const consoleLines=(r.log||[]).slice(-220),consoleEl=$('#mConsole'),activityTail=(s.activity||[]).slice(-6).map(x=>'['+new Date(x.at).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'})+'] '+x.message);
+  if($('#mConsoleState'))$('#mConsoleState').textContent=r.state||'idle';
+  if($('#mConsoleCommand'))$('#mConsoleCommand').textContent=r.command?('$ '+r.command+(r.cwd?' • '+r.cwd:'')):'No command running.';
+  if(consoleEl){const output=consoleLines.length?consoleLines.join('\n'):(activityTail.length?activityTail.join('\n'):'Yardmaster ready.');if(consoleEl.textContent!==output)consoleEl.textContent=output;if(consoleAutoScroll)requestAnimationFrame(()=>{consoleEl.scrollTop=consoleEl.scrollHeight})}
+  const modelControl=$('#model');if(c.model&&modelControl&&!Array.from(modelControl.options).some(o=>o.value===c.model)){const option=document.createElement('option');option.value=c.model;option.textContent=c.model;modelControl.append(option)}
+  if($('#firebaseLivePhaseField'))$('#firebaseLivePhaseField').hidden=(c.firebaseMode||'emulator')!=='both';
+  const fb=s.firebase||{},fm=fb.mode||c.firebaseMode||'emulator',t=fb.telemetry||{},em=fb.emulator||{},status='FIREBASE MODE: '+fm.toUpperCase()+' • TARGET: '+(fb.target||fm).toUpperCase()+' • PHASE: '+(fb.phase||'idle')+' • Emulator: '+(em.status||'stopped')+' '+Object.entries(em.products||{}).map(([p,v])=>p+': '+v).join(' • ')+(fb.liveProject?' • PROJECT: '+fb.liveProject+' • Can create billable Firebase/Google Cloud activity.':'')+' • Local phases: '+(t.emulatorPhases||0)+' • Live phases: '+(t.livePhases||0)+' • Verification attempts: '+(t.liveVerificationAttempts||0)+' • '+new Date(fb.updatedAt||Date.now()).toLocaleTimeString();
+  for(const id of ['firebaseStatus','mFirebaseStatus'])if($('#'+id))$('#'+id).textContent=status;
+  for(const [id,v] of [['branch',c.branch],['repositoryPath',c.repositoryPath],['testingUrl',c.testingUrl],['testType',c.testType],['firebaseMode',c.firebaseMode||'emulator'],['firebaseLivePhase',c.firebaseLivePhase||'verification'],['chatMode',c.chatMode],['model',c.model],['thinkingEffort',c.thinkingEffort],['chatLoopEnabled',String(!!c.chatLoopEnabled)],['chatLoopPlan',c.chatLoopPlan],['repoMode',c.repoUpdateMode],['maxRepairs',String(c.maxRepairAttempts??25)],['maxSelfHeal',String(c.maxSelfHealAttempts??5)],['autoHandoff',String(c.autoHandoff!==false)],['autoSelfHeal',String(c.autoSelfHeal!==false)],['autoPush',String(!!c.autoPush)],['waitDeploy',String(c.waitForDeploy!==false)],['runAfterDeploy',String(c.runAfterDeploy!==false)],['autoUpdateOperator',String(c.autoUpdateOperator!==false)],['dryRunMode',String(!!c.dryRunMode)]])if($('#'+id)&&document.activeElement!==$('#'+id))$('#'+id).value=v||$('#'+id).value;
+  const wf=s.workflow||{},ac=$('#approvalCard');
+  if(ac){
+    if(wf.approval?.type==='repair'&&wf.pendingRepair)ac.innerHTML='<h3>Repair Ready</h3><div class="tiny">Manual Ask Me mode is enabled. Apply the downloaded repair and test it?</div><div class="m-controls"><button class="m-btn start" data-act="approve-repair">Approve</button><button class="m-btn stop" data-act="reject-repair">Reject</button></div>';
+    else if(wf.state==='waiting-action')ac.innerHTML='<h3>Your action is needed</h3><div class="tiny">'+esc(wf.requiredAction?.detail||s.chatgpt?.detail||'Reconnect the connection in ChatGPT on your PC.')+'</div><button class="m-btn" data-act="resume-handoff" style="width:100%;margin-top:10px">Resume Handoff</button>';
+    else if(wf.state==='waiting-login')ac.innerHTML='<h3>ChatGPT Sign-in Needed</h3><div class="tiny">Sign in once in the Yardmaster ChatGPT window on the PC.</div><button class="m-btn" data-act="resume-handoff" style="width:100%;margin-top:10px">Resume Handoff</button>';
+    else if(wf.state==='handoff-error')ac.innerHTML='<h3>Handoff Stopped Safely</h3><div class="tiny">'+esc(wf.error||'ChatGPT handoff verification failed.')+'</div><button class="m-btn start" data-act="resume-handoff" style="width:100%;margin-top:10px">Resume Current Failed Test</button><div class="tiny" style="margin-top:7px">Reuses the existing failed-test ZIP and continues the repair cycle without restarting the Play Store gate.</div>';
+    else if(wf.state==='failed-manual')ac.innerHTML='<h3>Failed Test Ready</h3><div class="tiny">Failure evidence is saved. Continue from it without restarting the gate.</div><button class="m-btn start" data-act="resume-handoff" style="width:100%;margin-top:10px">Upload Failed ZIP & Continue</button>';
+    else ac.innerHTML='<h3>Automation</h3><div class="tiny">Workflow: '+esc(wf.state||'idle')+(c.repoUpdateMode==='automatic'?' • Repairs apply and retest automatically.':'')+'</div>';
+  }
+  $('#activity').innerHTML=(s.activity||[]).slice(-12).reverse().map(x=>'<div class="activity-row"><span>'+new Date(x.at).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+'</span><span class="dot" style="background:'+(x.level==='error'?'#ef6666':x.level==='warn'?'#e6a348':'#38d77f')+'"></span><span>'+esc(x.message)+'</span></div>').join('')||'<div class="activity-row"><span>--</span><span class="dot"></span><span>No activity yet.</span></div>';
+}
+
+let chatScreenshotBusy=false;
+async function mobileScreenshot(target){
+  const img=$(target),chat=target==='#mChatPreview',note=chat?$('#mChatPreviewText'):null;if(!img||!base||!token||chat&&chatScreenshotBusy)return;
+  if(chat)chatScreenshotBusy=true;
+  try{
+    const r=await fetch(base+(chat?'/api/chatgpt-screenshot':'/api/operator-screenshot'),{headers:auth(),cache:'no-store',signal:AbortSignal.timeout(12000)});
+    if(!r.ok)throw new Error('No screenshot');const blob=await r.blob(),old=img.dataset.objectUrl,u=URL.createObjectURL(blob);img.dataset.objectUrl=u;img.src=u;img.hidden=false;if(old)URL.revokeObjectURL(old);
+    if(note){note.hidden=true;img.onload=()=>{const view=$('#mChatView');if(!view.dataset.positioned){view.scrollLeft=(view.scrollWidth-view.clientWidth)/2;view.dataset.positioned='true'}}}
+  }catch{img.hidden=true;if(note){note.hidden=false;note.textContent=state.version==='0.1.120'?'The ChatGPT-only view needs the queued PC update. Yardmaster will update at a safe point.':'Waiting for a fresh ChatGPT view from your PC.'}}
+  finally{if(chat)chatScreenshotBusy=false}
+}
+async function downloadEvidence(id,name='yardmaster-evidence'){
+  const r=await fetch(base+'/api/evidence?id='+encodeURIComponent(id),{headers:auth()});if(!r.ok)throw new Error(await r.text());const blob=await r.blob(),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name||'yardmaster-evidence';a.click();setTimeout(()=>URL.revokeObjectURL(u),1500);
+}
+let intelligenceRefresh=null;
+async function renderMobileIntelligence(){
+  if(intelligenceRefresh)return intelligenceRefresh;
+  intelligenceRefresh=loadMobileIntelligence().finally(()=>{intelligenceRefresh=null});
+  return intelligenceRefresh;
+}
+async function loadMobileIntelligence(){
+  if(!base||!token)return;try{
+    const d=await api('/api/intelligence');mobileIntel=d||{};$('#mIntelUpdated').textContent=d.updatedAt?new Date(d.updatedAt).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'}):'--';
+    const summary={safeMode:d.safeMode,hang:d.hang,health:d.health,preflight:d.preflight,resources:d.resources,knownFailure:d.knownFailure,smartTests:d.smartTests,flakes:d.flakes,provenance:d.provenance,changes:d.changes,cost:d.cost,selfHealAttempts:d.selfHealAttempts,audit:d.audit?.slice?.(-12),timeline:d.timeline?.slice?.(-12),annotations:d.annotations};
+    $('#mIntelSummary').textContent=JSON.stringify(summary,null,2);
+    $('#mEvidence').innerHTML=(d.evidence||[]).slice(0,24).map(e=>'<div class="m-row"><b>'+esc(e.name||e.id||'Evidence')+'</b><div class="tiny">'+esc(e.kind||e.type||'')+'</div><div class="m-row-actions"><button class="m-btn" data-evidence-id="'+esc(e.id||e.path||e.name)+'" data-evidence-name="'+esc(e.name||'yardmaster-evidence')+'">Open / Download</button></div></div>').join('')||'<div class="tiny">No evidence yet.</div>';
+    $('#mProfiles').innerHTML=Object.entries(d.profiles||{}).map(([key,p])=>'<div class="m-row"><b>'+esc(p.name||key)+'</b><div class="m-row-actions"><button class="m-btn" data-mobile-action="apply-profile" data-key="'+esc(key)+'">Apply</button><button class="m-btn m-danger" data-mobile-action="delete-profile" data-key="'+esc(key)+'">Delete</button></div></div>').join('')||'<div class="tiny">No saved profiles.</div>';
+    $('#mWorktrees').innerHTML=(d.worktrees||[]).map(w=>'<div class="m-row"><b>'+esc(w.branch||'Worktree')+'</b><div class="tiny">'+esc(w.path||'')+'</div><div class="m-row-actions"><button class="m-btn m-danger" data-mobile-action="remove-worktree" data-path="'+esc(w.path||'')+'">Remove</button></div></div>').join('')||'<div class="tiny">No isolated worktrees.</div>';
+    if(d.screenshotAvailable){await mobileScreenshot('#mIntelScreenshot')}else{$('#mIntelScreenshot').hidden=true}
+  }catch(e){$('#mIntelSummary').textContent='Intelligence unavailable: '+e.message}
+}
+
+let refreshBusy=false;
+async function refresh(){
+  if(!mobile||refreshBusy)return;
+  if(!base){showPair('Enter the secure Remote Access URL shown by Yardmaster on your PC.');return}
+  if(!deviceId||!token){showPair(deviceId?'Unlock with your saved passkey. You do not need to create another one.':'Enter the fresh six-digit pairing code from the PC.');return}
+  refreshBusy=true;
+  if(!document.body.classList.contains('ym-authenticated')&&$('#phoneReconnect').hidden)showReconnect();
+  try{
+    const authenticated=await api('/api/status');ownerLink.failures=0;ownerLink.remember(authenticated.connection);render(authenticated);hidePair();
+    // Intelligence and screenshot collection must not delay authenticated controls.
+    void renderMobileIntelligence();if($('.m-section[data-mobile-section="chatgpt"]')?.classList.contains('active'))void mobileScreenshot('#mChatPreview');
+    const needsRepair=('Notification' in window)&&Notification.permission==='granted'&&localStorage.getItem(KEY+'push-enabled')==='1'&&(!authenticated.currentDevice?.hasPush||String(authenticated.currentDevice?.pushStatus||'')!=='working');
+    if(needsRepair&&!pushRepairBusy&&Date.now()-lastSilentPushRepair>60000){lastSilentPushRepair=Date.now();ensurePush({requestPermission:false,test:true,force:true,silent:true})}
+  }catch(error){
+    if(!token)showPair('Your owner credential was rejected or revoked. Unlock with your saved passkey.');
+    else {ownerLink.failures++;if($('#mPc'))$('#mPc').textContent=(error.kind||'api-unreachable')+': '+error.message;if(ownerLink.failures>=3)showReconnect(error.message+' Retrying automatically; your saved sign-in is still remembered.');}
+  }finally{refreshBusy=false}
+}
+$('#phoneReconnectRetry')?.addEventListener('click',refresh);
+$('#phoneReconnectPair')?.addEventListener('click',()=>showPair('Use the current tunnel URL from the PC. Unlock with your saved passkey, or pair again only if this device is no longer trusted.'));
+$('#unlock')?.addEventListener('click',unlockWithPasskey);$('#pair')?.addEventListener('click',async()=>{const u=$('#url').value.trim().replace(/\/$/,''),code=$('#code').value.trim(),device=$('#device').value.trim()||'My phone';if(!validRemote(u)){$('#pairMsg').textContent='Use the HTTPS trycloudflare.com URL shown by Yardmaster.';return}if(!navigator.credentials){$('#pairMsg').textContent='This device does not support passkeys.';return}$('#pairMsg').textContent='Checking tunnel…';try{base=u;localStorage.setItem(KEY+'url',u);const health=await tunnelHealth();if(!health.ok)throw new Error(health.error);$('#pairMsg').textContent='Creating passkey…';const r=await fetch(u+'/api/passkey/register/options',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code,deviceName:device})});if(!r.ok)throw new Error(await r.text());const j=await r.json(),cred=await navigator.credentials.create({publicKey:regOptions(j.options)});const vr=await fetch(u+'/api/passkey/register/verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({registrationId:j.registrationId,credential:serializeRegistration(cred)})});if(!vr.ok)throw new Error(await vr.text());const v=await vr.json();base=u;deviceId=v.deviceId;token=v.sessionToken;localStorage.setItem(KEY+'url',u);localStorage.setItem(KEY+'deviceId',deviceId);ownerLink.saveCredential(token);ownerLink.remember(v.connection);history.replaceState(null,'','/yardmaster');hidePair();refresh()}catch(e){$('#pairMsg').textContent='Pairing failed: '+e.message}});
+function confirmStopAction(action){return action!=='stop'||confirm('Stop the current test and Yardmaster workflow?')}
+document.addEventListener('click',async e=>{const b=e.target.closest?.('[data-act]');if(!b||!confirmStopAction(b.dataset.act))return;try{const result=await api('/api/action',{method:'POST',body:JSON.stringify({action:b.dataset.act})});if(b.dataset.act==='update-operator-now'){if(result.queued)$('#mUpdateMessage').textContent='Update queued. Waiting on '+result.waitingOn+'. Yardmaster will update at the safe point and resume afterward.';else if(result.current)$('#mUpdateMessage').textContent='This PC is already on the current verified Yardmaster release.';else if(result.started)$('#mUpdateMessage').textContent='PC update started. Yardmaster will restart and reconnect.'}refresh()}catch(err){alert(err.message)}});
+for(const [id,key,type] of [['branch','branch','text'],['repositoryPath','repositoryPath','text'],['testingUrl','testingUrl','text'],['testType','testType','text'],['firebaseMode','firebaseMode','text'],['firebaseLivePhase','firebaseLivePhase','text'],['chatMode','chatMode','text'],['model','model','text'],['thinkingEffort','thinkingEffort','text'],['chatLoopEnabled','chatLoopEnabled','bool'],['chatLoopPlan','chatLoopPlan','text'],['repoMode','repoUpdateMode','text'],['maxRepairs','maxRepairAttempts','number'],['maxSelfHeal','maxSelfHealAttempts','number'],['autoHandoff','autoHandoff','bool'],['autoSelfHeal','autoSelfHeal','bool'],['autoPush','autoPush','bool'],['waitDeploy','waitForDeploy','bool'],['runAfterDeploy','runAfterDeploy','bool'],['autoUpdateOperator','autoUpdateOperator','bool'],['dryRunMode','dryRunMode','bool']])$('#'+id)?.addEventListener('change',async e=>{let value=e.target.value;if(type==='number')value=Number(value);if(type==='bool')value=value==='true';try{await api('/api/config',{method:'POST',body:JSON.stringify({[key]:value})});refresh()}catch(err){alert(err.message)}});
+$('#consoleAutoScroll')?.addEventListener('click',()=>{consoleAutoScroll=!consoleAutoScroll;$('#consoleAutoScroll').textContent='Auto-scroll: '+(consoleAutoScroll?'On':'Off');if(consoleAutoScroll&&$('#mConsole'))$('#mConsole').scrollTop=$('#mConsole').scrollHeight});
+$('#copyConsole')?.addEventListener('click',async()=>{try{await navigator.clipboard.writeText($('#mConsole')?.textContent||'');const b=$('#copyConsole');b.textContent='Copied';setTimeout(()=>b.textContent='Copy',900)}catch{alert('Could not copy the console output on this browser.')}});
+for(const button of [$('#mobileNewWorkControl'),$('#mobileNewWork')])button?.addEventListener('click',()=>$('#newWorkOverlay')?.classList.add('show'));
+$('#cancelMobileWork')?.addEventListener('click',()=>$('#newWorkOverlay')?.classList.remove('show'));
+$('#submitMobileWork')?.addEventListener('click',async()=>{const task=$('#mobileWorkTask')?.value.trim()||'',message=$('#mobileWorkMsg'),button=$('#submitMobileWork');if(!task){message.textContent='Describe what you want implemented first.';return}try{button.disabled=true;button.textContent='Handing off…';const accepted=await api('/api/action',{method:'POST',body:JSON.stringify({action:'new-implementation',taskPrompt:task,pushWhenPassed:!!$('#mobileWorkPush')?.checked})});if(accepted?.runsOn!=='windows-pc')throw new Error('The Windows Yardmaster did not confirm the remote job.');message.textContent='Accepted by your Windows Yardmaster. The PC is running this work now.';$('#mobileWorkTask').value='';setTimeout(()=>$('#newWorkOverlay')?.classList.remove('show'),650);await refresh()}catch(error){message.textContent=error.message}finally{button.disabled=false;button.textContent='Hand Off & Walk Away'}});
+document.addEventListener('click',async e=>{
+  const tab=e.target.closest?.('[data-mobile-section-target]');if(tab){const target=tab.dataset.mobileSectionTarget;document.querySelectorAll('.mobile-nav [data-mobile-section-target]').forEach(x=>x.classList.toggle('active',x===tab));document.querySelectorAll('.m-section[data-mobile-section]').forEach(x=>x.classList.toggle('active',x.dataset.mobileSection===target));if(target==='intelligence')await renderMobileIntelligence();if(target==='chatgpt')void mobileScreenshot('#mChatPreview');window.scrollTo({top:0,behavior:'instant'});return}
+  const ev=e.target.closest?.('[data-evidence-id]');if(ev){try{await downloadEvidence(ev.dataset.evidenceId,ev.dataset.evidenceName)}catch(err){alert(err.message)}return}
+  const b=e.target.closest?.('[data-mobile-action]');if(!b)return;let body={action:b.dataset.mobileAction};
+  if(body.action==='add-note'){body={action:'add-run-note',note:$('#mRunNote').value.trim()}}
+  else if(body.action==='bookmark'){body={action:'bookmark-run',note:$('#mRunNote').value.trim(),bookmark:true}}
+  else if(body.action==='toggle-safe'){body={action:'set-safe-mode',enabled:!mobileIntel.safeMode?.enabled,reason:'mobile control'}}
+  else if(body.action==='save-profile'){body={action:'save-profile',name:$('#mProfileName').value.trim()||'Mobile Profile'}}
+  else if(body.action==='apply-profile'||body.action==='delete-profile')body.key=b.dataset.key;
+  else if(body.action==='create-worktree'){body={action:'create-worktree',branch:$('#mWorktreeBranch').value.trim(),base:'HEAD'}}
+  else if(body.action==='remove-worktree')body.path=b.dataset.path;
+  else if(body.action==='revoke-device')body={action:'revoke-device',deviceId:b.dataset.deviceId};
+  try{await api('/api/action',{method:'POST',body:JSON.stringify(body)});await refresh()}catch(err){alert(err.message)}
+});
+
+$('#mSendProtocol')?.addEventListener('click',async()=>{const text=$('#mProtocol').value.trim();if(!text)return;try{await api('/api/command',{method:'POST',body:JSON.stringify({text})});$('#mProtocol').value='';await refresh()}catch(e){alert(e.message)}});
+$('#mRefreshIntel')?.addEventListener('click',renderMobileIntelligence);
+if(mobile){for(const type of ['gesturestart','gesturechange','gestureend'])document.addEventListener(type,e=>e.preventDefault(),{passive:false});document.addEventListener('touchmove',e=>{if(e.touches?.length>1)e.preventDefault()},{passive:false});}
+
+async function reconnectAfterResume(){if(!mobile)return;try{await ownerLink.rediscover();base=ownerLink.base}catch{}await refresh()}
+addEventListener('online',reconnectAfterResume);addEventListener('pageshow',reconnectAfterResume);
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')reconnectAfterResume()});
+refresh();setInterval(refresh,2500);
