@@ -1,10 +1,7 @@
 {
-  "product": "Yardmaster",
   "version": "0.1.127",
-  "releaseDate": "2026-10-02",
   "sourceCommit": "ae5e1742b98c8d8cf41e5773611777b9f171e1fb",
-  "verified": true,
-  "channel": "production",
+  "passed": true,
   "verification": {
     "fullStore": "not-rerun",
     "fullPlaywright": "not-rerun",
@@ -13,9 +10,5 @@
     "targetedPlaywright": "4 passed: pending reconnect message stability and signed tunnel endpoint recovery on desktop and Android emulation",
     "certificationSource": "local Windows focused repair checks",
     "phoneHardware": "Android browser emulation; real handset not exercised"
-  },
-  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.127.zip",
-  "sha256": "3affe8718b82a59fb45e55c38c85901629831e8499c405b9124140fd7e44fc94",
-  "updateSha256": "3affe8718b82a59fb45e55c38c85901629831e8499c405b9124140fd7e44fc94",
-  "updateDownloadUrl": "https://raw.githubusercontent.com/geoffm1985-glitch/86chaos-website/main/public/yardmaster/releases/Yardmaster-Windows-0.1.127.zip"
+  }
 }
