@@ -1,0 +1,11 @@
+{
+  "name": "Yardmaster",
+  "short_name": "Yardmaster",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#071525",
+  "theme_color": "#071525",
+  "icons": [
+    {"src":"/yardmaster-icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}
