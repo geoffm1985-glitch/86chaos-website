@@ -1,11 +1,7 @@
 {
-  "product": "Yardmaster",
   "version": "0.1.138",
-  "releaseDate": "2026-10-03",
   "sourceCommit": "e200374f0777f948b5f8466c5dcdb5f06d07d888",
-  "testedSourceCommit": "e200374f0777f948b5f8466c5dcdb5f06d07d888",
-  "verified": true,
-  "channel": "production",
+  "passed": true,
   "verification": {
     "fullStore": "not-run",
     "fullPlaywright": "coverage passed across original full run and focused failed/new/affected reruns",
@@ -47,9 +43,5 @@
       "nodePassed": 27,
       "browserPassed": 8
     }
-  },
-  "downloadUrl": "/yardmaster/releases/Yardmaster-Windows-0.1.138.zip",
-  "sha256": "0411054a69bc4c2b38ef96c30c275d8405e9a114d2bf0df6e3a1933bcfca0002",
-  "updateSha256": "0411054a69bc4c2b38ef96c30c275d8405e9a114d2bf0df6e3a1933bcfca0002",
-  "updateDownloadUrl": "https://raw.githubusercontent.com/geoffm1985-glitch/86chaos-website/main/public/yardmaster/releases/Yardmaster-Windows-0.1.138.zip"
+  }
 }

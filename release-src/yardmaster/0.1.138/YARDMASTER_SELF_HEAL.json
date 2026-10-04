@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "version": "0.1.107",
+  "published": false,
+  "releaseManifestUrl": "https://www.86chaos.com/yardmaster/release.json",
+  "requiredTests": [
+    "test:self-heal",
+    "test:playwright",
+    "test:play-store"
+  ],
+  "regressionCoverage": {
+    "exactFailure": "Windows 0.1.106 handoff 20261001-210452: all five selected cases fail (connected repair timeouts and crash cleanup EBUSY). Offload blocking snapshot/overlay subprocesses, serialize health checks with bounded transient recovery, and independently detect operator death in the watchdog.",
+    "playStoreTests": [
+      "test/firebase-target.test.mjs"
+    ],
+    "playwrightTests": [
+      "test/playwright/firebase-target.e2e.spec.mjs"
+    ]
+  }
+}

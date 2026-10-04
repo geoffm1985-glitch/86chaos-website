@@ -1,0 +1,11 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import {execFileSync} from 'node:child_process';
+import {recordAppliedRepairOwnership,repairSourceIsOwned} from '../automation/repair-ownership.mjs';
+function fixture(){const root=fs.mkdtempSync(path.join(os.tmpdir(),'ym-owned-repair-')),repo=path.join(root,'repo'),data=path.join(root,'data'),archive=path.join(root,'applied.zip');fs.mkdirSync(repo);fs.writeFileSync(path.join(repo,'source.txt'),'baseline');fs.writeFileSync(archive,'validated fixture archive');for(const args of [['init','-b','testing'],['config','user.email','fixture@example.invalid'],['config','user.name','Repair Fixture'],['add','.'],['commit','-m','baseline']])execFileSync('git',args,{cwd:repo,stdio:'ignore'});return {root,repo,data,archive,close:()=>fs.rmSync(root,{recursive:true,force:true})}}
+test('applied source ownership survives discarded workflow state and a new operator read',()=>{const f=fixture();try{fs.writeFileSync(path.join(f.repo,'source.txt'),'applied repair');recordAppliedRepairOwnership(f.data,f.repo,{zipPath:f.archive,receivedAt:Date.now()});assert.equal(repairSourceIsOwned(f.data,f.repo),true);assert.equal(repairSourceIsOwned(f.data,f.repo),true)}finally{f.close()}});
+test('later source edits and a different repository are never authorized by the old repair',()=>{const f=fixture(),other=fixture();try{fs.writeFileSync(path.join(f.repo,'source.txt'),'applied repair');recordAppliedRepairOwnership(f.data,f.repo,{zipPath:f.archive});assert.equal(repairSourceIsOwned(f.data,other.repo),true);fs.writeFileSync(path.join(other.repo,'source.txt'),'applied repair');assert.equal(repairSourceIsOwned(f.data,other.repo),false);fs.writeFileSync(path.join(f.repo,'source.txt'),'unknown edit');assert.equal(repairSourceIsOwned(f.data,f.repo),false)}finally{f.close();other.close()}});
+test('known diagnostic archives are preserved without granting ownership to unknown source or archives',()=>{const f=fixture();try{fs.writeFileSync(path.join(f.repo,'86chaos-17.0.57-EXACT-FAILED-SOURCE.zip'),'saved failure');assert.equal(repairSourceIsOwned(f.data,f.repo),true);fs.writeFileSync(path.join(f.repo,'unrecognized.zip'),'unknown archive');assert.equal(repairSourceIsOwned(f.data,f.repo),false)}finally{f.close()}});
