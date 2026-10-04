@@ -1,0 +1,9 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import vm from 'node:vm';
+import {updateCopyFixture} from './helpers/update-copy-fixture.mjs';
+test('Windows update replaces different bytes with identical ZIP timestamps and sizes',()=>{const f=updateCopyFixture();try{assert.equal(fs.statSync(path.join(f.source,'package.json')).size,fs.statSync(path.join(f.installed,'package.json')).size);f.copy();assert.equal(JSON.parse(fs.readFileSync(path.join(f.installed,'package.json'))).version,'0.1.134');f.verify()}finally{f.dispose()}});
+test('installed byte verification detects corruption and preserves installed dependencies',()=>{const f=updateCopyFixture();try{fs.mkdirSync(path.join(f.installed,'node_modules'),{recursive:true});fs.writeFileSync(path.join(f.installed,'node_modules','keep'),'dependency');f.copy();assert.equal(fs.readFileSync(path.join(f.installed,'node_modules','keep'),'utf8'),'dependency');fs.writeFileSync(path.join(f.installed,'package.json'),'{"version":"0.1.132"}');assert.throws(()=>f.verify(),/installed file verification failed/)}finally{f.dispose()}});
+test('a mismatched installed version cannot clear the update checkpoint or resume a handoff',()=>{const source=fs.readFileSync(new URL('../server.mjs',import.meta.url),'utf8'),body=source.slice(source.indexOf('function resumeAfterOperatorUpdate(){'),source.indexOf('function repositoryPathOrThrow(){'));let removed=0,scheduled=0;const state={workflow:{repairAttempts:6}};vm.runInNewContext(body+';resumeAfterOperatorUpdate()',{state,packageInfo:{version:'0.1.132'},updateResumePath:'marker',readJson:()=>({to:'0.1.134',resumeAfterUpdate:{kind:'resume-handoff'}}),fs:{rmSync(){removed++}},activity(){},persist(){},setTimeout(){scheduled++}});assert.equal(state.update.state,'Failed');assert.equal(removed,0);assert.equal(scheduled,0);assert.equal(state.workflow.repairAttempts,6)});

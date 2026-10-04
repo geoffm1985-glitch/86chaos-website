@@ -1,0 +1,119 @@
+name: Yardmaster Full Store Gate
+on:
+  push:
+    branches: [yardmaster-testing]
+jobs:
+  windows-store:
+    if: contains(github.event.head_commit.message, '[FULL STORE]')
+    runs-on: windows-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Install exact dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Syntax and source checks
+        run: npm run check
+      - name: Full Store test suite
+        run: npm run test:play-store
+      - name: Stress real Edge ChatGPT send five times
+        shell: pwsh
+        run: |
+          1..5 | ForEach-Object {
+            Write-Host "Trusted-send stress iteration $_ / 5"
+            node --test --test-concurrency=1 test/play-store-chatgpt-browser.test.mjs
+            if($LASTEXITCODE -ne 0){exit $LASTEXITCODE}
+          }
+      - name: Parse all PowerShell
+        shell: pwsh
+        run: |
+          $errors=@()
+          Get-ChildItem scripts -Filter *.ps1 | ForEach-Object {
+            [System.Management.Automation.Language.Parser]::ParseFile($_.FullName,[ref]$null,[ref]$errors) | Out-Null
+          }
+          if($errors.Count){$errors|Format-List|Out-String|Write-Error;exit 1}
+      - name: Security and secret boundary
+        shell: pwsh
+        run: |
+          $tracked = git ls-files
+          if($tracked -match '(^|/)(\.env($|\.)|.*adminsdk.*\.json$|.*\.pem$|.*\.pfx$|id_rsa$)'){throw 'Credential-like file is tracked.'}
+          $privateKey = git grep -I -n -E 'BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY' -- . 2>$null
+          if($LASTEXITCODE -eq 0 -and $privateKey){$privateKey;throw 'Private key material found in tracked source.'}
+          npm audit --omit=dev --audit-level=critical
+          if($LASTEXITCODE -ne 0){exit $LASTEXITCODE}
+      - name: Build certified Windows ZIP
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force dist | Out-Null
+          $pkg=Get-Content package.json -Raw|ConvertFrom-Json
+          $items=@('desktop.cjs','server.mjs','playwright.config.mjs','package.json','package-lock.json','README.md','Install-Yardmaster.cmd','Yardmaster-Installer.cmd','public','scripts','automation','test')
+          Compress-Archive -Path $items -DestinationPath ("dist/Yardmaster-Windows-$($pkg.version).zip") -Force
+          $entries = tar -tf ("dist/Yardmaster-Windows-$($pkg.version).zip")
+          foreach($required in @('Yardmaster-Installer.cmd','Install-Yardmaster.cmd','server.mjs','playwright.config.mjs','automation/chatgpt.mjs','public/index.html')){
+            if(-not ($entries -contains $required)){throw "Certified package missing $required"}
+          }
+          if($entries -match '(^|/)(\.git|node_modules|\.env)($|/)'){throw 'Certified package contains protected/unwanted state.'}
+          Get-FileHash ("dist/Yardmaster-Windows-$($pkg.version).zip") -Algorithm SHA256
+      - name: Exercise Windows install launch update and uninstall
+        shell: pwsh
+        run: |
+          $installRoot=Join-Path $env:LOCALAPPDATA 'Yardmaster\app'
+          $dataRoot=Join-Path $env:LOCALAPPDATA 'Yardmaster'
+          $uninstallKey='HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\Yardmaster'
+          $version=[string](Get-Content package.json -Raw|ConvertFrom-Json).version
+          & '.\scripts\Install-Yardmaster.ps1' -SkipCloudflare -NoLaunch
+          if(-not(Test-Path $installRoot)){throw 'Installer did not create app root.'}
+          $reg=Get-ItemProperty $uninstallKey
+          if($reg.DisplayVersion -ne $version){throw 'Installed Apps version mismatch.'}
+          @{repositoryPath='C:\state-preservation-fixture';branch='testing';autoPush=$true;autoUpdateOperator=$false}|ConvertTo-Json|Set-Content (Join-Path $dataRoot 'config.json')
+          & (Join-Path $installRoot 'scripts\Start-Yardmaster.ps1')
+          $deadline=(Get-Date).AddSeconds(30);$status=$null
+          do{Start-Sleep -Milliseconds 500;try{$status=Invoke-RestMethod 'http://127.0.0.1:8787/api/status' -TimeoutSec 2}catch{}}while((-not $status.online)-and(Get-Date)-lt $deadline)
+          if(-not $status.online){throw 'Installed Yardmaster did not launch.'}
+          $archive=(Resolve-Path ("dist/Yardmaster-Windows-$version.zip")).Path
+          & '.\scripts\Update-Yardmaster.ps1' -PackagePath $archive -NoLaunch
+          $preserved=Get-Content (Join-Path $dataRoot 'config.json') -Raw|ConvertFrom-Json
+          if($preserved.repositoryPath -ne 'C:\state-preservation-fixture' -or $preserved.autoPush -ne $true){throw 'Update did not preserve state.'}
+          & (Join-Path $installRoot 'scripts\Start-Yardmaster.ps1')
+          $deadline=(Get-Date).AddSeconds(30);$status=$null
+          do{Start-Sleep -Milliseconds 500;try{$status=Invoke-RestMethod 'http://127.0.0.1:8787/api/status' -TimeoutSec 2}catch{}}while(((-not $status.online)-or $status.version -ne $version)-and(Get-Date)-lt $deadline)
+          if(-not $status.online -or $status.version -ne $version){throw 'Updated Yardmaster did not relaunch at expected version.'}
+          & (Join-Path $installRoot 'scripts\Uninstall-Yardmaster.ps1') -Quiet
+          $deadline=(Get-Date).AddSeconds(15)
+          while((Test-Path $dataRoot)-and(Get-Date)-lt $deadline){Start-Sleep -Milliseconds 500}
+          if(Test-Path $dataRoot){throw 'Uninstaller left Yardmaster state/program files.'}
+          if(Test-Path $uninstallKey){throw 'Uninstaller left Installed Apps registration.'}
+      - name: Live Cloudflare authenticated mobile smoke and restart persistence
+        shell: pwsh
+        run: |
+          $cloudflared=Join-Path $env:RUNNER_TEMP 'cloudflared.exe'
+          Invoke-WebRequest 'https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-windows-amd64.exe' -OutFile $cloudflared -UseBasicParsing -TimeoutSec 120
+          & $cloudflared --version
+          if($LASTEXITCODE -ne 0){throw 'cloudflared could not run.'}
+          $env:YARDMASTER_LIVE_CLOUDFLARED=$cloudflared
+          node --test --test-concurrency=1 test/operator.integration.test.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Yardmaster-Windows-FULL-STORE
+          path: dist/Yardmaster-Windows-*.zip
+
+  compatibility:
+    if: contains(github.event.head_commit.message, '[FULL STORE]')
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+        node: ['22','24']
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm ci --no-audit --no-fund
+      - run: npm run check
+      - name: Cross-platform logic contracts
+        run: node --test --test-concurrency=1 test/chatgpt-selection.test.mjs test/play-store-chatgpt-send.test.mjs test/static-contracts.test.mjs
