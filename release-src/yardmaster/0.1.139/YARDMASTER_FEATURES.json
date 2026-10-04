@@ -1,0 +1,938 @@
+{
+  "schema": 1,
+  "version": "0.1.113",
+  "policy": {
+    "implementationCodePatterns": [
+      "server.mjs",
+      "automation/**",
+      "public/**",
+      "scripts/**",
+      "desktop.cjs",
+      "electron/**",
+      "preload.cjs",
+      "package.json"
+    ],
+    "requiresPlayStoreOrCertificationTest": true,
+    "requiresPlaywrightTest": true,
+    "requireSingleTestingCommandOnDelivery": true,
+    "testingCommand": "npm run test:owner:repair"
+  },
+  "features": [
+    {
+      "id": "failure-fingerprinting-known-fix-memory",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "visual-workflow-timeline",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "built-in-evidence-viewer",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "reproduction-capsule",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "smart-test-selection",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "flaky-test-intelligence",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "preflight-doctor",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "resource-watchdog",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "adaptive-hang-detection",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "safe-mode",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "canary-update-validation",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "pre-repair-snapshots",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "worktree-manager",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "release-provenance",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "reproducible-build-manifest",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs",
+        "test/manifest-export.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "self-heal-attempt-comparison",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "self-heal-escalation-levels",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "mobile-action-cards",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "mobile-live-screenshot",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "run-notes-bookmarks",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "cost-guard",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "automation-dry-run",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "configuration-profiles",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "factual-health-panel",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "tamper-evident-audit-log",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "changed-since-last-good",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/operations-intelligence.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "durable-play-store-pause-resume",
+      "playStoreTests": [
+        "test/resumable-pause-docked-chatgpt.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/resumable-pause-docked-chatgpt.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "docked-chatgpt-workspace",
+      "playStoreTests": [
+        "test/resumable-pause-docked-chatgpt.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/resumable-pause-docked-chatgpt.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "desktop-menu-bootstrap-wiring",
+      "playStoreTests": [
+        "test/static-contracts.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/full-app.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "trusted-prompt-inserttext-contract",
+      "playStoreTests": [
+        "test/static-contracts.test.mjs",
+        "test/play-store-chatgpt-send.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/yardmaster.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "self-heal-playwright-candidate-version-fixture",
+      "playStoreTests": [
+        "test/static-contracts.test.mjs",
+        "test/self-heal.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/full-app.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "windows-clipboard-powershell-try-catch-syntax",
+      "exactFailure": "Yardmaster 0.1.79 Windows full Play Store run: three clipboard paths emitted try{...}; catch{...}, causing MissingCatchOrFinally; static self-heal fixture version extraction double-escaped JavaScript regex tokens, so it extracted no semantic versions.",
+      "playStoreTests": [
+        "test/clipboard-syntax.test.mjs",
+        "test/full-self-test.test.mjs",
+        "test/operator.integration.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/clipboard-syntax.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "clear-local-certification-pass-fail-reporting",
+      "playStoreTests": [
+        "test/test-reporting.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/test-reporting.e2e.spec.mjs"
+      ],
+      "exactFailure": "Windows inventory separators differed from POSIX expectations; Node reporter fixture absolute drive paths were not ESM file URLs."
+    },
+    {
+      "id": "desktop-panel-visibility-and-selection",
+      "exactFailure": "Fixed viewport heights and hidden overflow clip Operations/ChatGPT controls and compress Intelligence cards when the self-heal banner is shown.",
+      "playStoreTests": [
+        "test/desktop-layout.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/desktop-layout.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "resume-failed-run-operations-surface",
+      "playStoreTests": [
+        "test/yardmaster-1.85-control-parity.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/yardmaster-1.85-control-parity.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "authenticated-mobile-full-control-parity",
+      "playStoreTests": [
+        "test/yardmaster-1.85-control-parity.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/yardmaster-1.85-control-parity.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "mobile-no-zoom",
+      "playStoreTests": [
+        "test/yardmaster-1.85-control-parity.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/yardmaster-1.85-control-parity.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "mobile-section-tabs",
+      "playStoreTests": [
+        "test/yardmaster-1.85-control-parity.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/yardmaster-1.85-control-parity.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "timestamped-live-status-intelligence",
+      "playStoreTests": [
+        "test/yardmaster-1.85-control-parity.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/yardmaster-1.85-control-parity.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "stable-windows-taskbar-identity",
+      "playStoreTests": [
+        "test/yardmaster-1.85-control-parity.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/yardmaster-1.85-control-parity.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "continuous-chat-mode-model-routing",
+      "playStoreTests": [
+        "test/yardmaster-1.85-control-parity.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/yardmaster-1.85-control-parity.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "full-process-1.85-feature-parity-preflight",
+      "playStoreTests": [
+        "test/yardmaster-1.85-control-parity.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/yardmaster-1.85-control-parity.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "version-7-migration-and-mobile-revoke-repair",
+      "exactFailure": "Yardmaster 0.1.85 certification had stale automationDefaultsVersion 6 expectations, a stale self-heal Playwright semantic-version fixture, and the paired-phone trusted-device revoke action was still blocked as Windows-only.",
+      "playStoreTests": [
+        "test/operator.integration.test.mjs",
+        "test/resumable-pause-docked-chatgpt.test.mjs",
+        "test/static-contracts.test.mjs",
+        "test/yardmaster-1.85-control-parity.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/full-app.e2e.spec.mjs",
+        "test/playwright/yardmaster-1.85-control-parity.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "automatic-test-failure-diagnostic-zip",
+      "exactFailure": "Full Yardmaster certification stopped on a failed phase without automatically exporting one portable diagnostic ZIP containing the failed phase, exit code, captured console output, version, and safe repository metadata.",
+      "playStoreTests": [
+        "test/test-reporting.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/test-reporting.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "playwright-discovery-syntax-preflight",
+      "playStoreTests": [
+        "test/coverage-inventory.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/website-push-scope.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "website-slashless-notification-worker-scope",
+      "playStoreTests": [
+        "test/website-push-scope.test.mjs",
+        "test/push-notifications.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/website-push-scope.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "complete-api-ui-config-coverage-inventory",
+      "playStoreTests": [
+        "test/coverage-inventory.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/full-app.e2e.spec.mjs",
+        "test/playwright/website-push-scope.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "run-lifecycle-and-history",
+      "playStoreTests": [
+        "test/operator.integration.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/full-app.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "remote-pairing-passkeys-device-revocation",
+      "playStoreTests": [
+        "test/operator.integration.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/full-app.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "notification-subscription-and-delivery-health",
+      "playStoreTests": [
+        "test/push-notifications.test.mjs",
+        "test/operator.integration.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/full-app.e2e.spec.mjs",
+        "test/playwright/website-push-scope.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "branch-push-deployment-verification-command-protocol",
+      "playStoreTests": [
+        "test/operator.integration.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/full-app.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "new-work-and-repair-approval",
+      "playStoreTests": [
+        "test/static-contracts.test.mjs",
+        "test/operator.integration.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/full-app.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "full-process-diagnostics-and-manual-chatgpt",
+      "playStoreTests": [
+        "test/full-self-test.test.mjs",
+        "test/manual-open-work-sol-high.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/full-app.e2e.spec.mjs",
+        "test/playwright/yardmaster.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "desktop-installer-uninstaller-update-and-identity",
+      "playStoreTests": [
+        "test/static-contracts.test.mjs",
+        "test/yardmaster-1.85-control-parity.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/yardmaster-1.85-control-parity.e2e.spec.mjs",
+        "test/playwright/full-app.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "windows-pause-fixture-readiness-and-coverage-description",
+      "exactFailure": "0.1.87 Windows certification: coverage description omitted test:playwright:full; disposable pause fixture checked ticks before startup completed.",
+      "playStoreTests": [
+        "test/operations-intelligence.test.mjs",
+        "test/resumable-pause-docked-chatgpt.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/resumable-pause-docked-chatgpt.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "hosted-mobile-pwa-auth-controls-configuration-evidence-push-install",
+      "playStoreTests": [
+        "test/mobile-pwa.test.mjs",
+        "test/mobile-regressions.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/mobile-pwa.e2e.spec.mjs",
+        "test/playwright/mobile-regressions.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "mobile-failed-test-selection-and-windows-regressions",
+      "playStoreTests": [
+        "test/mobile-pwa.test.mjs",
+        "test/mobile-regressions.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/mobile-pwa.e2e.spec.mjs",
+        "test/playwright/mobile-regressions.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "windows-fixture-close-locks-archive-timeout-and-attached-mobile-controls",
+      "exactFailure": "0.1.89: Windows intelligence cleanup EPERM; archive fixture exceeded 45s; Android revoke control hidden after detached-row section lookup.",
+      "playStoreTests": [
+        "test/targeted-repair.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/targeted-repair.e2e.spec.mjs",
+        "test/playwright/operations-intelligence.e2e.spec.mjs",
+        "test/playwright/mobile-pwa.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "phone-refresh-reconnect-single-flight",
+      "playStoreTests": [
+        "test/phone-reconnect.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/mobile-pwa.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "source-run-version-identity",
+      "playStoreTests": [
+        "test/run-project.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/working-project.e2e.spec.mjs",
+        "test/playwright/mobile-pwa.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "desktop-mobile-stop-confirmation",
+      "playStoreTests": [
+        "test/stop-confirmation.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/working-project.e2e.spec.mjs",
+        "test/playwright/mobile-pwa.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "desktop-version-fixture-output-readiness",
+      "exactFailure": "0.1.91 Windows version test timed out after six seconds while the fixture was still starting; its actual signal arrived later.",
+      "playStoreTests": [
+        "test/run-project.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/working-project.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "chatgpt-composer-readiness-and-evidenced-sign-in",
+      "playStoreTests": [
+        "test/chatgpt-login-state.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/chatgpt-login-state.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "contenteditable-blank-line-clear-assertion",
+      "exactFailure": "0.1.93 Windows/Edge cleared contenteditable returned newline; test incorrectly required zero-length raw text.",
+      "playStoreTests": [
+        "test/chatgpt-login-state.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/chatgpt-login-state.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "desktop-chatgpt-dock-reconnect-and-session-identity",
+      "playStoreTests": [
+        "test/chatgpt-dock-connection.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/chatgpt-dock-connection.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "desktop-chatgpt-private-ipc-bridge",
+      "playStoreTests": [
+        "test/chatgpt-dock-bridge.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/chatgpt-dock-bridge.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "electron-test-runtime-prepared-before-timed-launch",
+      "playStoreTests": [
+        "test/electron-test-runtime.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/chatgpt-dock-bridge.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "windows-electron-test-inspector-startup",
+      "exactFailure": "0.1.97 Windows Electron binary was prepared successfully, but electron.launch timed out after 20000ms before any dock assertions.",
+      "playStoreTests": [
+        "test/electron-test-launch.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/chatgpt-dock-bridge.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "two-exchange-loop-chat-rollover",
+      "playStoreTests": [
+        "test/loop-update.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/loop-update.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "testing-channel-in-app-update",
+      "playStoreTests": [
+        "test/loop-update.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/loop-update.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "assistant-command-format-preserved-before-rollover",
+      "playStoreTests": [
+        "test/model-controls.test.mjs",
+        "test/loop-update.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/loop-update.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "desktop-android-model-selection",
+      "playStoreTests": [
+        "test/model-controls.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/model-controls.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "windows-android-project-channel-isolation",
+      "playStoreTests": [
+        "test/model-controls.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/loop-update.e2e.spec.mjs",
+        "test/playwright/model-controls.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "repair-browser-fixture-layout-and-download-isolation",
+      "playStoreTests": [
+        "test/loop-update.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/loop-update.e2e.spec.mjs",
+        "test/playwright/model-controls.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "full-first-then-failed-delta-loop",
+      "playStoreTests": [
+        "test/continuous-loop.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/continuous-loop.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "connected-two-cycle-repair-deployment-verification",
+      "playStoreTests": [
+        "test/continuous-loop.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/continuous-loop.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "firebase-target-persistence-desktop-mobile",
+      "playStoreTests": [
+        "test/firebase-target.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/firebase-target.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "firebase-official-emulator-lifecycle-readiness-crash-cleanup",
+      "playStoreTests": [
+        "test/firebase-target.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/firebase-target.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "firebase-no-live-fallback-and-inherited-egress-guard",
+      "playStoreTests": [
+        "test/firebase-target.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/firebase-target.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "firebase-both-full-local-and-bounded-live-routing",
+      "playStoreTests": [
+        "test/firebase-target.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/firebase-target.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "firebase-local-repair-before-one-live-recheck",
+      "playStoreTests": [
+        "test/firebase-target.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/firebase-target.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "firebase-resume-pause-self-heal-target-pinning",
+      "playStoreTests": [
+        "test/firebase-target.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/firebase-target.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "firebase-full-command-and-connected-assistant-repair-workflow",
+      "playStoreTests": [
+        "test/firebase-target.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/firebase-target.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "firebase-windows-preload-and-awaited-process-cleanup",
+      "playStoreTests": [
+        "test/firebase-target.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/firebase-target.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "firebase-windows-batch-launch-and-original-startup-errors",
+      "playStoreTests": [
+        "test/firebase-target.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/firebase-target.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "firebase-repair-overlay-equal-metadata-content",
+      "playStoreTests": [
+        "test/firebase-target.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/firebase-target.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "firebase-crash-watchdog-test-process-ownership",
+      "playStoreTests": [
+        "test/firebase-target.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/firebase-target.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "firebase-repair-snapshot-and-overlay-responsiveness",
+      "playStoreTests": [
+        "test/firebase-target.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/firebase-target.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "firebase-serialized-health-check-transient-recovery",
+      "playStoreTests": [
+        "test/firebase-target.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/firebase-target.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "firebase-session-functions-paths-and-cold-start-readiness",
+      "playStoreTests": [
+        "test/firebase-session-paths.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/firebase-target.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "firebase-watchdog-owner-pid-independent-cleanup",
+      "playStoreTests": [
+        "test/firebase-target.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/firebase-target.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "persistent-owner-endpoint-recovery",
+      "playStoreTests": [
+        "test/owner-connection.test.mjs",
+        "test/owner-server.integration.test.mjs",
+        "test/firebase-cli-recovery.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/owner-reconnect.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "completed-repair-download-and-conversation-resume",
+      "playStoreTests": [
+        "test/chatgpt-download.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/chatgpt-download.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "verified-update-bytes-with-fixed-release-timestamps",
+      "playStoreTests": [
+        "test/update-copy.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/chatgpt-download.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "owned-electron-artifact-download-routing",
+      "playStoreTests": [
+        "test/chatgpt-dock-bridge.test.mjs",
+        "test/chatgpt-download.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/chatgpt-dock-bridge.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "completed-repair-renderer-fetch-recovery",
+      "playStoreTests": [
+        "test/chatgpt-dock-bridge.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/chatgpt-dock-bridge.e2e.spec.mjs"
+      ]
+    },
+    {
+      "id": "windows-updater-independent-lifecycle",
+      "playStoreTests": [
+        "test/updater-lifecycle.test.mjs"
+      ],
+      "playwrightTests": [
+        "test/playwright/updater-lifecycle.e2e.spec.mjs"
+      ]
+    }
+  ]
+}
