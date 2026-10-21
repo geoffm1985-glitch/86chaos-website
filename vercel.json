@@ -7,6 +7,136 @@
       "source": "/yardmaster/download",
       "destination": "/yardmaster/releases/Yardmaster-Windows-0.1.143.zip",
       "permanent": false
+    },
+    {
+      "source": "/86voice",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/86voice.html",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/about",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/about.html",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/ai-ordering",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/ai-ordering.html",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/ai-tools",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/ai-tools.html",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/all-features",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/all-features.html",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/beta",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/beta.html",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/download",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/download.html",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/faq",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/faq.html",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/features",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/features.html",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/how-it-works",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/how-it-works.html",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/legal",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/legal.html",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/pricing",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/pricing.html",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/product-tour",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/product-tour.html",
+      "destination": "/",
+      "permanent": false
     }
   ],
   "headers": [
