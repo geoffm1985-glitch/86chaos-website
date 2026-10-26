@@ -8,11 +8,14 @@ test('responsive layout, truthful labels, navigation, accessibility and rendered
   const errors=[];page.on('pageerror',err=>errors.push(err.message));
   await page.goto('/');await expect(page).toHaveTitle(/Big Restaurant Technology/);
   await expect(page.locator('h1')).toContainText('Small business pricing.');
-  await expect(page.getByText('Planned management platform',{exact:true})).toBeVisible();
-  await expect(page.getByText('Future development · Separate from launch',{exact:true})).toBeAttached();
+  expect(await page.locator('body').innerText()).not.toMatch(/\b(planned|pending|future development|in development|part of the plan)\b/i);
   for(const y of [0,700,1500,2300,3200,4200,5300,6500,8000]){await page.evaluate(y=>window.scrollTo(0,y),y);await page.waitForTimeout(90);}
   await page.evaluate(()=>window.scrollTo(0,0));await page.waitForTimeout(750);
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBeTruthy();
+  // Everything must fit: no element past the screen edge and none cut off by its card (the steps row once was).
+  // The header logo image is cropped on purpose to trim its transparent margin; decorative art is excluded.
+  const unfit=await page.evaluate(()=>{const vw=document.documentElement.clientWidth,out=[];for(const el of document.querySelectorAll('main *, header *, footer *')){if(el.closest('.skip-link,.honeypot,.sr-only,picture,.brand-stage,.intelligence-symbol,.brand-link')||!el.getClientRects().length)continue;const r=el.getBoundingClientRect();if(!r.width||!r.height)continue;const name=el.tagName.toLowerCase()+'.'+String(el.className||'').split(' ')[0]+' '+(el.textContent||'').trim().slice(0,30);if(r.right>vw+0.5||r.left<-0.5)out.push('past screen: '+name);let a=el.parentElement;while(a&&a!==document.body&&!/hidden|clip|auto|scroll/.test(getComputedStyle(a).overflowX))a=a.parentElement;if(a&&a!==document.body){const b=a.getBoundingClientRect();if(r.right>b.right+0.5||r.left<b.left-0.5)out.push('cut off: '+name);}}return out;});
+  expect(unfit).toEqual([]);
   expect(await page.locator('body').innerText()).not.toMatch(/\$\s*\d|\d+\s*dollars|\bUSD\b/);
   await expect(page.locator('form')).toBeAttached();
   await page.screenshot({path:`${runRoot}/${testInfo.project.name}-full.png`,fullPage:true});

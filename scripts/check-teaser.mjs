@@ -12,7 +12,9 @@ for(const file of files){
   assert(!/console\.log|innerHTML\s*=/.test(source),'No public PII logging or unsafe HTML sinks: '+file);
 }
 const home=readFileSync('dist/index.html','utf8');
-for(const expected of ['Coming soon','Planned management platform','Future development','No hidden charges','No long-term contracts','Chilton App Works LLC','/privacy']) assert(home.includes(expected),expected);
+for(const expected of ['Coming soon','No hidden charges','No long-term contracts','Chilton App Works LLC','/privacy']) assert(home.includes(expected),expected);
+// Owner 2026-10-26: the public site does not describe features as planned, pending or future roadmap work.
+for(const page of ['dist/index.html','dist/privacy.html']){const text=readFileSync(page,'utf8').replace(/<script[\s\S]*?<\/script>/g,' ').replace(/<[^>]+>/g,' ');assert(!/\b(planned|pending|future development|in development|part of the plan|roadmap)\b/i.test(text),'No roadmap-status wording: '+page);}
 assert(!/<script(?![^>]*src=)[^>]*>/.test(home),'External scripts required by strict CSP');
 assert.equal((home.match(/<h1\b/g)||[]).length,1);
 assert(!/checkout|Buy now|Start free trial|testimonials/i.test(home));
