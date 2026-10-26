@@ -7,10 +7,22 @@
     "dev": "astro dev",
     "build": "node scripts/prepare-yardmaster-release.mjs && node scripts/fetch-android-preview.mjs && astro build",
     "preview": "astro preview",
-    "test:yardmaster": "node scripts/prepare-yardmaster-release.mjs && node scripts/verify-yardmaster-release.mjs"
+    "test:yardmaster": "node scripts/prepare-yardmaster-release.mjs && node scripts/verify-yardmaster-release.mjs",
+    "build:website": "astro build",
+    "check": "astro check",
+    "lint": "node scripts/check-teaser.mjs",
+    "test:signup": "node --test tests/launch-signup.test.mjs",
+    "test:website": "playwright test",
+    "preview:website": "node scripts/preview-website.mjs"
   },
   "dependencies": {
-    "astro": "^5.0.0",
-    "@vercel/analytics": "^2.0.1"
+    "@vercel/analytics": "^2.0.1",
+    "astro": "^5.0.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.64.1",
+    "typescript": "^5.9.3"
   }
 }

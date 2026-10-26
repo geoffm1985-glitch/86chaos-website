@@ -1,60 +1,76 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#080d12" />
-    <meta name="description" content="86 Chaos. The ultimate restaurant command center is coming." />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="86 Chaos | The Ultimate Restaurant Command Center Is Coming" />
-    <meta property="og:description" content="The ultimate restaurant command center is coming." />
-    <meta property="og:image" content="https://www.86chaos.com/assets/logo-main.png" />
-    <meta property="og:url" content="https://www.86chaos.com/" />
-    <link rel="canonical" href="https://www.86chaos.com/" />
-    <link rel="icon" type="image/webp" href="/assets/app-icon.webp" />
-    <link rel="apple-touch-icon" href="/assets/app-icon.webp" />
-    <title>86 Chaos | The Ultimate Restaurant Command Center Is Coming</title>
-    <style is:global>
-      :root { color-scheme: dark; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-      * { box-sizing: border-box; }
-      html { min-height: 100%; background: #05080c; }
-      body { margin: 0; color: #f6f1ec; min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; position: relative; isolation: isolate; overflow-x: hidden; }
-      body::before { content: ""; position: fixed; inset: 0; background: url("/assets/site-background-clean-v59.png") center center / cover no-repeat; opacity: .70; z-index: -2; pointer-events: none; }
-      body::after { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(180deg, rgba(5,8,12,.38) 0%, rgba(5,8,12,.51) 48%, rgba(5,8,12,.64) 100%), radial-gradient(circle at 50% 46%, rgba(201,143,109,.12), transparent 48%); }
-      main { flex: 1; width: 100%; min-height: 520px; display: flex; align-items: center; justify-content: center; padding: clamp(40px, 7vh, 84px) 22px 30px; }
-      .announcement { width: min(100%, 1050px); text-align: center; display: flex; flex-direction: column; align-items: center; }
-      .logo { width: clamp(260px, 47vw, 535px); max-width: 88%; height: auto; display: block; margin: 0 auto clamp(58px, 9vh, 98px); }
-      .eyebrow { margin: 0 0 24px; color: #e7ba91; font-weight: 760; letter-spacing: .38em; font-size: clamp(.69rem, 1.45vw, .83rem); text-transform: uppercase; }
-      h1 { font-weight: 850; font-size: clamp(2.75rem, 6.6vw, 6.35rem); line-height: .99; letter-spacing: -.067em; margin: 0; text-wrap: balance; text-shadow: 0 8px 44px rgba(0,0,0,.46); }
-      h1 span { display: block; }
-      h1 .accent { padding-block: .07em; background: linear-gradient(105deg, #f6dcc3 0%, #e8b187 45%, #b96f45 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
-      .rule { width: 74px; height: 2px; background: linear-gradient(90deg, transparent, #dfaa83, transparent); margin: clamp(32px, 6vh, 55px) auto 0; }
-      .sub { color: #dfd8d2; letter-spacing: .035em; font-weight: 430; font-size: clamp(.9rem, 1.7vw, 1.15rem); line-height: 1.55; margin: 20px 0 0; max-width: 540px; text-shadow: 0 2px 16px #000b; }
-      footer { padding: 0 16px max(22px, env(safe-area-inset-bottom)); text-align: center; color: rgba(235,230,225,.6); font-size: .75rem; letter-spacing: .04em; }
-      @media (max-width: 650px) {
-        main { min-height: 560px; padding-inline: 20px; }
-        .logo { width: min(84vw, 420px); margin-bottom: clamp(54px, 10vh, 90px); }
-        .eyebrow { letter-spacing: .3em; }
-        h1 { font-size: clamp(2.55rem, 10vw, 4.7rem); letter-spacing: -.055em; line-height: 1.025; }
-        .sub { max-width: 310px; }
-      }
-      @media (prefers-reduced-motion: no-preference) { .announcement { animation: appear .7s ease-out both; } @keyframes appear { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } } }
-    </style>
-  </head>
-  <body>
-    <main>
-      <section class="announcement" aria-labelledby="announcement-title">
-        <img class="logo" src="/assets/logo-main.png" width="640" height="360" alt="86 Chaos Kitchen Management OS" />
-        <p class="eyebrow">Coming soon</p>
-        <h1 id="announcement-title">
-          <span>The ultimate</span>
-          <span class="accent">restaurant command center</span>
-          <span>is coming.</span>
-        </h1>
-        <div class="rule" aria-hidden="true"></div>
-        <p class="sub">One restaurant. One command center. Less chaos.</p>
-      </section>
-    </main>
-    <footer>© 2026 Chilton App Works LLC</footer>
-  </body>
-</html>
+---
+import TeaserLayout from '../layouts/TeaserLayout.astro';
+import { CONSENT_TEXT } from '../lib/launch-signup.mjs';
+const features = [
+  {num:'01', title:'A clearer start to every shift.', tag:'RESTAURANT COMMAND CENTER', text:'A manager’s brief, daily priorities and operational alerts. One place to see what needs attention before the rush begins.', items:['Daily briefings','Actionable alerts','Connected operations'], icon:'command'},
+  {num:'02', title:'The right people. A better plan.', tag:'SCHEDULING & TIME', text:'Bring schedules, availability, time-off requests and shift changes together. Connect the plan with time clocks, timesheets and labor visibility.', items:['Schedule building','Availability & time off','Time clock & timesheets'], icon:'schedule'},
+  {num:'03', title:'Know what’s on the shelf.\nAnd what it’s costing you.', tag:'INVENTORY & FOOD COST', text:'Connect counts, invoices, ingredient costs and purchasing. Track waste, review scanning results and plan orders around the stock you actually have.', items:['Invoice scanning & review','Par levels & ordering','Waste & cost tracking'], icon:'inventory'},
+  {num:'04', title:'Make every plate count.', tag:'RECIPES & MENU INSIGHT', text:'Keep recipes, portions and ingredient costs connected. Understand menu profitability and give your kitchen clear instructions for consistent execution.', items:['Recipe costing','Batch scaling','Menu profitability'], icon:'recipe'},
+  {num:'05', title:'A team that knows what’s next.', tag:'PREP & DAILY OPERATIONS', text:'Give prep, opening routines and closing checklists a clear owner. Keep labels, maintenance and daily responsibilities part of the same working day.', items:['Prep & task assignments','Opening & closing','Labels & maintenance'], icon:'check'},
+  {num:'06', title:'See beyond a busy dining room.', tag:'FINANCIAL & LABOR INSIGHT', text:'Bring daily closing, labor costs and financial reports into view. Planned exports will help connect approved records with your accountant and chosen payroll provider.', items:['Guided Daily Close','Labor & financial reports','Planned accounting exports'], icon:'chart'}
+];
+---
+<TeaserLayout>
+  <main id="main">
+    <section class="hero section-shell" aria-labelledby="hero-title">
+      <div class="eyebrow launch-status"><span class="status-dot" aria-hidden="true"></span> Coming soon · Built for independents</div>
+      <h1 id="hero-title">Big restaurant<br />technology.<br /><span class="copper-text">Small business pricing.</span></h1>
+      <p class="hero-subtitle">The Ultimate Restaurant Command Center Is Coming.</p>
+      <p class="hero-description">Your people. Your kitchen. Your business.<br class="desktop-break" /> The tools you need, coming together in one powerful, easy-to-use platform.</p>
+      <div class="hero-actions"><a class="button button-primary" href="#launch">Get Launch Updates <span aria-hidden="true">↗</span></a><a class="text-link" href="#vision">Explore What’s Coming <span aria-hidden="true">↓</span></a></div>
+      <p class="hero-footnote">For independent restaurants, bars and the people who run them.</p>
+      <div class="brand-stage" aria-label="86 Chaos Kitchen Management OS">
+        <picture><source srcset="/assets/brand-scene.webp" type="image/webp" /><img src="/assets/site-background-clean-v59.png" alt="86 Chaos Kitchen Management OS — copper and steel branding with a restaurant kitchen and Wisconsin backdrop" width="1671" height="941" fetchpriority="high" /></picture>
+        <div class="stage-bottom"><span>BUILT FOR THE WORK. BUILT FOR YOU.</span><span aria-hidden="true">86 / LESS CHAOS</span></div>
+      </div>
+    </section>
+    <div class="principle-strip"><div class="section-shell"><span>Independent by design</span><span>No hidden charges</span><span>No long-term contracts</span></div></div>
+    <section id="vision" class="section-shell section-space" aria-labelledby="vision-title">
+      <div class="section-intro"><div><p class="eyebrow">One restaurant. One command center.</p><h2 id="vision-title">Less piecing it together.<br /><span class="muted">More running your restaurant.</span></h2></div><p>Schedules in one place. Inventory in another. The rest in your head. We’re building a more connected way to work—from the first prep list to the final close.</p></div>
+      <div class="vision-note"><span class="small-pill">Planned management platform</span><p>The capabilities below describe our intended completed platform. Development is ongoing; final launch scope and availability will be confirmed before subscriptions open.</p></div>
+      <div class="feature-grid">
+        {features.map((feature, index) => <article class:list={['feature', {'feature-wide':index === 0 || index === 2}]}>
+          <div class="feature-top"><span class="eyebrow">{feature.tag}</span><span class="feature-num" aria-hidden="true">{feature.num}</span></div>
+          <h3>{feature.title}</h3><p>{feature.text}</p>
+          {index === 0 && <div class="workflow-art" aria-label="Illustration of a planned connected restaurant workflow"><div class="workflow-center"><span class="status-dot" aria-hidden="true"></span> YOUR RESTAURANT</div><div class="workflow-points"><span>People</span><span>Kitchen</span><span>Business</span></div><div class="workflow-line" aria-hidden="true"></div><div class="workflow-outcome">A clearer picture of the day <span aria-hidden="true">↗</span></div><small>Workflow illustration · Not a product screenshot</small></div>}
+          {index === 2 && <div class="inventory-art" aria-label="Planned workflow: receive, count, cost, plan"><span>Receive</span><i aria-hidden="true">→</i><span>Count</span><i aria-hidden="true">→</i><span>Cost</span><i aria-hidden="true">→</i><span>Plan</span></div>}
+          <ul class="feature-items">{feature.items.map(item => <li>{item}</li>)}</ul>
+        </article>)}
+      </div>
+    </section>
+    <section class="team-section section-shell" aria-labelledby="team-title">
+      <div class="team-copy"><p class="eyebrow">People make the place</p><h2 id="team-title">Give your team<br />more than a login.</h2><p>Planned onboarding, restaurant manuals, short lessons and practical skill sign-offs will help employees learn the way your restaurant works. Training records and credential-renewal reminders are part of the plan.</p><p>Connect the team with messages, announcements, shift communication and 86 alerts—so important information has a place to go.</p><span class="small-pill">Planned capabilities</span></div>
+      <div class="team-art"><div class="training-heading"><span class="eyebrow">From first day to a stronger team</span><span aria-hidden="true">↗</span></div><ol><li><span>01</span><div><strong>Welcome</strong><p>Onboarding & restaurant resources</p></div></li><li><span>02</span><div><strong>Learn</strong><p>Manuals, lessons & knowledge checks</p></div></li><li><span>03</span><div><strong>Put it into practice</strong><p>Manager-verified skills & training records</p></div></li><li><span>04</span><div><strong>Stay connected</strong><p>Team updates & shift communication</p></div></li></ol><p class="art-caption">Planned learning journey · Not a product screen</p></div>
+    </section>
+    <section class="intelligence section-shell section-space" aria-labelledby="intelligence-title">
+      <div class="intelligence-symbol" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <p class="eyebrow">86Voice & restaurant intelligence · Planned</p><h2 id="intelligence-title">A little more insight.<br /><span class="copper-text">A lot less guesswork.</span></h2><p>We’re connecting voice and typed assistance with the work of running a restaurant. Ask for information, understand an alert, or review a suggested next step—with meaningful changes kept under your control.</p><div class="intelligence-details"><span>Information grounded in your records</span><span>Recommendations you can understand</span><span>You review. You decide.</span></div>
+    </section>
+    <section id="principles" class="honest-section" aria-labelledby="honest-title"><div class="section-shell section-space">
+      <p class="eyebrow">Our commitment to independent operators</p><h2 id="honest-title">Powerful software.<br />Honest pricing.<br /><span class="copper-text">No surprises.</span></h2>
+      <p class="honest-intro">You have enough unpredictable costs. Your software shouldn’t be another one.</p>
+      <div class="promises"><article><span aria-hidden="true">01 /</span><h3>Know what’s included.</h3><p>No hidden charges. Clear subscription terms, included features and applicable usage limits before you subscribe.</p></article><article><span aria-hidden="true">02 /</span><h3>Keep your freedom.</h3><p>No long-term contracts. Affordable by design, with straightforward information to help you choose what fits your restaurant.</p></article><article><span aria-hidden="true">03 /</span><h3>Choose extras knowingly.</h3><p>Optional services, third-party charges and AI or scanning allowances disclosed clearly. No misleading pricing tricks.</p></article></div>
+      <div class="service-note"><strong>A clear line between software and hands-on help.</strong><p>We’re planning guided self-service setup and resources. Hands-on onboarding, setup, data migration, custom configuration and personalized training by Chilton App Works personnel are optional professional services and may carry separately quoted charges, approved by you in advance. Applicable integration, payment-processing and other third-party costs will be disclosed separately.</p></div>
+      <p class="pricing-note">Subscription details will be announced closer to launch.</p>
+    </div></section>
+    <section class="section-shell compatibility section-space" aria-labelledby="compatibility-title"><div><p class="eyebrow">Your restaurant. Your choices.</p><h2 id="compatibility-title">Build on what<br />works for you.</h2></div><div><p>Our management platform is being designed to work alongside existing POS and payment arrangements where technically supported. We’ll confirm supported connections before asking you to rely on them.</p><p>Payroll-ready records and appropriate exports are part of the plan. Specific POS, accounting and payroll integrations will be announced after verification; universal compatibility is not promised.</p><div class="future-note"><span class="small-pill">Future development · Separate from launch</span><h3>Native 86 Chaos POS & kitchen displays</h3><p>A native POS and kitchen display system are a separate, longer-term vision after the management platform is complete. They are not part of its initial commercial offering.</p></div></div></section>
+    <section id="story" class="founder section-shell" aria-labelledby="story-title"><div class="founder-number"><span>25</span><p>YEARS, APPROXIMATELY.<br />ONE VERY REAL PERSPECTIVE.</p></div><div><p class="eyebrow">The experience behind 86 Chaos</p><h2 id="story-title">Built in the kitchen.<br /><span class="muted">Not in a boardroom.</span></h2><p>86 Chaos was conceived by a restaurant professional with approximately 25 years of kitchen experience. The pressure of service. Tight budgets. Scheduling headaches. Inventory, food costs and keeping a team on the same page.</p><p>That firsthand perspective is shaping a platform built with respect for the people doing the work—and the independent businesses they keep running.</p><div class="company-signature"><span class="signature-rule" aria-hidden="true"></span><span>86 CHAOS <small>BY CHILTON APP WORKS LLC</small></span></div></div></section>
+    <section id="launch" class="signup-section section-shell section-space" aria-labelledby="launch-title"><div class="signup-copy"><p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> The next chapter is coming</p><h2 id="launch-title">Your restaurant has<br />enough chaos.<br /><span class="copper-text">Be here for what’s next.</span></h2><p>Get product news and launch updates. Be among the first to learn what’s coming together.</p><p class="signup-assurance">No purchase. No commitment. Just updates you choose to receive.</p><a class="contact-link" href="mailto:Geoffrey@86chaos.com">Geoffrey@86chaos.com <span aria-hidden="true">↗</span></a></div>
+      <div class="signup-card"><h3>Get Launch Updates</h3><p class="form-intro">A better way to run your restaurant is on the way.</p>
+        <form id="launch-form" action="/api/launch-signup" method="post" aria-describedby="form-status">
+          <fieldset id="signup-fields" disabled><legend class="sr-only">Launch update signup</legend>
+            <div class="field"><label for="email">Email address <span>(required)</span></label><input id="email" name="email" type="email" autocomplete="email" maxlength="254" placeholder="you@yourrestaurant.com" required /></div>
+            <div class="field"><label for="first-name">First name <span>(optional)</span></label><input id="first-name" name="name" autocomplete="given-name" maxlength="80" /></div>
+            <div class="field"><label for="restaurant">Restaurant or business name <span>(optional)</span></label><input id="restaurant" name="restaurant" autocomplete="organization" maxlength="160" /></div>
+            <div class="honeypot" aria-hidden="true"><label for="website">Leave this field empty</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off" /></div>
+            <label class="consent" for="consent"><input id="consent" name="consent" type="checkbox" required /><span>{CONSENT_TEXT}</span></label>
+            <div id="turnstile-widget"></div><button id="signup-submit" class="button button-primary" type="submit">Get Launch Updates <span aria-hidden="true">↗</span></button>
+          </fieldset>
+          <p id="form-status" class="form-status" role="status" aria-live="polite" tabindex="-1">Checking signup availability…</p><noscript><p>JavaScript is needed for secure signup. You can contact <a href="mailto:Geoffrey@86chaos.com">Geoffrey@86chaos.com</a>.</p></noscript>
+          <p class="privacy-note">We use your details for 86 Chaos product and launch updates. Request removal anytime by email. <a href="/privacy">Read our privacy notice.</a></p>
+        </form>
+      </div>
+    </section>
+  </main>
+  <script src="../scripts/teaser.ts"></script>
+</TeaserLayout>
