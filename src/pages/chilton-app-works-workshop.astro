@@ -1,0 +1,128 @@
+---
+const logo = 'https://chilton-app-works-business-website-y0yj33.v2.appdeploy.ai/resources/chilton-app-works-logo.jpg';
+const offers = [
+  {name:'One-Page Starter',price:'$149',intro:'Launch a clean, credible online presence.',perks:['One professional, mobile-friendly page','Tested design template','Your provided logo, photos and copy','Contact links and basic search setup','One revision round'],detail:'Domain, hosting, email and add-ons separate.',slug:'One-Page Starter $149'},
+  {name:'Small Business',price:'$349',intro:'Make room for the details customers need.',perks:['Up to three responsive pages','Business colors and branding','About, services and contact pages','Basic local-search setup','One revision round'],detail:'Advanced forms and extra work quoted first.',slug:'Small Business website $349'},
+  {name:'Business Plus',price:'$599',intro:'A little more custom. A lot more presence.',perks:['Up to five responsive pages','More customized page layouts','Gallery or service showcase','Clear calls to action','Two revision rounds'],detail:'Complex features and external services separately quoted.',slug:'Business Plus website $599'}
+];
+const care = [
+{name:'Basic Hosting',price:'$19',detail:'Managed static hosting, SSL and monitoring. Edits quoted separately.'},
+{name:'Managed Care',price:'$39',detail:'Basic Hosting benefits plus up to 15 minutes of minor edits each month.'},
+{name:'Premium Care',price:'$69',detail:'Basic Hosting benefits plus up to 30 minutes of minor edits each month.'}
+];
+const mail=(topic:string)=>'mailto:Geoffrey@86chaos.com?subject='+encodeURIComponent('Chilton App Works | '+topic);
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="theme-color" content="#071b33"/><meta name="robots" content="noindex,nofollow"/>
+<meta name="description" content="Chilton App Works blueprint-style website preview. Professional websites from $149 plus transparent separately disclosed domain, hosting and email costs."/>
+<title>Chilton App Works | The Digital Workshop Preview</title>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+<div class="preview-ribbon"><span><i></i> CHILTON APP WORKS · DESIGN DIRECTION: THE DIGITAL WORKSHOP</span><a href="/chilton-app-works-preview">View original preview ↗</a></div>
+<header>
+  <a class="logo" href="#top" aria-label="Chilton App Works home"><img src={logo} width="295" height="116" alt="Official Chilton App Works blue and green logo" /></a>
+  <nav class="desktop-nav" aria-label="Site sections"><a href="#approach">What we do</a><a href="#evidence">Why a website</a><a href="#pricing">Pricing</a><a href="#care">Website care</a></nav>
+  <a class="header-contact" href={mail('Project conversation')}>Start a project <span>↗</span></a>
+  <details class="mobile-nav"><summary>Explore <span>☰</span></summary><nav aria-label="Mobile sections"><a href="#approach">What we do</a><a href="#evidence">Why a website</a><a href="#pricing">Pricing</a><a href="#care">Website care</a><a href="#contact">Get in touch</a></nav></details>
+</header>
+<main id="main">
+<section class="hero" id="top">
+<div class="hero-grid">
+  <div class="hero-lead">
+    <div class="eyebrow"><span class="spark">✳</span> DIGITAL TOOLS FOR INDEPENDENT BUSINESSES</div>
+    <h1>Small business.<br/><span>Big presence.</span></h1>
+    <p class="hero-description">Websites that look sharp. Custom apps that actually help. Clear pricing and no confusing handoffs. Created in Chilton, Wisconsin.</p>
+    <div class="hero-actions"><a class="primary" href="#pricing">See the website packages <b>↗</b></a><a class="underlink" href="#approach">See what we build ↗</a></div>
+    <div class="hero-foot"><span>✓ No lock-in tricks</span><span>✓ Real ownership</span><span>✓ Scope before spending</span></div>
+  </div>
+  <div class="hero-display">
+    <div class="gridboard"></div>
+    <div class="scribble">THE PLAN</div>
+    <div class="mock-browser">
+      <div class="browser-bar"><span>● ● ●</span><span>yoursmallbusiness.com</span><span>↗</span></div>
+      <div class="mock-body">
+        <div class="mock-top"><b>YOUR BRAND<span>✳</span></b><small>SERVICES &nbsp; ABOUT &nbsp; CONTACT</small></div>
+        <div class="mock-title">Make it<br/>happen<span>.</span></div>
+        <div class="mock-cta">LET'S TALK ↗</div>
+        <div class="mock-cards"><i></i><i></i><i></i></div>
+      </div>
+    </div>
+    <div class="price-ticket"><small>WEBSITES FROM</small><strong>$149</strong><span>ONE-TIME BUILD</span></div>
+    <div class="display-bottom">DESIGNED TO GET YOU NOTICED. ENGINEERED TO WORK.</div>
+  </div>
+</div>
+<div class="hero-smallprint">The $149 starter covers a scoped one-page template website. Domain, hosting, paid email services and optional additions cost extra.</div>
+</section>
+<section class="intro-rail" aria-label="Our promises"><span>YOUR BUSINESS FIRST</span><b>✳</b><span>NO HIDDEN SURPRISES</span><b>✳</b><span>YOU OWN YOUR DOMAIN</span><b>✳</b><span>NO LONG-TERM CARE CONTRACT</span></section>
+<section class="section" id="approach">
+  <div class="section-head"><div><p class="section-kicker">BUILT FOR THE WAY YOU WORK</p><h2>Whatever's next,<br/>we can <em>build it.</em></h2></div><p>Not everything needs a complicated software platform. Sometimes you need a great website. Sometimes you need something made just for your business.</p></div>
+  <div class="bento">
+    <article class="bento-large"><span class="service-label">WEB PRESENCE</span><h3>A website people<br/>remember.</h3><p>Clean pages, fast mobile experiences, clear calls to action, and a professional home for your business.</p><a href="#pricing">Explore websites ↗</a><div class="bento-geometry" aria-hidden="true"><span></span><span></span><span></span></div></article>
+    <article class="bento-app"><span class="service-label">CUSTOM SOFTWARE</span><h3>Apps built around you.</h3><p>Workflow tools, client portals, operational dashboards and small-business automations.</p><a href={mail('Custom application estimate')}>Get an app quote ↗</a><div class="app-art" aria-hidden="true"><span>TEAM WORKSPACE</span><div><i></i><i></i><i></i></div></div></article>
+    <article class="bento-email"><span class="service-label">BUSINESS EMAIL</span><h3>Your domain.<br/>Your inbox.</h3><p>One-time setup starting at <b>$49</b>, with provider mailbox subscriptions separate.</p><a href={mail('Business email setup')}>Ask about email ↗</a></article>
+    <article class="bento-care"><span class="service-label">ONGOING SUPPORT</span><h3>Help without the hassle.</h3><p>Optional, clearly scoped hosting and upkeep. Keep control of your site and your providers.</p><a href="#care">See monthly options ↗</a></article>
+  </div>
+</section>
+<section class="evidence-section" id="evidence">
+<div class="section">
+  <div class="section-head evidence-head"><div><p class="section-kicker">WHY IT MATTERS</p><h2>Your customers<br/>are <em>online.</em></h2></div><p>A professional website helps people evaluate your business and find the next step. Visibility isn't a luxury when your customers start with a search.</p></div>
+  <div class="fact-grid">
+    <article><strong>84<span>%</span></strong><p>of surveyed U.S. consumers searched online for a local business in the prior three months.</p><a target="_blank" rel="noopener noreferrer" href="https://www.brightlocal.com/research/consumer-search-behavior-channels/">BRIGHTLOCAL · 2026 ↗</a></article>
+    <article><strong>73<span>%</span></strong><p>of recent local-business searches surveyed began on a mobile device.</p><a target="_blank" rel="noopener noreferrer" href="https://www.brightlocal.com/research/consumer-search-behavior-channels/">BRIGHTLOCAL · 2026 ↗</a></article>
+    <article><strong>20<span>%</span></strong><p>ranked a professional-looking website among their top three reasons to contact or visit a business.</p><a target="_blank" rel="noopener noreferrer" href="https://www.brightlocal.com/research/consumer-search-behavior-decisions/">BRIGHTLOCAL · 2026 ↗</a></article>
+  </div>
+  <p class="facts-source">Survey results describe consumer behavior, not guaranteed sales gains. The 2026 BrightLocal decision research sampled 1,227 recent U.S. local-business searchers.</p>
+</div>
+</section>
+<section class="pricing-section" id="pricing">
+<div class="section">
+  <div class="section-head"><div><p class="section-kicker">THE REAL NUMBERS</p><h2>Pay for the site.<br/><em>Not the hype.</em></h2></div><p>Start small, grow when you need to. Every quote tells you what's included, what's separate, and who owns what.</p></div>
+  <div class="pricing-table">
+    {offers.map((p,i)=><article class:list={['offer',{'first-offer':i===0}]}>
+      <div class="offer-intro"><span class="offer-label">{i===0?'THE EASY START':'WEBSITE BUILD'}</span><h3>{p.name}</h3><p>{p.intro}</p></div>
+      <div class="offer-price"><strong>{p.price}</strong><small>one time</small></div>
+      <ul>{p.perks.map(item=><li><span>✓</span>{item}</li>)}</ul>
+      <div class="offer-foot"><p>{p.detail}</p><a href={mail(p.slug)} aria-label={'Ask about '+p.name}>↗</a></div>
+    </article>)}
+  </div>
+  <div class="extra-note"><span>NEED MORE SPACE?</span><p><b>Additional pages from $99 each.</b> Extensive copywriting, bookings, e-commerce, integrations, databases and extra revisions are quoted before work begins.</p></div>
+  <p class="pricing-disclosure"><b>No hidden fees:</b> Your domain registration and renewals, hosting, email licenses, third-party services and unusual usage charges are separate and disclosed. Customers ordinarily pay those providers directly. Domain ownership and agreed completed deliverables remain yours.</p>
+</div>
+</section>
+<section class="care-section section" id="care">
+  <div class="section-head"><div><p class="section-kicker">OPTIONAL CARE</p><h2>Stay online.<br/><em>Stay in control.</em></h2></div><p>Hosting and upkeep are not mandatory. Keep your own hosting or choose a simple, month-to-month care plan.</p></div>
+  <div class="care-row">{care.map(p=><article><div><h3>{p.name}</h3><strong>{p.price}<span>/mo</span></strong></div><p>{p.detail}</p></article>)}</div>
+  <div class="care-note"><b>Clear from the start.</b> Standard plans assume eligible static sites and ordinary usage. Domains, email licenses, special integrations and unusual provider charges are separate. Care is optional and cancellable with 30 days' notice; unused edit minutes don't roll over.</div>
+</section>
+<section class="contact-section" id="contact">
+  <div class="section contact-inner"><div><span class="section-kicker">GOT A PROJECT?</span><h2>Good ideas<br/>start <em>here.</em></h2><p>Tell us about the business you're building. We'll put together a sensible scope and explain the costs before anything begins.</p><div class="contact-location">✳ Chilton, Wisconsin · Chilton App Works LLC</div></div><div class="contact-cta"><span>LET'S GET SOMETHING STARTED</span><h3>Even a simple site<br/>can make a big impact.</h3><a href={mail('Website or custom software inquiry')}>Send a project email <b>↗</b></a><small>Opens your email app. No information is collected on this preview page.</small></div></div>
+</section>
+</main>
+<footer><div class="footer-inner"><a href="#top"><img src={logo} width="240" height="95" alt="Chilton App Works" /></a><p>Websites. Custom software. Straightforward costs.</p><span>© 2026 Chilton App Works LLC · Unlisted design preview</span><a href="/chilton-app-works-preview">Original preview ↗</a></div></footer>
+</body></html>
+<style>
+:root{--bg:#081c31;--navy:#071c32;--ink:#0c314a;--blue:#0b83b8;--green:#77dd89;--paper:#f3fafc;--line:#cfdee5}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:'Trebuchet MS',Arial,system-ui,sans-serif;color:#12364f;background:#fff;-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}a:focus-visible,summary:focus-visible{outline:3px solid #51b972;outline-offset:3px}.skip{position:absolute;left:10px;top:-100px;background:#fff;padding:10px;color:#000;z-index:100}.skip:focus{top:8px}
+.preview-ribbon{background:#061524;color:#b3d6e5;padding:12px clamp(18px,4vw,65px);display:flex;justify-content:space-between;align-items:center;gap:14px;font-size:10px;font-weight:800;letter-spacing:1.1px}.preview-ribbon i{display:inline-block;width:7px;height:7px;background:#76dd89;border-radius:50%;margin-right:6px}.preview-ribbon a{color:#9ee9aa}
+header{position:sticky;top:0;background:#f5fafb;display:flex;align-items:center;justify-content:space-between;gap:22px;padding:12px clamp(18px,4vw,65px);z-index:20;border-bottom:1px solid #cde0e8}header .logo{background:#fff;display:flex;align-items:center;border-radius:5px;min-width:0}header .logo img{width:230px;height:77px;object-fit:contain;mix-blend-mode:multiply;max-width:100%}.desktop-nav{display:flex;gap:24px}.desktop-nav a{font-size:12px;color:#174960;font-weight:800}.header-contact{background:#073957;color:#fff;padding:15px 20px;font-size:12px;font-weight:900;white-space:nowrap;border-radius:2px}.header-contact span{color:#86de93;margin-left:20px}.mobile-nav{display:none}
+.section{max-width:1280px;margin:0 auto;padding:99px 5%}.section-head{display:grid;grid-template-columns:1.1fr .6fr;gap:9%;align-items:end;margin-bottom:42px}.section-kicker,.eyebrow{display:block;font-size:11px;letter-spacing:2px;font-weight:900;color:#0a79a3}.section-head h2{font-size:clamp(43px,5.6vw,76px);line-height:1.02;letter-spacing:-4px;margin:18px 0 0;font-weight:900}.section-head h2 em{font-style:normal;color:#0a83ad}.section-head>p{max-width:405px;color:#617a8a;font-size:15px;line-height:1.85;margin:0}
+.hero{background:#081d33;color:#fff}.hero-grid{display:grid;grid-template-columns:49% 51%;min-height:570px}.hero-lead{padding:86px 3vw 75px max(5vw,calc((100vw - 1280px)/2));max-width:850px}.hero .eyebrow{color:#a7c8d6}.spark{color:#83e79c}.hero h1{font-size:clamp(51px,5.9vw,91px);line-height:1.02;letter-spacing:-5px;margin:35px 0 27px}.hero h1 span{color:#80e291}.hero-description{font-size:17px;line-height:1.85;max-width:570px;color:#c0d3e2}.hero-actions{display:flex;gap:25px;align-items:center;flex-wrap:wrap;margin-top:31px}.hero-actions .primary{background:#7ce18d;color:#06243a;padding:17px 20px;display:flex;gap:25px;font-weight:900;font-size:13px;border-radius:2px}.hero-actions .underlink{text-decoration:underline;text-underline-offset:6px;font-size:13px;font-weight:800}.hero-foot{display:flex;gap:14px 22px;flex-wrap:wrap;color:#98bfca;font-size:11px;margin-top:61px;font-weight:800}
+.hero-display{background:linear-gradient(145deg,#057ba9,#024b74);min-height:570px;position:relative;overflow:hidden;display:grid;place-items:center}.gridboard{position:absolute;inset:-50px;background-image:linear-gradient(#e7ffff21 1px,transparent 1px),linear-gradient(90deg,#e7ffff21 1px,transparent 1px);background-size:36px 36px;transform:rotate(15deg)}.scribble{position:absolute;top:40px;left:8%;font-size:10px;font-weight:900;color:#c6e6eb;letter-spacing:2px}
+.mock-browser{position:relative;width:74%;max-width:500px;transform:rotate(-3deg);z-index:2;background:white;border:7px solid #063351;box-shadow:19px 21px 0 #02233c7d;border-radius:9px;overflow:hidden}.browser-bar{height:33px;background:#dbe9ef;display:flex;align-items:center;justify-content:space-between;padding:0 13px;font-size:9px;color:#4b7888}.mock-body{color:#14334b;padding:28px;background:#fcffff}.mock-top{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:11px}.mock-top small{font-size:8px}.mock-top b span{color:#30ab64}.mock-title{font-size:clamp(35px,4.3vw,62px);font-weight:900;letter-spacing:-3px;line-height:1.05;margin:33px 0 19px}.mock-title span{color:#3fb566}.mock-cta{display:inline-block;background:#0878a4;color:#fff;font-weight:800;font-size:10px;padding:11px 16px}.mock-cards{display:flex;gap:10px;margin-top:28px}.mock-cards i{height:29px;background:#e6f1f4;flex:1}
+.price-ticket{position:absolute;z-index:4;bottom:43px;right:5%;display:flex;flex-direction:column;background:#78df8c;color:#062f4c;transform:rotate(8deg);padding:15px 21px;box-shadow:7px 7px #093451a3}.price-ticket small,.price-ticket span{font-size:10px;font-weight:900;letter-spacing:1px}.price-ticket strong{font-size:65px;line-height:1.05;letter-spacing:-4px}.display-bottom{position:absolute;bottom:16px;left:20px;font-size:9px;letter-spacing:1px;color:#d6f0fa;font-weight:900}.hero-smallprint{text-align:center;font-size:11px;line-height:1.6;background:#0c2d47;padding:17px;color:#aac5d3}
+.intro-rail{background:#77dc8b;color:#0b344c;display:flex;flex-wrap:wrap;justify-content:center;gap:12px 32px;align-items:center;padding:21px 18px;font-size:11px;letter-spacing:1px;font-weight:900}.intro-rail b{font-size:22px;color:#fff}
+.bento{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:13px;grid-template-rows:auto auto}.bento article{padding:28px;position:relative;overflow:hidden;min-height:259px;display:flex;flex-direction:column;align-items:flex-start}.bento article h3{font-size:clamp(23px,2.4vw,32px);line-height:1.16;letter-spacing:-1px;margin:14px 0}.bento article p{font-size:13px;line-height:1.8;margin:0 0 20px;max-width:430px}.bento article a{font-size:12px;font-weight:900;text-decoration:underline;text-underline-offset:5px;margin-top:auto}.service-label{font-size:10px;letter-spacing:1.3px;font-weight:900}.bento-large{grid-row:span 2;background:#0a446a;color:#fff;justify-content:flex-start}.bento-large p{color:#cfe2eb}.bento-large .service-label{color:#95e5ab}.bento-geometry{margin-top:40px;height:140px;width:100%;display:flex;gap:10px;transform:rotate(-12deg)}.bento-geometry span{flex:1;background:#1688b1;border:2px solid #65d788}.bento-geometry span:nth-child(2){transform:translateY(30px)}.bento-geometry span:nth-child(3){transform:translateY(-17px)}.bento-app{grid-column:span 2;background:#e8f3f7}.bento-app a{color:#08739c}.app-art{position:absolute;right:20px;bottom:17px;width:170px;background:white;padding:11px;box-shadow:7px 7px #c6e5ee;transform:rotate(5deg)}.app-art>span{font-size:8px;font-weight:900;letter-spacing:1px}.app-art div{display:flex;gap:5px;margin-top:15px;align-items:end;height:30px}.app-art i{background:#1a80a2;flex:1;height:55%}.app-art i:nth-child(2){height:100%;background:#65c97c}.app-art i:nth-child(3){height:75%}.bento-email{background:#dbf7e4}.bento-care{background:#f2f7f9;border:1px solid #d4e9ec}
+.evidence-section{background:#eef7f9}.fact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.fact-grid article{background:#fff;padding:31px;min-width:0;border-top:5px solid #197ba5;display:flex;flex-direction:column}.fact-grid article:nth-child(2){border-top-color:#4fbf73}.fact-grid strong{font-size:clamp(60px,6vw,90px);line-height:1;letter-spacing:-5px;color:#0b628d}.fact-grid strong span{font-size:.6em;color:#52ad72}.fact-grid p{font-size:14px;color:#597587;line-height:1.8;min-height:110px}.fact-grid a{font-size:10px;color:#16779f;font-weight:900;letter-spacing:.7px;margin-top:auto}.facts-source{font-size:11px;color:#667e8c;line-height:1.7;margin:20px 0 0}
+.pricing-section{background:#fff}.pricing-table{border-top:2px solid #143d57}.offer{display:grid;grid-template-columns:1.2fr .7fr 1.4fr 55px;gap:22px;align-items:center;border-bottom:1px solid #c9dce3;padding:30px 10px}.offer.first-offer{background:#e8f9ed;border-bottom:2px solid #48b867;padding:32px 20px}.offer-label{font-size:10px;letter-spacing:1.1px;color:#0f7192;font-weight:900}.offer-intro h3{font-size:25px;letter-spacing:-1px;margin:8px 0}.offer-intro p{font-size:12px;color:#637b86;line-height:1.7;margin:0}.offer-price{white-space:nowrap}.offer-price strong{display:block;font-size:clamp(43px,4vw,61px);letter-spacing:-4px;color:#0e4f72}.first-offer .offer-price strong{color:#197b4b}.offer-price small{font-size:11px;color:#628391}.offer ul{display:grid;grid-template-columns:1fr 1fr;gap:9px 18px;list-style:none;padding:0;margin:0}.offer li{font-size:11px;color:#48687b;display:flex;gap:7px;align-items:start;line-height:1.5}.offer li span{color:#168b55}.offer-foot{display:flex;flex-direction:column;align-items:end;gap:12px}.offer-foot p{font-size:10px;line-height:1.5;color:#68818d;text-align:right;margin:0}.offer-foot a{display:grid;place-items:center;border-radius:50%;width:44px;height:44px;background:#0f6691;color:white;font-size:23px}.extra-note{padding:24px;background:#113f60;color:white;margin-top:24px;display:flex;gap:30px;align-items:center}.extra-note span{min-width:150px;font-weight:900;font-size:11px;color:#9cddb0;letter-spacing:1.4px}.extra-note p{font-size:13px;line-height:1.8;margin:0}.pricing-disclosure{font-size:11px;line-height:1.9;color:#63828b;margin:19px 0 0}
+.care-section{background:#eaf6f9}.care-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.care-row article{background:#fff;border:1px solid #c9e2e8;padding:27px}.care-row article>div{display:flex;justify-content:space-between;gap:10px;align-items:baseline}.care-row h3{font-size:19px;margin:0}.care-row strong{font-size:41px;color:#0a6c96}.care-row strong span{font-size:12px;color:#708998}.care-row p{font-size:12px;line-height:1.8;color:#6b818d;margin:18px 0 0}.care-note{background:#d8efdf;border-left:4px solid #38b86a;padding:22px;margin-top:20px;font-size:12px;line-height:1.8;color:#35596a}
+.contact-section{background:#0a2a44;color:white}.contact-inner{display:grid;grid-template-columns:1.1fr .8fr;gap:8%;align-items:center}.contact-inner .section-kicker{color:#a5e7ba}.contact-inner h2{font-size:clamp(50px,6vw,83px);letter-spacing:-4px;line-height:1.05;margin:20px 0}.contact-inner h2 em{font-style:normal;color:#8deb9e}.contact-inner>div>p{color:#aac7d5;font-size:15px;line-height:1.8;max-width:500px}.contact-location{font-size:12px;color:#a3e8b9;margin-top:33px}.contact-cta{background:#f5fdfc;color:#0b3d5c;padding:33px}.contact-cta>span{font-size:10px;letter-spacing:1px;font-weight:900;color:#0d7e9d}.contact-cta h3{font-size:28px;letter-spacing:-1.2px}.contact-cta a{display:flex;align-items:center;justify-content:space-between;background:#76d989;color:#093653;padding:17px;font-size:13px;font-weight:900}.contact-cta small{display:block;margin-top:17px;font-size:10px;line-height:1.7;color:#748995}
+footer{background:#061827;color:#c7e2e8}.footer-inner{max-width:1280px;margin:auto;padding:35px 5%;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}footer img{background:#fff;width:180px;height:68px;object-fit:contain;border-radius:3px;padding:3px}footer p{font-size:12px}footer span{font-size:10px}footer a:last-child{font-size:11px;color:#b8eec6}
+@media(max-width:1100px){.desktop-nav{gap:12px}.hero h1{font-size:64px}.section-head{gap:5%}.offer{grid-template-columns:1fr .75fr 1.5fr 44px;gap:15px}.offer ul{grid-template-columns:1fr}.app-art{width:128px}}
+@media(max-width:760px){.preview-ribbon{font-size:8px;line-height:1.6}.preview-ribbon a{display:none}header{min-height:78px}header .logo img{width:187px;height:70px}.desktop-nav,.header-contact{display:none}.mobile-nav{display:block;position:relative}.mobile-nav summary{list-style:none;background:#def3e6;padding:11px 13px;font-size:12px;color:#17435d;font-weight:900}.mobile-nav summary::-webkit-details-marker{display:none}.mobile-nav nav{position:absolute;right:0;top:42px;width:196px;background:#fff;display:flex;flex-direction:column;padding:13px;box-shadow:0 16px 30px #0003;border:1px solid #d0e5ed}.mobile-nav nav a{font-size:12px;padding:12px 8px;border-bottom:1px solid #e8f0f2}.hero-grid{grid-template-columns:1fr}.hero-lead{padding:64px 6% 45px}.hero h1{font-size:clamp(49px,10vw,74px);letter-spacing:-3px}.hero-description{font-size:15px}.hero-foot{margin-top:38px}.hero-display{min-height:420px}.price-ticket{bottom:19px;right:4%;padding:12px 15px}.price-ticket strong{font-size:47px}.intro-rail{gap:10px;font-size:9px}.intro-rail b{display:none}.section{padding:72px 6%}.section-head{grid-template-columns:1fr;gap:20px}.section-head>p{max-width:unset}.section-head h2{font-size:clamp(42px,9vw,65px);letter-spacing:-2.5px}.bento{grid-template-columns:1fr 1fr}.bento-large{grid-row:auto;grid-column:1/-1;min-height:250px}.bento-app{grid-column:1/-1}.bento-email,.bento-care{grid-column:auto}.bento article{min-height:220px}.fact-grid,.care-row{grid-template-columns:1fr}.fact-grid article p{min-height:0}.offer,.offer.first-offer{display:grid;grid-template-columns:1fr auto;gap:10px;padding:25px 10px}.offer-intro{grid-column:1}.offer-price{grid-column:2;grid-row:1}.offer-price strong{font-size:43px}.offer ul{grid-column:1/-1;grid-template-columns:1fr 1fr;gap:8px}.offer-foot{grid-column:1/-1;flex-direction:row;align-items:center}.offer-foot p{text-align:left}.extra-note{display:block}.extra-note p{margin-top:12px}.contact-inner{grid-template-columns:1fr;gap:33px}.footer-inner{justify-content:flex-start}}
+@media(max-width:420px){header .logo img{width:160px}.hero h1{font-size:45px}.hero-actions .primary{width:100%;justify-content:space-between}.hero-display{min-height:360px}.mock-browser{width:82%;border-width:5px}.mock-body{padding:14px}.mock-title{font-size:35px}.mock-top small{font-size:6px}.price-ticket strong{font-size:37px}.price-ticket{transform:rotate(6deg)}.intro-rail{display:grid;grid-template-columns:1fr 1fr;text-align:center}.bento{grid-template-columns:1fr}.bento-large,.bento-app{grid-column:auto}.bento article{min-height:220px}.bento-app .app-art{display:none}.offer ul{grid-template-columns:1fr}.offer-price strong{font-size:37px}.care-row article>div{align-items:center}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
