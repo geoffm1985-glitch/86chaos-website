@@ -1,0 +1,56 @@
+---
+export function getStaticPaths() {
+  return ["services","pricing","about","work","apps","care","email","contact"].map(page=>({params:{page},props:{page}}));
+}
+const {page} = Astro.props;
+const route = "/chilton-app-works-neon";
+const titleLookup = {"services":"Services designed for your business","pricing":"Affordable website pricing","about":"About Chilton App Works","work":"Example projects and digital capabilities","apps":"Custom apps tailored to your business","care":"Optional website care plans","email":"Professional business email setup","contact":"Contact Chilton App Works"};
+const extras = {"services":[{"label":"Professional websites","href":"/chilton-app-works-neon/pricing","x":53,"y":494,"w":1015,"h":151},{"label":"Custom apps","href":"/chilton-app-works-neon/apps","x":53,"y":668,"w":1015,"h":151},{"label":"Website care","href":"/chilton-app-works-neon/care","x":53,"y":842,"w":1015,"h":151},{"label":"Business email","href":"/chilton-app-works-neon/email","x":53,"y":1016,"w":1015,"h":151},{"label":"Start a project","href":"/chilton-app-works-neon/contact","x":790,"y":1215,"w":265,"h":56}],"pricing":[{"label":"One page package $149","href":"mailto:Geoffrey@86chaos.com?subject=Chilton%20App%20Works%20%7C%20One-Page%20Starter%20website%20%24149","x":76,"y":816,"w":286,"h":67},{"label":"Three page package $349","href":"mailto:Geoffrey@86chaos.com?subject=Chilton%20App%20Works%20%7C%20Small%20Business%20website%20%24349","x":396,"y":816,"w":286,"h":67},{"label":"Five page package $599","href":"mailto:Geoffrey@86chaos.com?subject=Chilton%20App%20Works%20%7C%20Business%20Plus%20website%20%24599","x":740,"y":816,"w":286,"h":67},{"label":"Additional pages $99","href":"/chilton-app-works-neon/contact","x":52,"y":1003,"w":327,"h":148},{"label":"Website care","href":"/chilton-app-works-neon/care","x":394,"y":1003,"w":327,"h":148},{"label":"Business email","href":"/chilton-app-works-neon/email","x":736,"y":1003,"w":327,"h":148},{"label":"Get a quote","href":"/chilton-app-works-neon/contact","x":804,"y":1250,"w":259,"h":56}],"about":[{"label":"Contact Chilton App Works","href":"/chilton-app-works-neon/contact","x":758,"y":1217,"w":310,"h":56}],"work":[{"label":"Website services","href":"/chilton-app-works-neon/pricing","x":56,"y":458,"w":486,"h":314},{"label":"Custom applications","href":"/chilton-app-works-neon/apps","x":566,"y":458,"w":486,"h":314},{"label":"Customer portals and custom apps","href":"/chilton-app-works-neon/apps","x":56,"y":794,"w":486,"h":314},{"label":"Digital support","href":"/chilton-app-works-neon/care","x":566,"y":794,"w":486,"h":314},{"label":"Tell us your idea","href":"/chilton-app-works-neon/contact","x":779,"y":1200,"w":287,"h":56}],"apps":[{"label":"Get custom app quote","href":"mailto:Geoffrey@86chaos.com?subject=Chilton%20App%20Works%20%7C%20Custom%20application%20development%20quote","x":795,"y":1161,"w":242,"h":56}],"care":[{"label":"Basic website hosting $19","href":"mailto:Geoffrey@86chaos.com?subject=Chilton%20App%20Works%20%7C%20Basic%20Hosting%20%2419%20monthly","x":80,"y":850,"w":273,"h":56},{"label":"Managed Care $39","href":"mailto:Geoffrey@86chaos.com?subject=Chilton%20App%20Works%20%7C%20Managed%20Care%20%2439%20monthly","x":423,"y":850,"w":273,"h":56},{"label":"Premium Care $69","href":"mailto:Geoffrey@86chaos.com?subject=Chilton%20App%20Works%20%7C%20Premium%20Care%20%2469%20monthly","x":766,"y":850,"w":273,"h":56}],"email":[{"label":"Ask about business email setup","href":"mailto:Geoffrey@86chaos.com?subject=Chilton%20App%20Works%20%7C%20Professional%20business%20email%20setup%20from%20%2449","x":813,"y":1155,"w":230,"h":56}],"contact":[{"label":"Email Chilton App Works","href":"mailto:Geoffrey@86chaos.com?subject=Chilton%20App%20Works%20%7C%20New%20project%20inquiry","x":89,"y":762,"w":394,"h":56},{"label":"View website pricing","href":"/chilton-app-works-neon/pricing","x":747,"y":1222,"w":310,"h":56}]};
+const nav = [{"label":"Home","href":"/chilton-app-works-neon","x":32,"y":9,"w":280,"h":86},{"label":"Services","href":"/chilton-app-works-neon/services","x":444,"y":16,"w":102,"h":64},{"label":"Pricing","href":"/chilton-app-works-neon/pricing","x":545,"y":16,"w":86,"h":64},{"label":"About","href":"/chilton-app-works-neon/about","x":633,"y":16,"w":82,"h":64},{"label":"Work","href":"/chilton-app-works-neon/work","x":718,"y":16,"w":74,"h":64},{"label":"Contact","href":"/chilton-app-works-neon/contact","x":790,"y":16,"w":91,"h":64},{"label":"Let's Talk","href":"/chilton-app-works-neon/contact","x":894,"y":16,"w":180,"h":69}];
+const contacts = [...nav,...(extras[page]||[])];
+const percent=(n:number,range:number)=>((n/range)*100).toFixed(5)+"%";
+---
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex,nofollow"/><meta name="theme-color" content="#040e13"/>
+<meta name="description" content={"Chilton App Works — "+titleLookup[page]+". Original neon design with useful website, software and support information."}/>
+<title>{titleLookup[page]} | Chilton App Works</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#040e13;color:#d9eeee;font-family:Arial,Helvetica,sans-serif}
+img{display:block;width:100%;height:auto;user-select:none;pointer-events:none}
+a,button,summary{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.page-frame{width:min(1122px,100%);margin:0 auto;background:#050f14;box-shadow:0 0 90px #17ccb61b}
+.poster-scroll{width:100%;overflow-x:auto;overscroll-behavior-inline:contain}
+.poster{position:relative;width:100%;min-width:0;aspect-ratio:1122 / 1334;background:#050e14}
+.poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.hotspot{position:absolute;z-index:3;display:block;background:transparent;border:0;outline:none;box-shadow:none;cursor:pointer}
+.hotspot:focus-visible{outline:2px solid #37f3e3;outline-offset:2px}
+.hotspot:focus:not(:focus-visible),.hotspot:active{outline:none;box-shadow:none;background:transparent}
+.hotspot span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.aux{display:flex;justify-content:space-between;gap:20px;align-items:center;padding:13px 18px;background:#071820;border-top:1px solid #17656b;color:#93c6c9;font-size:11px;line-height:1.55}
+.aux a{color:#43e8db;text-decoration:underline;text-underline-offset:3px}
+.zoom-controls{display:none;align-items:center;justify-content:space-between;gap:12px;padding:10px 16px;background:#092029;border-bottom:1px solid #1f6064;font-size:11px}
+.zoom-controls button{padding:8px 11px;border-radius:7px;background:#0b2a2f;border:1px solid #43dfd6;color:#bffdfa;font-size:11px;font-weight:800}
+.poster-scroll.zoomed .poster{width:1122px}
+@media(max-width:700px){.zoom-controls{display:flex}.aux{display:block}.aux a{display:block;margin-top:7px}}
+</style></head><body>
+<div class="page-frame">
+  <div class="zoom-controls"><span>Image-based {titleLookup[page]} page · zoom to read details</span><button id="zoom" aria-pressed="false" type="button">Zoom in ⤢</button></div>
+  <main class="poster-scroll" id="poster-scroll">
+    <div class="poster">
+      <img src={`/assets/chilton-neon/${page}.svg`} alt={`Chilton App Works neon illustrated ${titleLookup[page]} page. Use the labeled links to browse sections.`} loading="eager" width="1122" height="1334"/>
+      {contacts.map(p=><a class="hotspot" aria-label={p.label} href={p.href} style={`left:${percent(p.x,1122)};top:${percent(p.y,1334)};width:${percent(p.w,1122)};height:${percent(p.h,1334)}`}><span>{p.label}</span></a>)}
+    </div>
+  </main>
+  <div class="aux"><span>Neon design preview · Prices are starting prices; domain, hosting, email licenses and optional work are separate.</span><a href={route}>Return to landing page ↗</a></div>
+</div>
+<script>
+ const scroller=document.querySelector('#poster-scroll');const button=document.querySelector('#zoom');
+ if(scroller&&button)button.addEventListener('click',()=>{
+   const expanded=scroller.classList.toggle('zoomed');
+   button.textContent=expanded?'Fit screen ↙':'Zoom in ⤢';
+   button.setAttribute('aria-pressed',String(expanded));scroller.scrollLeft=0;
+ });
+</script>
+</body></html>
