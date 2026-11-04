@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="343" height="172" viewBox="0 0 343 172" role="img" aria-label="Transparent pricing, no hidden fees">
+<defs>
+ <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0c2831"/><stop offset=".65" stop-color="#081a23"/><stop offset="1" stop-color="#092530"/></linearGradient>
+ <linearGradient id="aqua" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#34fae9"/><stop offset="1" stop-color="#0a716f"/></linearGradient>
+ <linearGradient id="coral" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffb09d"/><stop offset="1" stop-color="#de655c"/></linearGradient>
+ <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect x="2.5" y="3" width="338" height="166" rx="15" fill="url(#panel)" stroke="#24c6c1" stroke-opacity=".85" stroke-width="2"/>
+<path d="M306 5H341V71L267 135H218Z" fill="url(#aqua)" opacity=".14"/>
+<path d="M308 5H340L314 57H276Z" fill="url(#coral)" opacity=".27"/>
+<path d="M8 145L59 95H94L40 166H8Z" fill="#19c9c0" opacity=".12"/>
+<path d="M244 162l88-112" stroke="#36f8e8" opacity=".25" stroke-width="1"/>
+<rect x="19" y="19" width="45" height="45" rx="11" fill="#103940" stroke="#25d9d1" stroke-width="1.5"/>
+<path d="M28 40l9 9 18-19" fill="none" stroke="#38f7e7" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+<text x="76" y="35" fill="#38fae9" font-size="12" font-family="Arial,Helvetica,sans-serif" letter-spacing="1.9" font-weight="800">TRANSPARENT PRICING</text>
+<text x="76" y="59" fill="#f6fdff" font-size="25" font-family="Arial,Helvetica,sans-serif" font-weight="900">NO HIDDEN FEES</text>
+<path d="M20 77H323" stroke="#2d646b" stroke-width="1"/>
+<text x="22" y="104" fill="#f8ffff" font-size="19" font-family="Arial,Helvetica,sans-serif" font-weight="750">Your domain. Your choice.</text>
+<text x="22" y="129" fill="#bad7dc" font-size="15" font-family="Arial,Helvetica,sans-serif">All additional costs explained upfront.</text>
+<text x="22" y="151" fill="#ff987f" font-size="14" font-family="Arial,Helvetica,sans-serif" font-weight="850">SEE WHAT'S INCLUDED</text>
+<circle cx="305" cy="136" r="17" fill="#14383f" stroke="#ff8b75" stroke-width="1.5"/>
+<path d="M298 136h14m-5-5 5 5-5 5" stroke="#ff957b" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
