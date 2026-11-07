@@ -1,0 +1,204 @@
+---
+interface Props {base:string;page:string}
+const {base,page}=Astro.props as Props;
+const art={
+ home:['https://gcdn.picsart.com/picsart-mcp/a6070144-b3af-4dd1-a01d-c0111938992b.png',1199,1312],
+ website:['https://gcdn.picsart.com/picsart-mcp/182ed2bf-bee8-41b1-8f5a-d5fff03a5239.png',1024,1536],
+ apps:['https://gcdn.picsart.com/picsart-mcp/a126c9a3-a1bc-4eab-a60b-98bb8cef6c8e.png',1024,1536],
+ repair:['https://gcdn.picsart.com/picsart-mcp/ce0660f5-62d3-4701-9d72-3e9edc20c8f0.png',1024,1536],
+ care:['https://gcdn.picsart.com/picsart-mcp/7d0c4f84-dc58-442c-84b3-b90c66778ad2.png',1024,1536],
+ email:['https://gcdn.picsart.com/picsart-mcp/de7f1686-a105-4d5a-8e53-7b831c721359.png',1024,1536]
+};
+const ownerLogo='https://gcdn.picsart.com/picsart-mcp/7e304288-7481-4983-b2c8-70c8041dd304.jpeg';
+const names=[['Website Design','website'],['Custom Applications','apps'],['Computer Repair & Support','repair'],['Website Care','care'],['Business Email','email']];
+const normalized=page==='website-design'||page==='pricing'?'website':page==='services'?'home':page==='work'?'apps':page;
+const selected=art[normalized]||art.home;
+const [artUrl,w,h]=selected;
+const visible=!!art[normalized];
+const isHome=normalized==='home';
+const pct=(x:number,total:number)=>(100*x/total).toFixed(5)+'%';
+const route=(name:string)=>name==='home'?base:base+'/'+(name==='website'?'website-design':name);
+const mail=(title:string)=>'mailto:Geoffrey@86chaos.com?subject='+encodeURIComponent('Chilton App Works | '+title);
+const href=(target:string)=>target.startsWith('ask:')?mail(target.slice(4)):target.startsWith('anchor:')?'#'+target.slice(7):route(target);
+const title=normalized==='home'?'Chilton App Works':normalized==='website'?'Website Design':normalized==='apps'?'Custom Applications':normalized==='repair'?'Computer Repair & Tech Support':normalized==='care'?'Website Care':normalized==='email'?'Business Email':normalized==='about'?'About Chilton App Works':'Contact Chilton App Works';
+type Box=[string,string,number,number,number,number];
+const homeNav:Box[]=[
+ ['Home','home',335,0,116,76],['Pricing','website',596,0,102,76],['About','about',708,0,93,76],['Contact','contact',802,0,98,76],['Get a Free Quote','ask:Website or tech service consultation',939,0,247,78]
+];
+const pageNav:Box[]=[
+ ['Home','home',326,0,100,69],['Pricing','website',540,0,88,69],['About','about',630,0,101,69],['Contact','contact',728,0,91,69],['Get a Free Quote','ask:New project inquiry',821,0,198,69]
+];
+const buttons:Record<string,Box[]>={
+ home:[
+ ['Hero Get a Free Quote','ask:New project inquiry',45,322,256,75],['Explore Our Services','anchor:services',315,322,237,74],
+ ['Website Design Learn More','website',16,533,222,343],['Custom Applications Learn More','apps',249,533,221,343],
+ ['Computer Repair Learn More','repair',481,533,220,343],['Website Care Learn More','care',714,533,217,343],
+ ['Business Email Learn More','email',944,533,226,343],
+ ['Get a Free Quote','ask:New project inquiry',280,1168,328,72],["Let's Talk",'contact',622,1168,296,72]
+ ],
+ website:[
+ ['Hero Get a Free Quote','ask:Website Design',39,334,219,60],['View Packages','anchor:plans',262,334,205,60],
+ ['Starter Website $149','ask:One-Page Starter Website $149',64,919,265,58],
+ ['Small Business Website $349','ask:Small Business Website $349',378,919,266,58],
+ ['Business Plus Website $599','ask:Business Plus Website $599',701,919,271,58],
+ ['Additional Pages','ask:Additional Pages $99 each',27,1043,238,91],
+ ['Custom Features','ask:Custom Website Features',266,1043,251,91],
+ ['Business Email','email',518,1043,247,91],['Website Care','care',766,1043,248,91],
+ ['Bottom Get a Free Quote','ask:Website Design',269,1426,248,74],["Bottom Let's Talk",'contact',526,1426,249,74]
+ ],
+ apps:[
+ ['Request a Custom Quote','ask:Custom Application Quote',33,270,269,68],
+ ['Schedule a Consultation','ask:Custom Application Consultation',304,270,240,68],
+ ['Restaurant Software','ask:Restaurant Software',20,405,315,137],
+ ['Scheduling Systems','ask:Scheduling Systems',348,405,322,137],
+ ['Inventory & Operations','ask:Inventory and Operations Apps',683,405,324,137],
+ ['Business Dashboards','ask:Business Dashboard',20,550,315,138],
+ ['Process Automation','ask:Process Automation',348,550,322,138],
+ ['Web and Mobile Apps','ask:Web and Mobile App',683,550,324,138],
+ ['Schedule a Consultation','ask:Custom Software Consultation',342,1440,350,62]
+ ],
+ repair:[
+ ['Book Repair Now','ask:Computer Repair Service',40,236,248,65],
+ ['Get a Quote','ask:Remote Computer Diagnostics from $25',298,236,207,65],
+ ['Diagnostics and Troubleshooting','ask:Computer Diagnostics $25',20,486,236,281],
+ ['Virus and Malware Removal','ask:Virus and Malware Removal $49',267,486,235,281],
+ ['PC Cleanup and Optimization','ask:PC Cleanup $39',511,486,236,281],
+ ['Windows Reinstall and Setup','ask:Windows Setup $69',761,486,243,281],
+ ['Hardware Upgrades','ask:Hardware Upgrades $35 plus parts',20,778,236,263],
+ ['Laptop Repairs','ask:Laptop Repairs $59 plus parts',267,778,235,263],
+ ['Data Transfer','ask:Data Transfer $39',511,778,236,263],
+ ['New Computer Setup','ask:Computer Setup $49',761,778,243,263],
+ ['Bottom Book a Repair','ask:Computer Repair Service',251,1448,264,66],
+ ['Bottom Get a Quote','ask:Computer Diagnostics Quote',521,1448,258,66]
+ ],
+ care:[
+ ['Hero Get Started','ask:Website Care',35,261,218,67],
+ ['View Care Plans','anchor:plans',269,261,209,67],
+ ['Basic Hosting $19','ask:Basic Hosting $19 per month',48,977,283,69],
+ ['Managed Care $39','ask:Managed Care $39 per month',368,977,298,69],
+ ['Premium Care $69','ask:Premium Care $69 per month',691,977,293,69],
+ ['Bottom Get Started','ask:Website Care',244,1445,264,74],
+ ["Bottom Let's Talk",'contact',515,1445,258,74]
+ ],
+ email:[
+ ['Ask About Email Setup','ask:Business Email Setup from $49',35,265,266,69],
+ ['Hero Get a Quote','ask:Business Email Quote',307,265,197,69],
+ ['Mailbox Setup Get Started','ask:First Mailbox Setup $49',66,1014,346,66],
+ ['Bottom Email Setup','ask:Business Email Setup',232,1438,282,75],
+ ["Bottom Let's Talk",'contact',529,1438,263,75]
+ ]
+};
+const overlay= [...(isHome?homeNav:pageNav),...(buttons[normalized]||[])];
+const servicesArea=isHome?[474,0,114,76]:[425,0,114,69];
+---
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex,nofollow"/><meta name="theme-color" content="#073c7d"/>
+<meta name="description" content={'Chilton App Works '+title+' interactive design preview. Affordable upfront prices, no hidden fees and local Wisconsin service.'}/>
+<title>{title} | Chilton App Works</title>
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:linear-gradient(130deg,#06376d,#086bc1);color:white;font-family:Arial,Helvetica,sans-serif}
+a,button,summary{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+a:focus-visible,summary:focus-visible,button:focus-visible{outline:3px solid #a6f52e;outline-offset:2px}
+.site{width:min(1199px,100%);min-height:100vh;margin:auto;box-shadow:0 0 65px #001d4080}
+.viewer{overflow-x:hidden;width:100%;background:#064b8f}
+.poster{width:100%;position:relative;aspect-ratio:var(--w)/var(--h);isolation:isolate}
+.poster-image{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none;user-select:none}
+.hit{display:block;position:absolute;z-index:5;background:transparent;border-radius:5px;text-decoration:none}
+.hit:hover{background:#ffffff13}
+.hit:focus-visible{outline:3px solid #a6f52e;background:#a6f52e35}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.actual-logo{position:absolute;z-index:7;display:block;background-color:#f7fbff;background-image:var(--logo);background-size:100% auto;background-position:center;background-repeat:no-repeat;border-radius:5px}
+.services-menu{z-index:9;position:absolute}
+.services-menu summary{display:block;width:100%;height:100%;list-style:none;cursor:pointer}
+.services-menu summary::-webkit-details-marker{display:none}
+.dropdown{display:none;position:absolute;z-index:60;top:90%;left:0;background:#fff;color:#062951;border:2px solid #9afa39;border-radius:9px;box-shadow:0 12px 30px #001b4d90;min-width:245px;padding:6px;flex-direction:column}
+.dropdown a{display:block;color:#082d55;text-decoration:none;font-size:14px;line-height:1.3;white-space:nowrap;font-weight:800;padding:13px;border-radius:5px}
+.dropdown a:hover{background:#e6f2ff}
+.services-menu[open] .dropdown,.mobile-services[open] .dropdown{display:flex}
+.zoom-row{display:none;justify-content:space-between;align-items:center;gap:14px;background:#043979;border-bottom:1px solid #80cbf880;padding:11px 14px;font-size:12px;line-height:1.35}
+.zoom-row button{padding:10px 15px;border-radius:7px;background:#a3f42b;border:0;color:#082b51;font-weight:900;min-height:43px;white-space:nowrap}
+.viewer.zoomed{overflow-x:auto;overscroll-behavior-x:contain}
+.viewer.zoomed .poster{width:780px}
+.note{background:#063b79;color:#e1f1ff;font-size:11px;line-height:1.65;padding:14px 19px}
+.note a{color:#a8ff45;font-weight:800}
+.mobilebar{display:none}
+.info{background:linear-gradient(145deg,#063e8d,#1696db);padding:18px 5% 80px;min-height:65vh}
+.info-head{display:flex;justify-content:space-between;align-items:center}
+.info-logo{width:280px;height:85px;max-width:80%;background:white;background-image:var(--logo);background-position:center;background-size:100% auto;background-repeat:no-repeat;border-radius:8px;display:block}
+.info-head nav{display:flex;gap:20px}
+.info-head nav a{color:white;font-size:13px;font-weight:800;text-decoration:none}
+.info-copy{max-width:790px;margin:70px auto 25px}
+.info-copy h1{font-size:clamp(36px,6vw,68px);line-height:1.05;letter-spacing:-1px}
+.info-copy h1 em{font-style:normal;color:#b5fb4b}
+.info-copy p{font-size:17px;line-height:1.7}
+.info-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;margin:27px 0}
+.info-cards a{color:#073767;background:#fff;padding:20px;border-radius:10px;font-weight:800;text-decoration:none}
+.info-cta{display:inline-block;padding:17px 22px;background:#a1f62b;border-radius:9px;font-weight:850;color:#063666;text-decoration:none;margin-top:15px}
+@media(max-width:720px){
+ .site{box-shadow:none;width:100%}
+ .zoom-row{display:flex}
+ .poster .desktop-nav-hit,.poster .services-menu{display:none}
+ .actual-logo{display:none}
+ .mobilebar{position:sticky;z-index:70;bottom:0;display:flex;align-items:center;justify-content:space-around;gap:5px;background:#053268f5;backdrop-filter:blur(9px);border-top:2px solid #a0f82c;padding:9px 6px calc(9px + env(safe-area-inset-bottom))}
+ .mobilebar>a,.mobile-services summary{font-size:12px;font-weight:850;padding:10px 6px;white-space:nowrap;text-decoration:none;color:#fff}
+ .mobilebar>a.contact-link{background:#a0f42c;color:#082f60;border-radius:8px;padding:11px 12px}
+ .mobile-services{position:relative}
+ .mobile-services summary{list-style:none;display:block;cursor:pointer}
+ .mobile-services summary::-webkit-details-marker{display:none}
+ .mobile-services .dropdown{top:auto;bottom:calc(100% + 15px);right:-80px;left:auto}
+ .note{font-size:10px}
+ .info-head nav{display:none}
+ .info-cards{grid-template-columns:1fr}
+}
+@media(max-width:360px){.mobilebar>a,.mobile-services summary{font-size:11px;padding:9px 2px}}
+</style>
+</head>
+<body style={'--logo:url('+ownerLogo+')'}>
+<div class="site">
+{visible?<>
+ <div class="zoom-row"><span>Approved design · Fit to screen or zoom to read the details</span><button id="zoom" type="button" aria-pressed="false">Zoom In ⤢</button></div>
+ <main class="viewer" id="viewer">
+  <div class="poster" style={'--w:'+w+';--h:'+h}>
+   <img class="poster-image" src={artUrl} alt={'Original approved blue, green and white Chilton App Works '+title+' mockup with mapped interactive buttons.'} width={w} height={h} loading="eager"/>
+   <a class="actual-logo" href={base} aria-label="Original Chilton App Works logo, home" style={isHome?'left:1.2%;top:0%;width:26.8%;height:7.4%':'left:1.2%;top:0%;width:29%;height:5.1%'}></a>
+   {overlay.map(([label,target,x,y,bw,bh])=><a class:list={['hit',{'desktop-nav-hit':(isHome?homeNav:pageNav).some(q=>q[0]===label&&q[2]===x)}]} aria-label={label} href={href(target)} style={'left:'+pct(x,w)+';top:'+pct(y,h)+';width:'+pct(bw,w)+';height:'+pct(bh,h)}><span class="sr">{label}</span></a>)}
+   <details class="services-menu" style={'left:'+pct(servicesArea[0],w)+';top:'+pct(servicesArea[1],h)+';width:'+pct(servicesArea[2],w)+';height:'+pct(servicesArea[3],h)}>
+     <summary aria-label="Open Services menu"></summary><div class="dropdown">{names.map(([label,key])=><a href={route(key)}>{label}</a>)}</div>
+   </details>
+   {isHome&&<span id="services" style="position:absolute;top:32%;left:0" aria-hidden="true"></span>}
+   {(normalized==='website'||normalized==='care')&&<span id="plans" style="position:absolute;top:36%;left:0" aria-hidden="true"></span>}
+  </div>
+ </main>
+ <div class="note">Interactive temporary Chilton App Works website on 86chaos.com. Starting prices and service availability are subject to approved scope. Free computer pickup and delivery applies within the agreed local service area; unsuccessful repairs are charged the agreed diagnostic fee only. Parts and provider costs are disclosed upfront. <a href={route('contact')}>Contact us</a>.</div>
+ </>:<div class="info">
+  <header class="info-head"><a class="info-logo" href={base} aria-label="Chilton App Works home"></a><nav><a href={base}>Home</a>{names.map(([label,key])=><a href={route(key)}>{label}</a>)}</nav></header>
+  <main class="info-copy"><p style="font-size:12px;color:#b2fe37;font-weight:900;letter-spacing:2px">CHILTON APP WORKS LLC · WISCONSIN</p>
+  <h1>{normalized==='about'?<>Local Roots.<br/><em>Practical Technology.</em></>:<>Let's Talk.<br/><em>Get a Quote.</em></>}</h1>
+  <p>{normalized==='about'?'Chilton App Works LLC provides practical websites, custom applications, computer diagnostics and repairs, website care, and business email services for people and small businesses in Wisconsin. We believe in straightforward pricing, freedom of choice and no hidden fees.':'Tell us about your website, computer, software project or business email needs. We provide clear starting prices and discuss the expected cost before beginning any work.'}</p>
+  <div class="info-cards">{names.map(([label,key])=><a href={normalized==='about'?route(key):mail(label+' inquiry')}>{label} ↗</a>)}</div>
+  <a class="info-cta" href={mail('New service inquiry')}>Email Geoffrey@86chaos.com ↗</a>
+  <p style="font-size:12px;margin-top:30px">Email links open your email application and do not automatically send or store data.</p>
+  </main></div>}
+<nav class="mobilebar" aria-label="Mobile navigation">
+ <a href={base}>Home</a><details class="mobile-services"><summary>Services ▾</summary><div class="dropdown">{names.map(([label,key])=><a href={route(key)}>{label}</a>)}</div></details>
+ <a href={route('website')}>Pricing</a><a href={route('about')}>About</a><a class="contact-link" href={route('contact')}>Contact</a>
+</nav></div>
+<script is:inline>
+(function(){
+ const button=document.getElementById('zoom'),viewer=document.getElementById('viewer');
+ if(button&&viewer)button.addEventListener('click',()=>{
+  const open=viewer.classList.toggle('zoomed');
+  button.textContent=open?'Fit Screen ↙':'Zoom In ⤢';
+  button.setAttribute('aria-pressed',String(open));viewer.scrollLeft=0;
+ });
+ document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',event=>{
+  const node=document.getElementById(a.getAttribute('href').slice(1));
+  if(node){event.preventDefault();node.scrollIntoView({behavior:'smooth'});}
+ }));
+})();
+</script>
+</body></html>
