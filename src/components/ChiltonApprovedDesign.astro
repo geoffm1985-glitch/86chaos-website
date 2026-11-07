@@ -23,7 +23,7 @@ const href=(target:string)=>target.startsWith('ask:')?mail(target.slice(4)):targ
 const title=normalized==='home'?'Chilton App Works':normalized==='website'?'Website Design':normalized==='apps'?'Custom Applications':normalized==='repair'?'Computer Repair & Tech Support':normalized==='care'?'Website Care':normalized==='email'?'Business Email':normalized==='about'?'About Chilton App Works':'Contact Chilton App Works';
 type Box=[string,string,number,number,number,number];
 const homeNav:Box[]=[
- ['Home','home',335,0,116,76],['Pricing','website',596,0,102,76],['About','about',708,0,93,76],['Contact','contact',802,0,98,76],['Get a Free Quote','ask:Website or tech service consultation',939,0,247,78]
+ ['Home','home',393,0,113,96],['Pricing','website',636,0,92,96],['About','about',729,0,94,96],['Contact','contact',824,0,110,96],['Get a Free Quote','ask:Website or tech service consultation',935,0,255,96]
 ];
 const pageNav:Box[]=[
  ['Home','home',326,0,100,69],['Pricing','website',540,0,88,69],['About','about',630,0,101,69],['Contact','contact',728,0,91,69],['Get a Free Quote','ask:New project inquiry',821,0,198,69]
@@ -89,7 +89,7 @@ const buttons:Record<string,Box[]>={
  ]
 };
 const overlay= [...(isHome?homeNav:pageNav),...(buttons[normalized]||[])];
-const servicesArea=isHome?[474,0,114,76]:[425,0,114,69];
+const servicesArea=isHome?[506,0,129,96]:[425,0,114,69];
 ---
 <!doctype html>
 <html lang="en"><head>
@@ -141,7 +141,7 @@ a:focus-visible,summary:focus-visible,button:focus-visible{outline:3px solid #a6
 @media(max-width:720px){
  .site{box-shadow:none;width:100%}
  .zoom-row{display:flex}
- .poster .desktop-nav-hit,.poster .services-menu{display:none}
+ .poster .desktop-nav-hit,.poster .services-menu{display:block}
  .actual-logo{display:block}
  .mobilebar{position:sticky;z-index:70;bottom:0;display:flex;align-items:center;justify-content:space-around;gap:5px;background:#053268f5;backdrop-filter:blur(9px);border-top:2px solid #a0f82c;padding:9px 6px calc(9px + env(safe-area-inset-bottom))}
  .mobilebar>a,.mobile-services summary{font-size:12px;font-weight:850;padding:10px 6px;white-space:nowrap;text-decoration:none;color:#fff}
@@ -183,10 +183,7 @@ a:focus-visible,summary:focus-visible,button:focus-visible{outline:3px solid #a6
   <a class="info-cta" href={mail('New service inquiry')}>Email Geoffrey@86chaos.com ↗</a>
   <p style="font-size:12px;margin-top:30px">Email links open your email application and do not automatically send or store data.</p>
   </main></div>}
-<nav class="mobilebar" aria-label="Mobile navigation">
- <a href={base}>Home</a><details class="mobile-services"><summary>Services ▾</summary><div class="dropdown">{names.map(([label,key])=><a href={route(key)}>{label}</a>)}</div></details>
- <a href={route('website')}>Pricing</a><a href={route('about')}>About</a><a class="contact-link" href={route('contact')}>Contact</a>
-</nav></div>
+</div>
 <script is:inline>
 (function(){
  const button=document.getElementById('zoom'),viewer=document.getElementById('viewer');
