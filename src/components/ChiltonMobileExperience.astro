@@ -1,0 +1,207 @@
+---
+interface Props {base:string;page:string;artUrl:string;logo:string;w:number;h:number}
+const {base,page,artUrl,logo,w,h}=Astro.props as Props;
+const url=(key:string)=>key==='home'?base:base+'/'+(key==='website'?'website-design':key);
+const email=(topic:string)=>'mailto:Geoffrey@86chaos.com?subject='+encodeURIComponent('Chilton App Works | '+topic);
+const tabs=[['Website Design','website'],['Custom Applications','apps'],['Computer Repair','repair'],['Website Care','care'],['Business Email','email']];
+const hero:{
+ [key:string]:{title:string;accent:string;intro:string;button:string;subject:string}
+}={
+ home:{title:'Practical Tech Solutions for',accent:'Your Business.',intro:'Professional websites, custom apps, computer repair, and ongoing support. Affordable technology from a local business.',button:'Get a Free Quote',subject:'New project'},
+ website:{title:'Professional Websites That',accent:'Grow Your Business.',intro:'Modern mobile-friendly websites that build trust, look professional, and help customers reach you.',button:'Get a Free Quote',subject:'Website Design'},
+ apps:{title:'Custom Applications Built for',accent:'Your Business.',intro:'Tailored software that solves real challenges in your everyday business operations.',button:'Request a Custom Quote',subject:'Custom Software'},
+ repair:{title:'Computer Repair &',accent:'Tech Support.',intro:'Affordable remote computer diagnostics, repairs, upgrades, and free local pickup and delivery.',button:'Book a Repair',subject:'Computer Repair'},
+ care:{title:'Website Care That Keeps Your Site',accent:'Running Smoothly.',intro:'Optional hosting coordination, monitoring, minor updates, and reliable support for your website.',button:'View Care Plans',subject:'Website Care'},
+ email:{title:'Professional Business Email for',accent:'Your Brand.',intro:'Set up professional email using your domain, with help getting it working on your devices.',button:'Ask About Email Setup',subject:'Business Email'}
+};
+const selected=hero[page]||hero.home;
+const frame=page==='home'?[548,78,631,322]:page==='repair'?[483,72,540,255]:[509,72,514,277];
+function crop(src:string,iw:number,ih:number,rect:number[]){
+ const [x,y,bw,bh]=rect;
+ return 'background-image:url("'+src+'");background-size:'+(iw/bw*100).toFixed(4)+'% auto;background-position:'+(x/(iw-bw)*100).toFixed(4)+'% '+(y/(ih-bh)*100).toFixed(4)+'%;aspect-ratio:'+bw+'/'+bh+';';
+}
+const scene=crop(artUrl,w,h,frame);
+const homeArt='https://gcdn.picsart.com/picsart-mcp/a6070144-b3af-4dd1-a01d-c0111938992b.png';
+const cards=[
+ {title:'Website Design',desc:'Professional, mobile-friendly websites that help your business stand out.',price:'Starting at $149',key:'website',x:84},
+ {title:'Custom Applications',desc:'Tailored software solutions that fit the way your business works.',price:'Custom Quote',key:'apps',x:318},
+ {title:'Computer Repair & Support',desc:'Remote diagnostics, repairs, and FREE local pickup and delivery.',price:'Diagnostics from $25',key:'repair',x:550},
+ {title:'Website Care',desc:'Keep your site secure, updated and running smoothly.',price:'Starting at $19/mo',key:'care',x:781},
+ {title:'Business Email',desc:'Professional email for your business using your own domain.',price:'Setup from $49',key:'email',x:993}
+];
+const packages=[
+ {title:'One-Page Starter',price:'$149',note:'one-time',features:['One mobile-friendly page','Provided logo, photos and text','Contact links and basic SEO','One revision round']},
+ {title:'Small Business',price:'$349',note:'one-time',features:['Up to 3 pages','Responsive, branded design','Contact links or a scoped form','One revision round']},
+ {title:'Business Plus',price:'$599',note:'one-time',features:['Up to 5 pages','More customized layouts','Gallery or contact features as scoped','Two revision rounds']}
+];
+const repairs=[
+ ['Diagnostics & Troubleshooting','From $25','Investigate computer issues, including remotely when suitable.'],
+ ['Virus & Malware Removal','From $49','Remove infections and help secure your device.'],
+ ['PC Cleanup & Optimization','From $39','Speed up startup and reduce common slowdowns.'],
+ ['Windows Reinstall / Setup','From $69','Windows, drivers and initial computer configuration.'],
+ ['Hardware Upgrades','From $35 + parts','Install compatible RAM, SSDs and other parts.'],
+ ['Laptop / Charging-Port Repairs','From $59 + parts','Assess laptop hardware and power issues.'],
+ ['Data Transfer','From $39','Move accessible files and photos to another device.'],
+ ['New Computer Setup','From $49','Updates, initial configuration and essential setup.']
+];
+const carePlans=[
+ {title:'Basic Hosting',price:'$19',note:'/month',features:['Hosting coordination','SSL and availability monitoring','No included content edits']},
+ {title:'Managed Care',price:'$39',note:'/month',features:['Hosting coordination & monitoring','Up to 15 minutes minor edits monthly','Routine website checks']},
+ {title:'Premium Care',price:'$69',note:'/month',features:['Hosting coordination & monitoring','Up to 30 minutes minor edits monthly','Priority routine requests']}
+];
+const appFeatures=[
+ ['Restaurant Systems','Kitchen, prep, and operational workflows.'],
+ ['Scheduling Tools','Shifts, availability, and time tracking.'],
+ ['Inventory & Operations','Counts, orders, costs, and records.'],
+ ['Business Dashboards','Reports and actionable business metrics.'],
+ ['Process Automation','Replace time-consuming repetitive work.'],
+ ['Web & Mobile Apps','Responsive tools for desktop and phones.']
+];
+const steps=[['Discover','Tell us what you need.'],['Plan','Agree on scope and pricing.'],['Build','Develop and test your solution.'],['Launch','Deliver and explain support.']];
+---
+<div class="mc-page">
+ <header class="mc-header">
+  <a href={base} class="mc-brand" aria-label="Chilton App Works home"><img src={logo} alt="Original Chilton App Works logo" width="180" height="65" /></a>
+  <details class="mc-menu"><summary>☰ <span>Menu</span></summary>
+   <nav aria-label="Services and pages"><a href={base}>Home</a>{tabs.map(([t,k])=><a href={url(k)}>{t}</a>)}<a href={url('about')}>About</a><a href={url('contact')}>Contact</a></nav>
+  </details>
+ </header>
+ <main>
+ {page!=='about'&&page!=='contact' ? <>
+  <section class="mc-hero">
+   <div class="mc-padded"><span class="mc-kicker">CHILTON APP WORKS · WISCONSIN</span><h1>{selected.title} <span>{selected.accent}</span></h1><p>{selected.intro}</p>
+    <div class="mc-actions"><a class="mc-btn mc-lime" href={email(selected.subject)}>{selected.button} ↗</a><a class="mc-btn mc-outline" href="#mc-details">Explore More ↓</a></div>
+   </div><div class="mc-illustration" style={scene} role="img" aria-label="Original illustrated computer artwork from the approved design"></div>
+  </section>
+  <section class="mc-section" id="mc-details"><div class="mc-padded">
+   {page==='home'&&<>
+    <div class="mc-heading"><span class="mc-kicker">OUR SERVICES</span><h2>How Can We Help?</h2><p>Everything you need, with affordable starting prices. Select a service to read more.</p></div>
+    <div class="mc-home-cards">{cards.map(c=><article class="mc-service">
+     <div class="mc-service-art" style={crop(homeArt,1199,1312,[c.x,510,82,74])} aria-hidden="true"></div>
+     <div><h3>{c.title}</h3><p>{c.desc}</p><strong>{c.price}</strong><a class="mc-btn mc-blue" href={url(c.key)}>Learn More →</a></div></article>)}</div>
+    <div class="mc-trust"><h2>Clear Prices. Local Service.</h2><div><b>✓ Free local pickup & delivery</b><b>✓ Remote computer diagnostics</b><b>✓ Upfront affordable pricing</b><b>✓ No hidden fees</b></div></div>
+   </>}
+   {page==='website'&&<>
+    <div class="mc-heading"><span class="mc-kicker">WEBSITE PACKAGES</span><h2>Simple, Transparent Pricing</h2><p>Professional websites designed to grow with your business.</p></div>
+    <div class="mc-plans">{packages.map((p,i)=><article class:list={['mc-plan',{'mc-special':i===1}]}><span>{i===1?'MOST POPULAR':'WEBSITE PACKAGE'}</span><h3>{p.title}</h3><strong>{p.price}</strong><small>{p.note}</small><ul>{p.features.map(f=><li>{f}</li>)}</ul><a class="mc-btn mc-blue" href={email(p.title+' website '+p.price)}>Get Started →</a></article>)}</div>
+    <div class="mc-note"><b>Extra pages start at $99.</b> Professional email setup starts at $49. Hosting, domain renewal, third-party fees and extra features are disclosed separately.</div>
+   </>}
+   {page==='apps'&&<>
+    <div class="mc-heading"><span class="mc-kicker">CUSTOM SOFTWARE</span><h2>Built Around Your Work</h2><p>Useful applications that solve everyday problems.</p></div>
+    <div class="mc-small-cards">{appFeatures.map(([t,d])=><article><h3>{t}</h3><p>{d}</p></article>)}</div>
+    <div class="mc-heading mc-gap"><h2>From Idea to Launch</h2></div>
+    <div class="mc-steps">{steps.map(([t,d],i)=><article><span>{i+1}</span><div><h3>{t}</h3><p>{d}</p></div></article>)}</div>
+    <div class="mc-note"><b>Custom quote.</b> Features, security, integrations, testing and infrastructure are individually scoped and explained upfront.</div>
+   </>}
+   {page==='repair'&&<>
+    <div class="mc-promise"><h2>Can't Fix It? You Only Pay the Diagnostic Fee.</h2><p>If an agreed repair can't resolve the reported issue, no repair labor is charged. All costs are explained before work begins.</p></div>
+    <div class="mc-heading mc-gap"><span class="mc-kicker">COMPUTER REPAIR & SUPPORT</span><h2>Affordable Repair Prices</h2><p>Remote support available when suitable. Free local pickup and delivery by arrangement.</p></div>
+    <div class="mc-repairs">{repairs.map(([t,p,d])=><article><div><h3>{t}</h3><p>{d}</p><strong>{p}</strong></div><a href={email(t+' '+p)}>Ask About It ↗</a></article>)}</div>
+    <div class="mc-heading mc-gap"><h2>How It Works</h2></div>
+    <div class="mc-steps">{[['Contact Us','Describe the issue and choose remote help or pickup.'],['We Diagnose','We explain the problem and options.'],['You Approve','Get an upfront estimate before repair.'],['Repair & Return','We test the repair and arrange return.']].map(([t,d],i)=><article><span>{i+1}</span><div><h3>{t}</h3><p>{d}</p></div></article>)}</div>
+    <div class="mc-note">Free pickup and delivery applies within the agreed local service area, subject to scheduling. Parts and additional services are quoted in advance.</div>
+   </>}
+   {page==='care'&&<>
+    <div class="mc-heading"><span class="mc-kicker">OPTIONAL WEBSITE CARE</span><h2>Keep Your Site Running Smoothly</h2><p>Flexible care plans without required long-term contracts.</p></div>
+    <div class="mc-plans">{carePlans.map((p,i)=><article class:list={['mc-plan',{'mc-special':i===1}]}><span>{i===1?'MOST POPULAR':'MONTHLY CARE'}</span><h3>{p.title}</h3><strong>{p.price}<small>{p.note}</small></strong><ul>{p.features.map(f=><li>{f}</li>)}</ul><a class="mc-btn mc-blue" href={email(p.title+' '+p.price+' monthly')}>Get Started →</a></article>)}</div>
+    <div class="mc-note">Domain registration, hosting subscriptions, mailbox licenses, substantial changes and third-party fees can be separate. You own your domain and agreed deliverables.</div>
+   </>}
+   {page==='email'&&<>
+    <div class="mc-heading"><span class="mc-kicker">BUSINESS EMAIL</span><h2>Professional Email, Simple Setup</h2><p>Make a great impression with an address at your own domain.</p></div>
+    <article class="mc-plan mc-special"><span>FIRST MAILBOX SETUP</span><h3>Business Email</h3><strong>$49</strong><small>one-time setup from</small><ul><li>Create and configure your first mailbox</li><li>Connect your business domain</li><li>Help set up your computer and phone</li><li>Basic handoff and usage guidance</li></ul><a class="mc-btn mc-blue" href={email('First mailbox setup $49')}>Get Started →</a></article>
+    <div class="mc-heading mc-gap"><h2>How It Works</h2></div>
+    <div class="mc-steps">{[['Choose','Select your preferred mailbox provider.'],['Connect','Configure your domain records.'],['Configure','Set up your desktop and phone.'],['Go','Start using your professional address.']].map(([t,d],i)=><article><span>{i+1}</span><div><h3>{t}</h3><p>{d}</p></div></article>)}</div>
+    <div class="mc-note">Mailbox subscription licenses, domain purchases, domain renewal and other provider charges are separate and disclosed upfront. Provider accounts ordinarily remain yours.</div>
+   </>}
+  </div></section>
+  <section class="mc-cta"><div class="mc-padded"><h2>Ready to Get Started?</h2><p>Local service. Affordable prices. No hidden fees.</p><a class="mc-btn mc-lime" href={email(selected.subject)}>{selected.button} ↗</a><a class="mc-btn mc-outline" href={url('contact')}>Contact Us →</a></div></section>
+ </> : <>
+  <section class="mc-hero"><div class="mc-padded"><span class="mc-kicker">CHILTON APP WORKS LLC · WISCONSIN</span><h1>{page==='about'?'Local Roots.':'Let’s Talk.'} <span>{page==='about'?'Practical Technology.':'Get a Quote.'}</span></h1><p>{page==='about'?'Based in Chilton, Wisconsin. Websites, custom applications, computer repair and tech support, website care, and business email, with straightforward pricing.':'Choose the service you need and email Chilton App Works directly to request information or a quote.'}</p></div></section>
+  <section class="mc-section"><div class="mc-padded"><div class="mc-small-cards">{tabs.map(([t,k])=><article><h3>{t}</h3><a class="mc-btn mc-blue" href={page==='about'?url(k):email(t+' inquiry')}>{page==='about'?'Learn More →':'Send Inquiry →'}</a></article>)}</div><div class="mc-note">Geoffrey@86chaos.com · Inquiry links open your email application. This website doesn't automatically send or store messages.</div></div></section>
+ </>}
+ </main>
+ <footer class="mc-footer"><div class="mc-padded"><b>Chilton App Works LLC</b><p>Chilton, Wisconsin · Honest prices · Local service</p><nav><a href={base}>Home</a><a href={url('about')}>About</a><a href={url('contact')}>Contact</a></nav><small>Temporary preview on 86chaos.com · © 2026</small></div></footer>
+</div>
+<style>
+.mc-page{display:none}
+@media(max-width:720px){
+.mc-page{display:block;font:16px/1.48 Arial,Helvetica,sans-serif;color:#fff;background:#0a68b9}
+.mc-page *{box-sizing:border-box}
+.mc-page a:focus-visible,.mc-page summary:focus-visible{outline:3px solid #a5f634;outline-offset:3px}
+.mc-padded{padding:0 20px;max-width:550px;margin:0 auto}
+.mc-header{position:sticky;top:0;z-index:90;background:linear-gradient(115deg,#062d63,#096eb8);border-bottom:2px solid #9efa35;box-shadow:0 3px 12px #0026537d;height:77px;padding:8px 15px;display:flex;justify-content:space-between;align-items:center}
+.mc-brand{width:186px;height:61px;background:#fff;border-radius:9px;overflow:hidden;flex-shrink:0}
+.mc-brand img{width:100%;height:100%;display:block;object-fit:cover;object-position:center}
+.mc-menu{position:relative;z-index:100}
+.mc-menu summary{cursor:pointer;list-style:none;background:#06467e;border:1px solid #aef741;border-radius:9px;padding:11px 14px;font-weight:850;font-size:15px;min-height:47px}
+.mc-menu summary::-webkit-details-marker{display:none}
+.mc-menu nav{display:flex;flex-direction:column;position:absolute;right:0;top:calc(100% + 10px);min-width:min(296px,calc(100vw - 30px));background:#f4faff;border:2px solid #a6f331;border-radius:11px;padding:8px;box-shadow:0 10px 24px #001b458f;max-height:75vh;overflow-y:auto}
+.mc-menu:not([open]) nav{display:none}
+.mc-menu nav a{color:#0a315d;text-decoration:none;padding:12px 13px;font-size:15px;font-weight:850;border-radius:5px}
+.mc-menu nav a:hover{background:#e6f5de}
+.mc-hero{background:radial-gradient(circle at 88% 78%,#3baef3ac,transparent 45%),linear-gradient(140deg,#062e63,#0878c9);padding:29px 0 9px;border-bottom:3px solid #a1f332;overflow:hidden}
+.mc-kicker{display:block;color:#b0f843;font-size:11px;letter-spacing:1.6px;font-weight:950;line-height:1.25;margin-bottom:12px}
+.mc-hero h1{font-size:clamp(31px,9vw,45px);line-height:1.09;font-weight:900;letter-spacing:-1.3px;margin:0 0 16px}
+.mc-hero h1 span{color:#a8f437}
+.mc-hero p{font-size:16px;line-height:1.5;margin:0 0 20px;color:#f0faff}
+.mc-actions{display:flex;flex-wrap:wrap;gap:10px}
+.mc-btn{display:inline-flex;align-items:center;justify-content:center;text-align:center;min-height:46px;padding:11px 15px;border-radius:10px;font-size:15px;font-weight:850;line-height:1.2;text-decoration:none}
+.mc-lime{color:#06305a;background:#a8f538;box-shadow:0 4px 0 #156533}
+.mc-outline{color:#fff;background:#064778;border:2px solid #e5f5ff}
+.mc-blue{color:#fff;background:#0757a4;min-height:42px;font-size:14px}
+.mc-illustration{width:100%;margin:17px 0 -5px;background-repeat:no-repeat;mask-image:linear-gradient(#000 86%,transparent 100%)}
+.mc-section{padding:34px 0 40px;background:linear-gradient(140deg,#0b7fcf,#0861b2)}
+.mc-heading{text-align:center;margin:0 0 24px}
+.mc-heading h2{font-size:clamp(27px,7.7vw,38px);line-height:1.12;font-weight:900;margin:0 0 10px}
+.mc-heading p{font-size:15px;line-height:1.54;margin:0}
+.mc-gap{margin:35px 0 20px}
+.mc-home-cards,.mc-plans,.mc-small-cards,.mc-repairs,.mc-steps{display:grid;gap:13px}
+.mc-service{display:grid;grid-template-columns:90px minmax(0,1fr);gap:14px;align-items:center;background:linear-gradient(145deg,#fff,#e8f5ff);border:2px solid #daedff;border-radius:16px;padding:15px;color:#072e5c;box-shadow:0 6px 14px #002d6280}
+.mc-service:nth-child(3){background:linear-gradient(135deg,#f2ffe4,#dcf4e9);border-color:#adfb49}
+.mc-service-art{width:85px;min-height:78px;background-repeat:no-repeat;align-self:start}
+.mc-service h3{font-size:20px;line-height:1.13;margin:0 0 8px;font-weight:900}
+.mc-service p{font-size:14px;line-height:1.44;margin:0 0 9px}
+.mc-service strong{font-size:20px;line-height:1.1;color:#0b852b;display:block;margin:0 0 12px}
+.mc-trust{margin:24px 0 0;padding:22px 17px;background:#ecf9ff;color:#073660;border-radius:16px}
+.mc-trust h2{text-align:center;margin:0 0 15px;font-size:24px;line-height:1.15}
+.mc-trust>div{display:grid;gap:10px}
+.mc-trust b{font-size:14px}
+.mc-plan{background:linear-gradient(130deg,#fff,#e6f4fe);color:#07335e;border-radius:16px;padding:23px 20px;box-shadow:0 4px 14px #0027566e}
+.mc-special{border:3px solid #acf638;background:linear-gradient(130deg,#f5ffe5,#e7f9ea)}
+.mc-plan>span{color:#1164a7;letter-spacing:1.2px;font-size:10px;font-weight:900}
+.mc-plan h3{font-size:25px;line-height:1.17;margin:8px 0}
+.mc-plan strong{display:block;font-size:43px;line-height:1.12;color:#0a892f}
+.mc-plan strong small{font-size:18px}
+.mc-plan>small{font-size:12px}
+.mc-plan ul{list-style:none;padding:0;display:grid;gap:9px;margin:16px 0 20px}
+.mc-plan li{font-size:14px;line-height:1.4;padding-left:23px;position:relative}
+.mc-plan li:before{content:'✓';color:#0b8b2a;position:absolute;left:0;font-weight:900}
+.mc-plan .mc-btn{width:100%}
+.mc-small-cards article{background:#f5faff;border-radius:14px;color:#07345d;padding:20px}
+.mc-small-cards h3{font-size:19px;margin:0 0 7px}
+.mc-small-cards p{font-size:14px;margin:0}
+.mc-small-cards a{margin-top:11px}
+.mc-note{background:#edf8ff;color:#0d416c;padding:17px 18px;border-radius:13px;border-left:5px solid #b0f531;margin-top:22px;font-size:13px;line-height:1.57}
+.mc-promise{padding:20px;border-radius:14px;background:#a9f637;color:#06345c;margin:0 0 29px}
+.mc-promise h2{font-size:24px;line-height:1.12;margin:0 0 11px}
+.mc-promise p{font-size:13px;margin:0;line-height:1.55}
+.mc-repairs article{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:17px;background:#f3faff;color:#07315f;border-radius:14px}
+.mc-repairs h3{font-size:17px;line-height:1.2;margin:0 0 8px}
+.mc-repairs p{font-size:13px;line-height:1.4;margin:0 0 5px}
+.mc-repairs strong{display:block;font-size:19px;color:#0a8932}
+.mc-repairs a{display:block;flex:0 0 auto;width:97px;padding:11px 6px;border-radius:8px;text-align:center;text-decoration:none;color:#fff;background:#0757a4;font-size:12px;font-weight:850}
+.mc-steps article{display:flex;gap:14px;padding:16px;border-radius:13px;background:#f2faff;color:#073663}
+.mc-steps span{display:grid;place-items:center;flex:0 0 35px;height:35px;border-radius:50%;background:#a6f633;color:#053660;font-size:19px;font-weight:900}
+.mc-steps h3{font-size:17px;margin:0 0 4px}
+.mc-steps p{font-size:13px;line-height:1.45;margin:0}
+.mc-cta{padding:38px 0 45px;background:linear-gradient(120deg,#063166,#0b7cc8);border-top:4px solid #acfa3b;text-align:center}
+.mc-cta h2{font-size:31px;line-height:1.15;margin:0 0 9px}
+.mc-cta p{font-size:15px;margin:0 0 18px}
+.mc-cta .mc-btn{margin:5px}
+.mc-footer{padding:25px 0 35px;background:#032c62;color:#e9f4ff}
+.mc-footer b{font-size:18px}
+.mc-footer p,.mc-footer small{font-size:12px}
+.mc-footer nav{display:flex;gap:20px;margin:15px 0}
+.mc-footer nav a{text-decoration:none;font-size:13px;font-weight:850;color:#a8f642}
+}
+@media(max-width:360px){.mc-padded{padding-inline:14px}.mc-brand{width:163px}.mc-service{grid-template-columns:73px minmax(0,1fr);gap:10px;padding:12px}.mc-service-art{width:70px;min-height:70px}.mc-service h3{font-size:18px}}
