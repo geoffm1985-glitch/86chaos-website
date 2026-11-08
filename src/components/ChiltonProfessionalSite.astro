@@ -1,0 +1,6 @@
+---
+import { renderChiltonPage } from '../lib/chilton-site.mjs';
+const { base = '/chilton-app-works-neon', page = 'home' } = Astro.props;
+const html = renderChiltonPage(page, base);
+---
+<Fragment set:html={html} />

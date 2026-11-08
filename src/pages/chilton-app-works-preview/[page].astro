@@ -1,8 +1,8 @@
 ---
-import ChiltonApprovedDesign from '../../components/ChiltonApprovedDesign.astro';
+import ChiltonProfessionalSite from '../../components/ChiltonProfessionalSite.astro';
 export function getStaticPaths(){
  return ['website-design','apps','repair','care','email','pricing','services','work','about','contact'].map(page=>({params:{page},props:{page}}));
 }
 const {page}=Astro.props;
 ---
-<ChiltonApprovedDesign base="/chilton-app-works-preview" page={page} />
+<ChiltonProfessionalSite base="/chilton-app-works-preview" page={page} />
