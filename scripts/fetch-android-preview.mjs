@@ -8,7 +8,9 @@ const checksumName = apkName + '.sha256';
 const outputDir = path.resolve('public', 'downloads');
 // The preview release is optional for the marketing site (its download pages redirect home). When the release is no
 // longer publicly available the build continues without it; when it is available it is still fully verified.
-const UNAVAILABLE = new Set([401, 403, 404]);
+// The optional preview must not block the marketing site if GitHub times out (HTTP 504).
+// No unverified preview is bundled; checksum verification remains mandatory when downloaded.
+const UNAVAILABLE = new Set([401, 403, 404, 504]);
 
 const request = (url) => fetch(url, {
   redirect: 'follow',
